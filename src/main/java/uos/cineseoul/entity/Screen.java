@@ -18,7 +18,7 @@ public class Screen {
     @Column(name="SCREEN_NUM")
     private Long screenNum;
 
-    @Column(name="NAME", nullable = false, unique = false, length = 100)
+    @Column(name="NAME", nullable = false, unique = true, length = 100)
     private String name;
 
     @Column(name="TOTAL_SEAT", nullable = false, unique = false)
@@ -26,7 +26,7 @@ public class Screen {
 
     /* Foreign Key */
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SCREEN_NUM", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "SCREEN_NUM")
     private List<Seat> seats;
     /* */
 }

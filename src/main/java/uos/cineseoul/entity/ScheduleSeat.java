@@ -23,6 +23,6 @@ public class ScheduleSeat {
     @JoinColumn(name = "SEAT_NUM", nullable = false)
     private Seat seat;
 
-    @Column(name="OCCUPIED", nullable = false, unique = false)
-    private Integer occupied;
+    @Column(name="OCCUPIED", nullable = false, unique = false, length = 1)
+    private String occupied;
 }
