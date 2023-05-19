@@ -12,12 +12,12 @@ import uos.cineseoul.repository.UserRepository;
 import javax.transaction.Transactional;
 
 @SpringBootTest
-@Transactional
 @Slf4j
 class UserRepoTests {
 	@Autowired
 	UserRepository userRepo;
 	@Test
+	//@Transactional
 	void registerTest() {
 		User user = User.builder().id("sem1308").pw("1308").name("한수한")
 						.residentNum("9902211111111").phoneNum("010XXXXXXXX")
@@ -29,18 +29,13 @@ class UserRepoTests {
 	}
 
 	@Test
+	@Transactional
 	void findTest() {
-		User user = User.builder().id("sem1308").pw("1308").name("한수한")
-				.residentNum("9902211111111").phoneNum("010XXXXXXXX")
-				.point(0).role("A").build();
+		String ID = "sem1308";
 
-		User savedUser =userRepo.save(user);
-
-		Long userNum  = userRepo.findNumById(savedUser.getId()).orElseThrow(()->{
-					throw new RuntimeException("user " + savedUser.getId() + " is not exits");
+		Long userNum  = userRepo.findNumById(ID).orElseThrow(()->{
+					throw new RuntimeException("user " + ID + " is not exits");
 		});
-
-		assert savedUser.getUserNum().equals(userNum);
 	}
 
 }

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-@Transactional
 @Slf4j
 class SeatRepoTests {
 	@Autowired
@@ -22,12 +21,11 @@ class SeatRepoTests {
 	@Autowired
 	ScreenRepository screenRepo;
 	@Test
+	//@Transactional
 	void registerTest() {
-
-		// 상영관 생성
+		// 상영관 불러오기
 		String screenName = "A";
-		Screen screen = Screen.builder().name(screenName).totalSeat(0).build();
-		Screen savedScreen = screenRepo.save(screen);
+		Screen screen = screenRepo.findByName(screenName).get();
 
 		// 상영관에 좌석 2개 생성
 		List<Seat> seatList = new ArrayList<Seat>();
@@ -35,13 +33,13 @@ class SeatRepoTests {
 		String row1 = "H";
 		String col1 = "10";
 		String seatGrade1 = "A";
-		Seat seat1 = Seat.builder().row(row1).col(col1).seatGrade(seatGrade1).screen(savedScreen).build();
+		Seat seat1 = Seat.builder().row(row1).col(col1).seatGrade(seatGrade1).screen(screen).build();
 		seatList.add(seat1);
 
 		String row2 = "E";
 		String col2 = "15";
 		String seatGrade2 = "B";
-		Seat seat2 = Seat.builder().row(row2).col(col2).seatGrade(seatGrade2).screen(savedScreen).build();
+		Seat seat2 = Seat.builder().row(row2).col(col2).seatGrade(seatGrade2).screen(screen).build();
 		seatList.add(seat2);
 
 		seatList.forEach(seat -> {

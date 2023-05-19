@@ -10,16 +10,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
-    //@Query("select t from TICKET t where t.USER_NUM = :UserNum")
-    List<Ticket> findByUser(@Param("UserNum") Long UserNum);
+    @Query("select t from TICKET t where t.user.userNum = :userNum")
+    List<Ticket> findByUserNum(@Param("userNum") Long userNum);
 
-    @Query("select t from USERS u, TICKET t where u = t.user and u.id = :userID")
+    @Query("select t from TICKET t where t.user.id = :userID")
     List<Ticket> findByUserID(@Param("userID") String userID);
 
-    //@Query("select t from TICKET t where t.USER_NUM = :userNum")
-    Optional<Ticket> findByUserAndTicketNum(@Param("userNum") Long userNum, @Param("ticketNum") Long ticketNum);
+    @Query("select t from TICKET t where t.user.userNum = :userNum and t.ticketNum = :ticketNum")
+    Optional<Ticket> findByUserNumAndTicketNum(@Param("userNum") Long userNum, @Param("ticketNum") Long ticketNum);
 
-    @Query("select t from USERS u, TICKET t where u = t.user and u.id = :userID and t.ticketNum = :ticketNum")
+    @Query("select t from TICKET t where t.user.id = :userID and t.ticketNum = :ticketNum")
     Optional<Ticket> findByUserIDAndTicketNum(@Param("userID") String userID, @Param("ticketNum") Long ticketNum);
-
 }

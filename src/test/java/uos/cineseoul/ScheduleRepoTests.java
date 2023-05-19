@@ -8,9 +8,12 @@ import uos.cineseoul.entity.Schedule;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import uos.cineseoul.entity.ScheduleSeat;
 import uos.cineseoul.entity.Screen;
 import uos.cineseoul.entity.Seat;
 import uos.cineseoul.repository.ScheduleRepository;
+import uos.cineseoul.repository.ScheduleSeatRepository;
 import uos.cineseoul.repository.ScreenRepository;
 import uos.cineseoul.repository.SeatRepository;
 
@@ -20,21 +23,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-@Transactional
 @Slf4j
 class ScheduleRepoTests {
-	@Autowired
-	SeatRepository seatRepo;
 	@Autowired
 	ScheduleRepository scheduleRepo;
 	@Autowired
 	ScreenRepository screenRepo;
+	@Autowired
+	ScheduleSeatRepository scheduleSeatRepo;
 	@Test
+	//@Transactional
 	void registerTest() {
 		// 상영 일정 등록
 		Integer order = 1;
 		String screenName = "A";
-		Screen screen = setScreenAndSeat(screenName);
+		Screen screen = screenRepo.findByName(screenName).get();
 		Integer emptySeat = screen.getTotalSeat();
 
 		LocalDateTime schedTime = LocalDateTime.now();
@@ -44,12 +47,21 @@ class ScheduleRepoTests {
 
 		assert savedSched.getOrder().equals(order) && savedSched.getScreen().equals(screen) &&
 				savedSched.getEmptySeat().equals(emptySeat) && savedSched.getSchedTime().equals(schedTime);
+
+		List<Seat> seatList = savedSched.getScreen().getSeats();
+
+		// Screen에서 EAGER로 해야함
+		seatList.forEach(seat -> {
+			ScheduleSeat ss = ScheduleSeat.builder().schedule(savedSched).seat(seat).occupied("N").build();
+			scheduleSeatRepo.save(ss);
+		});
 	}
 
 	@Test
+	@Transactional
 	void findTest() {
 		String screenName = "A";
-		Screen screen = setScreenAndSeat(screenName);
+		Screen screen = screenRepo.findByName(screenName).get();
 		Integer emptySeat = screen.getTotalSeat();
 
 		// 상영일정 2개 생성
@@ -79,37 +91,6 @@ class ScheduleRepoTests {
 
 		scheduleList.forEach(sched -> {
 			System.out.println("오늘 상영일자 : " + sched.getSchedTime());
-		});
-	}
-
-	Screen setScreenAndSeat(String screenName){
-		Screen screen = Screen.builder().name(screenName).totalSeat(0).build();
-
-		Screen savedScreen = screenRepo.save(screen);
-
-		// 상영관에 좌석 2개 생성
-		List<Seat> seatList = new ArrayList<Seat>();
-
-		String row1 = "H";
-		String col1 = "10";
-		String seatGrade1 = "A";
-		Seat seat1 = Seat.builder().row(row1).col(col1).seatGrade(seatGrade1).screen(savedScreen).build();
-		seatList.add(seat1);
-
-		String row2 = "E";
-		String col2 = "15";
-		String seatGrade2 = "B";
-		Seat seat2 = Seat.builder().row(row2).col(col2).seatGrade(seatGrade2).screen(savedScreen).build();
-		seatList.add(seat2);
-
-		seatList.forEach(seat -> {
-			Seat saved = seatRepo.save(seat);
-			saved.getScreen().setTotalSeat(saved.getScreen().getTotalSeat() + 1);
-			screenRepo.save(saved.getScreen());
-		});
-
-		return screenRepo.findByName(savedScreen.getName()).orElseThrow(()->{
-			throw new RuntimeException("screen " + savedScreen.getName() + " is not exits");
 		});
 	}
 }

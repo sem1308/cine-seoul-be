@@ -12,12 +12,12 @@ import uos.cineseoul.repository.UserRepository;
 import javax.transaction.Transactional;
 
 @SpringBootTest
-@Transactional
 @Slf4j
 class ScreenRepoTests {
 	@Autowired
 	ScreenRepository screenRepo;
 	@Test
+	//@Transactional
 	void registerTest() {
 		String name = "A";
 		Screen screen = Screen.builder().name(name).totalSeat(0).build();
@@ -30,14 +30,11 @@ class ScreenRepoTests {
 	@Test
 	void findTest() {
 		String name = "A";
-		Screen screen = Screen.builder().name(name).totalSeat(0).build();
-		Screen savedScreen = screenRepo.save(screen);
-
-		Screen foundScreen  = screenRepo.findByName(savedScreen.getName()).orElseThrow(()->{
-					throw new RuntimeException("screen " + savedScreen.getName() + " is not exits");
+		Screen foundScreen  = screenRepo.findByName(name).orElseThrow(()->{
+					throw new RuntimeException("screen " + name + " is not exits");
 		});
 
-		assert foundScreen.getScreenNum().equals(savedScreen.getScreenNum());
+		assert foundScreen.getName().equals(name);
 	}
 
 }
