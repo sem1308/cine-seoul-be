@@ -4,8 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import uos.cineseoul.dto.InsertScreenDTO;
+import uos.cineseoul.dto.UpdateScreenDTO;
 import uos.cineseoul.entity.Screen;
 import uos.cineseoul.entity.User;
+import uos.cineseoul.mapper.ScreenMapper;
 import uos.cineseoul.repository.ScreenRepository;
 import uos.cineseoul.repository.UserRepository;
 
@@ -17,15 +20,33 @@ class ScreenRepoTests {
 	@Autowired
 	ScreenRepository screenRepo;
 	@Test
-	//@Transactional
+	@Transactional
 	void registerTest() {
-		String name = "A";
-		Screen screen = Screen.builder().name(name).totalSeat(0).build();
+		String name = "B";
+		InsertScreenDTO screenDTO = InsertScreenDTO.builder().name(name).build();
+		Screen screen = ScreenMapper.INSTANCE.toEntity(screenDTO);
 
 		Screen savedScreen = screenRepo.save(screen);
 
 		assert savedScreen.getName().equals(screen.getName());
 	}
+
+	@Test
+	@Transactional
+	void updateTest() {
+		Long screenNum = 1L;
+		String name = "B"; // 원래 A
+		UpdateScreenDTO screenDTO = UpdateScreenDTO.builder().screenNum(screenNum).name(name).build();
+		Screen screen = screenRepo.findById(screenNum).get();
+
+		ScreenMapper.INSTANCE.updateFromDto(screenDTO, screen);
+
+		Screen savedScreen = screenRepo.save(screen);
+
+		assert savedScreen.getName().equals(name);
+	}
+
+
 
 	@Test
 	void findTest() {
