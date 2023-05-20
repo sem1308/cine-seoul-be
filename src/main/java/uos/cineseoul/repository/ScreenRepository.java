@@ -8,6 +8,5 @@ import uos.cineseoul.entity.Screen;
 import java.util.Optional;
 
 public interface ScreenRepository extends JpaRepository<Screen, Long> {
-
     Optional<Screen> findByName(@Param("name") String name);
 }

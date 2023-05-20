@@ -22,13 +22,13 @@ public class Screen {
     @Column(name="NAME", nullable = false, unique = true, length = 100)
     private String name;
 
-    @Column(name="TOTAL_SEAT", nullable = false, unique = false)
+    @Column(name="TOTAL_SEAT", nullable = true, unique = false)
     @ColumnDefault("0")
     private Integer totalSeat;
 
     /* Foreign Key */
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SCREEN_NUM")
+    @JoinColumn(name = "SCREEN_NUM", insertable = false)
     private List<Seat> seats;
     /* */
 }
