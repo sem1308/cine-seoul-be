@@ -31,7 +31,7 @@ class ScreenRepoTests {
 	void findTest() {
 		String name = "A";
 		Screen foundScreen  = screenRepo.findByName(name).orElseThrow(()->{
-					throw new RuntimeException("screen " + name + " is not exits");
+					throw new RuntimeException("screen " + name + " is not exist");
 		});
 
 		assert foundScreen.getName().equals(name);

@@ -15,6 +15,10 @@ public interface ScheduleSeatRepository extends JpaRepository<ScheduleSeat, Long
     // 상영 일정으로 조회
     List<ScheduleSeat> findAllBySchedule(Schedule schedule);
 
+    // 상영 일정 번호로 조회
+    @Query("select ss from SCHEDULE_SEAT ss where ss.schedule.schedNum = :schedNum")
+    List<ScheduleSeat> findAllBySchedNum(@Param("schedNum")Long schedNum);
+
     // 상영일정번호 및 좌석번호로 조회
 //    @Query("select ss from SCHEDULE_SEAT ss where ss.schedule = :schedule and ss.seat = :seat")
 //    Optional<ScheduleSeat> findBySchedAndSeat(@Param("schedule")Schedule schedule ,@Param("seat")Seat seat);
