@@ -1,16 +1,16 @@
 package uos.cineseoul;
 
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.CreationTimestamp;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import uos.cineseoul.dto.InsertTicketDTO;
+import uos.cineseoul.dto.UpdateTicketDTO;
 import uos.cineseoul.entity.*;
+import uos.cineseoul.mapper.TicketMapper;
 import uos.cineseoul.repository.*;
 
-import javax.persistence.*;
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootTest
@@ -28,41 +28,62 @@ class TicketRepoTests {
 		Integer stdPrice = 8000;
 		Integer salePrice = 7500;
 		String issued = "N";
-		LocalDateTime createdAt = LocalDateTime.now();
 
-		String userID = "sem1308";
-
-		User user = userRepo.findByUserId(userID).get();
-
-		Long schedNum = 5L;
+		Long userNum = 1L;
+		Long schedNum = 2L;
 		Long seatNum = 1L;
-		ScheduleSeat scheduleSeat = scheduleSeatRepo.findBySchedNumAndSeatNum(schedNum,seatNum).get();
 
-		Ticket ticket = Ticket.builder().stdPrice(stdPrice).salePrice(salePrice)
-				.issued(issued).createdAt(createdAt).user(user).scheduleSeat(scheduleSeat).build();
+		InsertTicketDTO ticketDTO = InsertTicketDTO.builder().stdPrice(stdPrice).salePrice(salePrice)
+				.issued(issued).userNum(userNum).schedNum(schedNum).seatNum(seatNum).build();
+
+		User user = userRepo.findById(userNum).get();
+		ScheduleSeat scheduleSeat = scheduleSeatRepo.findBySchedNumAndSeatNum(ticketDTO.getSchedNum(),ticketDTO.getSeatNum()).get();
+
+		Ticket ticket = TicketMapper.INSTANCE.toEntity(ticketDTO);
+		ticket.setUser(user);
+		ticket.setScheduleSeat(scheduleSeat);
 
 		Ticket savedTicket = ticketRepo.save(ticket);
 
 		assert ticket.getCreatedAt().equals(savedTicket.getCreatedAt());
 	}
+
+	@Test
+	@Transactional
+	void updateTicketTest() {
+		Integer salePrice = 8000; // 바꿈
+		String issued = "N";
+		Long ticketNum = 1L;
+		Long schedNum = 2L;
+		Long seatNum = 2L; // 바꿈
+
+		UpdateTicketDTO ticketDTO = UpdateTicketDTO.builder().salePrice(salePrice)
+				.issued(issued).ticketNum(ticketNum).schedNum(schedNum).seatNum(seatNum).build();
+
+		Ticket ticket = ticketRepo.findById(ticketNum).get();
+
+		ScheduleSeat scheduleSeat = scheduleSeatRepo.findBySchedNumAndSeatNum(ticketDTO.getSchedNum(),ticketDTO.getSeatNum()).get();
+
+		TicketMapper.INSTANCE.updateFromDto(ticketDTO,ticket);
+		ticket.setScheduleSeat(scheduleSeat);
+
+		Ticket savedTicket = ticketRepo.save(ticket);
+
+		assert savedTicket.getSalePrice().equals(salePrice);
+		assert savedTicket.getScheduleSeat().getSeat().getSeatNum().equals(seatNum);
+	}
+
 	@Test
 	@Transactional
 	void findOneTest() {
 		Long ticketNum = 2L;
-		Long userNum = 1L;
-		String userId = "sem1308";
-
-		// by userNum and ticketNum
-		Ticket ticket1 = ticketRepo.findByUserNumAndTicketNum(userNum, ticketNum).orElseThrow(() -> {
-			throw new RuntimeException("Ticket1 is not exits");
-		});
 
 		// by userId and ticketNum
-		Ticket ticket2 = ticketRepo.findByUserIDAndTicketNum(userId, ticketNum).orElseThrow(() -> {
-			throw new RuntimeException("Ticket2 is not exits");
+		Ticket ticket = ticketRepo.findById(ticketNum).orElseThrow(() -> {
+			throw new RuntimeException("Ticket is not exits");
 		});
 
-		assert ticket1.getTicketNum().equals(ticket2.getTicketNum());
+		assert ticket.getTicketNum().equals(ticketNum);
 
 		System.out.println("티켓 1개 찾기 테스트 완료");
 	}
