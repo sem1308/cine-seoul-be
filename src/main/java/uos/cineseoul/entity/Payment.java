@@ -38,7 +38,7 @@ public class Payment{
     /* Foreign Key */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_NUM", nullable = false)
-    private User users;
+    private User user;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TICKET_NUM", nullable = false)

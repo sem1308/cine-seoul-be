@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity(name = "TICKET")
@@ -25,13 +26,14 @@ public class Ticket{
     @Column(name="TICKET_NUM")
     private Long ticketNum;
 
-    @Column(name="STD_PRICE", nullable = false, unique = true)
+    @Column(name="STD_PRICE", nullable = false, unique = false)
     private Integer stdPrice;
 
     @Column(name="SALE_PRICE", nullable = false, unique = false)
     private Integer salePrice;
 
     @Column(name="ISSUED", nullable = false, unique = false, length = 1)
+    @ColumnDefault("N")
     private String issued;
 
     @CreationTimestamp

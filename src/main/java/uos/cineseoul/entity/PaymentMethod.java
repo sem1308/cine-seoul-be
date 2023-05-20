@@ -12,6 +12,8 @@ import java.util.Date;
 @Getter
 @Builder
 public class PaymentMethod {
+    // 카드 : code = "C000" , name = "card"
+    // 계좌 : code = "A000" , name = "account"
     @Id
     @Column(name="PAMENT_METHOD_CODE", length = 4, nullable = false, unique = true)
     private String paymentMethodCode;
