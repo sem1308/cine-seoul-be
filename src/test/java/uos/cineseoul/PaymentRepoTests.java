@@ -4,7 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import uos.cineseoul.dto.InsertPaymentDTO;
 import uos.cineseoul.entity.*;
+import uos.cineseoul.mapper.PaymentMapper;
 import uos.cineseoul.repository.*;
 
 import javax.transaction.Transactional;
@@ -42,6 +44,49 @@ class PaymentRepoTests {
 
 		Payment savedPayment = paymentRepo.save(payment);
 	}
+
+	@Test
+	@Transactional
+	void paymentTestByMapper() {
+		Integer price = 7500;
+
+		Long userNum = 1L;
+		Long ticketNum = 1L;
+		String paymentMethodCode = "C000";
+
+		InsertPaymentDTO paymentDTO = InsertPaymentDTO.builder().ticketNum(ticketNum)
+				.price(price).userNum(userNum).paymentMethodCode(paymentMethodCode).build();
+
+		Payment payment = PaymentMapper.INSTANCE.toEntity(paymentDTO);
+
+		if(paymentDTO.getPaymentMethodCode().equals("C000")){
+			payment.setApprovalNum("0XASDWU123");
+		}
+
+		User user = userRepo.findById(userNum).get();
+		Ticket ticket = ticketRepo.findById(ticketNum).get();
+		PaymentMethod pm = paymentMethodRepo.findById(paymentMethodCode).get();
+
+		payment.setUser(user);
+		payment.setTicket(ticket);
+		payment.setPaymentMethod(pm);
+
+		Payment savedPayment = paymentRepo.save(payment);
+
+		ticket.setIssued("Y");
+		ticketRepo.save(ticket);
+	}
+
+	@Test
+	//@Transactional
+	void generatePaymentMethodTest(){
+		PaymentMethod pm1 = PaymentMethod.builder().paymentMethodCode("C000").name("card").build();
+		PaymentMethod pm2 = PaymentMethod.builder().paymentMethodCode("A000").name("account").build();
+
+		paymentMethodRepo.save(pm1);
+		paymentMethodRepo.save(pm2);
+	}
+
 	@Test
 	void findOneTest() {
 		Long ticketNum = 2L;
