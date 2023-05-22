@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import uos.cineseoul.dto.InsertTicketDTO;
 import uos.cineseoul.dto.UpdateTicketDTO;
 import uos.cineseoul.entity.*;
@@ -24,6 +25,7 @@ class TicketRepoTests {
 	ScheduleSeatRepository scheduleSeatRepo;
 	@Test
 	@Transactional
+	@Rollback(false)
 	void generateTicketTest() {
 		Integer stdPrice = 8000;
 		Integer salePrice = 7500;
@@ -38,6 +40,8 @@ class TicketRepoTests {
 
 		User user = userRepo.findById(userNum).get();
 		ScheduleSeat scheduleSeat = scheduleSeatRepo.findBySchedNumAndSeatNum(ticketDTO.getSchedNum(),ticketDTO.getSeatNum()).get();
+		scheduleSeat.setOccupied("Y");
+		scheduleSeatRepo.save(scheduleSeat);
 
 		Ticket ticket = TicketMapper.INSTANCE.toEntity(ticketDTO);
 		ticket.setUser(user);
