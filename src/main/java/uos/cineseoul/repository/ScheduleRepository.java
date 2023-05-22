@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import uos.cineseoul.entity.Schedule;
+import uos.cineseoul.entity.ScheduleSeat;
 import uos.cineseoul.entity.Screen;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,10 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     // 날짜별 상영 일정 조회
     //@Query("select s from SCHEDULE s where s.schedTime between :start and :end")
     List<Schedule> findAllBySchedTimeBetween(LocalDateTime start, LocalDateTime end);
+
+    // 날짜, 상영관 번호로 일정 조회
+    @Query("select s from SCHEDULE s where schedTime = :schedTime and s.screen.screenNum = :screenNum")
+    Optional<Schedule> findBySchedTimeAndScreenNum(@Param("schedTime")LocalDateTime schedTime, @Param("screenNum")Long screenNum);
 
     // 영화별 상영 일정 조회
     // - 영화 번호로 조회

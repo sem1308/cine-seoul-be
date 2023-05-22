@@ -7,55 +7,37 @@ import org.springframework.boot.test.context.SpringBootTest;
 import uos.cineseoul.dto.InsertScreenDTO;
 import uos.cineseoul.dto.UpdateScreenDTO;
 import uos.cineseoul.entity.Screen;
-import uos.cineseoul.entity.User;
 import uos.cineseoul.mapper.ScreenMapper;
 import uos.cineseoul.repository.ScreenRepository;
-import uos.cineseoul.repository.UserRepository;
+import uos.cineseoul.service.ScreenService;
 
 import javax.transaction.Transactional;
 
 @SpringBootTest
 @Slf4j
-class ScreenRepoTests {
+class ScreenServiceTests {
 	@Autowired
-	ScreenRepository screenRepo;
+	ScreenService screenService;
 	@Test
 	@Transactional
 	void registerTest() {
 		String name = "C";
 		InsertScreenDTO screenDTO = InsertScreenDTO.builder().name(name).build();
-		Screen screen = ScreenMapper.INSTANCE.toEntity(screenDTO);
 
-		Screen savedScreen = screenRepo.save(screen);
+		Screen savedScreen = screenService.insert(screenDTO);
 
-		assert savedScreen.getName().equals(screen.getName());
+		assert savedScreen.getName().equals(screenDTO.getName());
 	}
 
 	@Test
 	@Transactional
 	void updateTest() {
 		Long screenNum = 1L;
-		String name = "A"; // 원래 A
+		String name = "C"; // 원래 A
 		UpdateScreenDTO screenDTO = UpdateScreenDTO.builder().screenNum(screenNum).name(name).build();
-		Screen screen = screenRepo.findById(screenNum).get();
 
-		ScreenMapper.INSTANCE.updateFromDto(screenDTO, screen);
-
-		Screen savedScreen = screenRepo.save(screen);
+		Screen savedScreen = screenService.update(screenDTO);
 
 		assert savedScreen.getName().equals(name);
 	}
-
-
-
-	@Test
-	void findTest() {
-		String name = "A";
-		Screen foundScreen  = screenRepo.findByName(name).orElseThrow(()->{
-					throw new RuntimeException("screen " + name + " is not exist");
-		});
-
-		assert foundScreen.getName().equals(name);
-	}
-
 }
