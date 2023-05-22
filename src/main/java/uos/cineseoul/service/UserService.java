@@ -1,5 +1,6 @@
 package uos.cineseoul.service;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,21 +29,37 @@ public class UserService {
         List<User> users = userRepo.findAll();
 
         if (users.isEmpty()) {
-            throw new ResourceNotFoundException("고객이 없습니다.");
+            throw new ResourceNotFoundException("사용자가 없습니다.");
         }
 
         return users;
     }
 
-    public User login(Map<String, String> loginInfo) {
-        User User = userRepo.findByUserId(loginInfo.get("id")).orElseThrow(() -> new ResourceNotFoundException("아이디가 존재하지 않습니다."));
+    public User findOneByNum(Long num) {
+        User user = userRepo.findById(num).orElseThrow(()->{
+            throw new ResourceNotFoundException("번호가 "+ num +"인 사용자가 없습니다.");
+        });
+        return user;
+    }
+
+    public User findOneById(String id) {
+        User user = userRepo.findByUserId(id).orElseThrow(()->{
+            throw new ResourceNotFoundException("아이디가 "+id+"인 사용자가 없습니다.");
+        });
+        return user;
+    }
+
+    public User login(@NotNull Map<String, String> loginInfo) {
+        User user = userRepo.findByUserId(loginInfo.get("id")).orElseThrow(() -> {
+            throw new ResourceNotFoundException("아이디 또는 비밀번호가 틀렸습니다.");
+        });
 
         // 암호 일치 확인
-        if (!passwordEncoder.matches(loginInfo.get("pw"), User.getPw())) {
-            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
+        if (!passwordEncoder.matches(loginInfo.get("pw"), user.getPw())) {
+            throw new ResourceNotFoundException("아이디 또는 비밀번호가 틀렸습니다.");
         }
 
-        return User;
+        return user;
     }
 
     public void checkDuplicate(String id){
@@ -51,8 +68,12 @@ public class UserService {
         }
     }
 
-    public User insert(InsertUserDTO UserDTO) {
-        User user = UserMapper.INSTANCE.toEntity(UserDTO);
+    public boolean checkPassword(String pw, String pwEnc){
+        return passwordEncoder.matches(pw, pwEnc);
+    }
+
+    public User insert(InsertUserDTO userDTO) {
+        User user = UserMapper.INSTANCE.toEntity(userDTO);
 
         checkDuplicate(user.getId());
 
@@ -66,9 +87,11 @@ public class UserService {
         return newUser;
     }
 
-    public User update(Long num, UpdateUserDTO userDTO) {
-
-        User user = userRepo.findById(num).orElseThrow(() -> new ResourceNotFoundException("번호가 "+num+"인 고객이 존재하지 않습니다."));
+    public User update(UpdateUserDTO userDTO) {
+        if(userDTO.getUserNum()!=null){
+            userDTO.setPw(passwordEncoder.encode(userDTO.getPw()));
+        }
+        User user = userRepo.findById(userDTO.getUserNum()).orElseThrow(() -> new ResourceNotFoundException("번호가 "+userDTO.getUserNum()+"인 고객이 존재하지 않습니다."));
         UserMapper.INSTANCE.updateFromDto(userDTO, user);
         User updatedUser = userRepo.save(user);
 
