@@ -8,6 +8,7 @@ import uos.cineseoul.dto.InsertSeatDTO;
 import uos.cineseoul.dto.UpdateSeatDTO;
 import uos.cineseoul.entity.Screen;
 import uos.cineseoul.entity.Seat;
+import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.SeatMapper;
 import uos.cineseoul.repository.ScreenRepository;
 import uos.cineseoul.repository.SeatRepository;
@@ -96,5 +97,15 @@ class SeatRepoTests {
 		assert updatedSeat.getRow().equals(row);
 		assert updatedSeat.getCol().equals(col);
 		assert updatedSeat.getSeatGrade().equals(seatGrade);
+	}
+	@Test
+	void findTest(){
+		Long screenNum = 61L;
+		String row = "E";
+		String col = "15";
+
+		Seat seat = seatRepo.findByScreenNumAndRowAndCol(screenNum,row,col).orElseThrow(()->{
+			throw new ResourceNotFoundException("상영관에 "+row+col+"인 좌석이 존재하지 않습니다.");
+		});
 	}
 }
