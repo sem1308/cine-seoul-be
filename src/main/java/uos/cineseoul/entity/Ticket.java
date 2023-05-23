@@ -33,7 +33,7 @@ public class Ticket{
     private Integer salePrice;
 
     @Column(name="ISSUED", nullable = false, unique = false, length = 1)
-    @ColumnDefault("N")
+    //@ColumnDefault("N")
     private String issued;
 
     @CreationTimestamp
