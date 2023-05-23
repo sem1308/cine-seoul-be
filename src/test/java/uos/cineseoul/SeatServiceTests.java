@@ -5,6 +5,7 @@ import org.hibernate.sql.Update;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import uos.cineseoul.dto.InsertSeatDTO;
 import uos.cineseoul.dto.UpdateSeatDTO;
 import uos.cineseoul.entity.Screen;
@@ -23,12 +24,13 @@ class SeatServiceTests {
 	@Autowired
 	ScreenRepository screenRepo;
 	@Test
-	//@Transactional
+	@Transactional
+	@Rollback(false)
 	void registerTest() {
-		Long screenNum = 61L;
+		Long screenNum = 1L;
 		String row1 = "E";
-		String col1 = "15";
-		String seatGrade1 = "A";
+		String col1 = "11";
+		String seatGrade1 = "B";
 
 		InsertSeatDTO seatDTO = InsertSeatDTO.builder().row(row1).col(col1)
 				.seatGrade(seatGrade1).screenNum(screenNum).build();

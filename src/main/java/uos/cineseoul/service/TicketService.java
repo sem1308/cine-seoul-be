@@ -46,14 +46,14 @@ public class TicketService {
         });
         return ticket;
     }
-    public List<Ticket> findOneByUserNum(Long userNum) {
+    public List<Ticket> findByUserNum(Long userNum) {
         List<Ticket> ticketList = ticketRepo.findByUserNum(userNum);
         if (ticketList.isEmpty()) {
             throw new ResourceNotFoundException(userNum+"번 유저에 대한 티켓이 없습니다.");
         }
         return ticketList;
     }
-    public List<Ticket> findOneByUserId(String userId) {
+    public List<Ticket> findByUserId(String userId) {
         List<Ticket> ticketList = ticketRepo.findByUserID(userId);
         if (ticketList.isEmpty()) {
             throw new ResourceNotFoundException("유저 "+userId+"에 대한 티켓이 없습니다.");

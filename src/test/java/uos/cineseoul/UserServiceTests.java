@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import uos.cineseoul.dto.InsertUserDTO;
 import uos.cineseoul.dto.UpdateUserDTO;
 import uos.cineseoul.entity.User;
@@ -21,9 +22,10 @@ class UserServiceTests {
 	UserService userService;
 	@Test
 	@Transactional
+	@Rollback(false)
 	void registerTest() {
 
-		InsertUserDTO userDTO = InsertUserDTO.builder().id("sem13081").pw("1308").name("한수한")
+		InsertUserDTO userDTO = InsertUserDTO.builder().id("sem1308").pw("1308").name("한수한")
 				.residentNum("9902211111111").phoneNum("010XXXXXXXX").role("M").build();
 
 		User savedUser = userService.insert(userDTO);

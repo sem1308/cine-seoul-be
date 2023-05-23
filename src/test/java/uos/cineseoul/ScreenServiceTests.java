@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import uos.cineseoul.dto.InsertScreenDTO;
 import uos.cineseoul.dto.UpdateScreenDTO;
 import uos.cineseoul.entity.Screen;
@@ -20,8 +21,9 @@ class ScreenServiceTests {
 	ScreenService screenService;
 	@Test
 	@Transactional
+	@Rollback(false)
 	void registerTest() {
-		String name = "C";
+		String name = "B";
 		InsertScreenDTO screenDTO = InsertScreenDTO.builder().name(name).build();
 
 		Screen savedScreen = screenService.insert(screenDTO);
@@ -33,7 +35,7 @@ class ScreenServiceTests {
 	@Transactional
 	void updateTest() {
 		Long screenNum = 1L;
-		String name = "C"; // 원래 A
+		String name = "D";
 		UpdateScreenDTO screenDTO = UpdateScreenDTO.builder().screenNum(screenNum).name(name).build();
 
 		Screen savedScreen = screenService.update(screenDTO);
