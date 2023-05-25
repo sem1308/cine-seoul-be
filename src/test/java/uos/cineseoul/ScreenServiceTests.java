@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import uos.cineseoul.dto.InsertScreenDTO;
+import uos.cineseoul.dto.PrintScreenDTO;
 import uos.cineseoul.dto.UpdateScreenDTO;
 import uos.cineseoul.entity.Screen;
 import uos.cineseoul.mapper.ScreenMapper;
@@ -26,7 +27,7 @@ class ScreenServiceTests {
 		String name = "B";
 		InsertScreenDTO screenDTO = InsertScreenDTO.builder().name(name).build();
 
-		Screen savedScreen = screenService.insert(screenDTO);
+		PrintScreenDTO savedScreen = screenService.insert(screenDTO);
 
 		assert savedScreen.getName().equals(screenDTO.getName());
 	}
@@ -38,7 +39,7 @@ class ScreenServiceTests {
 		String name = "D";
 		UpdateScreenDTO screenDTO = UpdateScreenDTO.builder().screenNum(screenNum).name(name).build();
 
-		Screen savedScreen = screenService.update(screenDTO);
+		PrintScreenDTO savedScreen = screenService.update(screenDTO);
 
 		assert savedScreen.getName().equals(name);
 	}

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import uos.cineseoul.dto.InsertTicketDTO;
+import uos.cineseoul.dto.PrintTicketDTO;
 import uos.cineseoul.dto.UpdateTicketDTO;
 import uos.cineseoul.entity.ScheduleSeat;
 import uos.cineseoul.entity.Ticket;
@@ -39,7 +40,7 @@ class TicketServiceTests {
 		InsertTicketDTO ticketDTO = InsertTicketDTO.builder().stdPrice(stdPrice).salePrice(salePrice)
 				.issued(issued).userNum(userNum).schedNum(schedNum).seatNum(seatNum).build();
 
-		Ticket savedTicket = ticketService.insert(ticketDTO);
+		PrintTicketDTO savedTicket = ticketService.insert(ticketDTO);
 
 		assert savedTicket.getSalePrice().equals(salePrice);
 		assert savedTicket.getScheduleSeat().getSeat().getSeatNum().equals(seatNum);
@@ -57,7 +58,7 @@ class TicketServiceTests {
 		UpdateTicketDTO ticketDTO = UpdateTicketDTO.builder().salePrice(salePrice)
 				.issued(issued).ticketNum(ticketNum).schedNum(schedNum).seatNum(seatNum).build();
 
-		Ticket savedTicket = ticketService.update(ticketDTO);
+		PrintTicketDTO savedTicket = ticketService.update(ticketDTO);
 
 		assert savedTicket.getSalePrice().equals(salePrice);
 		assert savedTicket.getScheduleSeat().getSeat().getSeatNum().equals(seatNum);
@@ -69,7 +70,7 @@ class TicketServiceTests {
 		Long ticketNum = 21L;
 
 		// by userId and ticketNum
-		Ticket ticket = ticketService.findOneByNum(ticketNum);
+		PrintTicketDTO ticket = ticketService.findOneByNum(ticketNum);
 		assert ticket.getTicketNum().equals(ticketNum);
 
 		System.out.println("티켓 1개 찾기 테스트 완료");
@@ -80,11 +81,11 @@ class TicketServiceTests {
 		Long userNum = 1L;
 		String userId = "sem1308";
 		// by userNum
-		List<Ticket> ticketList1 = ticketService.findByUserNum(userNum);
+		List<PrintTicketDTO> ticketList1 = ticketService.findByUserNum(userNum);
 
 		System.out.println("유저 "+userId+"의 티켓 수: "+ticketList1.size());
 		// by userId
-		List<Ticket> ticketList2 = ticketService.findByUserId(userId);
+		List<PrintTicketDTO> ticketList2 = ticketService.findByUserId(userId);
 		System.out.println(userNum+"번 유저의 티켓 수: "+ticketList2.size());
 	}
 }

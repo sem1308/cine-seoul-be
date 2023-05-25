@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import uos.cineseoul.dto.InsertSeatDTO;
+import uos.cineseoul.dto.PrintSeatDTO;
 import uos.cineseoul.dto.UpdateSeatDTO;
 import uos.cineseoul.entity.Screen;
 import uos.cineseoul.entity.Seat;
@@ -36,7 +37,7 @@ class SeatServiceTests {
 				.seatGrade(seatGrade1).screenNum(screenNum).build();
 		Integer screenBeforeTS = screenRepo.findById(seatDTO.getScreenNum()).get().getTotalSeat();
 
-		Seat savedSeat = seatService.insert(seatDTO);
+		PrintSeatDTO savedSeat = seatService.insert(seatDTO);
 		Screen screenAfter = screenRepo.findById(seatDTO.getScreenNum()).get();
 
 		assert screenAfter.getTotalSeat().equals(screenBeforeTS+1);
@@ -51,30 +52,34 @@ class SeatServiceTests {
 		String col = "15"; // 원래 10
 		String seatGrade = "C"; // 원래 A
 
-		Seat basicSeat = seatService.findOneByNum(seatNum);
-		Screen basicScreen = basicSeat.getScreen();
+		PrintSeatDTO basicSeat = seatService.findOneByNum(seatNum);
+		Screen basicScreen = screenRepo.findById(basicSeat.getScreenNum()).get();
 
 		Screen updatedScreen = screenRepo.findById(screenNum).get();
 		UpdateSeatDTO seatDTO = UpdateSeatDTO.builder().seatNum(seatNum).row(row).screenNum(screenNum)
 								.col(col).seatGrade(seatGrade).build();
 
-		Long basicScreenNum = basicSeat.getScreen().getScreenNum();
-		Integer basicScreenTotalSeat = basicSeat.getScreen().getTotalSeat();
+		Long basicScreenNum = basicSeat.getScreenNum();
+		Integer basicScreenTotalSeat = screenRepo.findById(basicScreenNum).get().getTotalSeat();
 		Long updatedScreenNum = updatedScreen.getScreenNum();
-		Integer updatedScreenTotalSeat = updatedScreen.getTotalSeat();
+		Integer updatedScreenTotalSeat = screenRepo.findById(updatedScreenNum).get().getTotalSeat();
 
-		Seat updatedSeat = seatService.update(seatDTO);
+		PrintSeatDTO updatedSeat = seatService.update(seatDTO);
+
+		Integer cBasicScreenTotalSeat = screenRepo.findById(basicScreenNum).get().getTotalSeat();
+		Integer cUpdatedScreenTotalSeat = screenRepo.findById(updatedScreenNum).get().getTotalSeat();
+
 
 		System.out.println("기존 From 스크린 "+basicScreenNum+" 좌석 합 : "+basicScreenTotalSeat);
 		System.out.println("기존 To 스크린 "+updatedScreenNum+" 좌석 합 : "+updatedScreenTotalSeat);
-		System.out.println("변경 From 스크린 "+basicScreen.getScreenNum()+" 좌석 합 : "+basicScreen.getTotalSeat());
-		System.out.println("변경 To 스크린 "+updatedSeat.getScreen().getScreenNum()+" 좌석 합 : "+updatedSeat.getScreen().getTotalSeat());
+		System.out.println("변경 From 스크린 "+basicScreenNum+" 좌석 합 : "+cBasicScreenTotalSeat);
+		System.out.println("변경 To 스크린 "+updatedScreenNum+" 좌석 합 : "+cUpdatedScreenTotalSeat);
 
 		if(seatDTO.getScreenNum()==null || seatDTO.getScreenNum().equals(basicScreenNum))
-			assert basicScreenTotalSeat.equals(updatedSeat.getScreen().getTotalSeat());
+			assert basicScreenTotalSeat.equals(cUpdatedScreenTotalSeat);
 		else{
-			assert basicScreen.getTotalSeat().equals(basicScreenTotalSeat-1);
-			assert updatedSeat.getScreen().getTotalSeat().equals(updatedScreenTotalSeat+1);
+			assert cBasicScreenTotalSeat.equals(basicScreenNum-1);
+			assert cUpdatedScreenTotalSeat.equals(updatedScreenTotalSeat+1);
 		}
 	}
 
@@ -83,7 +88,7 @@ class SeatServiceTests {
 	void findAllByScreenTest() {
 		Long screenNum = 1L;
 
-		List<Seat> seat = seatService.findAllByScreenNum(screenNum);
+		List<PrintSeatDTO> seat = seatService.findAllByScreenNum(screenNum);
 		System.out.println(seat.size());
 	}
 
