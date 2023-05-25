@@ -22,7 +22,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .forCodeGeneration(true)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("uos.seclass.bacchus.controllers"))
+                .apis(RequestHandlerSelectors.basePackage("uos.cineseoul.controllers"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo())
@@ -31,9 +31,9 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Bacchus Backend APIs")
+                .title("Cinema-Seoul Backend APIs")
                 .description("show bacchus's apis")
-                .contact(new Contact("bacchus", "", ""))
+                .contact(new Contact("cineseoul", "", ""))
                 .version("1.0")
                 .build();
     }
