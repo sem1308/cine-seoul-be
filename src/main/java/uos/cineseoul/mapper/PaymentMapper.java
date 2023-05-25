@@ -6,6 +6,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
 import uos.cineseoul.dto.InsertPaymentDTO;
+import uos.cineseoul.dto.PrintPaymentDTO;
 import uos.cineseoul.entity.Payment;
 
 @Mapper(componentModel = "spring")
@@ -14,7 +15,7 @@ public interface PaymentMapper {
 
     Payment toEntity(InsertPaymentDTO paymentDTO);
 
-    InsertPaymentDTO toDTO(Payment payment);
+    PrintPaymentDTO toDTO(Payment payment);
 
 //    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 //    void updateFromDto(UpdateScheduleDTO dto, @MappingTarget Schedule entity);

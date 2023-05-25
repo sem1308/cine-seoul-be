@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import uos.cineseoul.dto.InsertScheduleDTO;
+import uos.cineseoul.dto.PrintScheduleDTO;
+import uos.cineseoul.dto.PrintScreenDTO;
 import uos.cineseoul.dto.UpdateScheduleDTO;
 import uos.cineseoul.entity.Schedule;
 import uos.cineseoul.entity.Screen;
@@ -28,7 +30,7 @@ class ScheduleServiceTests {
 	ScreenService screenService;
 	@Test
 	@Transactional
-	@Rollback(false)
+	@Rollback(true)
 	void registerTest() throws ParseException {
 		// 상영 일정 등록
 		Integer order = 1;
@@ -37,12 +39,12 @@ class ScheduleServiceTests {
 		Date date = dtFormat.parse(myString);
 		LocalDateTime schedTime = new java.sql.Timestamp(date.getTime()).toLocalDateTime();
 		//LocalDateTime schedTime = LocalDateTime.of(2023,05,21,10,30,30);
-		Long screenNum = 61L;
+		Long screenNum = 1L;
 
 		InsertScheduleDTO scheduleDTO = InsertScheduleDTO.builder().order(order)
 										.screenNum(screenNum).schedTime(schedTime).build();
 
-		Schedule schedule = scheduleService.insert(scheduleDTO);
+		PrintScheduleDTO schedule = scheduleService.insert(scheduleDTO);
 	}
 
 	@Test
@@ -59,10 +61,10 @@ class ScheduleServiceTests {
 		// 상영관 변경
 		String name = "B";
 		Long schedNum = 44L;
-		Screen screen = screenService.findOneByName(name);
+		PrintScreenDTO screen = screenService.findOneByName(name);
 		UpdateScheduleDTO scheduleDTO = UpdateScheduleDTO.builder().schedNum(schedNum).screenNum(screen.getScreenNum()).schedTime(schedTime).build();
 
-		Schedule schedule = scheduleService.update(scheduleDTO);
+		PrintScheduleDTO schedule = scheduleService.update(scheduleDTO);
 
 //		System.out.println("변경된 상영관 이름 : " + schedule.getScreen().getName());
 //		System.out.println("변경된 상영관 총 좌석 개수 : " + schedule.getScreen().getTotalSeat());
@@ -77,7 +79,7 @@ class ScheduleServiceTests {
 	void findTest() {
 		LocalDateTime schedTime = LocalDateTime.now();
 
-		List<Schedule> scheduleList = scheduleService.findByDate(schedTime);
+		List<PrintScheduleDTO> scheduleList = scheduleService.findByDate(schedTime);
 		scheduleList.forEach(s -> {
 			System.out.println("상영시간 : " + s.getSchedTime());
 		});

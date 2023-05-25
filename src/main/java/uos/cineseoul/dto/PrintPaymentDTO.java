@@ -7,7 +7,6 @@ import uos.cineseoul.entity.Ticket;
 import uos.cineseoul.entity.User;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor()
@@ -15,15 +14,16 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Builder
-public class InsertPaymentDTO {
+public class PrintPaymentDTO {
+    private Long paymentNum;
+
+    private String approvalNum ;
+
     private int price;
 
-    @Size(max = 16, min=16)
-    private String cardNum;
-
-    private Long userNum;
+    private LocalDateTime createdAt;
 
     private Long ticketNum;
 
-    private String paymentMethodCode;
+    private PrintPaymentMethodDTO paymentMethod;
 }

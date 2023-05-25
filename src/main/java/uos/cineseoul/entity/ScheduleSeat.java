@@ -1,7 +1,6 @@
 package uos.cineseoul.entity;
 
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -24,6 +23,6 @@ public class ScheduleSeat {
     private Seat seat;
 
     @Column(name="OCCUPIED", nullable = false, unique = false, length = 1)
-    @ColumnDefault("N")
+//    @ColumnDefault("N")
     private String occupied;
 }

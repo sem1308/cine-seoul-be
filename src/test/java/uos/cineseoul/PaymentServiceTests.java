@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import uos.cineseoul.dto.InsertPaymentDTO;
+import uos.cineseoul.dto.PrintPaymentDTO;
 import uos.cineseoul.entity.Payment;
 import uos.cineseoul.entity.PaymentMethod;
 import uos.cineseoul.entity.Ticket;
@@ -38,13 +39,13 @@ class PaymentServiceTests {
 		InsertPaymentDTO paymentDTO = InsertPaymentDTO.builder().ticketNum(ticketNum)
 				.price(price).userNum(userNum).paymentMethodCode(paymentMethodCode).build();
 
-		Payment savedPayment = paymentService.insert(paymentDTO);
+		PrintPaymentDTO savedPayment = paymentService.insert(paymentDTO);
 	}
 
 	@Test
 	void findOneTest() {
 		Long paymentNum = 1L;
-		Payment payment = paymentService.findOneByNum(paymentNum);
+		PrintPaymentDTO payment = paymentService.findOneByNum(paymentNum);
 
 		assert payment.getPaymentNum().equals(paymentNum);
 	}
@@ -54,9 +55,9 @@ class PaymentServiceTests {
 		Long userNum = 1L;
 		String userId = "sem1308";
 		// by userNum
-		List<Payment> paymentList1 = paymentService.findByUserNum(userNum);
+		List<PrintPaymentDTO> paymentList1 = paymentService.findByUserNum(userNum);
 
 		// by userId
-		List<Payment> paymentList2 = paymentService.findByUserId(userId);
+		List<PrintPaymentDTO> paymentList2 = paymentService.findByUserId(userId);
 	}
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import uos.cineseoul.dto.InsertUserDTO;
+import uos.cineseoul.dto.PrintUserDTO;
 import uos.cineseoul.dto.UpdateUserDTO;
 import uos.cineseoul.entity.User;
 import uos.cineseoul.exception.ResourceNotFoundException;
@@ -28,7 +29,7 @@ class UserServiceTests {
 		InsertUserDTO userDTO = InsertUserDTO.builder().id("sem1308").pw("1308").name("한수한")
 				.residentNum("9902211111111").phoneNum("010XXXXXXXX").role("M").build();
 
-		User savedUser = userService.insert(userDTO);
+		PrintUserDTO savedUser = userService.insert(userDTO);
 	}
 
 	@Test
@@ -39,7 +40,7 @@ class UserServiceTests {
 		UpdateUserDTO userDTO = UpdateUserDTO.builder().userNum(userNum).pw(pw).name("한두한")
 				.phoneNum("011XXXXXXXX").build();
 
-		User updatedUser = userService.update(userDTO);
+		PrintUserDTO updatedUser = userService.update(userDTO);
 
 		// 변경된 비밀번호 확인
 		System.out.println(updatedUser.getPw());
@@ -51,7 +52,7 @@ class UserServiceTests {
 	void findTest() {
 		String ID = "sem1308";
 
-		User user = userService.findOneById(ID);
+		PrintUserDTO user = userService.findOneById(ID);
 	}
 
 }

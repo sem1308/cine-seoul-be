@@ -3,6 +3,7 @@ package uos.cineseoul.mapper;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import uos.cineseoul.dto.InsertUserDTO;
+import uos.cineseoul.dto.PrintUserDTO;
 import uos.cineseoul.dto.UpdateUserDTO;
 import uos.cineseoul.entity.User;
 
@@ -12,7 +13,7 @@ public interface UserMapper {
 
     User toEntity(InsertUserDTO userDTO);
 
-    InsertUserDTO toDTO(User user);
+    PrintUserDTO toDTO(User user);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromDto(UpdateUserDTO dto, @MappingTarget User entity);

@@ -8,15 +8,19 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import uos.cineseoul.dto.InsertTicketDTO;
+import uos.cineseoul.dto.PrintTicketDTO;
+import uos.cineseoul.dto.PrintUserDTO;
 import uos.cineseoul.dto.UpdateTicketDTO;
 import uos.cineseoul.entity.*;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.TicketMapper;
+import uos.cineseoul.mapper.UserMapper;
 import uos.cineseoul.repository.ScheduleSeatRepository;
 import uos.cineseoul.repository.TicketRepository;
 import uos.cineseoul.repository.ScreenRepository;
 import uos.cineseoul.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,37 +36,37 @@ public class TicketService {
         this.scheduleSeatRepo = scheduleSeatRepo;
     }
 
-    public List<Ticket> findAll() {
+    public List<PrintTicketDTO> findAll() {
         List<Ticket> ticketList = ticketRepo.findAll();
         if (ticketList.isEmpty()) {
             throw new ResourceNotFoundException("티켓이 없습니다.");
         }
-        return ticketList;
+        return getPrintDTOList(ticketList);
     }
 
-    public Ticket findOneByNum(Long num) {
+    public PrintTicketDTO findOneByNum(Long num) {
         Ticket ticket = ticketRepo.findById(num).orElseThrow(()->{
             throw new ResourceNotFoundException("번호가 "+ num +"인 티켓이 없습니다.");
         });
-        return ticket;
+        return getPrintDTO(ticket);
     }
-    public List<Ticket> findByUserNum(Long userNum) {
+    public List<PrintTicketDTO> findByUserNum(Long userNum) {
         List<Ticket> ticketList = ticketRepo.findByUserNum(userNum);
         if (ticketList.isEmpty()) {
             throw new ResourceNotFoundException(userNum+"번 유저에 대한 티켓이 없습니다.");
         }
-        return ticketList;
+        return getPrintDTOList(ticketList);
     }
-    public List<Ticket> findByUserId(String userId) {
+    public List<PrintTicketDTO> findByUserId(String userId) {
         List<Ticket> ticketList = ticketRepo.findByUserID(userId);
         if (ticketList.isEmpty()) {
             throw new ResourceNotFoundException("유저 "+userId+"에 대한 티켓이 없습니다.");
         }
-        return ticketList;
+        return getPrintDTOList(ticketList);
     }
 
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
-    public Ticket insert(InsertTicketDTO ticketDTO) {
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public PrintTicketDTO insert(InsertTicketDTO ticketDTO) {
         User user = userRepo.findById(ticketDTO.getUserNum()).orElseThrow(()->{
             throw new ResourceNotFoundException(ticketDTO.getUserNum()+"번 유저가 없습니다.");
         });
@@ -84,11 +88,11 @@ public class TicketService {
 
         Ticket savedTicket = ticketRepo.save(ticket);
 
-        return savedTicket;
+        return getPrintDTO(savedTicket);
     }
 
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
-    public Ticket update(UpdateTicketDTO ticketDTO) {
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public PrintTicketDTO update(UpdateTicketDTO ticketDTO) {
         Ticket ticket = ticketRepo.findById(ticketDTO.getTicketNum()).orElseThrow(()->{
             throw new ResourceNotFoundException(ticketDTO.getTicketNum()+"번 티켓이 없습니다.");
         });
@@ -109,6 +113,21 @@ public class TicketService {
 
         Ticket updatedTicket = ticketRepo.save(ticket);
 
-        return updatedTicket;
+        return getPrintDTO(updatedTicket);
     }
+
+    private PrintTicketDTO getPrintDTO(Ticket ticket){
+        PrintTicketDTO ticketDTO = TicketMapper.INSTANCE.toDTO(ticket);
+        ticketDTO.getScheduleSeat().getSchedule().getScreen().setSeats(null);
+        return ticketDTO;
+    }
+
+    private List<PrintTicketDTO> getPrintDTOList(List<Ticket> ticketList){
+        List<PrintTicketDTO> pTicketList = new ArrayList<>();
+        ticketList.forEach(ticket -> {
+            pTicketList.add(getPrintDTO(ticket));
+        });
+        return pTicketList;
+    }
+
 }
