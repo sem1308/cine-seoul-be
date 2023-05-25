@@ -6,6 +6,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
 import uos.cineseoul.dto.InsertSeatDTO;
+import uos.cineseoul.dto.PrintSeatDTO;
 import uos.cineseoul.dto.UpdateSeatDTO;
 import uos.cineseoul.entity.Seat;
 
@@ -15,7 +16,7 @@ public interface SeatMapper {
 
     Seat toEntity(InsertSeatDTO seatDTO);
 
-    InsertSeatDTO toDTO(Seat seat);
+    PrintSeatDTO toDTO(Seat seat);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromDto(UpdateSeatDTO dto, @MappingTarget Seat entity);
