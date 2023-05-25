@@ -22,7 +22,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .forCodeGeneration(true)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("uos.cineseoul.controllers"))
+                .apis(RequestHandlerSelectors.basePackage("uos.cineseoul.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo())
