@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uos.cineseoul.dto.InsertUserDTO;
+import uos.cineseoul.dto.PrintTicketDTO;
+import uos.cineseoul.dto.PrintUserDTO;
 import uos.cineseoul.dto.UpdateUserDTO;
 import uos.cineseoul.entity.User;
 import uos.cineseoul.service.AccountService;
@@ -25,43 +27,37 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
-    private final AccountService accountService;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    public UserController(UserService userService, AccountService accountService, JwtTokenProvider jwtTokenProvider) {
+    public UserController(UserService userService, JwtTokenProvider jwtTokenProvider) {
         this.userService = userService;
-        this.accountService = accountService;
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @GetMapping()
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "전체 고객 목록 조회", protocols = "http")
-    public List<User> lookUpMemberList() {
-        List<User> users = userService.findAll();
+    @ApiOperation(value = "전체 사용자 목록 조회", protocols = "http")
+    public List<PrintUserDTO> lookUpUserList() {
+        List<PrintUserDTO> users = userService.findAll();
         return users;
     }
 
     @GetMapping("/{num}")
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "고객 상세 조회", protocols = "http")
-    public ResponseEntity<User> lookUpMember(@PathVariable("num") Long num) {
-        User user = userService.findOneByNum(num);
-        // 반복 참조 제거
-        user.getTickets().forEach(ticket -> {
-            ticket.setUser(null);
-        });
+    @ApiOperation(value = "사용자 상세 조회", protocols = "http")
+    public ResponseEntity<PrintUserDTO> lookUpUser(@PathVariable("num") Long num) {
+        PrintUserDTO user = userService.findOneByNum(num);
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping()
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "고객 회원가입", protocols = "http")
+    @ApiOperation(value = "사용자 회원가입", protocols = "http")
     public ResponseEntity register(@RequestBody InsertUserDTO userDTO) {
-        ReturnMessage<User> msg = new ReturnMessage<>();
-        User user = userService.insert(userDTO);
+        PrintUserDTO user = userService.insert(userDTO);
+        ReturnMessage<PrintUserDTO> msg = new ReturnMessage<>();
         msg.setMessage("회원가입이 완료되었습니다.");
         msg.setData(user);
         msg.setStatus(StatusEnum.OK);
@@ -71,12 +67,11 @@ public class UserController {
 
     @PostMapping("/login")
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "고객 로그인", protocols = "http")
+    @ApiOperation(value = "사용자 로그인", protocols = "http")
     public ResponseEntity login(@RequestBody Map<String, String> loginInfo) {
+        PrintUserDTO user = userService.login(loginInfo);
+
         ReturnMessage<String> msg = new ReturnMessage<>();
-
-        User user = userService.login(loginInfo);
-
         msg.setMessage("로그인이 완료되었습니다.");
         msg.setStatus(StatusEnum.OK);
 
@@ -90,10 +85,14 @@ public class UserController {
 
     @PutMapping("/{num}")
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "고객 정보 변경", protocols = "http")
-    public ResponseEntity update(@RequestBody UpdateUserDTO userDTO) {
-        userService.update(userDTO);
+    @ApiOperation(value = "사용자 정보 변경", protocols = "http")
+    public ResponseEntity<ReturnMessage> update(@RequestBody UpdateUserDTO userDTO) {
+        PrintUserDTO user = userService.update(userDTO);
+        ReturnMessage<PrintUserDTO> msg = new ReturnMessage<>();
+        msg.setMessage("사용자 정보 변경이 완료되었습니다.");
+        msg.setData(user);
+        msg.setStatus(StatusEnum.OK);
 
-        return new ResponseEntity<>("update success", HttpStatus.OK);
+        return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 }
