@@ -6,7 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-//@Entity(name = "ACCOUNT")
+@Entity(name = "ACCOUNT")
 @AllArgsConstructor()
 @NoArgsConstructor()
 @Setter
@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Builder
 public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ACCOUNT_NUM")
     private String accountNum;
 
