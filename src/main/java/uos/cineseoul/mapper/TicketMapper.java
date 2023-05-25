@@ -11,6 +11,8 @@ public interface TicketMapper {
     TicketMapper INSTANCE = Mappers.getMapper(TicketMapper.class);
 
     //@Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "issued", source="issued",
+            defaultValue = "N")
     Ticket toEntity(InsertTicketDTO ticketDTO);
 
     InsertTicketDTO toDTO(Ticket ticket);
