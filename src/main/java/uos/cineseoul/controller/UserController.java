@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uos.cineseoul.entity.User;
+import uos.cineseoul.service.UserService;
+import uos.cineseoul.utils.JwtTokenProvider;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,21 +17,21 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
 
-    //private final UserService userService;
-    //private final AccountService accountService;
-    //private final JwtTokenProvider jwtTokenProvider;
+    private final UserService userService;
+    //private final BankService backService;
+    private final JwtTokenProvider jwtTokenProvider;
 
-//    @Autowired
-//    public UserController(UserService userService, AccountService accountService, JwtTokenProvider jwtTokenProvider) {
-//        this.userService = userService;
-//        this.accountService = accountService;
-//        this.jwtTokenProvider = jwtTokenProvider;
-//    }
+    @Autowired
+    public UserController(UserService userService, JwtTokenProvider jwtTokenProvider) {
+        this.userService = userService;
+        this.jwtTokenProvider = jwtTokenProvider;
+//        this.backService = backService;
+    }
 
-//    @GetMapping()
-//    @ResponseStatus(value = HttpStatus.OK)
-//    public List<User> lookUpUserList() {
-//        List<User> users = userService.findAll();
-//        return users;
-//    }
+    @GetMapping()
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<User> lookUpUserList() {
+        List<User> users = userService.findAll();
+        return users;
+    }
 }
