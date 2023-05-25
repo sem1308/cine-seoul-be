@@ -7,11 +7,9 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import uos.cineseoul.dto.InsertScheduleDTO;
+import uos.cineseoul.dto.PrintScheduleDTO;
 import uos.cineseoul.dto.UpdateScheduleDTO;
-import uos.cineseoul.entity.Schedule;
-import uos.cineseoul.entity.ScheduleSeat;
-import uos.cineseoul.entity.Screen;
-import uos.cineseoul.entity.Seat;
+import uos.cineseoul.entity.*;
 import uos.cineseoul.exception.ForbiddenException;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.ScheduleMapper;
@@ -21,6 +19,7 @@ import uos.cineseoul.repository.ScreenRepository;
 import uos.cineseoul.repository.SeatRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -38,23 +37,24 @@ public class ScheduleService {
         this.seatRepo = seatRepo;
     }
 
-    public List<Schedule> findAll() {
-        List<Schedule> schedules = scheduleRepo.findAll();
-        if (schedules.isEmpty()) {
+    public List<PrintScheduleDTO> findAll() {
+        List<Schedule> scheduleList = scheduleRepo.findAll();
+        if (scheduleList.isEmpty()) {
             throw new ResourceNotFoundException("상영일정이 없습니다.");
         }
-        return schedules;
+
+        return getPrintDTOList(scheduleList);
     }
 
-    public Schedule findOneByNum(Long num) {
+    public PrintScheduleDTO findOneByNum(Long num) {
         Schedule schedule = scheduleRepo.findById(num).orElseThrow(()->{
             throw new ResourceNotFoundException("번호가 "+ num +"인 상영일정이 없습니다.");
         });
-        return schedule;
+        return getPrintDTO(schedule);
     }
 
     // 그 날에 해당하는 상영일정 불러오기
-    public List<Schedule> findByDate(LocalDateTime time) {
+    public List<PrintScheduleDTO> findByDate(LocalDateTime time) {
         // 오늘의 상영일정 검색
         LocalDateTime startDatetime = LocalDateTime.of(time.toLocalDate(), time.toLocalTime().of(0,0,0));
         LocalDateTime endDatetime = LocalDateTime.of(time.toLocalDate(), time.toLocalTime().of(23,59,59));
@@ -67,19 +67,17 @@ public class ScheduleService {
         scheduleList.forEach(sched -> {
             System.out.println("오늘 상영일자 : " + sched.getSchedTime());
         });
-
-        return scheduleList;
+        return getPrintDTOList(scheduleList);
     }
-
-
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void checkDuplicate(LocalDateTime schedTime, Long screenNum){
         if(scheduleRepo.findBySchedTimeAndScreenNum(schedTime, screenNum).isPresent()){
             throw new DuplicateKeyException("해당 상영관과 시간의 상영일정이 존재합니다.");
         }
     }
 
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
-    public Schedule insert(InsertScheduleDTO scheduleDTO) {
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public PrintScheduleDTO insert(InsertScheduleDTO scheduleDTO) {
         // 중복 체크
         checkDuplicate(scheduleDTO.getSchedTime(),scheduleDTO.getScreenNum());
 
@@ -102,11 +100,11 @@ public class ScheduleService {
             scheduleSeatRepo.save(ss);
         });
 
-        return savedSched;
+        return getPrintDTO(savedSched);
     }
 
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
-    public Schedule update(UpdateScheduleDTO scheduleDTO) {
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public PrintScheduleDTO update(UpdateScheduleDTO scheduleDTO) {
         // 업데이트할 상영일정 불러오기
         Schedule schedule = scheduleRepo.findById(scheduleDTO.getSchedNum()).orElseThrow(()->{
             throw new ResourceNotFoundException("번호가 "+scheduleDTO.getSchedNum()+"인 상영일정이 존재하지 않습니다.");
@@ -149,6 +147,19 @@ public class ScheduleService {
         // 상영일정 저장
         Schedule savedSched = scheduleRepo.save(schedule);
 
-        return savedSched;
+        return getPrintDTO(savedSched);
     }
+
+    private PrintScheduleDTO getPrintDTO(Schedule schedule){
+        return ScheduleMapper.INSTANCE.toDTO(schedule);
+    }
+
+    private List<PrintScheduleDTO> getPrintDTOList(List<Schedule> scheduleList){
+        List<PrintScheduleDTO> pScheduleList = new ArrayList<>();
+        scheduleList.forEach(schedule -> {
+            pScheduleList.add(getPrintDTO(schedule));
+        });
+        return pScheduleList;
+    }
+
 }

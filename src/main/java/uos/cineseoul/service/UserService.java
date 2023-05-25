@@ -5,10 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import uos.cineseoul.dto.InsertUserDTO;
+import uos.cineseoul.dto.PrintUserDTO;
 import uos.cineseoul.dto.UpdateUserDTO;
 import uos.cineseoul.entity.User;
+import uos.cineseoul.entity.User;
 import uos.cineseoul.exception.ResourceNotFoundException;
+import uos.cineseoul.mapper.UserMapper;
 import uos.cineseoul.mapper.UserMapper;
 import uos.cineseoul.repository.UserRepository;
 
@@ -25,31 +31,31 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public List<User> findAll() {
-        List<User> users = userRepo.findAll();
+    public List<PrintUserDTO> findAll() {
+        List<User> userList = userRepo.findAll();
 
-        if (users.isEmpty()) {
+        if (userList.isEmpty()) {
             throw new ResourceNotFoundException("사용자가 없습니다.");
         }
 
-        return users;
+        return getPrintDTOList(userList);
     }
 
-    public User findOneByNum(Long num) {
+    public PrintUserDTO findOneByNum(Long num) {
         User user = userRepo.findById(num).orElseThrow(()->{
             throw new ResourceNotFoundException("번호가 "+ num +"인 사용자가 없습니다.");
         });
-        return user;
+        return getPrintDTO(user);
     }
 
-    public User findOneById(String id) {
+    public PrintUserDTO findOneById(String id) {
         User user = userRepo.findByUserId(id).orElseThrow(()->{
             throw new ResourceNotFoundException("아이디가 "+id+"인 사용자가 없습니다.");
         });
-        return user;
+        return getPrintDTO(user);
     }
 
-    public User login(@NotNull Map<String, String> loginInfo) {
+    public PrintUserDTO login(@NotNull Map<String, String> loginInfo) {
         User user = userRepo.findByUserId(loginInfo.get("id")).orElseThrow(() -> {
             throw new ResourceNotFoundException("아이디 또는 비밀번호가 틀렸습니다.");
         });
@@ -59,7 +65,7 @@ public class UserService {
             throw new ResourceNotFoundException("아이디 또는 비밀번호가 틀렸습니다.");
         }
 
-        return user;
+        return getPrintDTO(user);
     }
 
     public void checkDuplicate(String id){
@@ -72,7 +78,8 @@ public class UserService {
         return passwordEncoder.matches(pw, pwEnc);
     }
 
-    public User insert(InsertUserDTO userDTO) {
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+    public PrintUserDTO insert(InsertUserDTO userDTO) {
         User user = UserMapper.INSTANCE.toEntity(userDTO);
 
         checkDuplicate(user.getId());
@@ -84,10 +91,10 @@ public class UserService {
 
         User newUser = userRepo.save(user);
 
-        return newUser;
+        return getPrintDTO(newUser);
     }
-
-    public User update(UpdateUserDTO userDTO) {
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+    public PrintUserDTO update(UpdateUserDTO userDTO) {
         if(userDTO.getUserNum()!=null){
             userDTO.setPw(passwordEncoder.encode(userDTO.getPw()));
         }
@@ -95,6 +102,18 @@ public class UserService {
         UserMapper.INSTANCE.updateFromDto(userDTO, user);
         User updatedUser = userRepo.save(user);
 
-        return updatedUser;
+        return getPrintDTO(updatedUser);
+    }
+
+    private PrintUserDTO getPrintDTO(User user){
+        return UserMapper.INSTANCE.toDTO(user);
+    }
+
+    private List<PrintUserDTO> getPrintDTOList(List<User> userList){
+        List<PrintUserDTO> pUserList = new ArrayList<>();
+        userList.forEach(user -> {
+            pUserList.add(getPrintDTO(user));
+        });
+        return pUserList;
     }
 }

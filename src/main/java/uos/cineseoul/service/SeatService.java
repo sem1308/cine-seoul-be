@@ -7,14 +7,18 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import uos.cineseoul.dto.InsertSeatDTO;
+import uos.cineseoul.dto.PrintSeatDTO;
 import uos.cineseoul.dto.UpdateSeatDTO;
 import uos.cineseoul.entity.Screen;
 import uos.cineseoul.entity.Seat;
+import uos.cineseoul.entity.Seat;
 import uos.cineseoul.exception.ResourceNotFoundException;
+import uos.cineseoul.mapper.SeatMapper;
 import uos.cineseoul.mapper.SeatMapper;
 import uos.cineseoul.repository.ScreenRepository;
 import uos.cineseoul.repository.SeatRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,27 +33,27 @@ public class SeatService {
         this.screenRepo = screenRepo;
     }
 
-    public List<Seat> findAll() {
-        List<Seat> seats = seatRepo.findAll();
-        if (seats.isEmpty()) {
+    public List<PrintSeatDTO> findAll() {
+        List<Seat> seatList = seatRepo.findAll();
+        if (seatList.isEmpty()) {
             throw new ResourceNotFoundException("좌석이 없습니다.");
         }
-        return seats;
+        return getPrintDTOList(seatList);
     }
 
-    public List<Seat> findAllByScreenNum(Long screenNum){
-        List<Seat> seats = seatRepo.findByScreenNum(screenNum);
-        if (seats.isEmpty()) {
+    public List<PrintSeatDTO> findAllByScreenNum(Long screenNum){
+        List<Seat> seatList = seatRepo.findByScreenNum(screenNum);
+        if (seatList.isEmpty()) {
             throw new ResourceNotFoundException("스크린 "+screenNum+"에 좌석이 없습니다.");
         }
-        return seats;
+        return getPrintDTOList(seatList);
     }
 
-    public Seat findOneByNum(Long num) {
+    public PrintSeatDTO findOneByNum(Long num) {
         Seat seat = seatRepo.findById(num).orElseThrow(()->{
             throw new ResourceNotFoundException("번호가 "+ num +"인 좌석이 없습니다.");
         });
-        return seat;
+        return getPrintDTO(seat);
     }
 
     public void checkDuplicate(Long screenNum, String row, String col){
@@ -59,7 +63,7 @@ public class SeatService {
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
-    public Seat insert(InsertSeatDTO seatDTO) {
+    public PrintSeatDTO insert(InsertSeatDTO seatDTO) {
         checkDuplicate(seatDTO.getScreenNum(), seatDTO.getRow(), seatDTO.getCol());
 
         // 상영관 불러오기
@@ -75,11 +79,11 @@ public class SeatService {
 
         Seat newSeat = seatRepo.save(seat);
 
-        return newSeat;
+        return getPrintDTO(newSeat);
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
-    public Seat update(UpdateSeatDTO seatDTO) {
+    public PrintSeatDTO update(UpdateSeatDTO seatDTO) {
         checkDuplicate(seatDTO.getScreenNum(), seatDTO.getRow(), seatDTO.getCol());
 
         Seat seat = seatRepo.findById(seatDTO.getSeatNum()).orElseThrow(() -> new ResourceNotFoundException("번호가 "+seatDTO.getSeatNum()+"인 좌석이 존재하지 않습니다."));
@@ -99,6 +103,18 @@ public class SeatService {
 
         Seat updatedSeat = seatRepo.save(seat);
 
-        return updatedSeat;
+        return getPrintDTO(updatedSeat);
+    }
+
+    private PrintSeatDTO getPrintDTO(Seat seat){
+        return SeatMapper.INSTANCE.toDTO(seat);
+    }
+
+    private List<PrintSeatDTO> getPrintDTOList(List<Seat> seatList){
+        List<PrintSeatDTO> pSeatList = new ArrayList<>();
+        seatList.forEach(seat -> {
+            pSeatList.add(getPrintDTO(seat));
+        });
+        return pSeatList;
     }
 }
