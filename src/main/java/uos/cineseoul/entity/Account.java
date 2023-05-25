@@ -15,19 +15,19 @@ import java.time.LocalDateTime;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="BANK_NUM")
-    private Long bankNum;
+    @Column(name="ACCOUNT_NUM")
+    private String accountNum;
+
+    @Column(name = "OWNER_NAME", nullable = false)
+    private String ownerName;
 
     @Column(name="BALANCE", nullable = false, unique = false)
     private Integer balance;
 
+    @Column(name="CARD_NUM", nullable = true, unique = true)
+    private String cardNum;
+
     @CreationTimestamp
     @Column(name="CREATED_AT", nullable = false)
     private LocalDateTime createdAt;
-
-    /* Foreign Key */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_NUM", nullable = false)
-    private User user;
-    /* */
 }
