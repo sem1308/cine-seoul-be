@@ -56,7 +56,7 @@ public class ScreenController {
         return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 
-    @PutMapping("/{num}")
+    @PutMapping()
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "상영관 정보 변경", protocols = "http")
     public ResponseEntity update(@RequestBody UpdateScreenDTO screenDTO) {

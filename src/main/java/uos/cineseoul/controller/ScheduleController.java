@@ -66,7 +66,7 @@ public class ScheduleController {
         return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 
-    @PutMapping("/{num}")
+    @PutMapping()
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "상영일정 정보 변경", protocols = "http")
     public ResponseEntity<ReturnMessage> update(@RequestBody UpdateScheduleDTO scheduleDTO) {

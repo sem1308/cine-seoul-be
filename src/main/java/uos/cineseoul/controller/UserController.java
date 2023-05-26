@@ -83,7 +83,7 @@ public class UserController {
         return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 
-    @PutMapping("/{num}")
+    @PutMapping()
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "사용자 정보 변경", protocols = "http")
     public ResponseEntity<ReturnMessage> update(@RequestBody UpdateUserDTO userDTO) {
