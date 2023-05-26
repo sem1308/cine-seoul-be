@@ -7,7 +7,7 @@ import uos.cineseoul.entity.Account;
 import java.util.Optional;
 
 @Repository
-public interface AccountRepository extends JpaRepository<Account, Integer>{
+public interface AccountRepository extends JpaRepository<Account, String>{
     public Optional<Account> findByCardNum(String cardNum);
     public Optional<Account> findByCardNumAndOwnerName(String cardNum, String ownerName);
 }
