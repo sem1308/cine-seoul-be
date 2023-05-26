@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import uos.cineseoul.entity.Payment;
 import uos.cineseoul.entity.Ticket;
 import uos.cineseoul.entity.User;
+import uos.cineseoul.utils.enums.PayState;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,4 +23,7 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     Optional<Payment> findByTicket(Ticket ticket);
     @Query("select p from PAYMENT p where p.ticket.ticketNum = :ticketNum")
     Optional<Payment> findByTicketNum(@Param("ticketNum") Long ticketNum);
+
+    @Query("select p from PAYMENT p where p.ticket.ticketNum = :ticketNum and p.state= :state")
+    Optional<Payment> findByTicketNumAndState(@Param("ticketNum") Long ticketNum, @Param("state") PayState state);
 }

@@ -22,6 +22,11 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     @Query("select s from SCHEDULE s where schedTime = :schedTime and s.screen.screenNum = :screenNum")
     Optional<Schedule> findBySchedTimeAndScreenNum(@Param("schedTime")LocalDateTime schedTime, @Param("screenNum")Long screenNum);
 
+    // 상영관 번호로 일정 조회
+    @Query("select s from SCHEDULE s where s.screen.screenNum = :screenNum")
+    List<Schedule> findByScreenNum(@Param("screenNum")Long screenNum);
+
+
     // 영화별 상영 일정 조회
     // - 영화 번호로 조회
 //    @Query("select s from Schedule s where s.movie.movieNum = :movieNum")
