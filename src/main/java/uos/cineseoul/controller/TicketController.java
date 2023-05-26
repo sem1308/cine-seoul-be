@@ -74,6 +74,6 @@ public class TicketController {
         msg.setData(ticket);
         msg.setStatus(StatusEnum.OK);
 
-        return new ResponseEntity<>("update success", HttpStatus.OK);
+        return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 }
