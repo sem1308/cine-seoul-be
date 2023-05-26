@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import uos.cineseoul.dto.InsertScreenDTO;
 import uos.cineseoul.dto.PrintScreenDTO;
 import uos.cineseoul.dto.UpdateScreenDTO;
-import uos.cineseoul.entity.Screen;
 import uos.cineseoul.service.ScreenService;
 import uos.cineseoul.utils.ReturnMessage;
-import uos.cineseoul.utils.StatusEnum;
+import uos.cineseoul.utils.enums.StatusEnum;
 
 import java.util.List;
 

@@ -11,7 +11,7 @@ import uos.cineseoul.dto.PrintTicketDTO;
 import uos.cineseoul.dto.UpdateTicketDTO;
 import uos.cineseoul.service.TicketService;
 import uos.cineseoul.utils.ReturnMessage;
-import uos.cineseoul.utils.StatusEnum;
+import uos.cineseoul.utils.enums.StatusEnum;
 
 import java.util.List;
 

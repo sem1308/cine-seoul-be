@@ -8,12 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uos.cineseoul.dto.InsertScheduleDTO;
 import uos.cineseoul.dto.PrintScheduleDTO;
-import uos.cineseoul.dto.PrintUserDTO;
 import uos.cineseoul.dto.UpdateScheduleDTO;
-import uos.cineseoul.entity.Schedule;
 import uos.cineseoul.service.ScheduleService;
 import uos.cineseoul.utils.ReturnMessage;
-import uos.cineseoul.utils.StatusEnum;
+import uos.cineseoul.utils.enums.StatusEnum;
 
 import java.time.LocalDateTime;
 import java.util.List;
