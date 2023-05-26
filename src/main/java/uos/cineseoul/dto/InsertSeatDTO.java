@@ -1,8 +1,7 @@
 package uos.cineseoul.dto;
 
-import com.sun.istack.NotNull;
 import lombok.*;
-import uos.cineseoul.entity.Screen;
+import uos.cineseoul.utils.enums.GradeType;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -20,7 +19,8 @@ public class InsertSeatDTO {
     private String col;
 
     @Size(max = 1, min = 1)
-    private String seatGrade;
+    @Enumerated(EnumType.STRING)
+    private GradeType seatGrade;
 
     private Long screenNum;
 }

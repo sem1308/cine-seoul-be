@@ -59,7 +59,7 @@ public class User{
     @Column(name = "POINT", nullable = true)
     private Integer point;
 
-    @Column(name = "ROLE", nullable = false, length = 1)
+    @Column(name = "ROLE", nullable = false, columnDefinition = "char(1)")
     private String role;
 
     @CreationTimestamp

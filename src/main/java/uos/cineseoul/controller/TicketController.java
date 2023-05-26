@@ -11,7 +11,7 @@ import uos.cineseoul.dto.PrintTicketDTO;
 import uos.cineseoul.dto.UpdateTicketDTO;
 import uos.cineseoul.service.TicketService;
 import uos.cineseoul.utils.ReturnMessage;
-import uos.cineseoul.utils.StatusEnum;
+import uos.cineseoul.utils.enums.StatusEnum;
 
 import java.util.List;
 
@@ -64,7 +64,7 @@ public class TicketController {
         return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 
-    @PutMapping("/{num}")
+    @PutMapping()
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "티켓 정보 변경", protocols = "http")
     public ResponseEntity update(@RequestBody UpdateTicketDTO ticketDTO) {
@@ -74,6 +74,6 @@ public class TicketController {
         msg.setData(ticket);
         msg.setStatus(StatusEnum.OK);
 
-        return new ResponseEntity<>("update success", HttpStatus.OK);
+        return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 }

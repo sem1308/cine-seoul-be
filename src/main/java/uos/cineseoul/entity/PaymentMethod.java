@@ -1,9 +1,9 @@
 package uos.cineseoul.entity;
 
 import lombok.*;
+import uos.cineseoul.utils.enums.PaymentMethodType;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity(name = "PAYMENT_METHOD")
 @AllArgsConstructor()
@@ -16,7 +16,8 @@ public class PaymentMethod {
     // 계좌 : code = "A000" , name = "account"
     @Id
     @Column(name="PAMENT_METHOD_CODE", length = 4, nullable = false, unique = true)
-    private String paymentMethodCode;
+    @Enumerated(EnumType.STRING)
+    private PaymentMethodType paymentMethodCode;
 
     @Column(name="NAME", nullable = false, unique = true, length = 20)
     private String name ;

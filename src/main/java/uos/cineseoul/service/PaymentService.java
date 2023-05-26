@@ -9,13 +9,15 @@ import org.springframework.transaction.annotation.Transactional;
 import uos.cineseoul.dto.InsertPaymentDTO;
 import uos.cineseoul.dto.PrintPaymentDTO;
 import uos.cineseoul.entity.*;
+import uos.cineseoul.exception.DataInconsistencyException;
 import uos.cineseoul.exception.ResourceNotFoundException;
-import uos.cineseoul.mapper.PaymentMapper;
 import uos.cineseoul.mapper.PaymentMapper;
 import uos.cineseoul.repository.PaymentMethodRepository;
 import uos.cineseoul.repository.PaymentRepository;
 import uos.cineseoul.repository.TicketRepository;
 import uos.cineseoul.repository.UserRepository;
+import uos.cineseoul.utils.enums.PayState;
+import uos.cineseoul.utils.enums.TicketState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,28 +79,41 @@ public class PaymentService {
         Ticket ticket = ticketRepo.findById(paymentDTO.getTicketNum()).orElseThrow(()->{
             throw new ResourceNotFoundException("번호가 "+ paymentDTO.getTicketNum() +"인 티켓이 없습니다.");
         });
+        
+        // 결제 가격과 티켓 판매 가격 일치여부 확인
+        if(!ticket.getSalePrice().equals(payment.getPrice())){
+            throw new DataInconsistencyException("결제 가격과 티켓 판매 가격이 일치하지 않습니다.");
+        }
+
+        // 이미 발행된 티켓인지 확인
+        if(ticket.getIssued().equals(TicketState.Y)){
+            throw new ResourceNotFoundException("이미 발행된 티켓입니다.");
+        }else{
+            ticket.setIssued(TicketState.Y);
+            ticketRepo.save(ticket);
+        }
 
         PaymentMethod pm = paymentMethodRepo.findById(paymentDTO.getPaymentMethodCode()).orElseThrow(()->{
-            throw new ResourceNotFoundException("번호가 "+ paymentDTO.getPaymentMethodCode() +"인 결제 방법이 없습니다.");
+            throw new ResourceNotFoundException(paymentDTO.getPaymentMethodCode() +"인 결제 방법이 없습니다.");
         });
 
-        accountService.pay(user.getName(),paymentDTO.getCardNum(),paymentDTO.getPrice());
-
+        switch (pm.getPaymentMethodCode()){
+            case A000:
+                accountService.payByAccountNum(paymentDTO.getPrice(),paymentDTO.getAccountNum());
+                break;
+            case C000:
+                accountService.payByCardNum(paymentDTO.getPrice(),user.getName(),paymentDTO.getCardNum());
+                break;
+        }
         if(pm.getName().equals("card")){
             accountService.checkVaildity(paymentDTO.getCardNum(),user.getName());
             payment.setApprovalNum(accountService.getApprovalNum(paymentDTO.getCardNum()));
         }
 
-        if(ticket.getIssued().equals("Y")){
-            throw new ResourceNotFoundException("이미 발행된 티켓입니다.");
-        }else{
-            ticket.setIssued("Y");
-            ticketRepo.save(ticket);
-        }
-
         payment.setUser(user);
         payment.setTicket(ticket);
         payment.setPaymentMethod(pm);
+        payment.setState(PayState.Y);
 
         Payment savedPayment = paymentRepo.save(payment);
 

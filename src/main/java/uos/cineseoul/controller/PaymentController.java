@@ -8,10 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uos.cineseoul.dto.InsertPaymentDTO;
 import uos.cineseoul.dto.PrintPaymentDTO;
-import uos.cineseoul.entity.Payment;
 import uos.cineseoul.service.PaymentService;
 import uos.cineseoul.utils.ReturnMessage;
-import uos.cineseoul.utils.StatusEnum;
+import uos.cineseoul.utils.enums.StatusEnum;
 
 import java.util.List;
 

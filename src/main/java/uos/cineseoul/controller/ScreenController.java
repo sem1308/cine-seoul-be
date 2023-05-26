@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import uos.cineseoul.dto.InsertScreenDTO;
 import uos.cineseoul.dto.PrintScreenDTO;
 import uos.cineseoul.dto.UpdateScreenDTO;
-import uos.cineseoul.entity.Screen;
 import uos.cineseoul.service.ScreenService;
 import uos.cineseoul.utils.ReturnMessage;
-import uos.cineseoul.utils.StatusEnum;
+import uos.cineseoul.utils.enums.StatusEnum;
 
 import java.util.List;
 
@@ -56,7 +55,7 @@ public class ScreenController {
         return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 
-    @PutMapping("/{num}")
+    @PutMapping()
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "상영관 정보 변경", protocols = "http")
     public ResponseEntity update(@RequestBody UpdateScreenDTO screenDTO) {
@@ -66,6 +65,6 @@ public class ScreenController {
         msg.setData(screen);
         msg.setStatus(StatusEnum.OK);
 
-        return new ResponseEntity<>("update success", HttpStatus.OK);
+        return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 }

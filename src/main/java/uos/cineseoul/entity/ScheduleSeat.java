@@ -22,7 +22,7 @@ public class ScheduleSeat {
     @JoinColumn(name = "SEAT_NUM", nullable = false)
     private Seat seat;
 
-    @Column(name="OCCUPIED", nullable = false, unique = false, length = 1)
+    @Column(name="OCCUPIED", nullable = false, unique = false, columnDefinition = "char(1)")
 //    @ColumnDefault("N")
     private String occupied;
 }

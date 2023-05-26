@@ -1,6 +1,7 @@
 package uos.cineseoul.entity;
 
 import lombok.*;
+import uos.cineseoul.utils.enums.GradeType;
 
 import javax.persistence.*;
 
@@ -16,14 +17,15 @@ public class Seat {
     @Column(name="SEAT_NUM")
     private Long seatNum;
 
-    @Column(name="S_ROW", nullable = false, unique = false, length = 1)
+    @Column(name="S_ROW", nullable = false, unique = false, columnDefinition = "char(1)")
     private String row;
 
     @Column(name="S_COL", nullable = false, unique = false, length = 2)
     private String col;
 
-    @Column(name="SEAT_GRADE", nullable = false, unique = false, length=1)
-    private String seatGrade;
+    @Column(name="SEAT_GRADE", nullable = false, unique = false, columnDefinition = "char(1)")
+    @Enumerated(EnumType.STRING)
+    private GradeType seatGrade;
 
     /* Foreign Key */
     @ManyToOne(fetch = FetchType.LAZY)

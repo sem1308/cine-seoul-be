@@ -11,26 +11,26 @@ import uos.cineseoul.dto.PrintSeatDTO;
 import uos.cineseoul.dto.UpdateSeatDTO;
 import uos.cineseoul.entity.Screen;
 import uos.cineseoul.entity.Seat;
-import uos.cineseoul.entity.Seat;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.SeatMapper;
-import uos.cineseoul.mapper.SeatMapper;
+import uos.cineseoul.repository.ScheduleRepository;
 import uos.cineseoul.repository.ScreenRepository;
 import uos.cineseoul.repository.SeatRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class SeatService {
     private final SeatRepository seatRepo;
     private final ScreenRepository screenRepo;
+    private final ScheduleRepository scheduleRepo;
 
     @Autowired
-    public SeatService(SeatRepository seatRepo, ScreenRepository screenRepo) {
+    public SeatService(SeatRepository seatRepo, ScreenRepository screenRepo, ScheduleRepository scheduleRepo) {
         this.seatRepo = seatRepo;
         this.screenRepo = screenRepo;
+        this.scheduleRepo = scheduleRepo;
     }
 
     public List<PrintSeatDTO> findAll() {
@@ -62,10 +62,18 @@ public class SeatService {
         }
     }
 
+    public void checkSchedule(Long screenNum){
+        if (!scheduleRepo.findByScreenNum(screenNum).isEmpty()) {
+            throw new DuplicateKeyException("상영일정이 존재하는 상영관에는 좌석을 등록할 수 없습니다.");
+        }
+    }
+
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public PrintSeatDTO insert(InsertSeatDTO seatDTO) {
+        // 좌석 중복 체크
         checkDuplicate(seatDTO.getScreenNum(), seatDTO.getRow(), seatDTO.getCol());
-
+        // 상영일정 확인
+        checkSchedule(seatDTO.getScreenNum());
         // 상영관 불러오기
         Screen screen = screenRepo.findById(seatDTO.getScreenNum()).get();
 
@@ -90,6 +98,8 @@ public class SeatService {
         SeatMapper.INSTANCE.updateFromDto(seatDTO, seat);
         // 상영관 교체
         if(seatDTO.getScreenNum()!=null){
+            // 상영일정 확인
+            checkSchedule(seatDTO.getScreenNum());
             Screen screenFrom = seat.getScreen();
             Screen screenTo = screenRepo.findById(seatDTO.getScreenNum()).get();
             seat.setScreen(screenTo);
@@ -107,7 +117,9 @@ public class SeatService {
     }
 
     private PrintSeatDTO getPrintDTO(Seat seat){
-        return SeatMapper.INSTANCE.toDTO(seat);
+        PrintSeatDTO seatDTO = SeatMapper.INSTANCE.toDTO(seat);
+        seatDTO.setSeatPrice(seatDTO.getSeatGrade().getPrice());
+        return seatDTO;
     }
 
     private List<PrintSeatDTO> getPrintDTOList(List<Seat> seatList){

@@ -38,12 +38,12 @@ class TicketServiceTests {
 		Long seatNum = 1L;
 
 		InsertTicketDTO ticketDTO = InsertTicketDTO.builder().stdPrice(stdPrice).salePrice(salePrice)
-				.issued(issued).userNum(userNum).schedNum(schedNum).seatNum(seatNum).build();
+				.userNum(userNum).schedNum(schedNum).seatNum(seatNum).build();
 
 		PrintTicketDTO savedTicket = ticketService.insert(ticketDTO);
 
 		assert savedTicket.getSalePrice().equals(salePrice);
-		assert savedTicket.getScheduleSeat().getSeat().getSeatNum().equals(seatNum);
+		assert savedTicket.getScheduleSeat().getSeat().equals(seatNum);
 	}
 
 	@Test
@@ -56,7 +56,7 @@ class TicketServiceTests {
 		Long seatNum = 2L; // 바꿈
 
 		UpdateTicketDTO ticketDTO = UpdateTicketDTO.builder().salePrice(salePrice)
-				.issued(issued).ticketNum(ticketNum).schedNum(schedNum).seatNum(seatNum).build();
+				.ticketNum(ticketNum).schedNum(schedNum).seatNum(seatNum).build();
 
 		PrintTicketDTO savedTicket = ticketService.update(ticketDTO);
 

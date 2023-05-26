@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import uos.cineseoul.dto.InsertSeatDTO;
 import uos.cineseoul.dto.PrintSeatDTO;
 import uos.cineseoul.dto.UpdateSeatDTO;
-import uos.cineseoul.entity.Seat;
 import uos.cineseoul.service.SeatService;
 import uos.cineseoul.utils.ReturnMessage;
-import uos.cineseoul.utils.StatusEnum;
+import uos.cineseoul.utils.enums.StatusEnum;
 
 import java.util.List;
 
@@ -58,14 +57,14 @@ public class SeatController {
     public ResponseEntity register(@RequestBody InsertSeatDTO seatDTO) {
         PrintSeatDTO seat = seatService.insert(seatDTO);
         ReturnMessage<PrintSeatDTO> msg = new ReturnMessage<>();
-        msg.setMessage("좌석 예매가 완료되었습니다.");
+        msg.setMessage("좌석 등록이 완료되었습니다.");
         msg.setData(seat);
         msg.setStatus(StatusEnum.OK);
 
         return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 
-    @PutMapping("/{num}")
+    @PutMapping()
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "좌석 정보 변경", protocols = "http")
     public ResponseEntity update(@RequestBody UpdateSeatDTO seatDTO) {
@@ -75,6 +74,6 @@ public class SeatController {
         msg.setData(seat);
         msg.setStatus(StatusEnum.OK);
 
-        return new ResponseEntity<>("update success", HttpStatus.OK);
+        return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 }

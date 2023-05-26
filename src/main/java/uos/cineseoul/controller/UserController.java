@@ -7,18 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uos.cineseoul.dto.InsertUserDTO;
-import uos.cineseoul.dto.PrintTicketDTO;
 import uos.cineseoul.dto.PrintUserDTO;
 import uos.cineseoul.dto.UpdateUserDTO;
-import uos.cineseoul.entity.User;
-import uos.cineseoul.service.AccountService;
 import uos.cineseoul.service.UserService;
 import uos.cineseoul.utils.JwtTokenProvider;
 import uos.cineseoul.utils.ReturnMessage;
-import uos.cineseoul.utils.StatusEnum;
+import uos.cineseoul.utils.enums.StatusEnum;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -83,7 +79,7 @@ public class UserController {
         return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 
-    @PutMapping("/{num}")
+    @PutMapping()
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "사용자 정보 변경", protocols = "http")
     public ResponseEntity<ReturnMessage> update(@RequestBody UpdateUserDTO userDTO) {
