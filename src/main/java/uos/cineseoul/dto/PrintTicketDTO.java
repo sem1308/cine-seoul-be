@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import uos.cineseoul.entity.ScheduleSeat;
 import uos.cineseoul.entity.User;
+import uos.cineseoul.utils.enums.TicketState;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -21,7 +22,8 @@ public class PrintTicketDTO {
 
     private Integer salePrice;
 
-    private String issued;
+    @Enumerated(EnumType.STRING)
+    private TicketState issued;
 
     private LocalDateTime createdAt;
 
