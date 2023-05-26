@@ -6,19 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import uos.cineseoul.dto.InsertPaymentDTO;
 import uos.cineseoul.dto.PrintPaymentDTO;
-import uos.cineseoul.entity.Payment;
 import uos.cineseoul.entity.PaymentMethod;
-import uos.cineseoul.entity.Ticket;
-import uos.cineseoul.entity.User;
-import uos.cineseoul.mapper.PaymentMapper;
+import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.repository.PaymentMethodRepository;
-import uos.cineseoul.repository.PaymentRepository;
-import uos.cineseoul.repository.TicketRepository;
-import uos.cineseoul.repository.UserRepository;
 import uos.cineseoul.service.PaymentService;
+import uos.cineseoul.utils.enums.PaymentMethodType;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootTest
@@ -26,7 +20,8 @@ import java.util.List;
 class PaymentServiceTests {
 	@Autowired
 	PaymentService paymentService;
-
+	@Autowired
+	PaymentMethodRepository paymentMethodRepo;
 	@Test
 	@Transactional
 	void paymentTestByMapper() {
@@ -34,7 +29,7 @@ class PaymentServiceTests {
 
 		Long userNum = 1L;
 		Long ticketNum = 1L;
-		String paymentMethodCode = "C000";
+		PaymentMethodType paymentMethodCode = PaymentMethodType.C000;
 
 		InsertPaymentDTO paymentDTO = InsertPaymentDTO.builder().ticketNum(ticketNum)
 				.price(price).userNum(userNum).paymentMethodCode(paymentMethodCode).build();
@@ -48,6 +43,15 @@ class PaymentServiceTests {
 		PrintPaymentDTO payment = paymentService.findOneByNum(paymentNum);
 
 		assert payment.getPaymentNum().equals(paymentNum);
+	}
+
+	@Test
+	void findMethodTest() {
+		PaymentMethodType paymentMethodCode = PaymentMethodType.C000;
+
+		PaymentMethod pm = paymentMethodRepo.findById(paymentMethodCode).orElseThrow(()->{
+			throw new ResourceNotFoundException(paymentMethodCode +"인 결제 방법이 없습니다.");
+		});
 	}
 
 	@Test

@@ -1,7 +1,6 @@
 package uos.cineseoul;
 
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.sql.Update;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,9 +9,9 @@ import uos.cineseoul.dto.InsertSeatDTO;
 import uos.cineseoul.dto.PrintSeatDTO;
 import uos.cineseoul.dto.UpdateSeatDTO;
 import uos.cineseoul.entity.Screen;
-import uos.cineseoul.entity.Seat;
 import uos.cineseoul.repository.ScreenRepository;
 import uos.cineseoul.service.SeatService;
+import uos.cineseoul.utils.enums.GradeType;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -31,7 +30,7 @@ class SeatServiceTests {
 		Long screenNum = 1L;
 		String row1 = "E";
 		String col1 = "11";
-		String seatGrade1 = "B";
+		GradeType seatGrade1 = GradeType.A;
 
 		InsertSeatDTO seatDTO = InsertSeatDTO.builder().row(row1).col(col1)
 				.seatGrade(seatGrade1).screenNum(screenNum).build();
@@ -50,7 +49,7 @@ class SeatServiceTests {
 		Long screenNum = 1L;
 		String row = "D"; // 원래 H
 		String col = "15"; // 원래 10
-		String seatGrade = "C"; // 원래 A
+		GradeType seatGrade = GradeType.C; // 원래 A
 
 		PrintSeatDTO basicSeat = seatService.findOneByNum(seatNum);
 		Screen basicScreen = screenRepo.findById(basicSeat.getScreenNum()).get();
