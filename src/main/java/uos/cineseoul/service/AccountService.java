@@ -19,10 +19,21 @@ public class AccountService {
         this.accountRepo = accountRepo;
     }
 
-    public void pay(String cusName, String cardNum, int price){
-        Account account = accountRepo.findByCardNumAndOwnerName(cardNum,cusName)
-                .orElseThrow(() -> new ResourceNotFoundException("카드 정보가 없습니다."));
+    public void payByAccountNum(Integer price, String accountNum){
+        Account account = accountRepo.findById(accountNum)
+                .orElseThrow(() -> new ResourceNotFoundException("계좌 정보가 없습니다."));
 
+        pay(account, price);
+    }
+
+    public void payByCardNum(Integer price, String cusName, String cardNum){
+        Account account = accountRepo.findByCardNumAndOwnerName(cardNum,cusName)
+                .orElseThrow(() -> new ResourceNotFoundException("카드번호:"+cardNum+", 사용자 이름:"+cusName+"에 해당하는 카드 정보가 없습니다."));
+
+        pay(account, price);
+    }
+
+    private void pay(Account account, Integer price){
         if (account.getBalance() >= price){
             account.setBalance(account.getBalance() - price);
             accountRepo.save(account);
@@ -31,7 +42,15 @@ public class AccountService {
         }
     }
 
-    public void refund(String cusName, String cardNum, int price){
+    public void refundByAccountNum(int price, String accountNum){
+        Account account = accountRepo.findById(accountNum)
+                .orElseThrow(() -> new ResourceNotFoundException("계좌 정보가 없습니다."));
+
+        account.setBalance(account.getBalance() + price);
+        accountRepo.save(account);
+    }
+
+    public void refundByCardNum(int price, String cusName, String cardNum){
         Account account = accountRepo.findByCardNumAndOwnerName(cardNum,cusName)
                 .orElseThrow(() -> new ResourceNotFoundException("카드 정보가 없습니다."));
 
