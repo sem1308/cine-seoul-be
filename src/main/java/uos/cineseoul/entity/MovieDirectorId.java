@@ -12,6 +12,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class MovieDirectorId implements Serializable {
-    private Movie movie;
-    private Director director;
+    private Long movie;
+    private Long director;
 }

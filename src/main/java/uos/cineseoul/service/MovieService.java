@@ -40,6 +40,20 @@ public class MovieService {
         return movieList;
     }
 
+    public Movie findMovie(Long movieNum) {
+        Movie movie = movieRepository.findByMovieNum(movieNum).orElseThrow(
+                () -> new ResourceNotFoundException("해당 번호의 영화가 없습니다.")
+        );
+        return movie;
+    }
+
+    public Movie findMovieByTitle(String title) {
+        Movie movie = movieRepository.findByTitle(title).orElseThrow(
+                () -> new ResourceNotFoundException("해당 제목의 영화가 없습니다.")
+        );
+        return movie;
+    }
+
     public List<Movie> findAllShowingMovie() {
         List<Movie> movieList = movieRepository.findAllByIsShowing('T');
         if(movieList.isEmpty())
@@ -57,6 +71,9 @@ public class MovieService {
     }
 
     public Movie insert(InsertMovieDTO insertMovieDTO) {
+
+        Movie result;
+
         Distributor distributor = distributorRepository.findByDistNum(insertMovieDTO.getDistNum()).orElseThrow(
                 () -> new ResourceNotFoundException("해당 배급사가 없습니다.")
         );
@@ -75,6 +92,8 @@ public class MovieService {
                 .runningTime(insertMovieDTO.getRunningTime())
                 .info(insertMovieDTO.getInfo())
                 .build();
+
+        result = movieRepository.save(movie);
 
         insertMovieDTO.getActorList().forEach(
                 actorNum -> {
@@ -118,7 +137,7 @@ public class MovieService {
                 }
         );
 
-        return movieRepository.save(movie);
+        return result;
     }
 
 }

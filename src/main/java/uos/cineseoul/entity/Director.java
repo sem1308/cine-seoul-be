@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,5 +26,6 @@ public class Director {
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "director")
-    private List<MovieDirector> movieDirectorList;
+    @Builder.Default
+    private List<MovieDirector> movieDirectorList = new ArrayList<>();
 }

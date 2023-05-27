@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
+
+    Optional<Movie> findByMovieNum(Long movieNum);
     Optional<Movie> findByTitle(String title);
     List<Movie> findAllByIsShowing(char isShowing);
 

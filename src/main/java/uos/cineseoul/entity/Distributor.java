@@ -2,14 +2,17 @@ package uos.cineseoul.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 @Builder
 public class Distributor {
     @Id
@@ -21,5 +24,6 @@ public class Distributor {
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "distributor")
-    private List<Movie> movieList;
+    @Builder.Default
+    private List<Movie> movieList = new ArrayList<>();
 }

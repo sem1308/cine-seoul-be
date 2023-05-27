@@ -4,10 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import uos.cineseoul.entity.domain.CharLength;
-import uos.cineseoul.entity.domain.VarcharLength;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -46,12 +45,15 @@ public class Movie {
     private Grade grade;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie")
-    private List<MovieGenre> movieGenreList;
+    @Builder.Default
+    private List<MovieGenre> movieGenreList = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie")
-    private List<MovieDirector> movieDirectorList;
+    @Builder.Default
+    private List<MovieDirector> movieDirectorList = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie")
-    private List<MovieActor> movieActorList;
+    @Builder.Default
+    private List<MovieActor> movieActorList = new ArrayList<>();
 
 }
