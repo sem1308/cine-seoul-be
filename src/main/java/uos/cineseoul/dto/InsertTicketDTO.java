@@ -1,7 +1,10 @@
 package uos.cineseoul.dto;
 
 import lombok.*;
+import uos.cineseoul.utils.enums.TicketState;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Size;
 
 @AllArgsConstructor()
@@ -14,8 +17,8 @@ public class InsertTicketDTO {
 
     private Integer salePrice;
 
-    @Size(max = 1, min = 1)
-    private String issued;
+    @Enumerated(EnumType.STRING)
+    private TicketState issued;
 
     private Long userNum;
 

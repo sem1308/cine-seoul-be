@@ -29,14 +29,13 @@ class TicketRepoTests {
 	void generateTicketTest() {
 		Integer stdPrice = 8000;
 		Integer salePrice = 7500;
-		String issued = "N";
 
 		Long userNum = 1L;
 		Long schedNum = 2L;
 		Long seatNum = 1L;
 
 		InsertTicketDTO ticketDTO = InsertTicketDTO.builder().stdPrice(stdPrice).salePrice(salePrice)
-				.issued(issued).userNum(userNum).schedNum(schedNum).seatNum(seatNum).build();
+				.userNum(userNum).schedNum(schedNum).seatNum(seatNum).build();
 
 		User user = userRepo.findById(userNum).get();
 		ScheduleSeat scheduleSeat = scheduleSeatRepo.findBySchedNumAndSeatNum(ticketDTO.getSchedNum(),ticketDTO.getSeatNum()).get();
@@ -54,15 +53,16 @@ class TicketRepoTests {
 
 	@Test
 	@Transactional
+	@Rollback(false)
 	void updateTicketTest() {
-		Integer salePrice = 8000; // 바꿈
+		Integer salePrice = 8200;
 		String issued = "N";
-		Long ticketNum = 1L;
-		Long schedNum = 2L;
-		Long seatNum = 2L; // 바꿈
+		Long ticketNum = 4L;
+		Long schedNum = 5L;
+		Long seatNum = 43L;
 
 		UpdateTicketDTO ticketDTO = UpdateTicketDTO.builder().salePrice(salePrice)
-				.issued(issued).ticketNum(ticketNum).schedNum(schedNum).seatNum(seatNum).build();
+				.ticketNum(ticketNum).schedNum(schedNum).seatNum(seatNum).build();
 
 		Ticket ticket = ticketRepo.findById(ticketNum).get();
 
@@ -70,11 +70,16 @@ class TicketRepoTests {
 
 		TicketMapper.INSTANCE.updateFromDto(ticketDTO,ticket);
 		ticket.setScheduleSeat(scheduleSeat);
+		ticket.setIssued(issued);
 
 		Ticket savedTicket = ticketRepo.save(ticket);
 
 		assert savedTicket.getSalePrice().equals(salePrice);
 		assert savedTicket.getScheduleSeat().getSeat().getSeatNum().equals(seatNum);
+
+		System.out.println("!!!!!!!!!!!!!!!");
+		System.out.println(savedTicket.getScheduleSeat().getSchedule().getSchedNum());
+		System.out.println(savedTicket.getScheduleSeat().getSeat().getSeatNum());
 	}
 
 	@Test

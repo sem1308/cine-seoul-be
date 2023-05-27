@@ -3,6 +3,7 @@ package uos.cineseoul.mapper;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import uos.cineseoul.dto.InsertScreenDTO;
+import uos.cineseoul.dto.PrintScreenDTO;
 import uos.cineseoul.dto.UpdateScreenDTO;
 import uos.cineseoul.entity.Screen;
 
@@ -14,7 +15,7 @@ public interface ScreenMapper {
             defaultValue = "0")
     Screen toEntity(InsertScreenDTO screenDTO);
 
-    InsertScreenDTO toDTO(Screen screen);
+    PrintScreenDTO toDTO(Screen screen);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromDto(UpdateScreenDTO dto, @MappingTarget Screen entity);

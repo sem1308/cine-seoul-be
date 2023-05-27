@@ -1,9 +1,6 @@
 package uos.cineseoul.entity;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-
 import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -11,8 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import uos.cineseoul.utils.enums.TicketState;
 
 @Entity(name = "TICKET")
 @AllArgsConstructor()
@@ -32,9 +29,9 @@ public class Ticket{
     @Column(name="SALE_PRICE", nullable = false, unique = false)
     private Integer salePrice;
 
-    @Column(name="ISSUED", nullable = false, unique = false, length = 1)
-    //@ColumnDefault("N")
-    private String issued;
+    @Column(name="ISSUED", nullable = false, unique = false, columnDefinition = "char(1)")
+    @Enumerated(EnumType.STRING)
+    private TicketState issued;
 
     @CreationTimestamp
     @Column(name="CREATED_AT", nullable = false)

@@ -36,7 +36,7 @@ public class JwtTokenProvider {
     }
 
     // JWT 토큰 생성
-    public String createToken(int num, String id, String name, List<String> roles) {
+    public String createToken(Long num, String id, String name, List<String> roles) {
         Claims claims = Jwts.claims().setSubject("USER_TOKEN").setIssuer("BACCHUS"); // JWT payload 에 저장되는 정보단위
 
         claims.put("num", num);

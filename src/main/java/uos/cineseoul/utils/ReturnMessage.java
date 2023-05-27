@@ -1,5 +1,6 @@
 package uos.cineseoul.utils;
 import lombok.*;
+import uos.cineseoul.utils.enums.StatusEnum;
 
 @AllArgsConstructor()
 @NoArgsConstructor()

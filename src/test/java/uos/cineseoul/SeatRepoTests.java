@@ -12,6 +12,7 @@ import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.SeatMapper;
 import uos.cineseoul.repository.ScreenRepository;
 import uos.cineseoul.repository.SeatRepository;
+import uos.cineseoul.utils.enums.GradeType;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ class SeatRepoTests {
 		Long screenNum = 1L;
 		String row1 = "H";
 		String col1 = "10";
-		String seatGrade1 = "A";
+		GradeType seatGrade1 = GradeType.A;
 
 		InsertSeatDTO seatDTO1 = InsertSeatDTO.builder().row(row1).col(col1)
 				.seatGrade(seatGrade1).screenNum(screenNum).build();
@@ -50,7 +51,7 @@ class SeatRepoTests {
 
 		String row2 = "E";
 		String col2 = "15";
-		String seatGrade2 = "B";
+		GradeType seatGrade2 = GradeType.B;
 
 		InsertSeatDTO seatDTO2 = InsertSeatDTO.builder().row(row2).col(col2)
 				.seatGrade(seatGrade2).screenNum(screenNum).build();
@@ -83,7 +84,7 @@ class SeatRepoTests {
 		//Long screenNum = 1L;
 		String row = "D"; // 원래 H
 		String col = "15"; // 원래 10
-		String seatGrade = "C"; // 원래 A
+		GradeType seatGrade = GradeType.C;// 원래 A
 
 		Seat seat = seatRepo.findById(seatNum).get();
 

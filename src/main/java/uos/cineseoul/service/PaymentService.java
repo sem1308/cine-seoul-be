@@ -7,14 +7,19 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import uos.cineseoul.dto.InsertPaymentDTO;
+import uos.cineseoul.dto.PrintPaymentDTO;
 import uos.cineseoul.entity.*;
+import uos.cineseoul.exception.DataInconsistencyException;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.PaymentMapper;
 import uos.cineseoul.repository.PaymentMethodRepository;
 import uos.cineseoul.repository.PaymentRepository;
 import uos.cineseoul.repository.TicketRepository;
 import uos.cineseoul.repository.UserRepository;
+import uos.cineseoul.utils.enums.PayState;
+import uos.cineseoul.utils.enums.TicketState;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,52 +28,49 @@ public class PaymentService {
     private final PaymentMethodRepository paymentMethodRepo;
     private final TicketRepository ticketRepo;
     private final UserRepository userRepo;
+    private final AccountService accountService;
 
     @Autowired
-    public PaymentService(PaymentRepository paymentRepo, TicketRepository ticketRepo,UserRepository userRepo, PaymentMethodRepository paymentMethodRepo) {
+    public PaymentService(PaymentRepository paymentRepo, TicketRepository ticketRepo,UserRepository userRepo, PaymentMethodRepository paymentMethodRepo, AccountService accountService) {
         this.paymentRepo = paymentRepo;
         this.ticketRepo = ticketRepo;
         this.userRepo = userRepo;
         this.paymentMethodRepo = paymentMethodRepo;
+        this.accountService = accountService;
     }
 
-    public List<Payment> findAll() {
+    public List<PrintPaymentDTO> findAll() {
         List<Payment> paymentList = paymentRepo.findAll();
         if (paymentList.isEmpty()) {
             throw new ResourceNotFoundException("결제 내역이 없습니다.");
         }
-        return paymentList;
+        return getPrintDTOList(paymentList);
     }
 
-    public Payment findOneByNum(Long num) {
+    public PrintPaymentDTO findOneByNum(Long num) {
         Payment payment = paymentRepo.findById(num).orElseThrow(()->{
             throw new ResourceNotFoundException("번호가 "+ num +"인 결제 내역이 없습니다.");
         });
-        return payment;
+        return getPrintDTO(payment);
     }
-    public List<Payment> findByUserNum(Long userNum) {
+    public List<PrintPaymentDTO> findByUserNum(Long userNum) {
         List<Payment> paymentList = paymentRepo.findByUserNum(userNum);
         if (paymentList.isEmpty()) {
             throw new ResourceNotFoundException(userNum+"번 유저에 대한 결제 내역이 없습니다.");
         }
-        return paymentList;
+        return getPrintDTOList(paymentList);
     }
-    public List<Payment> findByUserId(String userId) {
+    public List<PrintPaymentDTO> findByUserId(String userId) {
         List<Payment> paymentList = paymentRepo.findByUserId(userId);
         if (paymentList.isEmpty()) {
             throw new ResourceNotFoundException("유저 "+userId+"에 대한 결제 내역이 없습니다.");
         }
-        return paymentList;
+        return getPrintDTOList(paymentList);
     }
 
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
-    public Payment insert(InsertPaymentDTO paymentDTO) {
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public PrintPaymentDTO insert(InsertPaymentDTO paymentDTO) {
         Payment payment = PaymentMapper.INSTANCE.toEntity(paymentDTO);
-
-        // TODO : 결제방법이 카드일 때 승인번호 받아오기
-        if(paymentDTO.getPaymentMethodCode().equals("C000")){
-            payment.setApprovalNum("0XASDWU123");
-        }
 
         User user = userRepo.findById(paymentDTO.getUserNum()).orElseThrow(()->{
             throw new ResourceNotFoundException("번호가 "+ paymentDTO.getUserNum() +"인 사용자가 없습니다.");
@@ -78,23 +80,57 @@ public class PaymentService {
             throw new ResourceNotFoundException("번호가 "+ paymentDTO.getTicketNum() +"인 티켓이 없습니다.");
         });
         
-        if(ticket.getIssued().equals("Y")){
+        // 결제 가격과 티켓 판매 가격 일치여부 확인
+        if(!ticket.getSalePrice().equals(payment.getPrice())){
+            throw new DataInconsistencyException("결제 가격과 티켓 판매 가격이 일치하지 않습니다.");
+        }
+
+        // 이미 발행된 티켓인지 확인
+        if(ticket.getIssued().equals(TicketState.Y)){
             throw new ResourceNotFoundException("이미 발행된 티켓입니다.");
         }else{
-            ticket.setIssued("Y");
+            ticket.setIssued(TicketState.Y);
             ticketRepo.save(ticket);
         }
 
         PaymentMethod pm = paymentMethodRepo.findById(paymentDTO.getPaymentMethodCode()).orElseThrow(()->{
-            throw new ResourceNotFoundException("번호가 "+ paymentDTO.getPaymentMethodCode() +"인 결제 방법이 없습니다.");
+            throw new ResourceNotFoundException(paymentDTO.getPaymentMethodCode() +"인 결제 방법이 없습니다.");
         });
+
+        switch (pm.getPaymentMethodCode()){
+            case A000:
+                accountService.payByAccountNum(paymentDTO.getPrice(),paymentDTO.getAccountNum());
+                break;
+            case C000:
+                accountService.payByCardNum(paymentDTO.getPrice(),user.getName(),paymentDTO.getCardNum());
+                break;
+        }
+        if(pm.getName().equals("card")){
+            accountService.checkVaildity(paymentDTO.getCardNum(),user.getName());
+            payment.setApprovalNum(accountService.getApprovalNum(paymentDTO.getCardNum()));
+        }
 
         payment.setUser(user);
         payment.setTicket(ticket);
         payment.setPaymentMethod(pm);
+        payment.setState(PayState.Y);
 
         Payment savedPayment = paymentRepo.save(payment);
 
-        return savedPayment;
+        return getPrintDTO(savedPayment);
+    }
+
+    private PrintPaymentDTO getPrintDTO(Payment payment){
+        PrintPaymentDTO paymentDTO = PaymentMapper.INSTANCE.toDTO(payment);
+        paymentDTO.setTicketNum(payment.getTicket().getTicketNum());
+        return paymentDTO;
+    }
+
+    private List<PrintPaymentDTO> getPrintDTOList(List<Payment> paymentList){
+        List<PrintPaymentDTO> pPaymentList = new ArrayList<>();
+        paymentList.forEach(payment -> {
+            pPaymentList.add(getPrintDTO(payment));
+        });
+        return pPaymentList;
     }
 }

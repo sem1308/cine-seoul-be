@@ -1,13 +1,9 @@
 package uos.cineseoul.dto;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import uos.cineseoul.entity.PaymentMethod;
-import uos.cineseoul.entity.Ticket;
-import uos.cineseoul.entity.User;
+import uos.cineseoul.utils.enums.PaymentMethodType;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.validation.constraints.Size;
 
 @AllArgsConstructor()
 @NoArgsConstructor(force = true)
@@ -17,9 +13,14 @@ import java.time.LocalDateTime;
 public class InsertPaymentDTO {
     private int price;
 
+    @Size(max = 16, min=16)
+    private String cardNum;
+
+    private String accountNum;
+
     private Long userNum;
 
     private Long ticketNum;
 
-    private String paymentMethodCode;
+    private PaymentMethodType paymentMethodCode;
 }

@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import uos.cineseoul.dto.InsertPaymentDTO;
 import uos.cineseoul.entity.*;
+import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.PaymentMapper;
 import uos.cineseoul.repository.*;
+import uos.cineseoul.utils.enums.PayState;
+import uos.cineseoul.utils.enums.PaymentMethodType;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -35,7 +38,7 @@ class PaymentRepoTests {
 		Long ticketNum = 2L;
 		Ticket ticket = ticketRepo.findById(ticketNum).get();
 
-		String paymentMethodCode = "C000";
+		PaymentMethodType paymentMethodCode = PaymentMethodType.C000;
 
 		PaymentMethod pm = paymentMethodRepo.findById(paymentMethodCode).orElse(null);
 
@@ -52,14 +55,14 @@ class PaymentRepoTests {
 
 		Long userNum = 1L;
 		Long ticketNum = 1L;
-		String paymentMethodCode = "C000";
+		PaymentMethodType paymentMethodCode = PaymentMethodType.C000;
 
 		InsertPaymentDTO paymentDTO = InsertPaymentDTO.builder().ticketNum(ticketNum)
 				.price(price).userNum(userNum).paymentMethodCode(paymentMethodCode).build();
 
 		Payment payment = PaymentMapper.INSTANCE.toEntity(paymentDTO);
 
-		if(paymentDTO.getPaymentMethodCode().equals("C000")){
+		if(paymentDTO.getPaymentMethodCode().equals(PaymentMethodType.C000)){
 			payment.setApprovalNum("0XASDWU123");
 		}
 
@@ -80,8 +83,8 @@ class PaymentRepoTests {
 	@Test
 	//@Transactional
 	void generatePaymentMethodTest(){
-		PaymentMethod pm1 = PaymentMethod.builder().paymentMethodCode("C000").name("card").build();
-		PaymentMethod pm2 = PaymentMethod.builder().paymentMethodCode("A000").name("account").build();
+		PaymentMethod pm1 = PaymentMethod.builder().paymentMethodCode(PaymentMethodType.C000).name("card").build();
+		PaymentMethod pm2 = PaymentMethod.builder().paymentMethodCode(PaymentMethodType.A000).name("account").build();
 
 		paymentMethodRepo.save(pm1);
 		paymentMethodRepo.save(pm2);
@@ -91,6 +94,17 @@ class PaymentRepoTests {
 	void findOneTest() {
 		Long ticketNum = 2L;
 		Payment payment = paymentRepo.findByTicketNum(ticketNum).get();
+
+		assert payment.getTicket().getTicketNum().equals(ticketNum);
+	}
+
+	@Test
+	void findOneByNumAndStateTest() {
+		Long ticketNum = 4L;
+
+		Payment payment = paymentRepo.findByTicketNumAndState(ticketNum, PayState.Y).orElseThrow(()->{
+			throw new ResourceNotFoundException("결제된 티켓이 아닙니다.");
+		});
 
 		assert payment.getTicket().getTicketNum().equals(ticketNum);
 	}
