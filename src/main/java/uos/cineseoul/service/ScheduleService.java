@@ -53,9 +53,9 @@ public class ScheduleService {
         return getPrintDTO(schedule);
     }
 
-    // 그 날에 해당하는 상영일정 불러오기
+    // 특정 날짜에 해당하는 상영일정 불러오기
     public List<PrintScheduleDTO> findByDate(LocalDateTime time) {
-        // 오늘의 상영일정 검색
+        // 특정 날짜의 상영일정 검색
         LocalDateTime startDatetime = LocalDateTime.of(time.toLocalDate(), time.toLocalTime().of(0,0,0));
         LocalDateTime endDatetime = LocalDateTime.of(time.toLocalDate(), time.toLocalTime().of(23,59,59));
 
@@ -69,7 +69,23 @@ public class ScheduleService {
         });
         return getPrintDTOList(scheduleList);
     }
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+
+    // 특정 영화및 특정 날짜의 상영일정 불러오기
+//    public List<PrintScheduleDTO> findByMovieAndDate(LocalDateTime time, Long movieNum) {
+//        // 특정 날짜의 상영일정 검색
+//        LocalDateTime startDatetime = LocalDateTime.of(time.toLocalDate(), time.toLocalTime().of(0,0,0));
+//        LocalDateTime endDatetime = LocalDateTime.of(time.toLocalDate(), time.toLocalTime().of(23,59,59));
+//
+//        List<Schedule> scheduleList = scheduleRepo.findByMovieNumAndDateBetween(startDatetime, endDatetime, movieNum);
+//        return getPrintDTOList(scheduleList);
+//    }
+
+    // 특정 영화의 상영일정 불러오기
+//    public List<PrintScheduleDTO> findByMovie(Long movieNum) {
+//        List<Schedule> scheduleList = scheduleRepo.findByMovieNum(movieNum);
+//        return getPrintDTOList(scheduleList);
+//    }
+
     public void checkDuplicate(LocalDateTime schedTime, Long screenNum){
         if(scheduleRepo.findBySchedTimeAndScreenNum(schedTime, screenNum).isPresent()){
             throw new DuplicateKeyException("해당 상영관과 시간의 상영일정이 존재합니다.");
