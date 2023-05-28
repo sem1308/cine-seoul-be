@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,5 +23,6 @@ public class Genre {
     private String name;
 
     @OneToMany(mappedBy = "genre")
-    private List<MovieGenre> movieGenreList;
+    @Builder.Default
+    private List<MovieGenre> movieGenreList = new ArrayList<>();
 }

@@ -12,6 +12,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class MovieGenreId implements Serializable {
-    private Movie movie;
-    private Genre genre;
+    private Long movie;
+    private String genre;
 }
