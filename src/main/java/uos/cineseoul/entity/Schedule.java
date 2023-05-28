@@ -37,8 +37,8 @@ public class Schedule {
     @JoinColumn(name = "SCREEN_NUM", nullable = false)
     private Screen screen;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "MOVIE_NUM")
-//    private Movie movie;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MOVIE_NUM")
+    private Movie movie;
     /* */
 }
