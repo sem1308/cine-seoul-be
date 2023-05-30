@@ -4,6 +4,7 @@ import lombok.*;
 import uos.cineseoul.dto.insert.InsertScheduleDTO;
 import uos.cineseoul.dto.insert.InsertSeatDTO;
 import uos.cineseoul.entity.Screen;
+import uos.cineseoul.entity.movie.Movie;
 
 import java.time.LocalDateTime;
 
@@ -19,8 +20,10 @@ public class CreateScheduleDTO {
 
     private Long screenNum;
 
-    public InsertScheduleDTO toInsertDTO(Screen screen){
-        InsertScheduleDTO insertDTO = InsertScheduleDTO.builder().schedTime(schedTime).order(order).screen(screen).build();
+    private Long movieNum;
+
+    public InsertScheduleDTO toInsertDTO(Screen screen, Movie movie){
+        InsertScheduleDTO insertDTO = InsertScheduleDTO.builder().schedTime(schedTime).order(order).movie(movie).screen(screen).build();
 
         return insertDTO;
     }
