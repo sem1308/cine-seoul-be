@@ -97,11 +97,11 @@ public class PaymentService {
             throw new ResourceNotFoundException(paymentDTO.getPaymentMethodCode() +"인 결제 방법이 없습니다.");
         });
 
-        switch (pm.getPaymentMethodCode()){
-            case A000:
+        switch (pm.getPaymentMethodCode().toString().indexOf(0)){
+            case 'A':
                 accountService.payByAccountNum(paymentDTO.getPrice(),paymentDTO.getAccountNum());
                 break;
-            case C000:
+            case 'C':
                 accountService.payByCardNum(paymentDTO.getPrice(),user.getName(),paymentDTO.getCardNum());
                 break;
         }
