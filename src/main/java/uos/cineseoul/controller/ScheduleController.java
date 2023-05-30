@@ -15,6 +15,7 @@ import uos.cineseoul.entity.Schedule;
 import uos.cineseoul.entity.Screen;
 import uos.cineseoul.service.ScheduleService;
 import uos.cineseoul.service.ScreenService;
+import uos.cineseoul.service.movie.MovieService;
 import uos.cineseoul.utils.ReturnMessage;
 import uos.cineseoul.utils.enums.StatusEnum;
 
@@ -29,10 +30,12 @@ public class ScheduleController {
 
     private final ScheduleService scheduleService;
     private final ScreenService screenService;
+    private final MovieService movieService;
     @Autowired
-    public ScheduleController(ScheduleService scheduleService, ScreenService screenService) {
+    public ScheduleController(ScheduleService scheduleService, ScreenService screenService, MovieService movieService) {
         this.scheduleService = scheduleService;
         this.screenService = screenService;
+        this.movieService = movieService;
     }
 
     @GetMapping()
@@ -62,23 +65,24 @@ public class ScheduleController {
     @GetMapping("/movie/{movieNum}")
     @ApiOperation(value = "특정 영화의 상영일정 조회", protocols = "http")
     public ResponseEntity<List<PrintScheduleDTO>> lookUpScheduleListByMovie(@PathVariable("movieNum") Long movieNum) {
-        List<PrintScheduleDTO> scheduleList = scheduleService.findByMovie(movieNum);
-        return new ResponseEntity<>(scheduleList, HttpStatus.OK);
+        List<Schedule> scheduleList = scheduleService.findByMovie(movieNum);
+        return new ResponseEntity<>(scheduleService.getPrintDTOList(scheduleList), HttpStatus.OK);
     }
 
     @GetMapping("/movie")
     @ApiOperation(value = "특정 영화와 특정 날짜의 상영일정 조회", protocols = "http")
     public ResponseEntity<List<PrintScheduleDTO>> lookUpScheduleListByMovieAndDate(@RequestParam(value="movieNum", required = true) Long movieNum,
                                                                                   @ApiParam(value = "yyyy-MM-dd", required = true) @RequestParam(value="schedTime", required = true) String schedTime) {
-        List<PrintScheduleDTO> scheduleList = scheduleService.findByMovie(movieNum);
-        return new ResponseEntity<>(scheduleList, HttpStatus.OK);
+        LocalDateTime st = LocalDateTime.of(LocalDate.parse(schedTime), LocalTime.of(0,0,0));
+        List<Schedule> scheduleList = scheduleService.findByMovieAndDate(movieNum, st);
+        return new ResponseEntity<>(scheduleService.getPrintDTOList(scheduleList), HttpStatus.OK);
     }
 
 
     @PostMapping()
     @ApiOperation(value = "상영일정 등록", protocols = "http")
     public ResponseEntity<ReturnMessage> register(@RequestBody CreateScheduleDTO scheduleDTO) {
-        Schedule schedule = scheduleService.insert(scheduleDTO.toInsertDTO(screenService.findOneByNum(scheduleDTO.getScreenNum())));
+        Schedule schedule = scheduleService.insert(scheduleDTO.toInsertDTO(screenService.findOneByNum(scheduleDTO.getScreenNum()),movieService.findMovie(scheduleDTO.getMovieNum())));
         ReturnMessage<Long> msg = new ReturnMessage<>();
         msg.setMessage("상영일정 등록이 완료되었습니다.");
         msg.setData(schedule.getSchedNum());
