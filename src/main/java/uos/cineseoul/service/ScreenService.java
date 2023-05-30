@@ -6,13 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import uos.cineseoul.dto.InsertScreenDTO;
-import uos.cineseoul.dto.PrintScreenDTO;
-import uos.cineseoul.dto.UpdateScreenDTO;
-import uos.cineseoul.entity.Screen;
+import uos.cineseoul.dto.insert.InsertScreenDTO;
+import uos.cineseoul.dto.response.PrintScreenDTO;
+import uos.cineseoul.dto.update.UpdateScreenDTO;
 import uos.cineseoul.entity.Screen;
 import uos.cineseoul.exception.ResourceNotFoundException;
-import uos.cineseoul.mapper.ScreenMapper;
 import uos.cineseoul.mapper.ScreenMapper;
 import uos.cineseoul.repository.ScreenRepository;
 

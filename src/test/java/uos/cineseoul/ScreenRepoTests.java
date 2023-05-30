@@ -4,13 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import uos.cineseoul.dto.InsertScreenDTO;
-import uos.cineseoul.dto.UpdateScreenDTO;
+import uos.cineseoul.dto.insert.InsertScreenDTO;
+import uos.cineseoul.dto.update.UpdateScreenDTO;
 import uos.cineseoul.entity.Screen;
-import uos.cineseoul.entity.User;
 import uos.cineseoul.mapper.ScreenMapper;
 import uos.cineseoul.repository.ScreenRepository;
-import uos.cineseoul.repository.UserRepository;
 
 import javax.transaction.Transactional;
 

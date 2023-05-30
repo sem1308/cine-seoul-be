@@ -5,13 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
-import uos.cineseoul.dto.InsertUserDTO;
-import uos.cineseoul.dto.PrintUserDTO;
-import uos.cineseoul.dto.UpdateUserDTO;
-import uos.cineseoul.entity.User;
-import uos.cineseoul.exception.ResourceNotFoundException;
-import uos.cineseoul.mapper.UserMapper;
-import uos.cineseoul.repository.UserRepository;
+import uos.cineseoul.dto.insert.InsertUserDTO;
+import uos.cineseoul.dto.response.PrintUserDTO;
+import uos.cineseoul.dto.update.UpdateUserDTO;
 import uos.cineseoul.service.UserService;
 
 import javax.transaction.Transactional;

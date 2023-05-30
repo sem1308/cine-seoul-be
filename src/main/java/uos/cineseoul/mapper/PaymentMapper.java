@@ -1,12 +1,9 @@
 package uos.cineseoul.mapper;
 
-import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
-import uos.cineseoul.dto.InsertPaymentDTO;
-import uos.cineseoul.dto.PrintPaymentDTO;
+import uos.cineseoul.dto.insert.InsertPaymentDTO;
+import uos.cineseoul.dto.response.PrintPaymentDTO;
 import uos.cineseoul.entity.Payment;
 
 @Mapper(componentModel = "spring")

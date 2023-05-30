@@ -5,12 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
-import uos.cineseoul.dto.InsertScheduleDTO;
-import uos.cineseoul.dto.PrintScheduleDTO;
-import uos.cineseoul.dto.PrintScreenDTO;
-import uos.cineseoul.dto.UpdateScheduleDTO;
-import uos.cineseoul.entity.Schedule;
-import uos.cineseoul.entity.Screen;
+import uos.cineseoul.dto.insert.InsertScheduleDTO;
+import uos.cineseoul.dto.response.PrintScheduleDTO;
+import uos.cineseoul.dto.response.PrintScreenDTO;
+import uos.cineseoul.dto.update.UpdateScheduleDTO;
 import uos.cineseoul.service.ScheduleService;
 import uos.cineseoul.service.ScreenService;
 

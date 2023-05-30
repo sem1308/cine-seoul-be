@@ -1,16 +1,13 @@
 package uos.cineseoul.repository;
 
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import uos.cineseoul.entity.Movie;
+import uos.cineseoul.entity.movie.Movie;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest

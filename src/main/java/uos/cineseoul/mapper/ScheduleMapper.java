@@ -2,9 +2,9 @@ package uos.cineseoul.mapper;
 
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
-import uos.cineseoul.dto.InsertScheduleDTO;
-import uos.cineseoul.dto.PrintScheduleDTO;
-import uos.cineseoul.dto.UpdateScheduleDTO;
+import uos.cineseoul.dto.insert.InsertScheduleDTO;
+import uos.cineseoul.dto.response.PrintScheduleDTO;
+import uos.cineseoul.dto.update.UpdateScheduleDTO;
 import uos.cineseoul.entity.Schedule;
 
 @Mapper(componentModel = "spring")

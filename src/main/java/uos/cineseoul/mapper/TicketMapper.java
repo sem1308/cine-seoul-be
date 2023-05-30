@@ -2,9 +2,9 @@ package uos.cineseoul.mapper;
 
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
-import uos.cineseoul.dto.InsertTicketDTO;
-import uos.cineseoul.dto.PrintTicketDTO;
-import uos.cineseoul.dto.UpdateTicketDTO;
+import uos.cineseoul.dto.insert.InsertTicketDTO;
+import uos.cineseoul.dto.response.PrintTicketDTO;
+import uos.cineseoul.dto.update.UpdateTicketDTO;
 import uos.cineseoul.entity.Ticket;
 
 @Mapper(componentModel = "spring")
