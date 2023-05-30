@@ -33,27 +33,27 @@ public class SeatService {
         this.scheduleRepo = scheduleRepo;
     }
 
-    public List<PrintSeatDTO> findAll() {
+    public List<Seat> findAll() {
         List<Seat> seatList = seatRepo.findAll();
         if (seatList.isEmpty()) {
             throw new ResourceNotFoundException("좌석이 없습니다.");
         }
-        return getPrintDTOList(seatList);
+        return seatList;
     }
 
-    public List<PrintSeatDTO> findAllByScreenNum(Long screenNum){
+    public List<Seat> findAllByScreenNum(Long screenNum){
         List<Seat> seatList = seatRepo.findByScreenNum(screenNum);
         if (seatList.isEmpty()) {
             throw new ResourceNotFoundException("스크린 "+screenNum+"에 좌석이 없습니다.");
         }
-        return getPrintDTOList(seatList);
+        return seatList;
     }
 
-    public PrintSeatDTO findOneByNum(Long num) {
+    public Seat findOneByNum(Long num) {
         Seat seat = seatRepo.findById(num).orElseThrow(()->{
             throw new ResourceNotFoundException("번호가 "+ num +"인 좌석이 없습니다.");
         });
-        return getPrintDTO(seat);
+        return seat;
     }
 
     public void checkDuplicate(Long screenNum, String row, String col){
@@ -69,13 +69,13 @@ public class SeatService {
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
-    public PrintSeatDTO insert(InsertSeatDTO seatDTO) {
-        // 좌석 중복 체크
-        checkDuplicate(seatDTO.getScreenNum(), seatDTO.getRow(), seatDTO.getCol());
-        // 상영일정 확인
-        checkSchedule(seatDTO.getScreenNum());
+    public Seat insert(InsertSeatDTO seatDTO) {
         // 상영관 불러오기
-        Screen screen = screenRepo.findById(seatDTO.getScreenNum()).get();
+        Screen screen = seatDTO.getScreen();
+        // 좌석 중복 체크
+        checkDuplicate(screen.getScreenNum(), seatDTO.getRow(), seatDTO.getCol());
+        // 상영일정 확인
+        checkSchedule(screen.getScreenNum());
 
         // 스크린의 총 좌석 값 1 증가
         screen.setTotalSeat(screen.getTotalSeat() + 1);
@@ -87,42 +87,47 @@ public class SeatService {
 
         Seat newSeat = seatRepo.save(seat);
 
-        return getPrintDTO(newSeat);
+        return newSeat;
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
-    public PrintSeatDTO update(UpdateSeatDTO seatDTO) {
-        checkDuplicate(seatDTO.getScreenNum(), seatDTO.getRow(), seatDTO.getCol());
+    public Seat update(Long seatNum, UpdateSeatDTO seatDTO) {
+        Seat seat = findOneByNum(seatNum);
 
-        Seat seat = seatRepo.findById(seatDTO.getSeatNum()).orElseThrow(() -> new ResourceNotFoundException("번호가 "+seatDTO.getSeatNum()+"인 좌석이 존재하지 않습니다."));
-        SeatMapper.INSTANCE.updateFromDto(seatDTO, seat);
-        // 상영관 교체
-        if(seatDTO.getScreenNum()!=null){
-            // 상영일정 확인
-            checkSchedule(seatDTO.getScreenNum());
-            Screen screenFrom = seat.getScreen();
-            Screen screenTo = screenRepo.findById(seatDTO.getScreenNum()).get();
-            seat.setScreen(screenTo);
-            // 기존 스크린의 총 좌석 값 1 감소
-            screenFrom.setTotalSeat(screenFrom.getTotalSeat() - 1);
-            // 변환된 스크린의 총 좌석 값 1 증가
-            screenTo.setTotalSeat(screenTo.getTotalSeat() + 1);
-            screenRepo.save(screenFrom);
-            screenRepo.save(screenTo);
+        // 좌석 상영관 or 행 or 열 변경
+        if(seatDTO.getScreen()!=null && seatDTO.getRow()!=null && seatDTO.getCol()!=null){
+            // 중복 자리 확인
+            checkDuplicate(seatDTO.getScreen().getScreenNum(), seatDTO.getRow(), seatDTO.getCol());
+            // 상영관 교체
+            if(seatDTO.getScreen().getScreenNum().equals(seat.getScreen().getScreenNum())){
+                // 상영일정 확인
+                checkSchedule(seat.getScreen().getScreenNum());
+
+                Screen screenFrom = seat.getScreen();
+                Screen screenTo = seatDTO.getScreen();
+                // 기존 스크린의 총 좌석 값 1 감소
+                screenFrom.setTotalSeat(screenFrom.getTotalSeat() - 1);
+                // 변환된 스크린의 총 좌석 값 1 증가
+                screenTo.setTotalSeat(screenTo.getTotalSeat() + 1);
+                screenRepo.save(screenFrom);
+                screenRepo.save(screenTo);
+            }
         }
+
+        SeatMapper.INSTANCE.updateFromDto(seatDTO, seat);
 
         Seat updatedSeat = seatRepo.save(seat);
 
-        return getPrintDTO(updatedSeat);
+        return updatedSeat;
     }
 
-    private PrintSeatDTO getPrintDTO(Seat seat){
+    public PrintSeatDTO getPrintDTO(Seat seat){
         PrintSeatDTO seatDTO = SeatMapper.INSTANCE.toDTO(seat);
         seatDTO.setSeatPrice(seatDTO.getSeatGrade().getPrice());
         return seatDTO;
     }
 
-    private List<PrintSeatDTO> getPrintDTOList(List<Seat> seatList){
+    public List<PrintSeatDTO> getPrintDTOList(List<Seat> seatList){
         List<PrintSeatDTO> pSeatList = new ArrayList<>();
         seatList.forEach(seat -> {
             pSeatList.add(getPrintDTO(seat));

@@ -29,31 +29,31 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public List<PrintUserDTO> findAll() {
+    public List<User> findAll() {
         List<User> userList = userRepo.findAll();
 
         if (userList.isEmpty()) {
             throw new ResourceNotFoundException("사용자가 없습니다.");
         }
 
-        return getPrintDTOList(userList);
+        return userList;
     }
 
-    public PrintUserDTO findOneByNum(Long num) {
+    public User findOneByNum(Long num) {
         User user = userRepo.findById(num).orElseThrow(()->{
             throw new ResourceNotFoundException("번호가 "+ num +"인 사용자가 없습니다.");
         });
-        return getPrintDTO(user);
+        return user;
     }
 
-    public PrintUserDTO findOneById(String id) {
+    public User findOneById(String id) {
         User user = userRepo.findByUserId(id).orElseThrow(()->{
             throw new ResourceNotFoundException("아이디가 "+id+"인 사용자가 없습니다.");
         });
-        return getPrintDTO(user);
+        return user;
     }
 
-    public PrintUserDTO login(@NotNull Map<String, String> loginInfo) {
+    public User login(@NotNull Map<String, String> loginInfo) {
         User user = userRepo.findByUserId(loginInfo.get("id")).orElseThrow(() -> {
             throw new ResourceNotFoundException("아이디 또는 비밀번호가 틀렸습니다.");
         });
@@ -63,7 +63,7 @@ public class UserService {
             throw new ResourceNotFoundException("아이디 또는 비밀번호가 틀렸습니다.");
         }
 
-        return getPrintDTO(user);
+        return user;
     }
 
     public void checkDuplicate(String id){
@@ -77,7 +77,7 @@ public class UserService {
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
-    public PrintUserDTO insert(InsertUserDTO userDTO) {
+    public User insert(InsertUserDTO userDTO) {
         User user = UserMapper.INSTANCE.toEntity(userDTO);
 
         checkDuplicate(user.getId());
@@ -89,10 +89,10 @@ public class UserService {
 
         User newUser = userRepo.save(user);
 
-        return getPrintDTO(newUser);
+        return newUser;
     }
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
-    public PrintUserDTO update(UpdateUserDTO userDTO) {
+    public User update(UpdateUserDTO userDTO) {
         if(userDTO.getUserNum()!=null){
             userDTO.setPw(passwordEncoder.encode(userDTO.getPw()));
         }
@@ -100,14 +100,14 @@ public class UserService {
         UserMapper.INSTANCE.updateFromDto(userDTO, user);
         User updatedUser = userRepo.save(user);
 
-        return getPrintDTO(updatedUser);
+        return updatedUser;
     }
 
-    private PrintUserDTO getPrintDTO(User user){
+    public PrintUserDTO getPrintDTO(User user){
         return UserMapper.INSTANCE.toDTO(user);
     }
 
-    private List<PrintUserDTO> getPrintDTOList(List<User> userList){
+    public List<PrintUserDTO> getPrintDTOList(List<User> userList){
         List<PrintUserDTO> pUserList = new ArrayList<>();
         userList.forEach(user -> {
             pUserList.add(getPrintDTO(user));

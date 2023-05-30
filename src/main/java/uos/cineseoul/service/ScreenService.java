@@ -26,26 +26,26 @@ public class ScreenService {
         this.screenRepo = screenRepo;
     }
 
-    public List<PrintScreenDTO> findAll() {
+    public List<Screen> findAll() {
         List<Screen> screenList = screenRepo.findAll();
         if (screenList.isEmpty()) {
             throw new ResourceNotFoundException("상영관이 없습니다.");
         }
-        return getPrintDTOList(screenList);
+        return screenList;
     }
 
-    public PrintScreenDTO findOneByNum(Long num) {
+    public Screen findOneByNum(Long num) {
         Screen screen = screenRepo.findById(num).orElseThrow(()->{
             throw new ResourceNotFoundException("번호가 "+ num +"인 상영관이 없습니다.");
         });
-        return getPrintDTO(screen);
+        return screen;
     }
 
-    public PrintScreenDTO findOneByName(String name) {
+    public Screen findOneByName(String name) {
         Screen screen = screenRepo.findByName(name).orElseThrow(()->{
             throw new ResourceNotFoundException("상영관 "+ name +"이 없습니다.");
         });
-        return getPrintDTO(screen);
+        return screen;
     }
 
     public void checkDuplicate(String screenName){
@@ -55,31 +55,31 @@ public class ScreenService {
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public PrintScreenDTO insert(InsertScreenDTO screenDTO) {
+    public Screen insert(InsertScreenDTO screenDTO) {
         checkDuplicate(screenDTO.getName());
         Screen screen = ScreenMapper.INSTANCE.toEntity(screenDTO);
 
         Screen savedScreen = screenRepo.save(screen);
 
-        return getPrintDTO(savedScreen);
+        return savedScreen;
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public PrintScreenDTO update(UpdateScreenDTO screenDTO) {
+    public Screen update(UpdateScreenDTO screenDTO) {
         checkDuplicate(screenDTO.getName());
         Screen screen = screenRepo.findById(screenDTO.getScreenNum()).get();
         ScreenMapper.INSTANCE.updateFromDto(screenDTO, screen);
 
         Screen savedScreen = screenRepo.save(screen);
 
-        return getPrintDTO(savedScreen);
+        return savedScreen;
     }
 
-    private PrintScreenDTO getPrintDTO(Screen screen){
+    public PrintScreenDTO getPrintDTO(Screen screen){
         return ScreenMapper.INSTANCE.toDTO(screen);
     }
 
-    private List<PrintScreenDTO> getPrintDTOList(List<Screen> screenList){
+    public List<PrintScreenDTO> getPrintDTOList(List<Screen> screenList){
         List<PrintScreenDTO> pScreenList = new ArrayList<>();
         screenList.forEach(screen -> {
             pScreenList.add(getPrintDTO(screen));
