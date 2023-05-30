@@ -8,9 +8,8 @@ import uos.cineseoul.dto.insert.InsertPaymentDTO;
 import uos.cineseoul.entity.*;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.PaymentMapper;
-import uos.cineseoul.repository.*;
 import uos.cineseoul.utils.enums.PayState;
-import uos.cineseoul.utils.enums.PaymentMethodType;
+import uos.cineseoul.utils.enums.PaymentMethod;
 import uos.cineseoul.utils.enums.TicketState;
 
 import javax.transaction.Transactional;
@@ -22,8 +21,6 @@ import java.util.List;
 class PaymentRepoTests {
 	@Autowired
 	PaymentRepository paymentRepo;
-	@Autowired
-	PaymentMethodRepository paymentMethodRepo;
 	@Autowired
 	TicketRepository ticketRepo;
 	@Autowired
@@ -39,12 +36,10 @@ class PaymentRepoTests {
 		Long ticketNum = 2L;
 		Ticket ticket = ticketRepo.findById(ticketNum).get();
 
-		PaymentMethodType paymentMethodCode = PaymentMethodType.C00;
-
-		PaymentMethod pm = paymentMethodRepo.findById(paymentMethodCode).orElse(null);
+		PaymentMethod paymentMethodCode = PaymentMethod.C00;
 
 		Payment payment = Payment.builder().ticket(ticket).approvalNum("0XASDWU123")
-				.createdAt(createdAt).price(price).user(user).paymentMethod(pm).build();
+				.createdAt(createdAt).price(price).user(user).paymentMethod(paymentMethodCode).build();
 
 		Payment savedPayment = paymentRepo.save(payment);
 	}
@@ -56,40 +51,25 @@ class PaymentRepoTests {
 
 		Long userNum = 1L;
 		Long ticketNum = 1L;
-		PaymentMethodType paymentMethodCode = PaymentMethodType.C00;
-
-		InsertPaymentDTO paymentDTO = InsertPaymentDTO.builder().ticketNum(ticketNum)
-				.price(price).userNum(userNum).paymentMethodCode(paymentMethodCode).build();
-
-		Payment payment = PaymentMapper.INSTANCE.toEntity(paymentDTO);
-
-		if(paymentDTO.getPaymentMethodCode().equals(PaymentMethodType.C00)){
-			payment.setApprovalNum("0XASDWU123");
-		}
+		PaymentMethod paymentMethod = PaymentMethod.C00;
 
 		User user = userRepo.findById(userNum).get();
 		Ticket ticket = ticketRepo.findById(ticketNum).get();
-		PaymentMethod pm = paymentMethodRepo.findById(paymentMethodCode).get();
 
-		payment.setUser(user);
-		payment.setTicket(ticket);
-		payment.setPaymentMethod(pm);
+		InsertPaymentDTO paymentDTO = InsertPaymentDTO.builder().ticket(ticket)
+				.price(price).user(user).paymentMethod(paymentMethod).build();
+
+		Payment payment = PaymentMapper.INSTANCE.toEntity(paymentDTO);
+		if(payment.getPaymentMethod().equals(PaymentMethod.C00)){
+			payment.setApprovalNum("0XASDWU123");
+		}
 
 		Payment savedPayment = paymentRepo.save(payment);
 
-		ticket.setIssued(TicketState.Y);
+		ticket.setTicketState(TicketState.Y);
 		ticketRepo.save(ticket);
 	}
 
-	@Test
-	//@Transactional
-	void generatePaymentMethodTest(){
-		PaymentMethod pm1 = PaymentMethod.builder().paymentMethodCode(PaymentMethodType.C00).name("card").build();
-		PaymentMethod pm2 = PaymentMethod.builder().paymentMethodCode(PaymentMethodType.A000).name("account").build();
-
-		paymentMethodRepo.save(pm1);
-		paymentMethodRepo.save(pm2);
-	}
 
 	@Test
 	void findOneTest() {
