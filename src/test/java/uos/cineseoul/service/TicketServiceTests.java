@@ -26,8 +26,6 @@ class TicketServiceTests {
 	UserService userService;
 	@Autowired
 	ScheduleService scheduleService;
-	@Autowired
-	SeatService seatService;
 	@Test
 	@Transactional
 	//@Rollback(false)
