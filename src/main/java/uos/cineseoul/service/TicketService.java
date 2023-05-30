@@ -92,7 +92,7 @@ public class TicketService {
     public Ticket update(Long ticketNum, UpdateTicketDTO ticketDTO) {
         Ticket ticket = findOneByNum(ticketNum);
         // 이미 취소된 티켓인지 확인
-        if(ticket.getIssued().equals(TicketState.C)){
+        if(ticket.getTicketState().equals(TicketState.C)){
             throw new ForbiddenException("이미 취소된 티켓입니다.");
         }
         
@@ -107,7 +107,7 @@ public class TicketService {
     public Ticket changeSeat(Long ticketNum, InsertTicketDTO insertTicketDTO) {
         Ticket ticket = findOneByNum(ticketNum);
         // 이미 취소된 티켓인지 확인
-        if(ticket.getIssued().equals(TicketState.C)){
+        if(ticket.getTicketState().equals(TicketState.C)){
             throw new ForbiddenException("이미 취소된 티켓입니다.");
         }
 
@@ -124,7 +124,7 @@ public class TicketService {
         if(p.isPresent()){
             Payment payment = p.get();
             // 환불
-            switch (payment.getPaymentMethod().getPaymentMethodCode().toString().charAt(0)){
+            switch (payment.getPaymentMethod().toString().charAt(0)){
                 case 'A':
                     accountService.refundByAccountNum(payment.getPrice(),payment.getAccountNum());
                     break;
