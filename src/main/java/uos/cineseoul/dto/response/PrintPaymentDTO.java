@@ -1,6 +1,7 @@
 package uos.cineseoul.dto.response;
 
 import lombok.*;
+import uos.cineseoul.utils.enums.PaymentMethod;
 
 import java.time.LocalDateTime;
 
@@ -20,5 +21,5 @@ public class PrintPaymentDTO {
 
     private Long ticketNum;
 
-    private PrintPaymentMethodDTO paymentMethod;
+    private PaymentMethod paymentMethod;
 }
