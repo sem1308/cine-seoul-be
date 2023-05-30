@@ -2,15 +2,13 @@ package uos.cineseoul.controller;
 
 
 import io.swagger.annotations.ApiOperation;
-import org.apache.logging.log4j.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uos.cineseoul.dto.InsertScreenDTO;
-import uos.cineseoul.dto.PrintScreenDTO;
-import uos.cineseoul.dto.UpdateScreenDTO;
+import uos.cineseoul.dto.insert.InsertScreenDTO;
+import uos.cineseoul.dto.response.PrintScreenDTO;
+import uos.cineseoul.dto.update.UpdateScreenDTO;
 import uos.cineseoul.service.ScreenService;
 import uos.cineseoul.utils.ReturnMessage;
 import uos.cineseoul.utils.enums.StatusEnum;

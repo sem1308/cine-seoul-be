@@ -5,12 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
-import uos.cineseoul.dto.InsertScreenDTO;
-import uos.cineseoul.dto.PrintScreenDTO;
-import uos.cineseoul.dto.UpdateScreenDTO;
-import uos.cineseoul.entity.Screen;
-import uos.cineseoul.mapper.ScreenMapper;
-import uos.cineseoul.repository.ScreenRepository;
+import uos.cineseoul.dto.insert.InsertScreenDTO;
+import uos.cineseoul.dto.response.PrintScreenDTO;
+import uos.cineseoul.dto.update.UpdateScreenDTO;
 import uos.cineseoul.service.ScreenService;
 
 import javax.transaction.Transactional;

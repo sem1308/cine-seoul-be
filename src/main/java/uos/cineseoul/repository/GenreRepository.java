@@ -1,7 +1,7 @@
 package uos.cineseoul.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import uos.cineseoul.entity.Genre;
+import uos.cineseoul.entity.movie.Genre;
 
 import java.util.Optional;
 

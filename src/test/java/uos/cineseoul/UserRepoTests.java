@@ -4,12 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import uos.cineseoul.dto.InsertUserDTO;
-import uos.cineseoul.dto.UpdateUserDTO;
-import uos.cineseoul.entity.Ticket;
+import uos.cineseoul.dto.insert.InsertUserDTO;
+import uos.cineseoul.dto.update.UpdateUserDTO;
 import uos.cineseoul.entity.User;
 import uos.cineseoul.mapper.UserMapper;
-import uos.cineseoul.repository.TicketRepository;
 import uos.cineseoul.repository.UserRepository;
 
 import javax.transaction.Transactional;

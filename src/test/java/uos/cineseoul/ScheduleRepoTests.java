@@ -4,9 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import uos.cineseoul.dto.InsertScheduleDTO;
-import uos.cineseoul.dto.InsertScreenDTO;
-import uos.cineseoul.dto.UpdateScheduleDTO;
+import uos.cineseoul.dto.insert.InsertScheduleDTO;
+import uos.cineseoul.dto.insert.InsertScreenDTO;
+import uos.cineseoul.dto.update.UpdateScheduleDTO;
 import uos.cineseoul.entity.Schedule;
 
 import java.text.ParseException;
@@ -22,7 +22,6 @@ import uos.cineseoul.mapper.ScreenMapper;
 import uos.cineseoul.repository.ScheduleRepository;
 import uos.cineseoul.repository.ScheduleSeatRepository;
 import uos.cineseoul.repository.ScreenRepository;
-import uos.cineseoul.repository.SeatRepository;
 
 import javax.transaction.Transactional;
 import java.time.LocalTime;
