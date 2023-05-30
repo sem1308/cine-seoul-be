@@ -1,6 +1,7 @@
 package uos.cineseoul.dto.update;
 
 import lombok.*;
+import uos.cineseoul.entity.Screen;
 
 import java.time.LocalDateTime;
 
@@ -10,11 +11,9 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 public class UpdateScheduleDTO {
-    private Long schedNum;
-
     private LocalDateTime schedTime;
 
     private Integer order;
 
-    private Long screenNum;
+    private Screen screen;
 }

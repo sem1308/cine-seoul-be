@@ -13,14 +13,11 @@ import javax.validation.constraints.Size;
 @Getter
 @Builder
 public class UpdateTicketDTO {
-    private Long ticketNum ;
-
+    /* 티켓 변경 가능 속성 */
+    // 판매 가격
+    // 티켓 상태
     private Integer salePrice;
 
     @Enumerated(EnumType.STRING)
-    private TicketState issued;
-
-    private Long schedNum;
-
-    private Long seatNum;
+    private TicketState ticketState;
 }

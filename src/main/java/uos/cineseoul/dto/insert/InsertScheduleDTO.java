@@ -19,5 +19,5 @@ public class InsertScheduleDTO {
 
     private Integer order;
 
-    private Long screenNum;
+    private Screen screen;
 }
