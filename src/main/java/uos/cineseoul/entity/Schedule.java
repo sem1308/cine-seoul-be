@@ -1,6 +1,7 @@
 package uos.cineseoul.entity;
 
 import lombok.*;
+import uos.cineseoul.entity.movie.Movie;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
