@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import uos.cineseoul.utils.enums.PayState;
+import uos.cineseoul.utils.enums.PaymentMethod;
 
 @Entity(name = "PAYMENT")
 @AllArgsConstructor()
@@ -42,8 +43,12 @@ public class Payment{
     private String cardNum;
     /* */
 
+    @Column(name = "PAMENT_METHOD", nullable = false, length = 4)
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+
     @CreationTimestamp
-    @Column(name="CREATED_AT", nullable = false)
+    @Column(name="PAYED_DATE", nullable = false)
     private LocalDateTime createdAt;
 
     /* Foreign Key */
@@ -54,9 +59,5 @@ public class Payment{
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TICKET_NUM", nullable = false)
     private Ticket ticket;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PAMENT_METHOD_CODE", nullable = false)
-    private PaymentMethod paymentMethod;
     /* */
 }
