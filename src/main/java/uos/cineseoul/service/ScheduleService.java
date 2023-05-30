@@ -75,19 +75,19 @@ public class ScheduleService {
     }
 
     // 특정 영화및 특정 날짜의 상영일정 불러오기
-    public List<PrintScheduleDTO> findByMovieAndDate(LocalDateTime time, Long movieNum) {
+    public List<Schedule> findByMovieAndDate(Long movieNum, LocalDateTime time) {
         // 특정 날짜의 상영일정 검색
         LocalDateTime startDatetime = LocalDateTime.of(time.toLocalDate(), time.toLocalTime().of(0,0,0));
         LocalDateTime endDatetime = LocalDateTime.of(time.toLocalDate(), time.toLocalTime().of(23,59,59));
 
         List<Schedule> scheduleList = scheduleRepo.findByMovieNumAndDateBetween(startDatetime, endDatetime, movieNum);
-        return getPrintDTOList(scheduleList);
+        return scheduleList;
     }
 
     //특정 영화의 상영일정 불러오기
-    public List<PrintScheduleDTO> findByMovie(Long movieNum) {
+    public List<Schedule> findByMovie(Long movieNum) {
         List<Schedule> scheduleList = scheduleRepo.findByMovieNum(movieNum);
-        return getPrintDTOList(scheduleList);
+        return scheduleList;
     }
 
     public void checkDuplicate(LocalDateTime schedTime, Long screenNum){
@@ -157,7 +157,11 @@ public class ScheduleService {
     }
 
     public PrintScheduleDTO getPrintDTO(Schedule schedule){
-        return ScheduleMapper.INSTANCE.toDTO(schedule);
+        PrintScheduleDTO printScheduleDTO = ScheduleMapper.INSTANCE.toDTO(schedule);
+        printScheduleDTO.getScheduleSeats().forEach(ss->{
+            ss.getSeat().setSeatPrice(ss.getSeat().getSeatGrade().getPrice());
+        });
+        return printScheduleDTO;
     }
 
     public List<PrintScheduleDTO> getPrintDTOList(List<Schedule> scheduleList){
