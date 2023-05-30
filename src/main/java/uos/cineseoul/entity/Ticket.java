@@ -48,5 +48,4 @@ public class Ticket{
             @JoinColumn(name = "SEAT_NUM", referencedColumnName = "SEAT_NUM")
     })
     private ScheduleSeat scheduleSeat;
-    /* */
 }

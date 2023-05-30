@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import uos.cineseoul.utils.enums.GradeType;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -25,4 +26,5 @@ public class Genre {
     @OneToMany(mappedBy = "genre")
     @Builder.Default
     private List<MovieGenre> movieGenreList = new ArrayList<>();
+
 }

@@ -26,4 +26,5 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     @Query("select p from PAYMENT p where p.ticket.ticketNum = :ticketNum and p.state= :state")
     Optional<Payment> findByTicketNumAndState(@Param("ticketNum") Long ticketNum, @Param("state") PayState state);
+
 }
