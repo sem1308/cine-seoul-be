@@ -76,7 +76,11 @@ public class ScreenService {
     }
 
     public PrintScreenDTO getPrintDTO(Screen screen){
-        return ScreenMapper.INSTANCE.toDTO(screen);
+        PrintScreenDTO printScreenDTO = ScreenMapper.INSTANCE.toDTO(screen);
+        printScreenDTO.getSeats().forEach(seat->{
+            seat.setSeatPrice(seat.getSeatGrade().getPrice());
+        });
+        return printScreenDTO;
     }
 
     public List<PrintScreenDTO> getPrintDTOList(List<Screen> screenList){
