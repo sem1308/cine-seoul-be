@@ -76,7 +76,7 @@ public class UserService {
         return passwordEncoder.matches(pw, pwEnc);
     }
 
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public User insert(InsertUserDTO userDTO) {
         User user = UserMapper.INSTANCE.toEntity(userDTO);
 
