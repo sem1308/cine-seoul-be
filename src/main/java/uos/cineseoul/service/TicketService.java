@@ -151,7 +151,6 @@ public class TicketService {
 
     public PrintTicketDTO getPrintDTO(Ticket ticket){
         PrintTicketDTO ticketDTO = TicketMapper.INSTANCE.toDTO(ticket);
-        ticketDTO.getScheduleSeat().getSchedule().getScreen().setSeats(null);
         return ticketDTO;
     }
 
