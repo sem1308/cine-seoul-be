@@ -26,7 +26,6 @@ class PaymentServiceTests {
 	@Transactional
 	void paymentTestByMapper() {
 		Integer price = 7500;
-
 		Long userNum = 1L;
 		Long ticketNum = 1L;
 		PaymentMethodType paymentMethodCode = PaymentMethodType.C000;

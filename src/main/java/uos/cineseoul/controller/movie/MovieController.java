@@ -9,6 +9,7 @@ import uos.cineseoul.dto.fix.FixMovieDTO;
 import uos.cineseoul.dto.insert.InsertMovieDTO;
 import uos.cineseoul.dto.response.PrintDetailedMovieDTO;
 import uos.cineseoul.dto.response.PrintMovieDTO;
+import uos.cineseoul.dto.update.UpdateMovieDTO;
 import uos.cineseoul.entity.movie.Movie;
 import uos.cineseoul.service.movie.MovieService;
 
@@ -88,7 +89,8 @@ public class MovieController {
     @PutMapping
     @Operation(description = "영화를 수정한다.")
     public ResponseEntity<Long> update(@RequestBody @Valid FixMovieDTO fixMovieDTO) {
-
-        return ResponseEntity.ok(1L);
+        UpdateMovieDTO updateMovieDTO = new UpdateMovieDTO(fixMovieDTO);
+        Long movieNum = movieService.update(updateMovieDTO).getMovieNum();
+        return ResponseEntity.ok(movieNum);
     }
 }
