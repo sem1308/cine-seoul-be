@@ -3,6 +3,7 @@ package uos.cineseoul.dto.insert;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import uos.cineseoul.dto.create.CreateMovieDTO;
+import uos.cineseoul.utils.enums.Is;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class InsertMovieDTO {
 
     private int runningTime;
 
-    private char isShowing;
+    private Is isShowing;
 
     private Long distNum;
 

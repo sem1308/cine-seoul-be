@@ -1,9 +1,11 @@
 package uos.cineseoul.dto.create;
 
 import lombok.Data;
+import uos.cineseoul.utils.enums.Is;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class CreateMovieDTO {
     private int runningTime;
 
     @NotNull
-    private char isShowing;
+    private Is isShowing;
 
     @NotNull
     private Long distNum;
