@@ -10,7 +10,9 @@ public class InsertDirectorDTO {
 
     private String name;
 
+    private String imgUrl;
     public InsertDirectorDTO(CreateDirectorDTO createDirectorDTO) {
         this.name = createDirectorDTO.getName();
+        this.imgUrl = createDirectorDTO.getImgUrl();
     }
 }

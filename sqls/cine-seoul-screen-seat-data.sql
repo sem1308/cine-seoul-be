@@ -1,15 +1,5 @@
--- °èÁÂ »ý¼º
-insert into account VALUES('0000000000','3000000','1234123412341234','2023-05-25','ÇÑ¼öÇÑ');
-
--- °áÁ¦¹æ¹ý »ý¼º
-insert into payment_method VALUES('C000','card');
-insert into payment_method VALUES('A000','account');
-
--- »ó¿µ°ü ¹× ÁÂ¼® »ý¼º
---set serveroutput on
-
 DECLARE
-	screen_num_st NUMBER := 1#;
+	screen_num_st NUMBER := 1;
 	screen_num_ed NUMBER := 4;
 	screen_num NUMBER;
 	screen_name VARCHAR2(100);
@@ -23,7 +13,7 @@ DECLARE
 BEGIN
     FOR screen IN screen_num_st..screen_num_ed
     LOOP
-        -- »ó¿µ°ü »ý¼º
+        -- ï¿½ó¿µ°ï¿½ ï¿½ï¿½ï¿½ï¿½
         CASE screen
             WHEN 1 THEN screen_name := 'A';
             WHEN 2 THEN screen_name := 'B';
@@ -32,12 +22,13 @@ BEGIN
             ELSE screen_name := 'U';
         END CASE;
         total_seat := r_ed * c_ed;
-        insert into screen(name,total_seat) values(screen_name,total_seat);
-        select screen_num into screen_num from screen where name=screen_name;
+        insert into screen(name,total_seat) values(screen_name,total_seat);        
+        select screen_num into screen_num from screen where name=screen_name;        
         
+        -- ï¿½Â¼ï¿½ ï¿½ï¿½ï¿½ï¿½
         FOR row IN r_st..r_ed
         LOOP
-            -- s_row ¼³Á¤
+            -- ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             CASE row
                 WHEN 1 THEN s_row := 'A';
                 WHEN 2 THEN s_row := 'B';
@@ -54,7 +45,7 @@ BEGIN
             END CASE;
             FOR s_col IN c_st..c_ed
             LOOP
-                -- seat_grade ¼³Á¤
+                -- ï¿½Â¼ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 if row < 3 or s_col < '3' or s_col > '18' then
                     seat_grade := 'C';
                 elsif row between 5 and 9 AND s_col between '5' and '16' then
@@ -63,9 +54,10 @@ BEGIN
                     seat_grade := 'B';
                 end if;
                 insert into seat(s_col,s_row,seat_grade,screen_num) values(s_col,s_row,seat_grade,screen_num);
---            DBMS_OUTPUT.PUT_LINE('»ó¿µ°ü '||screen_num || ' : ÁÂ¼®' || s_row || s_col || '('|| seat_grade || ')'||' »ý¼º');
-            END LOOP;
+--            DBMS_OUTPUT.PUT_LINE('ï¿½ó¿µ°ï¿½ '||screen_num || ' : ï¿½Â¼ï¿½' || s_row || s_col || '('|| seat_grade || ')'||' ï¿½ï¿½ï¿½ï¿½');
+            END LOOP;	
         END LOOP;
     END LOOP;
 END;
+
 COMMIT;

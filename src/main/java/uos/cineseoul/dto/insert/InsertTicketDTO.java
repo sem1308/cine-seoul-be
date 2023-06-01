@@ -1,11 +1,12 @@
 package uos.cineseoul.dto.insert;
 
 import lombok.*;
+import uos.cineseoul.entity.ScheduleSeat;
+import uos.cineseoul.entity.User;
 import uos.cineseoul.utils.enums.TicketState;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.validation.constraints.Size;
 
 @AllArgsConstructor()
 @NoArgsConstructor(force = true)
@@ -18,11 +19,9 @@ public class InsertTicketDTO {
     private Integer salePrice;
 
     @Enumerated(EnumType.STRING)
-    private TicketState issued;
+    private TicketState ticketState;
 
-    private Long userNum;
+    private User user;
 
-    private Long schedNum;
-
-    private Long seatNum;
+    private ScheduleSeat scheduleSeat;
 }

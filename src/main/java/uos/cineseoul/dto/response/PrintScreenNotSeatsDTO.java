@@ -1,15 +1,18 @@
 package uos.cineseoul.dto.response;
 
 import lombok.*;
-import uos.cineseoul.utils.enums.PaymentMethodType;
+
+import java.util.List;
 
 @AllArgsConstructor()
 @NoArgsConstructor(force = true)
 @Setter
 @Getter
 @Builder
-public class PrintPaymentMethodDTO {
-    private PaymentMethodType paymentMethodCode;
+public class PrintScreenNotSeatsDTO {
+    private Long screenNum;
 
     private String name;
+
+    private Integer totalSeat;
 }

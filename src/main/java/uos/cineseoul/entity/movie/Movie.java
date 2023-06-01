@@ -22,7 +22,7 @@ public class Movie {
     @Column(name = "TITLE", length = 100, nullable = false)
     private String title;
 
-    @Column(name = "INFO", length = 4000, nullable = false)
+    @Column(name = "INFO", length = 4000, nullable = true)
     private String info;
 
     @Column(name = "RELEASE_DATE", columnDefinition = "CHAR(8)", nullable = true)
@@ -31,9 +31,11 @@ public class Movie {
     @Column(name = "RUNNING_TIME", nullable = true)
     private int runningTime;
 
-    @Column(name = "IS_SHOWING", nullable = false, columnDefinition = "CHAR(1)")
-    @Enumerated(EnumType.STRING)
-    private Is isShowing;
+    @Column(name = "POSTER", nullable = true)
+    private String poster;
+
+    @Column(name = "IS_SHOWING", nullable = false)
+    private char isShowing;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DIST_NUM")

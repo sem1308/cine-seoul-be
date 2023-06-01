@@ -25,6 +25,7 @@ public class ActorService {
         Actor actor = Actor
                 .builder()
                 .name(insertActorDTO.getName())
+                .imgUrl(insertActorDTO.getImgUrl())
                 .build();
         return actorRepository.save(actor);
     }

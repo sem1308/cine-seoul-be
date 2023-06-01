@@ -1,4 +1,4 @@
-package uos.cineseoul;
+package uos.cineseoul.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -37,16 +37,16 @@ class SeatRepoTests {
 		String col1 = "10";
 		GradeType seatGrade1 = GradeType.A;
 
-		InsertSeatDTO seatDTO1 = InsertSeatDTO.builder().row(row1).col(col1)
-				.seatGrade(seatGrade1).screenNum(screenNum).build();
-
 		// 상영관 불러오기
-		Screen screen = screenRepo.findById(seatDTO1.getScreenNum()).get();
+		Screen screen = screenRepo.findById(screenNum).get();
+
+
+		InsertSeatDTO seatDTO1 = InsertSeatDTO.builder().row(row1).col(col1)
+				.seatGrade(seatGrade1).screen(screen).build();
 
 		Integer totalSeat = screen.getTotalSeat();
 
 		Seat seat1 = SeatMapper.INSTANCE.toEntity(seatDTO1);
-		seat1.setScreen(screen);
 		seatList.add(seat1);
 
 		String row2 = "E";
@@ -54,10 +54,9 @@ class SeatRepoTests {
 		GradeType seatGrade2 = GradeType.B;
 
 		InsertSeatDTO seatDTO2 = InsertSeatDTO.builder().row(row2).col(col2)
-				.seatGrade(seatGrade2).screenNum(screenNum).build();
+				.seatGrade(seatGrade2).screen(screen).build();
 
 		Seat seat2 = SeatMapper.INSTANCE.toEntity(seatDTO2);
-		seat2.setScreen(screen);
 		seatList.add(seat2);
 
 		seatList.forEach(seat -> {

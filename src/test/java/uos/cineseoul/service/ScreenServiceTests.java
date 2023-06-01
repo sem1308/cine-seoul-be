@@ -1,4 +1,4 @@
-package uos.cineseoul;
+package uos.cineseoul.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -8,6 +8,7 @@ import org.springframework.test.annotation.Rollback;
 import uos.cineseoul.dto.insert.InsertScreenDTO;
 import uos.cineseoul.dto.response.PrintScreenDTO;
 import uos.cineseoul.dto.update.UpdateScreenDTO;
+import uos.cineseoul.entity.Screen;
 import uos.cineseoul.service.ScreenService;
 
 import javax.transaction.Transactional;
@@ -24,7 +25,7 @@ class ScreenServiceTests {
 		String name = "B";
 		InsertScreenDTO screenDTO = InsertScreenDTO.builder().name(name).build();
 
-		PrintScreenDTO savedScreen = screenService.insert(screenDTO);
+		Screen savedScreen = screenService.insert(screenDTO);
 
 		assert savedScreen.getName().equals(screenDTO.getName());
 	}
@@ -36,7 +37,7 @@ class ScreenServiceTests {
 		String name = "D";
 		UpdateScreenDTO screenDTO = UpdateScreenDTO.builder().screenNum(screenNum).name(name).build();
 
-		PrintScreenDTO savedScreen = screenService.update(screenDTO);
+		Screen savedScreen = screenService.update(screenDTO);
 
 		assert savedScreen.getName().equals(name);
 	}

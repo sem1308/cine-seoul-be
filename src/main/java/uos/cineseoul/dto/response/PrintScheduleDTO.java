@@ -3,6 +3,7 @@ package uos.cineseoul.dto.response;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor()
 @NoArgsConstructor(force = true)
@@ -18,5 +19,7 @@ public class PrintScheduleDTO {
 
     private Integer emptySeat;
 
-    private PrintScreenDTO screen;
+    private PrintScreenNotSeatsDTO screen;
+
+    private List<PrintScheduleSeatNotSchedDTO> scheduleSeats;
 }

@@ -19,7 +19,7 @@ public class ControllerExceptionHandler {
 
         String url = ((ServletWebRequest) request).getRequest().getRequestURI().toString();
 
-        ErrorResponse message = new ErrorResponse(StatusEnum.INTERNAL_SERVER_ERROR.getStatusCode(), new Date(), url,
+        ErrorResponse message = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.hashCode(), new Date(), url,
                 ex.getMessage(), request.getDescription(false));
 
         return new ResponseEntity<ErrorResponse>(message, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -30,7 +30,7 @@ public class ControllerExceptionHandler {
                                                                          WebRequest request) {
         String url = ((ServletWebRequest) request).getRequest().getRequestURI().toString();
 
-        ErrorResponse message = new ErrorResponse(StatusEnum.NOT_FOUND.getStatusCode(), new Date(), url, ex.getMessage(),
+        ErrorResponse message = new ErrorResponse(HttpStatus.NOT_FOUND.hashCode(), new Date(), url, ex.getMessage(),
                 request.getDescription(false));
 
         return new ResponseEntity<ErrorResponse>(message, HttpStatus.NOT_FOUND);
@@ -40,7 +40,7 @@ public class ControllerExceptionHandler {
     public ResponseEntity<ErrorResponse> handleDataFormatException(DataFormatException ex, WebRequest request) {
         String url = ((ServletWebRequest) request).getRequest().getRequestURI().toString();
 
-        ErrorResponse message = new ErrorResponse(StatusEnum.BAD_REQUEST.getStatusCode(), new Date(), url, ex.getMessage(),
+        ErrorResponse message = new ErrorResponse(HttpStatus.BAD_REQUEST.hashCode(), new Date(), url, ex.getMessage(),
                 request.getDescription(false));
 
         return new ResponseEntity<ErrorResponse>(message, HttpStatus.BAD_REQUEST);
@@ -50,7 +50,7 @@ public class ControllerExceptionHandler {
     public ResponseEntity<ErrorResponse> handleForbiddenException(ForbiddenException ex, WebRequest request) {
         String url = ((ServletWebRequest) request).getRequest().getRequestURI().toString();
 
-        ErrorResponse message = new ErrorResponse(StatusEnum.FORBIDDEN.getStatusCode(), new Date(), url, ex.getMessage(),
+        ErrorResponse message = new ErrorResponse(HttpStatus.FORBIDDEN.hashCode(), new Date(), url, ex.getMessage(),
                 request.getDescription(false));
 
         return new ResponseEntity<ErrorResponse>(message, HttpStatus.FORBIDDEN);
@@ -60,7 +60,7 @@ public class ControllerExceptionHandler {
     public ResponseEntity<ErrorResponse> handleDataInconsistencyException(DataInconsistencyException ex, WebRequest request) {
         String url = ((ServletWebRequest) request).getRequest().getRequestURI().toString();
 
-        ErrorResponse message = new ErrorResponse(StatusEnum.PRECONDITION_FAILED.getStatusCode(), new Date(), url, ex.getMessage(),
+        ErrorResponse message = new ErrorResponse(HttpStatus.PRECONDITION_FAILED.hashCode(), new Date(), url, ex.getMessage(),
                 request.getDescription(false));
 
         return new ResponseEntity<ErrorResponse>(message, HttpStatus.PRECONDITION_FAILED);
@@ -71,7 +71,7 @@ public class ControllerExceptionHandler {
         String url = ((ServletWebRequest) request).getRequest().getRequestURI().toString();
 
         String firstBindingMessage = ex.getBindingResult().getAllErrors().get(0).getDefaultMessage();
-        ErrorResponse message = new ErrorResponse(StatusEnum.BAD_REQUEST.getStatusCode(), new Date(), url, firstBindingMessage,
+        ErrorResponse message = new ErrorResponse(HttpStatus.BAD_REQUEST.hashCode(), new Date(), url, firstBindingMessage,
                 request.getDescription(false));
 
         return new ResponseEntity<ErrorResponse>(message, HttpStatus.BAD_REQUEST);

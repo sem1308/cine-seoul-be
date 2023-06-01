@@ -1,4 +1,4 @@
-package uos.cineseoul;
+package uos.cineseoul.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -7,7 +7,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import uos.cineseoul.dto.insert.InsertTicketDTO;
 import uos.cineseoul.dto.response.PrintTicketDTO;
 import uos.cineseoul.dto.update.UpdateTicketDTO;
+import uos.cineseoul.entity.Ticket;
+import uos.cineseoul.service.ScheduleService;
+import uos.cineseoul.service.SeatService;
 import uos.cineseoul.service.TicketService;
+import uos.cineseoul.service.UserService;
+import uos.cineseoul.utils.enums.TicketState;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -17,6 +22,10 @@ import java.util.List;
 class TicketServiceTests {
 	@Autowired
 	TicketService ticketService;
+	@Autowired
+	UserService userService;
+	@Autowired
+	ScheduleService scheduleService;
 	@Test
 	@Transactional
 	//@Rollback(false)
@@ -30,9 +39,9 @@ class TicketServiceTests {
 		Long seatNum = 1L;
 
 		InsertTicketDTO ticketDTO = InsertTicketDTO.builder().stdPrice(stdPrice).salePrice(salePrice)
-				.userNum(userNum).schedNum(schedNum).seatNum(seatNum).build();
+				.user(userService.findOneByNum(userNum)).scheduleSeat(scheduleService.findScheduleSeat(schedNum,seatNum)).build();
 
-		PrintTicketDTO savedTicket = ticketService.insert(ticketDTO);
+		Ticket savedTicket = ticketService.insert(ticketDTO);
 
 		assert savedTicket.getSalePrice().equals(salePrice);
 		assert savedTicket.getScheduleSeat().getSeat().equals(seatNum);
@@ -42,15 +51,13 @@ class TicketServiceTests {
 	@Transactional
 	void updateTicketTest() {
 		Integer salePrice = 8000; // 바꿈
-		String issued = "N";
 		Long ticketNum = 21L;
-		Long schedNum = 2L;
 		Long seatNum = 2L; // 바꿈
 
 		UpdateTicketDTO ticketDTO = UpdateTicketDTO.builder().salePrice(salePrice)
-				.ticketNum(ticketNum).schedNum(schedNum).seatNum(seatNum).build();
+				.ticketState(TicketState.N).build();
 
-		PrintTicketDTO savedTicket = ticketService.update(ticketDTO);
+		Ticket savedTicket = ticketService.update(ticketNum,ticketDTO);
 
 		assert savedTicket.getSalePrice().equals(salePrice);
 		assert savedTicket.getScheduleSeat().getSeat().getSeatNum().equals(seatNum);
@@ -62,7 +69,7 @@ class TicketServiceTests {
 		Long ticketNum = 21L;
 
 		// by userId and ticketNum
-		PrintTicketDTO ticket = ticketService.findOneByNum(ticketNum);
+		Ticket ticket = ticketService.findOneByNum(ticketNum);
 		assert ticket.getTicketNum().equals(ticketNum);
 
 		System.out.println("티켓 1개 찾기 테스트 완료");
@@ -73,11 +80,11 @@ class TicketServiceTests {
 		Long userNum = 1L;
 		String userId = "sem1308";
 		// by userNum
-		List<PrintTicketDTO> ticketList1 = ticketService.findByUserNum(userNum);
+		List<Ticket> ticketList1 = ticketService.findByUserNum(userNum);
 
 		System.out.println("유저 "+userId+"의 티켓 수: "+ticketList1.size());
 		// by userId
-		List<PrintTicketDTO> ticketList2 = ticketService.findByUserId(userId);
+		List<Ticket> ticketList2 = ticketService.findByUserId(userId);
 		System.out.println(userNum+"번 유저의 티켓 수: "+ticketList2.size());
 	}
 }

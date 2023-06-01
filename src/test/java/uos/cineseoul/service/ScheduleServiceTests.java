@@ -1,4 +1,4 @@
-package uos.cineseoul;
+package uos.cineseoul.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -9,6 +9,8 @@ import uos.cineseoul.dto.insert.InsertScheduleDTO;
 import uos.cineseoul.dto.response.PrintScheduleDTO;
 import uos.cineseoul.dto.response.PrintScreenDTO;
 import uos.cineseoul.dto.update.UpdateScheduleDTO;
+import uos.cineseoul.entity.Schedule;
+import uos.cineseoul.entity.Screen;
 import uos.cineseoul.service.ScheduleService;
 import uos.cineseoul.service.ScreenService;
 
@@ -39,10 +41,11 @@ class ScheduleServiceTests {
 		//LocalDateTime schedTime = LocalDateTime.of(2023,05,21,10,30,30);
 		Long screenNum = 1L;
 
+		Screen screen = screenService.findOneByNum(screenNum);
 		InsertScheduleDTO scheduleDTO = InsertScheduleDTO.builder().order(order)
-										.screenNum(screenNum).schedTime(schedTime).build();
+										.screen(screen).schedTime(schedTime).build();
 
-		PrintScheduleDTO schedule = scheduleService.insert(scheduleDTO);
+		Schedule schedule = scheduleService.insert(scheduleDTO);
 	}
 
 	@Test
@@ -59,10 +62,10 @@ class ScheduleServiceTests {
 		// 상영관 변경
 		String name = "B";
 		Long schedNum = 44L;
-		PrintScreenDTO screen = screenService.findOneByName(name);
-		UpdateScheduleDTO scheduleDTO = UpdateScheduleDTO.builder().schedNum(schedNum).screenNum(screen.getScreenNum()).schedTime(schedTime).build();
+		Screen screen = screenService.findOneByName(name);
+		UpdateScheduleDTO scheduleDTO = UpdateScheduleDTO.builder().screen(screen).schedTime(schedTime).build();
 
-		PrintScheduleDTO schedule = scheduleService.update(scheduleDTO);
+		Schedule schedule = scheduleService.update(schedNum,scheduleDTO);
 
 //		System.out.println("변경된 상영관 이름 : " + schedule.getScreen().getName());
 //		System.out.println("변경된 상영관 총 좌석 개수 : " + schedule.getScreen().getTotalSeat());
@@ -77,7 +80,7 @@ class ScheduleServiceTests {
 	void findTest() {
 		LocalDateTime schedTime = LocalDateTime.now();
 
-		List<PrintScheduleDTO> scheduleList = scheduleService.findByDate(schedTime);
+		List<Schedule> scheduleList = scheduleService.findByDate(schedTime);
 		scheduleList.forEach(s -> {
 			System.out.println("상영시간 : " + s.getSchedTime());
 		});

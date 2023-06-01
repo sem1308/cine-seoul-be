@@ -1,7 +1,10 @@
 package uos.cineseoul.dto.insert;
 
 import lombok.*;
-import uos.cineseoul.utils.enums.PaymentMethodType;
+import uos.cineseoul.entity.Ticket;
+import uos.cineseoul.entity.User;
+import uos.cineseoul.utils.enums.PayState;
+import uos.cineseoul.utils.enums.PaymentMethod;
 
 import javax.validation.constraints.Size;
 
@@ -18,9 +21,11 @@ public class InsertPaymentDTO {
 
     private String accountNum;
 
-    private Long userNum;
+    private PayState state;
 
-    private Long ticketNum;
+    private PaymentMethod paymentMethod;
 
-    private PaymentMethodType paymentMethodCode;
+    private User user;
+
+    private Ticket ticket;
 }

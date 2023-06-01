@@ -1,4 +1,4 @@
-package uos.cineseoul;
+package uos.cineseoul.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -9,6 +9,7 @@ import uos.cineseoul.dto.insert.InsertSeatDTO;
 import uos.cineseoul.dto.response.PrintSeatDTO;
 import uos.cineseoul.dto.update.UpdateSeatDTO;
 import uos.cineseoul.entity.Screen;
+import uos.cineseoul.entity.Seat;
 import uos.cineseoul.repository.ScreenRepository;
 import uos.cineseoul.service.SeatService;
 import uos.cineseoul.utils.enums.GradeType;
@@ -32,12 +33,14 @@ class SeatServiceTests {
 		String col1 = "11";
 		GradeType seatGrade1 = GradeType.A;
 
-		InsertSeatDTO seatDTO = InsertSeatDTO.builder().row(row1).col(col1)
-				.seatGrade(seatGrade1).screenNum(screenNum).build();
-		Integer screenBeforeTS = screenRepo.findById(seatDTO.getScreenNum()).get().getTotalSeat();
+		Screen screenBefore = screenRepo.findById(screenNum).get();
+		Integer screenBeforeTS = screenBefore.getTotalSeat();
 
-		PrintSeatDTO savedSeat = seatService.insert(seatDTO);
-		Screen screenAfter = screenRepo.findById(seatDTO.getScreenNum()).get();
+		InsertSeatDTO seatDTO = InsertSeatDTO.builder().row(row1).col(col1)
+				.seatGrade(seatGrade1).screen(screenBefore).build();
+
+		Seat savedSeat = seatService.insert(seatDTO);
+		Screen screenAfter = screenRepo.findById(screenNum).get();
 
 		assert screenAfter.getTotalSeat().equals(screenBeforeTS+1);
 	}
@@ -51,35 +54,30 @@ class SeatServiceTests {
 		String col = "15"; // 원래 10
 		GradeType seatGrade = GradeType.C; // 원래 A
 
-		PrintSeatDTO basicSeat = seatService.findOneByNum(seatNum);
-		Screen basicScreen = screenRepo.findById(basicSeat.getScreenNum()).get();
+		Seat basicSeat = seatService.findOneByNum(seatNum);
+		Screen basicScreen = basicSeat.getScreen();
 
 		Screen updatedScreen = screenRepo.findById(screenNum).get();
-		UpdateSeatDTO seatDTO = UpdateSeatDTO.builder().seatNum(seatNum).row(row).screenNum(screenNum)
+		UpdateSeatDTO seatDTO = UpdateSeatDTO.builder().row(row).screen(updatedScreen)
 								.col(col).seatGrade(seatGrade).build();
 
-		Long basicScreenNum = basicSeat.getScreenNum();
+		Long basicScreenNum = basicScreen.getScreenNum();
 		Integer basicScreenTotalSeat = screenRepo.findById(basicScreenNum).get().getTotalSeat();
 		Long updatedScreenNum = updatedScreen.getScreenNum();
 		Integer updatedScreenTotalSeat = screenRepo.findById(updatedScreenNum).get().getTotalSeat();
 
-		PrintSeatDTO updatedSeat = seatService.update(seatDTO);
+		Seat updatedSeat = seatService.update(seatNum,seatDTO);
 
 		Integer cBasicScreenTotalSeat = screenRepo.findById(basicScreenNum).get().getTotalSeat();
 		Integer cUpdatedScreenTotalSeat = screenRepo.findById(updatedScreenNum).get().getTotalSeat();
-
 
 		System.out.println("기존 From 스크린 "+basicScreenNum+" 좌석 합 : "+basicScreenTotalSeat);
 		System.out.println("기존 To 스크린 "+updatedScreenNum+" 좌석 합 : "+updatedScreenTotalSeat);
 		System.out.println("변경 From 스크린 "+basicScreenNum+" 좌석 합 : "+cBasicScreenTotalSeat);
 		System.out.println("변경 To 스크린 "+updatedScreenNum+" 좌석 합 : "+cUpdatedScreenTotalSeat);
 
-		if(seatDTO.getScreenNum()==null || seatDTO.getScreenNum().equals(basicScreenNum))
-			assert basicScreenTotalSeat.equals(cUpdatedScreenTotalSeat);
-		else{
-			assert cBasicScreenTotalSeat.equals(basicScreenNum-1);
-			assert cUpdatedScreenTotalSeat.equals(updatedScreenTotalSeat+1);
-		}
+		assert cBasicScreenTotalSeat.equals(basicScreenNum-1);
+		assert cUpdatedScreenTotalSeat.equals(updatedScreenTotalSeat+1);
 	}
 
 	@Test
@@ -87,7 +85,7 @@ class SeatServiceTests {
 	void findAllByScreenTest() {
 		Long screenNum = 1L;
 
-		List<PrintSeatDTO> seat = seatService.findAllByScreenNum(screenNum);
+		List<Seat> seat = seatService.findAllByScreenNum(screenNum);
 		System.out.println(seat.size());
 	}
 
