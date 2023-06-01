@@ -30,9 +30,9 @@ public class MovieController {
         return ResponseEntity.ok(new PrintMovieDTO(movie));
     }
 
-    @GetMapping("/{title}")
+    @GetMapping("/search")
     @Operation(description = "영화 제목으로 영화를 검색한다.")
-    public ResponseEntity<PrintMovieDTO> lookUpMovieByNum(@PathVariable("title") String title) {
+    public ResponseEntity<PrintMovieDTO> lookUpMovieByNum(@RequestParam("title") String title) {
         Movie movie = movieService.findMovieByTitle(title);
         return ResponseEntity.ok(new PrintMovieDTO(movie));
     }
