@@ -12,6 +12,8 @@ public class PrintMovieDTO {
 
     private String title;
 
+    private String info;
+
     private String releaseDate;
 
     private int runningTime;
@@ -21,6 +23,8 @@ public class PrintMovieDTO {
     private String distName;
 
     private String gradeName;
+
+    private String poster;
 
     private List<String> genreList;
 
@@ -34,6 +38,8 @@ public class PrintMovieDTO {
         if(movie.getDistributor()!=null)
             this.distName = movie.getDistributor().getName();
         this.gradeName = movie.getGrade().getName();
+        this.info = movie.getInfo();
+        this.poster = movie.getPoster();
         this.genreList = new ArrayList<>();
         movie.getMovieGenreList().forEach(
                 movieGenre -> genreList.add(movieGenre.getGenre().getName())
