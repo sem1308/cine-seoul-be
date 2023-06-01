@@ -1,8 +1,10 @@
 package uos.cineseoul.config;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -41,9 +43,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable() // csrf 보안 토큰 disable처리.
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로 세션 역시 사용하지 않습니다.
                 .and().authorizeRequests() // 요청에 대한 사용권한 체크
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/**/admin/**").hasRole("A")
                 .anyRequest().permitAll() // 그외 나머지 요청은 누구나 접근 가능
                 .and().addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
                         UsernamePasswordAuthenticationFilter.class);
+    }
+
+    private static final String[] AUTH_ARR = {
+            "/swagger/**",
+            "/swagger-ui.html",
+            "/swagger-resources/**"
+    };
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers(AUTH_ARR);
     }
 }
