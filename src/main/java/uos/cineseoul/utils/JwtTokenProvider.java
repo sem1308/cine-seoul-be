@@ -22,7 +22,7 @@ import uos.cineseoul.dto.CustomUserDetails;
 @Component
 public class JwtTokenProvider {
 
-    private String secretKey = "bacchusbackendsecretkey120120120";
+    private String secretKey = "cineseoulbackendsecretkey120120120";
 
     // 토큰 유효시간 30분
     private long tokenValidTime = 30 * 60 * 1000L;
