@@ -17,6 +17,7 @@ import uos.cineseoul.repository.ScheduleRepository;
 import uos.cineseoul.repository.ScheduleSeatRepository;
 import uos.cineseoul.repository.ScreenRepository;
 import uos.cineseoul.repository.SeatRepository;
+import uos.cineseoul.utils.enums.Is;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -114,7 +115,7 @@ public class ScheduleService {
         List<Seat> seatList = savedSched.getScreen().getSeats();
 
         seatList.forEach(seat -> {
-            ScheduleSeat ss = ScheduleSeat.builder().schedule(savedSched).seat(seat).occupied("N").build();
+            ScheduleSeat ss = ScheduleSeat.builder().schedule(savedSched).seat(seat).isOccupied(Is.N).build();
             scheduleSeatRepo.save(ss);
         });
 
@@ -132,7 +133,7 @@ public class ScheduleService {
 
             // 예약되어있는 자리 처리
             schedule.getScheduleSeats().forEach(ss -> {
-                if(ss.getOccupied().equals("Y")){
+                if(ss.getIsOccupied().equals(Is.Y)){
                     throw new ForbiddenException("이미 예약된 자리가 존재합니다.");
                 }else{
                     scheduleSeatRepo.delete(ss);
@@ -142,7 +143,7 @@ public class ScheduleService {
             // 새로운 자리 등록
             List<Seat> seatList = screen.getSeats();
             seatList.forEach(seat->{
-                ScheduleSeat ss = ScheduleSeat.builder().schedule(schedule).seat(seat).occupied("N").build();
+                ScheduleSeat ss = ScheduleSeat.builder().schedule(schedule).seat(seat).isOccupied(Is.N).build();
                 scheduleSeatRepo.save(ss);
             });
             schedule.setEmptySeat(screen.getTotalSeat());

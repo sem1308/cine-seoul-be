@@ -1,6 +1,7 @@
 package uos.cineseoul.entity;
 
 import lombok.*;
+import uos.cineseoul.utils.enums.Is;
 
 import javax.persistence.*;
 
@@ -22,7 +23,7 @@ public class ScheduleSeat {
     @JoinColumn(name = "SEAT_NUM", nullable = false)
     private Seat seat;
 
-    @Column(name="OCCUPIED", nullable = false, unique = false, columnDefinition = "char(1)")
+    @Column(name="IS_OCCUPIED", nullable = false, unique = false, columnDefinition = "char(1)")
 //    @ColumnDefault("N")
-    private String occupied;
+    private Is isOccupied;
 }
