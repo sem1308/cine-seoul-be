@@ -2772,64 +2772,103 @@ VALUES ('그린나래미디어(주)');
 
 --SET DEFINE OFF
 
-INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('WA', '전쟁');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('TH', '스릴러');
+VALUES ('01', '드라마');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('FA', '가족');
+VALUES ('02', '판타지');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('AN', '애니메이션');
+VALUES ('03', '서부');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('DA', '다큐멘터리');
+VALUES ('04', '공포');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('CO', '코미디');
+VALUES ('05', '멜로/로맨스');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('DR', '드라마');
+VALUES ('06', '모험');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('HO', '공포');
+VALUES ('07', '스릴러');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('CR', '범죄');
+VALUES ('08', '느와르');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('AD', '모험');
+VALUES ('09', '컬트');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('MY', '미스터리');
+VALUES ('10', '다큐멘터리');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('FT', '판타지');
+VALUES ('11', '코미디');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('AC', '액션');
+VALUES ('12', '가족');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('MU', '뮤지컬');
+VALUES ('13', '미스터리');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('SF', 'SF');
+VALUES ('14', '전쟁');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('RO', '멜로/로맨스');
+VALUES ('15', '애니메이션');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('16', '범죄');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('17', '뮤지컬');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('18', 'SF');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('19', '액션');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('20', '무협');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('21', '에로');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('22', '서스펜스');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('23', '서사');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('24', '블랙코미디');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('25', '실험');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('26', '영화카툰');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('27', '영화음악');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('28', '영화패러디포스터');
 
 --행 1
 INSERT INTO GRADE (GRADE_CODE, NAME, ADULT_ONLY) VALUES ('12','12세 관람가','N');
 --행 2
 INSERT INTO GRADE (GRADE_CODE, NAME, ADULT_ONLY) VALUES ('15','15세 관람가','N');
 --행 3
-INSERT INTO GRADE (GRADE_CODE, NAME, ADULT_ONLY) VALUES ('19','청소년 관람불가','Y');
+INSERT INTO GRADE (GRADE_CODE, NAME, ADULT_ONLY) VALUES ('18','청소년 관람불가','Y');
 --행 4
 INSERT INTO GRADE (GRADE_CODE, NAME, ADULT_ONLY) VALUES ('AL','전체 관람가','N');
 --행 5
 INSERT INTO GRADE (GRADE_CODE, NAME, ADULT_ONLY) VALUES ('UN','미정','N');
+
+INSERT INTO GRADE (GRADE_CODE, NAME, ADULT_ONLY) VALUES ('LS','제한 상영가','Y');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('인어공주', '20230524', 'AL', 135, 25.0, '아틀란티카 바다의 왕 ‘트라이튼’의 사랑스러운 막내딸인 인어 ‘에리얼’은 늘 인간들이 사는 바다 너머 세상으로의 모험을 꿈꾼다. 어느 날, 우연히 바다 위로 올라갔다가 폭풍우 속 가라앉는 배에 탄 인간 ‘에릭 왕자’의 목숨을 구해준다. 갈망하던 꿈과 운명적인 사랑을 이루기 위해 용기를 낸 ‘에리얼’은 사악한 바다 마녀 ‘울슐라’와의 위험한 거래를 통해 다리를 얻게 된다. 드디어 바다를 벗어나 그토록 원하던 인간 세상으로 가게 되지만, 그 선택으로 ‘에리얼’과 아틀란티카 왕국 모두 위험에 처하게 되는데… 바닷속, 그리고 그 너머 아름다운 꿈과 사랑의 멜로디가 펼쳐진다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230524_42%2F1684890755488fBHJh_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
@@ -2865,7 +2904,7 @@ INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO
 VALUES ('슬픔의 삼각형', '20230517', '15', 147, 73.0, '호화 크루즈에 #협찬 으로 승선한 인플루언서 모델 커플. 각양각색의 부자들과 휴가를 즐기던 사이, 뜻밖의 사건으로 배가 전복되고 8명만이 간신히 무인도에 도착한다. 할 줄 아는 거라곤 구조 대기뿐인 사람들… 이때 존재감을 드러내는 건, “여기선 내가 캡틴입니다. 자, 내가 누구라고요?”', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230518_94%2F1684389723408gJwFX_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('존 윅 4', '20230412', '19', 169, 16.0, '죽을 위기에서 살아난 ‘존 윅’은 ‘최고 회의’를 쓰러트릴 방법을 찾아낸다. 비로소 완전한 자유의 희망을 보지만, NEW 빌런 ‘그라몽 후작’과 전 세계의 최강 연합은 ‘존 윅’의 오랜 친구까지 적으로 만들어 버리고, 새로운 위기에 놓인 ‘존 윅’은 최후의 반격을 준비하는데,, 레전드 액션 블록버스터 <존 윅>의 새로운 챕터가 열린다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230329_142%2F1680055399492ipxkq_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('존 윅 4', '20230412', '18', 169, 16.0, '죽을 위기에서 살아난 ‘존 윅’은 ‘최고 회의’를 쓰러트릴 방법을 찾아낸다. 비로소 완전한 자유의 희망을 보지만, NEW 빌런 ‘그라몽 후작’과 전 세계의 최강 연합은 ‘존 윅’의 오랜 친구까지 적으로 만들어 버리고, 새로운 위기에 놓인 ‘존 윅’은 최후의 반격을 준비하는데,, 레전드 액션 블록버스터 <존 윅>의 새로운 챕터가 열린다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230329_142%2F1680055399492ipxkq_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('문재인입니다', '20230510', '12', 114, 71.0, '대한민국 제19대 대통령으로 5년의 임기를 마치고 퇴임한 문재인 전 대통령은 평산마을에서 모든 짐을 내려놓고 새 삶을 꾸린다. 텃밭을 가꾸고 개와 고양이의 밥을 챙기는 것이 일과이고, 수염을 깎지 않고 편한 옷을 입을 수 있는 것이 자유이다. 퇴임 이후 최초로 공개되는 평산마을에서의 일상과 인터뷰, 오랜 시간 곁에서 동고동락한 이들의 이야기를 통해 ‘사람 문재인’을 이해해보려 한다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230503_79%2F1683075104588SRmr2_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
@@ -2892,7 +2931,7 @@ INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO
 VALUES ('옥수역귀신', '20230419', '15', 80, 56.0, '특종이 필요한 기자 ‘나영’은 옥수역에서 근무하는 친구 ‘우원’을 통해 ‘옥수역’에서 계속해서 일어난 사망사건들을 듣게 된다. ‘나영’은 ‘우원’과 함께 취재를 시작하고 그녀에게 계속 괴이한 일들이 벌어지는데… 무언가 있다. 옥수역에…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230419_143%2F168187149954769TL2_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('내 아내 이야기', '20230524', '19', 169, 62.0, '1년 365일을 바다 위에서 지내는 선장 ‘야코프’는 매일 반복되는 일상에 지쳐 있다. 어느 날, 친구에게 농담 삼아 던진 말을 시작으로 그의 인생은 특별한 2막을 맞이하게 되는데… “지금 카페에 들어오는 손님과 결혼할게” “그녀는 내 평생의 사랑이 될 테니까”', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230502_161%2F1683005266103l2NOp_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('내 아내 이야기', '20230524', '18', 169, 62.0, '1년 365일을 바다 위에서 지내는 선장 ‘야코프’는 매일 반복되는 일상에 지쳐 있다. 어느 날, 친구에게 농담 삼아 던진 말을 시작으로 그의 인생은 특별한 2막을 맞이하게 되는데… “지금 카페에 들어오는 손님과 결혼할게” “그녀는 내 평생의 사랑이 될 테니까”', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230502_161%2F1683005266103l2NOp_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('줄리아의 인생극장', '20230524', '12', 121, 32.0, '2052년 파리. 80세의 줄리아는 생을 만끽했다. 인생은 매 순간 우연의 연속이었고, 인생은 드라마틱하게 흘렀다. 만일 그날 여권을 잊어버리지 않았다면! 서점에서 책을 떨어뜨리지 않았다면! 스쿠터 운전을 하지 않았더라면! 매 순간 사소한 일상의 조각들이 줄리아의 인생을 휘젓는다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230502_177%2F1683006108237nDSIv_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
@@ -3051,10 +3090,10 @@ INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO
 VALUES ('마인드케이지', '20230531', '15', 96, 50.0, '사건의 실마리를 얻기 위해 형사와 살인범의 고도의 심리전이 시작되다! 어느 날, 성당에 천사의 모습으로 정성스럽게 꾸며진 사체가 발견되고, 형사 ‘제이크’는 5년 전 자신이 잡아들인 살인마 르프브르, 일명 ‘예술가’라 불리는 연쇄 살인마를 떠올린다. 그를 모방한 모방 범죄라 판단한 형사 ‘메리’는 예술가를 찾아가 단서를 얻고자 하지만, 범인을 잡기 위한 수사는 점점 예술가에게 집중되고, 메리는 또 다른 살인을 막기 위해 다시 예술가를 찾아간다. 예술가는 메리에게 알 수 없는 발언을 하고, 메리는 예술가가 자신에게 건넨 조각상 속에서 메모를 발견하는데… 과연 메리는 연쇄 살인을 멈출 수 있을까?', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230524_300%2F1684895516306xYy5v_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('동경의 주먹', '20010127', '19', 87, NULL, '츠다와 고지마는 고등학교 시절 그들의 여자친구가 자신들 앞에서 불량배들에게 무참히 폭행당하고 죽자 힘을 길러 복수하자고 다짐한다. 하지만 고지마만이 권투를 배우며 계속 힘을 키우고, 심약한 츠다는 결국 포기하고 평범한 샐러리맨으로 돌아간다. 그러던 어느 날 동경에서 무료하게 살아가던 츠다는 친구 고지마가 자신의 애인 히즈루를 범했다고 거짓말을 하자, 의처증 증세를 보이며 애인 히즈루를 의심한다. 결국 츠다는 친구에게 주먹다짐을 해보지만 권투선수인 고지마에게 무참하게 맞을 뿐이다. 같이 동거하던 애인 히즈루마저 아예 고지마의 집으로 거처를 옮기자 츠다는 점점 더 분노하고 고지마가 다니는 체육관에 다니기 시작한다. 연습에 온 힘을 다하던 중 둘은 연습경기를 갖기도 하지만, 이상하게도 고지마 역시 히즈루가 자신의 집으로 들어온 뒤부터는 맘이 약해지기 시작한다. 결국 츠다와 고지마는 각각 권투시합을 갖게 되는데, 이 둘은 처참하게 무너진다. 그 어느 누구도 동경 안에서 성공할 수 없는 듯 츠다가 자신을 억누르는 듯한 동경의 거대한 건물군을 바라보면서 영화는 끝이 난다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230525_179%2F1684982124907UM3yd_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('동경의 주먹', '20010127', '18', 87, NULL, '츠다와 고지마는 고등학교 시절 그들의 여자친구가 자신들 앞에서 불량배들에게 무참히 폭행당하고 죽자 힘을 길러 복수하자고 다짐한다. 하지만 고지마만이 권투를 배우며 계속 힘을 키우고, 심약한 츠다는 결국 포기하고 평범한 샐러리맨으로 돌아간다. 그러던 어느 날 동경에서 무료하게 살아가던 츠다는 친구 고지마가 자신의 애인 히즈루를 범했다고 거짓말을 하자, 의처증 증세를 보이며 애인 히즈루를 의심한다. 결국 츠다는 친구에게 주먹다짐을 해보지만 권투선수인 고지마에게 무참하게 맞을 뿐이다. 같이 동거하던 애인 히즈루마저 아예 고지마의 집으로 거처를 옮기자 츠다는 점점 더 분노하고 고지마가 다니는 체육관에 다니기 시작한다. 연습에 온 힘을 다하던 중 둘은 연습경기를 갖기도 하지만, 이상하게도 고지마 역시 히즈루가 자신의 집으로 들어온 뒤부터는 맘이 약해지기 시작한다. 결국 츠다와 고지마는 각각 권투시합을 갖게 되는데, 이 둘은 처참하게 무너진다. 그 어느 누구도 동경 안에서 성공할 수 없는 듯 츠다가 자신을 억누르는 듯한 동경의 거대한 건물군을 바라보면서 영화는 끝이 난다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230525_179%2F1684982124907UM3yd_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('악당들', '20230531', '19', 89, 41.0, '익명의 고객이 의뢰한 일을 완수만 한다면 특별사면을 보장하겠다는 무법 변호사의 제안을 받고 알제리 감옥에서 가석방된 빅 산드로 조직원 ‘세르조’. 살인을 즐기며 자아도취에 빠졌던 과거를 세탁하고 고급스러운 저택에 가정을 꾸린 킬러 ‘토니’. 국가를 뒤흔들 기밀문서를 빼앗겨 시궁창에 숨은 마피아 보스 ‘칼리굴라’. 15년 전에 일어났던 살인 사건의 진실을 앞에 두고 다시 만난 나쁜 녀석들은 죽음과 맞바꾼 마지막 피의 거래를 시작하는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230517_187%2F1684291432586AdAjk_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('악당들', '20230531', '18', 89, 41.0, '익명의 고객이 의뢰한 일을 완수만 한다면 특별사면을 보장하겠다는 무법 변호사의 제안을 받고 알제리 감옥에서 가석방된 빅 산드로 조직원 ‘세르조’. 살인을 즐기며 자아도취에 빠졌던 과거를 세탁하고 고급스러운 저택에 가정을 꾸린 킬러 ‘토니’. 국가를 뒤흔들 기밀문서를 빼앗겨 시궁창에 숨은 마피아 보스 ‘칼리굴라’. 15년 전에 일어났던 살인 사건의 진실을 앞에 두고 다시 만난 나쁜 녀석들은 죽음과 맞바꾼 마지막 피의 거래를 시작하는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230517_187%2F1684291432586AdAjk_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('익스파이어드', '20230601', '15', 102, 48.0, '''감성제어의 비밀을 찾아라!'' 사이보그와 인간이 공존하는 미래의 홍콩 인간 역시 사이보그처럼 감정을 잊은 채 살아간다. 고독하게 살아가던 사이보그 암살자 ''잭''은 우연히 노래방 가수 ''에이프럴''과 만나게 되고, 점점 그녀에게 빠져들며 이상한 감정을 느끼게 된다. 그녀에게 빠져들수록 고통을 느끼게 되는 ''잭''은 자신의 감성이 제어되고 있음을 알게 되고 그 비밀을 찾기 위해 과거를 파헤치기 시작하는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230523_76%2F1684810664145BO50I_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
@@ -3063,7 +3102,7 @@ INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO
 VALUES ('세인트 세이야: 더 비기닝', '20230531', '12', 112, 53.0, '인류를 지킬 것인가, 파멸시킬 것인가! 강력한 힘을 가진 전쟁과 지혜의 신 ‘아테나’의 환생! 세상을 구할 수호 기사가 깨어난다! 어린 시절 누나 ''패트리샤''가 납치된 후 홀로 자란 ''세이야'' 슬럼가 지하 격투장에서 벌어지는 결투로 근근이 살아가던 중, 위기의 상황에서 자신도 알지 못했던 미스터리한 힘이 발현되면서 ''아테나''를 찾고 있던 ''구라드''의 무장 조직에게 쫓기게 된다. 수수께끼의 남자 ''알먼 키도''에 의해 가까스로 목숨을 구한 ''세이야''는 그를 따라 도착한 은신처에서 ''아테나''의 환생인 ''시에나''와 마주한다. 오래전, 다른 신들에 맞서 인간을 지키던 전쟁과 지혜의 신 ‘아테나’ ‘알먼 키도’는 ‘시에나’에게 잠재된 ‘아테나’의 힘이 곧 깨어날 것이며, ‘세이야’는 ‘아테나’를 수호하고 세상을 지킬 성투사의 운명을 가졌다는 사실을 알려주는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230522_229%2F1684732462918ND1sV_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('6월의 뱀', '20041210', '19', 77, 55.0, '무덥고 끈적한 장마철의 도쿄. 결벽증이 있는 중년의 샐러리맨 시게히코와 심리치료센터에서 전화상담원으로 일하는 젊고 아름다운 린코는 외견상 평화롭고 풍족한 삶을 영위하고 있는 듯하지만 부부생활도, 아이도 없는 그들 부부의 생활은 건조하기 짝이 없다. 어느 날 그녀는 ‘남편에겐 비밀’이라고 쓰인 낯선 봉투를 받는다. 놀랍게도 그 안에는 그녀가 은밀한 행위를 하고 있는 장면을 가까이서 생생하게 찍힌 사진들이 들어있다. 공포와 수치심에 사로잡힌 그녀에게 또다시 봉투가 도착한다. 이번에는 그녀가 거울 앞에서 대담한 옷을 입고 짙은 화장을 하는 장면이 담겨있는 사진이 들어있다. 그리고 그녀에게 걸려온 한 통의 전화. “사진과 필름을 돌려받으려면 내 말을 들어!” 누군가 그녀를 감시하고 있다! 장대비가 쏟아지는 토요일, 린코는 사진과 필름을 돌려받기 공포에 떨면서도 전화로 그의 명령을 들으며 짧디짧은 스커트를 입고 집을 나선다. 낯선 목소리는 점점 수치스럽고 치욕스러운 일들을 그녀에게 강요하고, 그녀는 그 요구를 그대로 따를 수밖에 없다. 마침내 모든 요구를 들어준 후 사진과 원본 필름을 돌려받고 안도하는 린코. 그런데 수치심과 공포 속에서도 낯선 목소리의 요구는 어느새 그녀의 몸속 깊이 잠들어있던 관능을 일깨운다. 그리고, 또다시 걸려온 전화. “아직 안심하긴 일러, 사진은 또 있다.!” 시게히코는 어느 날, 아내의 놀라운 모습이 찍힌 사진 한 장을 발견한다. 강렬한 의혹과 질투에 몸을 떠는 시게히코. 그리고 그는 정신을 잃는다. 정신이 들자 그는 온몸이 결박된 채 악몽인지 현실인지 분간할 수 없는 이상한 광경들을 강제로 보게 된다. 자신에게 무슨 일이 일어나고 있는 것인지, 최근 들어 수상쩍기 그지 없는 아내에게 도대체 어떤 일이 벌어지고 있는 것인지, 혼란과 공포와 의혹 속에서 갈등하던 그는 며칠 뒤 아내의 뒤를 미행한다. 한밤의 외진 공터. 쏟아지는 굵은 빗줄기. 급정거하는 차의 타이어 소리, 이어 터지기 시작하는 카메라 플래쉬. 그리고 드러나는 린코의 눈부신 나신! 린코와 시게히코, 그리고 정체불명 사이코 스토커 사이에서 벌어지는 욕망과 폭력의 게임! 과연 승자는 누가 될 것인가?', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230525_203%2F1684979958724o4uEp_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('6월의 뱀', '20041210', '18', 77, 55.0, '무덥고 끈적한 장마철의 도쿄. 결벽증이 있는 중년의 샐러리맨 시게히코와 심리치료센터에서 전화상담원으로 일하는 젊고 아름다운 린코는 외견상 평화롭고 풍족한 삶을 영위하고 있는 듯하지만 부부생활도, 아이도 없는 그들 부부의 생활은 건조하기 짝이 없다. 어느 날 그녀는 ‘남편에겐 비밀’이라고 쓰인 낯선 봉투를 받는다. 놀랍게도 그 안에는 그녀가 은밀한 행위를 하고 있는 장면을 가까이서 생생하게 찍힌 사진들이 들어있다. 공포와 수치심에 사로잡힌 그녀에게 또다시 봉투가 도착한다. 이번에는 그녀가 거울 앞에서 대담한 옷을 입고 짙은 화장을 하는 장면이 담겨있는 사진이 들어있다. 그리고 그녀에게 걸려온 한 통의 전화. “사진과 필름을 돌려받으려면 내 말을 들어!” 누군가 그녀를 감시하고 있다! 장대비가 쏟아지는 토요일, 린코는 사진과 필름을 돌려받기 공포에 떨면서도 전화로 그의 명령을 들으며 짧디짧은 스커트를 입고 집을 나선다. 낯선 목소리는 점점 수치스럽고 치욕스러운 일들을 그녀에게 강요하고, 그녀는 그 요구를 그대로 따를 수밖에 없다. 마침내 모든 요구를 들어준 후 사진과 원본 필름을 돌려받고 안도하는 린코. 그런데 수치심과 공포 속에서도 낯선 목소리의 요구는 어느새 그녀의 몸속 깊이 잠들어있던 관능을 일깨운다. 그리고, 또다시 걸려온 전화. “아직 안심하긴 일러, 사진은 또 있다.!” 시게히코는 어느 날, 아내의 놀라운 모습이 찍힌 사진 한 장을 발견한다. 강렬한 의혹과 질투에 몸을 떠는 시게히코. 그리고 그는 정신을 잃는다. 정신이 들자 그는 온몸이 결박된 채 악몽인지 현실인지 분간할 수 없는 이상한 광경들을 강제로 보게 된다. 자신에게 무슨 일이 일어나고 있는 것인지, 최근 들어 수상쩍기 그지 없는 아내에게 도대체 어떤 일이 벌어지고 있는 것인지, 혼란과 공포와 의혹 속에서 갈등하던 그는 며칠 뒤 아내의 뒤를 미행한다. 한밤의 외진 공터. 쏟아지는 굵은 빗줄기. 급정거하는 차의 타이어 소리, 이어 터지기 시작하는 카메라 플래쉬. 그리고 드러나는 린코의 눈부신 나신! 린코와 시게히코, 그리고 정체불명 사이코 스토커 사이에서 벌어지는 욕망과 폭력의 게임! 과연 승자는 누가 될 것인가?', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230525_203%2F1684979958724o4uEp_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('총알 발레', '20230605', '15', 87, NULL, 'CM 제작 회사에 근무하는 고다는 10년을 사귄 연인 키리코가 권총으로 자살하자 권총에 광적으로 집착하게 된다. 어느 날 술에 취한 고다는 길에서 만난 불량배들에게 시비를 걸다 집단 구타를 당하는데, 불량배들은 고다를 그들의 아지트로 끌고 가 돈을 내놓으라며 협박한다. 고다는 불량배들에 대한 복수심으로 진짜 권총을 구하지만 얻지 못하고, 거리를 헤매다 지친 나머지 자신이 직접 권총을 만들어 불량배들을 습격하나 장난감같은 권총으로 그들의 비웃음만 산다. 그러던 중 고다는 불량배들 중 하나인 소녀 치사토가 죽음을 바라고 있다는 것을 알게 된다. 치사토의 패거리들은 다른 패들과 싸움을 벌일 계획을 세우고 있으며 치사토는 그 사이에서 죽기로 마음먹고 있다. 결국 고다를 괴롭히던 불량배들과 다른 패거리 사이에 싸움이 일어나고 고다는 진짜 권총을 얻어 그들의 싸움 속으로 뛰어드는데...', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230525_268%2F1684980890342t6Urv_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
@@ -3102,7 +3141,7 @@ INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO
 VALUES ('나의 사소한 슬픔', '20230614', '15', 103, 40.0, '언니가 ‘자살시도’를 했다는 엄마의 전화를 받았다. 작가라면서 글 한 줄 쓰는 것도 힘겹고, 이혼 위기로 엉망진창인 동생도 이렇게 잘 살고 있는데… 다정한 남편에 해외순회 공연까지 다니는 잘 나가는 피아니스트인 자기가 도대체 왜? 아빠처럼 그렇게, ‘똑같이’ 죽고 싶었던 거야? 그러고도 정신 못 차리고 엄마, 형부 몰래 ‘스위스’로 데려다 달라고? 언니는 왜 죽고 싶은 걸까? 자살할 사람은 정해져 있는 걸까? 언니는 자기가 가장 좋아하는 시처럼, ‘나의 사소한 슬픔’을 그 누구에게도, 나에게조차 토해낼 수 없었던 걸까?', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230518_259%2F16843874087351DUfX_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('순응자', '20160128', '19', 113, 67.0, '로마의 유복한 집안에서 자란 마르첼로는 어린 시절의 트라우마와 정신병원에 입원해 있는 아버지로 인해 불안에 시달린다. 남들처럼 평범하게 살아가는 것이 유일한 목적인 그는 평범한 가정을 이루고자 중산층 집안의 줄리아와 결혼하고, 대중의 강력한 지지를 받는 무솔리니 정권의 비밀경찰에 자원한다. 첫 임무로, 자신의 스승이자 프랑스에서 정치적 망명 중인 반독재 인사 콰드리 교수의 암살을 지시 받은 마르첼로는 파리로 신혼여행을 떠나 콰드리 교수와 그의 아내 안나에게 접근한다. 처음엔 경계와 의심을 늦추지 않던 이들 부부는 그를 차차 신뢰하게 되지만, 안나에게 걷잡을 수 없이 끌리게 된 마르첼로는 자신의 본심과 임무 사이에서 혼란을 겪게 되는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230517_183%2F1684286736893ylk0Y_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('순응자', '20160128', '18', 113, 67.0, '로마의 유복한 집안에서 자란 마르첼로는 어린 시절의 트라우마와 정신병원에 입원해 있는 아버지로 인해 불안에 시달린다. 남들처럼 평범하게 살아가는 것이 유일한 목적인 그는 평범한 가정을 이루고자 중산층 집안의 줄리아와 결혼하고, 대중의 강력한 지지를 받는 무솔리니 정권의 비밀경찰에 자원한다. 첫 임무로, 자신의 스승이자 프랑스에서 정치적 망명 중인 반독재 인사 콰드리 교수의 암살을 지시 받은 마르첼로는 파리로 신혼여행을 떠나 콰드리 교수와 그의 아내 안나에게 접근한다. 처음엔 경계와 의심을 늦추지 않던 이들 부부는 그를 차차 신뢰하게 되지만, 안나에게 걷잡을 수 없이 끌리게 된 마르첼로는 자신의 본심과 임무 사이에서 혼란을 겪게 되는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230517_183%2F1684286736893ylk0Y_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('위대한 작은 농장', '20230614', 'AL', 91, 61.0, '위대한 자연 속 작은 농장이 안내할 미래의 희망! LA 도심 속 아파트에 살던 신혼부부 감독 존과 요리사 몰리. 안락사 위기에서 구한 반려견 토드가 밤낮 없이 짖어 이웃들로부터 쫓겨날 위기에 처한다. 이들은 과감하게 도시를 떠나 자연과 함께하는 전통식 농장을 짓기로 결심하고, 축구장 100배 면적의 척박한 황무지를 변화시킬 무모한 도전을 시작한다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20190130_28%2F1548837588925GAUpO_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
@@ -3117,7 +3156,7 @@ INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO
 VALUES ('실버맨', '20230614', '12', 97, 24.0, '인생 2회차 ‘할배달’이 왔다! 늙어버린 청춘들의 특별한 택배 트립! 고독사를 준비하던 독고 할배 ‘순철’은 진짜 죽을 위기를 넘기자 다시 삶의 욕구가 타오른다! 정신을 차린 ‘순철’은 ‘실버맨 심부름센터’를 찾아가고, 면접부터 말아먹고 그곳에서 만난 미스터리 택배맨 ‘탁배’를 무작정 따라나서며 새로운 세상을 마주하는데… 고집불통 할배들의 좌충우돌 동행기가 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230518_211%2F1684378637672XvXDE_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('전봇대 소년의 모험', '20230615', '19', 46, 72.0, '등에 전봇대가 난 소년이, 강철 흡혈귀가 지배하는 가까운 미래의 세계로 타임 슬립한다. 미래에서 전봇대 소년을 기다리고 있던 수수께끼의 여교사 살리바 선생. 전봇대 소년은 살리바 선생과 함께 흡혈 그룹이 만들고 있는 초대형 암흑 병기가 완성되는 것을 막으러 대모험에 나선다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230525_112%2F16849793200152KvrF_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('전봇대 소년의 모험', '20230615', '18', 46, 72.0, '등에 전봇대가 난 소년이, 강철 흡혈귀가 지배하는 가까운 미래의 세계로 타임 슬립한다. 미래에서 전봇대 소년을 기다리고 있던 수수께끼의 여교사 살리바 선생. 전봇대 소년은 살리바 선생과 함께 흡혈 그룹이 만들고 있는 초대형 암흑 병기가 완성되는 것을 막으러 대모험에 나선다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230525_112%2F16849793200152KvrF_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('극장판 극주부도', '20230616', '12', 118, 72.0, '전국을 주름 잡던 야쿠자 ''타츠''. ''미쿠''를 만나 결혼하면서 야쿠자 생활을 청산하고 전업주부가 되기로 한다. 겉으로는 무서워 보이지만 그 누구보다도 가족을 아끼고 사랑하는 츤데레 가정주부인 ''타츠''와 집안일은 꽝이지만 다정한 워킹맘 ''미쿠'', 나이에 비해 성숙한 딸 ''히마와리'' 세 명의 가족을 둘러싼, 다혈질 부하와 어설픈 순경, 알바생 등이 함께 펼치는 진지하고도 웃긴 일상 이야기.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230525_101%2F16849780313273iQYz_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
@@ -3129,7 +3168,7 @@ INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO
 VALUES ('제이홉 인 더 박스', '20230616', 'AL', 85, 52.0, '방탄소년단의 데뷔 10주년을 맞이하여, 전 세계 극장에서 개봉하는 제이홉 솔로 다큐멘터리. 다 같이 모여, 영화관 큰 스크린으로 즐기는 축제! I''m your HOPE. You''re my HOPE. I''m j-hope. 판도라 상자 안 가장 깊숙한 곳, 마지막으로 남은 것은 희망. 2022년 7월 31일 미국 시카고, 세계 최대 뮤직 페스티벌 ‘롤라팔루자’에 제이홉은 솔로 아티스트로서, 대한민국 뮤지션 최초로 메인 스테이지 헤드라이너로 무대에 섰다. 춤밖에 모르던 정호석에서 세계적인 그룹 방탄소년단의 메인 댄서이자 래퍼가 된 제이홉. ‘Dynamite’와 ‘Butter’의 대대적인 성공 이후, 그는 첫 공식 솔로 앨범 작업을 시작한다. 솔로 아티스트로서의 정체성에 대한 고민과 불안이 불현듯 밀려들지만, 제이홉은 자신에 대한 용기와 믿음, 춤과 음악 그 자체를 즐기는 긍정의 힘으로, 이제 상자 밖으로 나와 세상을 맞이하기 위한 준비에 나선다. ‘Jack In The Box’의 제작기와 리스닝 파티, ‘롤라팔루자’의 공연 준비부터 무대 위 비상하는 모습까지 200여 일간 아티스트 제이홉의 일상의 기록을 담아낸 다큐멘터리.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230526_61%2F1685077286930O6MvJ_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('귀공자', '20230621', '19', 118, 29.0, '“난 단 한번도 타겟을 놓쳐 본 적이 없거든” 필리핀에서 불법 경기장을 전전하며 병든 어머니와 살아가는 복싱 선수 ‘마르코’. 어머니의 수술비 마련을 위해 평생 본 적 없는 아버지를 만나러 한국으로 향하던 그의 앞에 정체불명의 남자 ‘귀공자’가 나타나 그를 추격하기 시작한다. ‘마르코’ 주위를 쑥대밭으로 만들며 숨통을 조여오는 ‘귀공자’를 필두로, ‘마르코’를 집요하게 추격하는 재벌 2세 ‘한이사’, 필리핀에 이어 한국에서 우연히 ‘마르코’와 재회한 미스터리한 인물 ‘윤주’까지. 각기 다른 목적을 가진 이들은 단 하나의 타겟을 쫓아 모여들고, 그 무엇도 예측할 수 없는 혼란과 광기 속 ‘마르코’는 충격적인 진실을 마주하게 되는데… 단 하나의 타겟, 광기의 추격이 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230523_134%2F1684822002870Wvc5c_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('귀공자', '20230621', '18', 118, 29.0, '“난 단 한번도 타겟을 놓쳐 본 적이 없거든” 필리핀에서 불법 경기장을 전전하며 병든 어머니와 살아가는 복싱 선수 ‘마르코’. 어머니의 수술비 마련을 위해 평생 본 적 없는 아버지를 만나러 한국으로 향하던 그의 앞에 정체불명의 남자 ‘귀공자’가 나타나 그를 추격하기 시작한다. ‘마르코’ 주위를 쑥대밭으로 만들며 숨통을 조여오는 ‘귀공자’를 필두로, ‘마르코’를 집요하게 추격하는 재벌 2세 ‘한이사’, 필리핀에 이어 한국에서 우연히 ‘마르코’와 재회한 미스터리한 인물 ‘윤주’까지. 각기 다른 목적을 가진 이들은 단 하나의 타겟을 쫓아 모여들고, 그 무엇도 예측할 수 없는 혼란과 광기 속 ‘마르코’는 충격적인 진실을 마주하게 되는데… 단 하나의 타겟, 광기의 추격이 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230523_134%2F1684822002870Wvc5c_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('굿바이', '20081030', '12', 130, 41.0, '도쿄에서 첼리스트로 활동하던 ‘다이고’(모토키 마사히로)는 갑작스런 악단 해체로 아내 ‘미카’(히로스에 료코)와 고향으로 돌아간다. “연령, 경험 무관! 정규직 보장!” 여행사 구인 광고로 면접을 보고 바로 합격! 그러나 여행사는 국내도, 해외도 아닌 인생에서의 마지막 여행인 죽음을 배웅하는 장례지도회사! ‘다이고’는 ‘이쿠에이’(야마자키 츠토무)에게 일을 배우며 사명감을 갖게 되지만, ‘미카’와 주변 친구들은 그를 피할 만큼 새 출발을 반대하는데… 모두에게 전하는 사랑의 인사, “다녀오세요. 다시 만나요, 우리”', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20201216_180%2F1608106548353LSftG_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
@@ -3141,7 +3180,7 @@ INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO
 VALUES ('206: 사라지지 않는', '20230621', '12', 96, 6.0, '90세를 넘긴 나이에도 불구하고 765,000kV의 거대한 송전탑과 맞서 싸운 김말해 할머니 투쟁의 시작은 한국전쟁이었다. 한국전쟁 발발 전후 국가에 의해 은폐된, 민간인이 남녀노소 할 것 없이 무차별하게 학살당한 사건. 김말해 할머니와 또 다른 김말해''들''은 이 사건으로 가족을 잃고 침묵할 수밖에 없었다. 정확한 피해 규모도, 희생자 수도 알 수 없는 상황. 한국전쟁 정전 70년의 세월이 흘렀지만 그들의 시간은 멈춰있다. 그리고 국가 차원의 유해 발굴을 주도하던 진실화해위원회가 해체되자, 시민들은 자발적으로 공동조사단을 꾸려 그들을 찾아 나선다. "직업도, 배경도 다른 우리의 공통된 목표는 오직 하나. 인간을 구성하는 206개의 뼈를 가족의 품으로 돌려주는 것입니다" 국가가 은폐한 진실을 찾아 나선 시민 발굴단의 기록 <206: 사라지지 않는>', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230524_105%2F1684915701334NfJMg_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('인드림', '20230621', '19', 88, 31.0, '“너도 다른 사람 꿈속에 들어올 수 있구나?” 아버지의 병원비를 마련하기 위해 임상 실험에 참가했던 ‘홍화’는 타인의 꿈을 통제할 수 있는 ‘드림 워킹’ 능력을 갖게 된다. 어느 날, 친구 ‘지은’의 꿈속에 들어갔던 ‘홍화’는 자신과 똑같은 능력을 가진 연쇄살인범 ‘재인’과 맞닥뜨리고 살해 위기에 놓인 ‘지은’을 구하기 위해 형사 ‘상준’을 찾아가는데… ‘재인’은 ‘홍화’에게 위험한 제안을 하고 꿈과 현실을 오가는 두 사람의 쫓고 쫓기는 추적이 펼쳐진다!', '', 'N');
+VALUES ('인드림', '20230621', '18', 88, 31.0, '“너도 다른 사람 꿈속에 들어올 수 있구나?” 아버지의 병원비를 마련하기 위해 임상 실험에 참가했던 ‘홍화’는 타인의 꿈을 통제할 수 있는 ‘드림 워킹’ 능력을 갖게 된다. 어느 날, 친구 ‘지은’의 꿈속에 들어갔던 ‘홍화’는 자신과 똑같은 능력을 가진 연쇄살인범 ‘재인’과 맞닥뜨리고 살해 위기에 놓인 ‘지은’을 구하기 위해 형사 ‘상준’을 찾아가는데… ‘재인’은 ‘홍화’에게 위험한 제안을 하고 꿈과 현실을 오가는 두 사람의 쫓고 쫓기는 추적이 펼쳐진다!', '', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('스파이더맨: 어크로스 더 유니버스', '20230621', 'UN', 0, 53.0, '스파이더맨 VS 스파이더맨?! 여러 성장통을 겪으며 새로운 스파이더맨이 된 ‘마일스 모랄레스’. 그 앞에 다른 평행세계의 스파이더우먼 ‘그웬’이 다시 나타난다. 모든 차원의 멀티버스 속 스파이더맨들을 만나게 되지만, 질서에 대한 신념이 부딪히며 예상치 못한 균열이 생기는데… 상상 그 이상을 넘어서는 멀티버스의 세계가 열린다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230515_135%2F1684114755356LjnGu_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
@@ -3162,13 +3201,13 @@ INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO
 VALUES ('하나님의 마음', '20230628', '12', 102, 46.0, '“왜 하필 하나님께서는 외아들을 번제로 바치라고 하셨을까?” 어느 날 밤, 하나님이 아브라함을 찾아와 모리아 땅으로 가서 외아들 이삭을 번제로 바치라고 명령하신다. 아브라함은 다음 날 아내 사라를 뒤로 한 채 이삭과 3일간의 험난한 여정을 시작한다. “왜 하필 100살에 낳은 아들 이삭을 제물로 바치라고 하시는 걸까?” “왜 하필 3일이나 가야 하는 모리아에서 제사를 드리라고 하시는 걸까?” 탄식으로 가득한 질문은 여정 내내 계속되지만 마침내 예루살렘 모리아 산에서 그 해답을 찾게 되는데..', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230512_160%2F1683859952797tadW2_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('악마들', '', '19', 105, NULL, '부모에게 버림받은 10대 소년이 누이에게 품은 파괴적이고 왜곡된 열정을 그린 유년판 <베티 블루>. 두 아역 배우의 신들린 듯한 연기가 소름을 돋게 한다. 시카고국제영화제 금상. 토론토국제영화제 초청작, 산세바스찬영화제 초청작. 13세의 클로에와 12세의 조셉. 태어나면서부터 부모에게 버림받은 이들은 외부 세계와의 접촉을 거부하고, 서로에게만 의지하며 살아간다. 자폐증 증세를 보이는 클로에는 기괴한 웃음만을 흘리며 정처 없이 발길을 옮기고, 조셉은 그에게 단 하나뿐인 가족인 클로에를 보호하고, 어딘가에 있을 그들의 집을 찾기 위해 누이를 인도한다. 그러던 중, 마침내 그들은 보호소로 찾아온 어머니를 만나게 되고, 그들이 친남매가 아니라는 사실을 듣게 되는데.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20120130_196%2F1327916549947neAo4_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('악마들', '', '18', 105, NULL, '부모에게 버림받은 10대 소년이 누이에게 품은 파괴적이고 왜곡된 열정을 그린 유년판 <베티 블루>. 두 아역 배우의 신들린 듯한 연기가 소름을 돋게 한다. 시카고국제영화제 금상. 토론토국제영화제 초청작, 산세바스찬영화제 초청작. 13세의 클로에와 12세의 조셉. 태어나면서부터 부모에게 버림받은 이들은 외부 세계와의 접촉을 거부하고, 서로에게만 의지하며 살아간다. 자폐증 증세를 보이는 클로에는 기괴한 웃음만을 흘리며 정처 없이 발길을 옮기고, 조셉은 그에게 단 하나뿐인 가족인 클로에를 보호하고, 어딘가에 있을 그들의 집을 찾기 위해 누이를 인도한다. 그러던 중, 마침내 그들은 보호소로 찾아온 어머니를 만나게 되고, 그들이 친남매가 아니라는 사실을 듣게 되는데.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20120130_196%2F1327916549947neAo4_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('기적을 믿는 소녀', '20230705', 'AL', 100, 64.0, '하나님의 기적을 믿는 어린 소녀 ‘사라’는 호수로 낚시하러 가서 죽은 새를 발견하고 기도하는데 집으로 돌아가려 할 때 죽은 새가 살아난다. 사라는 하나님이 자신의 기도에 응답해서 새를 살린 거라고 말하지만 오빠와 그의 여자친구 ‘신디’는 그 광경을 같이 보고도 믿으려 하지 않는다. 상심한 사라는 외할아버지 ‘샘’과 단짝 친구 ‘마크’ 에게 호수에서 있었던 일을 이야기하는데, 그날 밤 사라는 심하게 앓는다. 며칠 후 오빠 축구팀의 라이벌 ‘앨비’ 일행들과 시비가 붙는 바람에 앨비의 개가 차에 치여 죽는 사고가 발생하지만 사라의 기도로 개가 다시 살아나고, 연이어 하반신 마비의 마크도 걷게 되자 어린 소녀가 하나님의 기적을 행한다는 소문이 퍼지면서 많은 사람들이 몰려들어 사라와 가족들은 혼란을 겪는데... 당신 곁으로 기적이 찾아옵니다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230524_234%2F1684906588727KfalP_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('보 이즈 어프레이드', '20230705', '19', 179, 59.0, '편집증을 앓는 ‘보’와 그를 집착적으로 사랑하는 엄마 ‘모나’ 엄마를 무조건 만나러 가야 하는 보의 기억과 환상, 현실이 뒤섞인 공포를 경험하게 되는 기이한 여정', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230523_68%2F1684820461764yc73Q_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('보 이즈 어프레이드', '20230705', '18', 179, 59.0, '편집증을 앓는 ‘보’와 그를 집착적으로 사랑하는 엄마 ‘모나’ 엄마를 무조건 만나러 가야 하는 보의 기억과 환상, 현실이 뒤섞인 공포를 경험하게 되는 기이한 여정', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230523_68%2F1684820461764yc73Q_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('극장판 도라에몽: 진구와 하늘의 유토피아', '20230708', 'UN', 107, NULL, '', '', 'N');
@@ -3213,13 +3252,13 @@ INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO
 VALUES ('어디로 가고 싶으신가요', '202306--', '12', 104, 58.0, '어느 봄날, 갑작스러운 사고로 남편인 ‘도경’을 잃은 ‘명지’는 슬픔에서 벗어나기 위해 폴란드 바르샤바로 잠시 떠난다. 하지만 ‘도경’의 소식을 모르는 대학 동창 ‘현석’과의 재회에 ‘명지’는 낯선 곳에서 불쑥불쑥 남편과의 추억을 마주하게 되는데… 한편, 같은 사고로 단짝 친구인 ‘지용’과 이별한 ‘해수’는 곳곳에 남겨진 친구의 빈자리를 느끼며 하나뿐인 동생을 잃고 몸이 마비된 ‘지용’의 누나 ‘지은’을 돕는다. 그러던 중 ‘해수’는 ‘지은’에게 새 편지지와 함께 ‘명지’의 주소를 건네는데… 홀로 남겨진 나와 당신에게 들려주고 싶은 다정한 말 한마디 “어디로 가고 싶으신가요”', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230504_5%2F1683170269277T2zNI_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('라방', '202306--', '19', 90, 19.0, '“내 여자친구가 인터넷 몰카 라이브 방송에 나온다?!” 대기업 취업도 쉽지 않고 친구가 보낸 불법 몰카 라이브 방송 링크를 여자친구 수진에게 들켜 헤어질 위기에 처한 프리랜서 PD ‘동주’. 수진의 생일날 이벤트를 준비하던 중 의문의 라이브 방송 링크가 전송되고 링크가 자동으로 열리는데… “아이디 486번 고객님이 입장되었습니다” 실시간으로 시작되는 몰카 라이브 방송! 그런데 모니터를 통해 여자친구 ‘수진’이 나타나고 동주는 충격에 빠지게 된다. 정체불명의 ‘젠틀맨’과 정신을 잃은 ‘수진’, ‘동주’는 사랑하는 수진을 구하기 위해 라이브 방송에 참여하기 시작하지만 ‘젠틀맨’은 라이브 방송을 점점 최악의 상황으로 끌고 가는데… 1분 1초를 다투는 숨 막히는 실시간 라이브 추격전이 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230515_242%2F1684128359736AvvPO_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('라방', '202306--', '18', 90, 19.0, '“내 여자친구가 인터넷 몰카 라이브 방송에 나온다?!” 대기업 취업도 쉽지 않고 친구가 보낸 불법 몰카 라이브 방송 링크를 여자친구 수진에게 들켜 헤어질 위기에 처한 프리랜서 PD ‘동주’. 수진의 생일날 이벤트를 준비하던 중 의문의 라이브 방송 링크가 전송되고 링크가 자동으로 열리는데… “아이디 486번 고객님이 입장되었습니다” 실시간으로 시작되는 몰카 라이브 방송! 그런데 모니터를 통해 여자친구 ‘수진’이 나타나고 동주는 충격에 빠지게 된다. 정체불명의 ‘젠틀맨’과 정신을 잃은 ‘수진’, ‘동주’는 사랑하는 수진을 구하기 위해 라이브 방송에 참여하기 시작하지만 ‘젠틀맨’은 라이브 방송을 점점 최악의 상황으로 끌고 가는데… 1분 1초를 다투는 숨 막히는 실시간 라이브 추격전이 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230515_242%2F1684128359736AvvPO_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('플래닛', '', '12', 114, NULL, '''우주정거장 미르''에서는 24시간 뒤 지나갈 소행성을 추적 중 운석 충돌 가능성을 말하지만 무시되고 만다. 한편. 지구에서는 이러한 영문도 모른 채\ 지구를 비켜갈 화려한 유성우의 우주쇼를 볼 기대에 들떠 있다. 그 시간, 소행성 뒤 편 사각 지대의 운석 파편들이 핵폭탄 보다 10배 강력한 파워로 우주정거장을 파괴한 후 지구를 향해 나아가고…. 소행성에 강타당한 지구는 모든 건물과 도로가 붕괴되며 대재앙이 펼쳐지는데...', 'https://img.megabox.co.kr/SharedImg/2023/05/25/7ObfF4ehnSp0Y2M6vT1sGtWJQ46OeLpk_420.jpg', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('바비', '20121025', '19', 98, 27.0, '핸드폰 고리를 팔며 생활비를 버는 어린 순영(김새론)에게는 지적 장애를 가진 아빠와 뭐든 완벽한 바비 인형이 되고 싶어하는 철없는 동생 순자(김아론), 안하무인인 작은 아빠 망택(이천희)이 있다. 심장병을 앓고 있는 둘째 딸을 위해 순영이 필요했던 미국인 스티브와 바비 부녀가 찾아오게 되고 이를 알면서도 돈을 위해 조카를 미국으로 보내려는 작은 아빠는 순영에게 강제적으로 미국으로의 입양을 권한다. 하지만 정작 미국에 가지 못해 안달 난 순자는 자신이 언니 대신 가기 위해 온갖 수를 쓰고 그 사실을 모르는 순영은 미국에 가면 더 나은 삶을 살 수 있을 거라는 생각에 동생 순자를 대신 데려가 달라 한다. 바비는 착한 순영과 함께 살기를 원했지만 아빠의 음모를 뒤늦게 알고 심한 충격을 받는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20121002_205%2F1349163028816vJBie_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('바비', '20121025', '18', 98, 27.0, '핸드폰 고리를 팔며 생활비를 버는 어린 순영(김새론)에게는 지적 장애를 가진 아빠와 뭐든 완벽한 바비 인형이 되고 싶어하는 철없는 동생 순자(김아론), 안하무인인 작은 아빠 망택(이천희)이 있다. 심장병을 앓고 있는 둘째 딸을 위해 순영이 필요했던 미국인 스티브와 바비 부녀가 찾아오게 되고 이를 알면서도 돈을 위해 조카를 미국으로 보내려는 작은 아빠는 순영에게 강제적으로 미국으로의 입양을 권한다. 하지만 정작 미국에 가지 못해 안달 난 순자는 자신이 언니 대신 가기 위해 온갖 수를 쓰고 그 사실을 모르는 순영은 미국에 가면 더 나은 삶을 살 수 있을 거라는 생각에 동생 순자를 대신 데려가 달라 한다. 바비는 착한 순영과 함께 살기를 원했지만 아빠의 음모를 뒤늦게 알고 심한 충격을 받는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20121002_205%2F1349163028816vJBie_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('미션 임파서블: 데드 레코닝 PART ONE', '202307--', 'UN', 0, 9.0, '', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230518_114%2F1684378173601f45h9_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
@@ -5957,684 +5996,684 @@ VALUES (136, 150);
 --SET DEFINE OFF
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (1, 'MU');
+VALUES (1, '17');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (1, 'FA');
+VALUES (1, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (1, 'FT');
+VALUES (1, '02');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (1, 'RO');
+VALUES (1, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (2, 'AC');
+VALUES (2, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (2, 'CR');
+VALUES (2, '16');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (3, 'AC');
+VALUES (3, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (3, 'AD');
+VALUES (3, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (3, 'SF');
+VALUES (3, '18');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (4, 'AN');
+VALUES (4, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (4, 'AD');
+VALUES (4, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (4, 'CO');
+VALUES (4, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (5, 'AN');
+VALUES (5, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (5, 'FA');
+VALUES (5, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (5, 'CO');
+VALUES (5, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (5, 'AD');
+VALUES (5, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (5, 'MU');
+VALUES (5, '17');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (6, 'AN');
+VALUES (6, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (7, 'AN');
+VALUES (7, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (8, 'DR');
+VALUES (8, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (8, 'RO');
+VALUES (8, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (9, 'AN');
+VALUES (9, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (10, 'AN');
+VALUES (10, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (11, 'CO');
+VALUES (11, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (11, 'DR');
+VALUES (11, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (12, 'AC');
+VALUES (12, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (13, 'DA');
+VALUES (13, '10');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (14, 'CO');
+VALUES (14, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (14, 'DR');
+VALUES (14, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (15, 'AC');
+VALUES (15, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (15, 'SF');
+VALUES (15, '18');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (16, 'DR');
+VALUES (16, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (17, 'CO');
+VALUES (17, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (17, 'AC');
+VALUES (17, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (18, 'RO');
+VALUES (18, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (18, 'CO');
+VALUES (18, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (19, 'DA');
+VALUES (19, '10');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (20, 'HO');
+VALUES (20, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (20, 'MY');
+VALUES (20, '13');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (21, 'RO');
+VALUES (21, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (22, 'DR');
+VALUES (22, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (22, 'RO');
+VALUES (22, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (23, 'DR');
+VALUES (23, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (23, 'MY');
+VALUES (23, '13');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (24, 'DR');
+VALUES (24, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (25, 'DR');
+VALUES (25, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (26, 'CO');
+VALUES (26, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (27, 'AN');
+VALUES (27, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (28, 'DR');
+VALUES (28, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (29, 'AN');
+VALUES (29, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (29, 'AD');
+VALUES (29, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (29, 'FA');
+VALUES (29, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (30, 'DR');
+VALUES (30, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (31, 'DA');
+VALUES (31, '10');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (32, 'FA');
+VALUES (32, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (32, 'DR');
+VALUES (32, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (33, 'DR');
+VALUES (33, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (33, 'FA');
+VALUES (33, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (34, 'DR');
+VALUES (34, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (35, 'AN');
+VALUES (35, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (35, 'DR');
+VALUES (35, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (35, 'FT');
+VALUES (35, '02');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (36, 'AN');
+VALUES (36, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (36, 'FT');
+VALUES (36, '02');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (36, 'DR');
+VALUES (36, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (37, 'HO');
+VALUES (37, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (37, 'TH');
+VALUES (37, '07');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (38, 'CO');
+VALUES (38, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (38, 'DR');
+VALUES (38, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (39, 'DR');
+VALUES (39, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (40, 'DR');
+VALUES (40, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (41, 'DR');
+VALUES (41, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (42, 'AN');
+VALUES (42, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (42, 'DR');
+VALUES (42, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (43, 'HO');
+VALUES (43, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (43, 'MY');
+VALUES (43, '13');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (44, 'DR');
+VALUES (44, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (45, 'TH');
+VALUES (45, '07');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (46, 'CO');
+VALUES (46, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (47, 'DR');
+VALUES (47, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (48, 'AN');
+VALUES (48, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (49, 'DR');
+VALUES (49, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (50, 'DR');
+VALUES (50, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (51, 'DR');
+VALUES (51, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (51, 'RO');
+VALUES (51, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (52, 'DR');
+VALUES (52, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (53, 'RO');
+VALUES (53, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (53, 'DR');
+VALUES (53, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (54, 'DR');
+VALUES (54, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (55, 'DR');
+VALUES (55, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (56, 'SF');
+VALUES (56, '18');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (57, 'TH');
+VALUES (57, '07');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (57, 'AC');
+VALUES (57, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (58, 'DR');
+VALUES (58, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (58, 'RO');
+VALUES (58, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (59, 'DR');
+VALUES (59, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (60, 'DR');
+VALUES (60, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (61, 'DR');
+VALUES (61, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (62, 'DR');
+VALUES (62, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (62, 'RO');
+VALUES (62, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (62, 'FA');
+VALUES (62, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (63, 'DR');
+VALUES (63, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (64, 'AC');
+VALUES (64, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (64, 'CO');
+VALUES (64, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (65, 'CR');
+VALUES (65, '16');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (65, 'AC');
+VALUES (65, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (66, 'AN');
+VALUES (66, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (66, 'AD');
+VALUES (66, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (66, 'FT');
+VALUES (66, '02');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (66, 'AC');
+VALUES (66, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (67, 'AC');
+VALUES (67, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (67, 'CO');
+VALUES (67, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (67, 'DR');
+VALUES (67, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (68, 'DR');
+VALUES (68, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (69, 'RO');
+VALUES (69, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (70, 'DR');
+VALUES (70, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (71, 'DR');
+VALUES (71, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (72, 'DR');
+VALUES (72, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (73, 'CR');
+VALUES (73, '16');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (73, 'DR');
+VALUES (73, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (73, 'TH');
+VALUES (73, '07');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (73, 'HO');
+VALUES (73, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (74, 'DR');
+VALUES (74, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (75, 'CR');
+VALUES (75, '16');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (75, 'AC');
+VALUES (75, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (76, 'SF');
+VALUES (76, '18');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (77, 'AC');
+VALUES (77, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (77, 'FT');
+VALUES (77, '02');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (78, 'MY');
+VALUES (78, '13');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (79, 'AC');
+VALUES (79, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (79, 'RO');
+VALUES (79, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (79, 'CR');
+VALUES (79, '16');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (80, 'AC');
+VALUES (80, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (80, 'SF');
+VALUES (80, '18');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (81, 'HO');
+VALUES (81, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (81, 'MY');
+VALUES (81, '13');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (81, 'TH');
+VALUES (81, '07');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (82, 'AN');
+VALUES (82, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (82, 'DR');
+VALUES (82, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (82, 'RO');
+VALUES (82, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (83, 'CO');
+VALUES (83, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (83, 'DR');
+VALUES (83, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (84, 'DR');
+VALUES (84, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (85, 'CO');
+VALUES (85, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (85, 'DR');
+VALUES (85, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (86, 'DR');
+VALUES (86, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (86, 'RO');
+VALUES (86, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (86, 'CO');
+VALUES (86, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (87, 'CO');
+VALUES (87, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (88, 'WA');
+VALUES (88, '14');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (88, 'AC');
+VALUES (88, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (89, 'DR');
+VALUES (89, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (90, 'DR');
+VALUES (90, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (91, 'DR');
+VALUES (91, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (92, 'DA');
+VALUES (92, '10');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (93, 'AC');
+VALUES (93, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (93, 'HO');
+VALUES (93, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (93, 'TH');
+VALUES (93, '07');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (94, 'AN');
+VALUES (94, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (95, 'DR');
+VALUES (95, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (96, 'SF');
+VALUES (96, '18');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (96, 'AC');
+VALUES (96, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (96, 'HO');
+VALUES (96, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (96, 'FT');
+VALUES (96, '02');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (97, 'CO');
+VALUES (97, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (98, 'DA');
+VALUES (98, '10');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (99, 'DA');
+VALUES (99, '10');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (100, 'AC');
+VALUES (100, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (101, 'DR');
+VALUES (101, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (102, 'HO');
+VALUES (102, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (102, 'CO');
+VALUES (102, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (103, 'DA');
+VALUES (103, '10');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (104, 'AC');
+VALUES (104, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (104, 'TH');
+VALUES (104, '07');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (105, 'AN');
+VALUES (105, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (106, 'DA');
+VALUES (106, '10');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (107, 'CO');
+VALUES (107, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (107, 'RO');
+VALUES (107, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (108, 'AN');
+VALUES (108, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (108, 'AD');
+VALUES (108, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (108, 'CO');
+VALUES (108, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (108, 'FA');
+VALUES (108, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (109, 'DR');
+VALUES (109, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (110, 'DR');
+VALUES (110, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (111, 'DR');
+VALUES (111, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (112, 'DR');
+VALUES (112, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (112, 'FA');
+VALUES (112, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (113, 'AD');
+VALUES (113, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (113, 'HO');
+VALUES (113, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (114, 'AN');
+VALUES (114, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (115, 'AN');
+VALUES (115, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (115, 'FA');
+VALUES (115, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (115, 'FT');
+VALUES (115, '02');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (116, 'AN');
+VALUES (116, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (117, 'CR');
+VALUES (117, '16');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (118, 'CO');
+VALUES (118, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (118, 'DR');
+VALUES (118, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (119, 'DR');
+VALUES (119, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (119, 'SF');
+VALUES (119, '18');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (120, 'DR');
+VALUES (120, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (121, 'AC');
+VALUES (121, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (121, 'AD');
+VALUES (121, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (121, 'FT');
+VALUES (121, '02');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (122, 'AC');
+VALUES (122, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (122, 'AD');
+VALUES (122, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (123, 'CO');
+VALUES (123, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (123, 'HO');
+VALUES (123, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (124, 'DR');
+VALUES (124, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (125, 'CO');
+VALUES (125, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (125, 'RO');
+VALUES (125, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (126, 'CR');
+VALUES (126, '16');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (126, 'AC');
+VALUES (126, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (127, 'DR');
+VALUES (127, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (129, 'SF');
+VALUES (129, '18');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (130, 'DR');
+VALUES (130, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (131, 'AC');
+VALUES (131, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (131, 'AD');
+VALUES (131, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (131, 'TH');
+VALUES (131, '07');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (132, 'DA');
+VALUES (132, '10');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (133, 'DR');
+VALUES (133, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (133, 'FA');
+VALUES (133, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (134, 'HO');
+VALUES (134, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (134, 'MY');
+VALUES (134, '13');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (134, 'TH');
+VALUES (134, '07');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (135, 'RO');
+VALUES (135, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (135, 'CO');
+VALUES (135, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (136, 'DA');
+VALUES (136, '10');
 
 COMMIT
