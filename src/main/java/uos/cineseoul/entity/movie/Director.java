@@ -21,9 +21,11 @@ public class Director {
     @Column(name = "DIR_NUM")
     private Long dirNum;
 
-
     @Column(name = "NAME", length = 100, nullable = false)
     private String name;
+
+    @Column(name = "IMG_URL", length = 2000, nullable = true)
+    private String imgUrl;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "director")
     @Builder.Default

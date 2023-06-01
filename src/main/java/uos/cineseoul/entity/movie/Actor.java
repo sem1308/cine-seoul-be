@@ -24,6 +24,9 @@ public class Actor {
     @Column(name = "NAME", length = 100, nullable = false)
     private String name;
 
+    @Column(name = "IMG_URL", length = 2000, nullable = true)
+    private String imgUrl;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "actor")
     @Builder.Default
     private List<MovieActor> movieActorList = new ArrayList<>();

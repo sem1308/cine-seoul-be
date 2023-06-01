@@ -10,4 +10,7 @@ public class CreateActorDTO {
     @NotBlank
     @Size(max = 100)
     private String name;
+
+    @Size(max = 2000)
+    private String imgUrl;
 }

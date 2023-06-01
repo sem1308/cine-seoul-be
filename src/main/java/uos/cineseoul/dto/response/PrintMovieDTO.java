@@ -31,7 +31,8 @@ public class PrintMovieDTO {
         this.releaseDate = movie.getReleaseDate();
         this.runningTime = movie.getRunningTime();
         this.isShowing = movie.getIsShowing();
-        this.distName = movie.getDistributor().getName();
+        if(movie.getDistributor()!=null)
+            this.distName = movie.getDistributor().getName();
         this.gradeName = movie.getGrade().getName();
         this.genreList = new ArrayList<>();
         movie.getMovieGenreList().forEach(

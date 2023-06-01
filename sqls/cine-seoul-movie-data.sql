@@ -2772,253 +2772,292 @@ VALUES ('그린나래미디어(주)');
 
 --SET DEFINE OFF
 
-INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('WA', '전쟁');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('TH', '스릴러');
+VALUES ('01', '드라마');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('FA', '가족');
+VALUES ('02', '판타지');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('AN', '애니메이션');
+VALUES ('03', '서부');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('DA', '다큐멘터리');
+VALUES ('04', '공포');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('CO', '코미디');
+VALUES ('05', '멜로/로맨스');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('DR', '드라마');
+VALUES ('06', '모험');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('HO', '공포');
+VALUES ('07', '스릴러');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('CR', '범죄');
+VALUES ('08', '느와르');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('AD', '모험');
+VALUES ('09', '컬트');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('MY', '미스터리');
+VALUES ('10', '다큐멘터리');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('FT', '판타지');
+VALUES ('11', '코미디');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('AC', '액션');
+VALUES ('12', '가족');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('MU', '뮤지컬');
+VALUES ('13', '미스터리');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('SF', 'SF');
+VALUES ('14', '전쟁');
 
 INSERT INTO GENRE (GENRE_CODE, NAME) 
-VALUES ('RO', '멜로/로맨스');
+VALUES ('15', '애니메이션');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('16', '범죄');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('17', '뮤지컬');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('18', 'SF');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('19', '액션');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('20', '무협');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('21', '에로');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('22', '서스펜스');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('23', '서사');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('24', '블랙코미디');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('25', '실험');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('26', '영화카툰');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('27', '영화음악');
+
+INSERT INTO GENRE (GENRE_CODE, NAME) 
+VALUES ('28', '영화패러디포스터');
 
 --행 1
 INSERT INTO GRADE (GRADE_CODE, NAME, ADULT_ONLY) VALUES ('12','12세 관람가','N');
 --행 2
 INSERT INTO GRADE (GRADE_CODE, NAME, ADULT_ONLY) VALUES ('15','15세 관람가','N');
 --행 3
-INSERT INTO GRADE (GRADE_CODE, NAME, ADULT_ONLY) VALUES ('19','청소년 관람불가','Y');
+INSERT INTO GRADE (GRADE_CODE, NAME, ADULT_ONLY) VALUES ('18','청소년 관람불가','Y');
 --행 4
 INSERT INTO GRADE (GRADE_CODE, NAME, ADULT_ONLY) VALUES ('AL','전체 관람가','N');
 --행 5
 INSERT INTO GRADE (GRADE_CODE, NAME, ADULT_ONLY) VALUES ('UN','미정','N');
 
-INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('인어공주', '20230524', 'AL', 135, 25.0, '아틀란티카 바다의 왕 ‘트라이튼’의 사랑스러운 막내딸인 인어 ‘에리얼’은 늘 인간들이 사는 바다 너머 세상으로의 모험을 꿈꾼다. 어느 날, 우연히 바다 위로 올라갔다가 폭풍우 속 가라앉는 배에 탄 인간 ‘에릭 왕자’의 목숨을 구해준다. 갈망하던 꿈과 운명적인 사랑을 이루기 위해 용기를 낸 ‘에리얼’은 사악한 바다 마녀 ‘울슐라’와의 위험한 거래를 통해 다리를 얻게 된다. 드디어 바다를 벗어나 그토록 원하던 인간 세상으로 가게 되지만, 그 선택으로 ‘에리얼’과 아틀란티카 왕국 모두 위험에 처하게 되는데… 바닷속, 그리고 그 너머 아름다운 꿈과 사랑의 멜로디가 펼쳐진다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230524_42%2F1684890755488fBHJh_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+INSERT INTO GRADE (GRADE_CODE, NAME, ADULT_ONLY) VALUES ('LS','제한 상영가','Y');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('분노의 질주: 라이드 오어 다이', '20230517', '15', 141, 70.0, '돔(빈 디젤)과 그의 패밀리 앞에 나타난 운명의 적 단테(제이슨 모모아). 과거의 그림자는 돔의 모든 것을 파괴하기 위해 달려온다. 단테에 의해 산산히 흩어진 패밀리들은 모두 목숨을 걸고 맞서야 하는 함정에 빠지고 마는데.. 달리거나 죽거나, 그들의 마지막 질주가 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230503_262%2F1683080729234M8bHL_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('인어공주', '20230524', 'AL', 135, 25.0, '아틀란티카 바다의 왕 ‘트라이튼’의 사랑스러운 막내딸인 인어 ‘에리얼’은 늘 인간들이 사는 바다 너머 세상으로의 모험을 꿈꾼다. 어느 날, 우연히 바다 위로 올라갔다가 폭풍우 속 가라앉는 배에 탄 인간 ‘에릭 왕자’의 목숨을 구해준다. 갈망하던 꿈과 운명적인 사랑을 이루기 위해 용기를 낸 ‘에리얼’은 사악한 바다 마녀 ‘울슐라’와의 위험한 거래를 통해 다리를 얻게 된다. 드디어 바다를 벗어나 그토록 원하던 인간 세상으로 가게 되지만, 그 선택으로 ‘에리얼’과 아틀란티카 왕국 모두 위험에 처하게 되는데… 바닷속, 그리고 그 너머 아름다운 꿈과 사랑의 멜로디가 펼쳐진다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230524_42%2F1684890755488fBHJh_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('가디언즈 오브 갤럭시: Volume 3', '20230503', '12', 150, 60.0, '‘가모라’를 잃고 슬픔에 빠져 있던 ‘피터 퀼’이 위기에 처한 은하계와 동료를 지키기 위해 다시 한번 가디언즈 팀과 힘을 모으고, 성공하지 못할 경우 그들의 마지막이 될지도 모르는 미션에 나서는 이야기', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230503_20%2F1683109578216k8TUH_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('분노의 질주: 라이드 오어 다이', '20230517', '15', 141, 70.0, '돔(빈 디젤)과 그의 패밀리 앞에 나타난 운명의 적 단테(제이슨 모모아). 과거의 그림자는 돔의 모든 것을 파괴하기 위해 달려온다. 단테에 의해 산산히 흩어진 패밀리들은 모두 목숨을 걸고 맞서야 하는 함정에 빠지고 마는데.. 달리거나 죽거나, 그들의 마지막 질주가 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230503_262%2F1683080729234M8bHL_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('슈퍼 마리오 브라더스', '20230426', 'AL', 92, 70.0, '따단-딴-따단-딴 전 세계를 열광시킬 올 타임 슈퍼 어드벤처의 등장! 뉴욕의 평범한 배관공 형제 ''마리오''와 ‘루이지’는 배수관 고장으로 위기에 빠진 도시를 구하려다 미스터리한 초록색 파이프 안으로 빨려 들어가게 된다. 파이프를 통해 새로운 세상으로 차원 이동하게 된 형제. 형 ''마리오''는 뛰어난 리더십을 지닌 ''피치''가 통치하는 버섯왕국에 도착하지만 동생 ''루이지''는 빌런 ''쿠파''가 있는 다크랜드로 떨어지며 납치를 당하고 ‘마리오’는 동생을 구하기 위해 ‘피치’와 ‘키노피오’의 도움을 받아 ''쿠파''에 맞서기로 결심한다. 그러나 슈퍼스타로 세상을 지배하려는 그의 강력한 힘 앞에 이들은 예기치 못한 위험에 빠지게 되는데...! 동생을 구하기 위해! 세상을 지키기 위해! ''슈퍼 마리오''로 레벨업 하기 위한 ''마리오''의 스펙터클한 스테이지가 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230309_3%2F1678329123596Kpcdb_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('가디언즈 오브 갤럭시: Volume 3', '20230503', '12', 150, 60.0, '‘가모라’를 잃고 슬픔에 빠져 있던 ‘피터 퀼’이 위기에 처한 은하계와 동료를 지키기 위해 다시 한번 가디언즈 팀과 힘을 모으고, 성공하지 못할 경우 그들의 마지막이 될지도 모르는 미션에 나서는 이야기', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230503_20%2F1683109578216k8TUH_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('아기공룡 둘리 : 얼음별 대모험 리마스터링', '19960724', 'AL', 84, 23.0, '아기공룡 둘리는 1억 년 전 거대한 빙산 조각에 갇혀 엄마와 헤어지게 되고 그 안에서 깊은 잠에 빠지게 된다. 어느 날 한강으로 빙산 조각이 흘러 들어오게 되고 조금씩 얼음이 깊은 잠에서 깨어난 둘리는 우연히 쌍문동에 사는 소시민 고길동의 집에 머물게 되는데, 호기심 많고 말썽꾸러기인 둘리로 인해 고길동의 집은 그날부터 하루도 맘 편할 날이 없다. 거기에 ‘공포의 공갈 젖꼭지’ 희동이, 외계인 도우너, 귀부인 타조 또치, 가수지망생 마이콜이 가세하고 이들은 타임 코스모스를 타고 빨리 어른이 되기 위해 미래로 여행을 떠난다. 그러나 타임 코스모스의 작동실수로 이들은 우주의 미로 속, 얼음별로 향하게 되고 그곳에서 둘리는 꿈에 그리던 엄마를 만나게 된다. 하지만 얼음별은 우주의 악당 바요킹에 의해 지배당하고 있었고 둘리 일행은 바요킹의 추격에 쫓기기 시작한다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230510_159%2F1683700719409fFKTr_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('슈퍼 마리오 브라더스', '20230426', 'AL', 92, 70.0, '따단-딴-따단-딴 전 세계를 열광시킬 올 타임 슈퍼 어드벤처의 등장! 뉴욕의 평범한 배관공 형제 ''마리오''와 ‘루이지’는 배수관 고장으로 위기에 빠진 도시를 구하려다 미스터리한 초록색 파이프 안으로 빨려 들어가게 된다. 파이프를 통해 새로운 세상으로 차원 이동하게 된 형제. 형 ''마리오''는 뛰어난 리더십을 지닌 ''피치''가 통치하는 버섯왕국에 도착하지만 동생 ''루이지''는 빌런 ''쿠파''가 있는 다크랜드로 떨어지며 납치를 당하고 ‘마리오’는 동생을 구하기 위해 ‘피치’와 ‘키노피오’의 도움을 받아 ''쿠파''에 맞서기로 결심한다. 그러나 슈퍼스타로 세상을 지배하려는 그의 강력한 힘 앞에 이들은 예기치 못한 위험에 빠지게 되는데...! 동생을 구하기 위해! 세상을 지키기 위해! ''슈퍼 마리오''로 레벨업 하기 위한 ''마리오''의 스펙터클한 스테이지가 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230309_3%2F1678329123596Kpcdb_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('극장판 짱구는 못말려: 동물소환 닌자 배꼽수비대', '20230504', 'AL', 100, 36.0, '어느 날 ‘짱구‘와 동갑내기인 5살 ‘진구’를 데리고, 짱구 가족을 찾아온 수상한 여성. 서로의 아이가 바뀌었다는 충격적인 소식을 전한다. 하루아침에 닌자 가문의 후계자 ‘진구’로 불리게 된 짱구는 ‘부리부리 엉덩이 분신술’로 닌자 유치원을 초토화시킨다. 한편, 떡잎마을에 남겨진 진구와 짱구 가족은 짱구를 찾으러 닌자 마을로 향하고, 세상의 중심인 ‘지구의 배꼽’이 흔들리기 시작하며, 지구가 붕괴될 위기에 처하는데… 과연 짱구는 세상을 지켜낼 수 있을까?!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230504_28%2F1683188611078EmvS2_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('아기공룡 둘리 : 얼음별 대모험 리마스터링', '19960724', 'AL', 84, 23.0, '아기공룡 둘리는 1억 년 전 거대한 빙산 조각에 갇혀 엄마와 헤어지게 되고 그 안에서 깊은 잠에 빠지게 된다. 어느 날 한강으로 빙산 조각이 흘러 들어오게 되고 조금씩 얼음이 깊은 잠에서 깨어난 둘리는 우연히 쌍문동에 사는 소시민 고길동의 집에 머물게 되는데, 호기심 많고 말썽꾸러기인 둘리로 인해 고길동의 집은 그날부터 하루도 맘 편할 날이 없다. 거기에 ‘공포의 공갈 젖꼭지’ 희동이, 외계인 도우너, 귀부인 타조 또치, 가수지망생 마이콜이 가세하고 이들은 타임 코스모스를 타고 빨리 어른이 되기 위해 미래로 여행을 떠난다. 그러나 타임 코스모스의 작동실수로 이들은 우주의 미로 속, 얼음별로 향하게 되고 그곳에서 둘리는 꿈에 그리던 엄마를 만나게 된다. 하지만 얼음별은 우주의 악당 바요킹에 의해 지배당하고 있었고 둘리 일행은 바요킹의 추격에 쫓기기 시작한다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230510_159%2F1683700719409fFKTr_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('스즈메의 문단속', '20230308', '12', 122, 65.0, '“이 근처에 폐허 없니? 문을 찾고 있어” 규슈의 한적한 마을에 살고 있는 소녀 ‘스즈메’는 문을 찾아 여행 중인 청년 ‘소타’를 만난다. 그의 뒤를 쫓아 산속 폐허에서 발견한 낡은 문. ‘스즈메’가 무언가에 이끌리듯 문을 열자 마을에 재난의 위기가 닥쳐오고 가문 대대로 문 너머의 재난을 봉인하는 ‘소타’를 도와 간신히 문을 닫는다. “닫아야만 하잖아요, 여기를!” 재난을 막았다는 안도감도 잠시, 수수께끼의 고양이 ‘다이진’이 나타나 ‘소타’를 의자로 바꿔 버리고 일본 각지의 폐허에 재난을 부르는 문이 열리기 시작하자 ‘스즈메’는 의자가 된 ‘소타’와 함께 재난을 막기 위한 여정에 나선다. “꿈이 아니었어” 규슈, 시코쿠, 고베, 도쿄 재난을 막기 위해 일본 전역을 돌며 필사적으로 문을 닫아가던 중 어릴 적 고향에 닿은 ‘스즈메’는 잊고 있던 진실과 마주하게 되는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230206_264%2F1675649061557DaJHD_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('극장판 짱구는 못말려: 동물소환 닌자 배꼽수비대', '20230504', 'AL', 100, 36.0, '어느 날 ‘짱구‘와 동갑내기인 5살 ‘진구’를 데리고, 짱구 가족을 찾아온 수상한 여성. 서로의 아이가 바뀌었다는 충격적인 소식을 전한다. 하루아침에 닌자 가문의 후계자 ‘진구’로 불리게 된 짱구는 ‘부리부리 엉덩이 분신술’로 닌자 유치원을 초토화시킨다. 한편, 떡잎마을에 남겨진 진구와 짱구 가족은 짱구를 찾으러 닌자 마을로 향하고, 세상의 중심인 ‘지구의 배꼽’이 흔들리기 시작하며, 지구가 붕괴될 위기에 처하는데… 과연 짱구는 세상을 지켜낼 수 있을까?!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230504_28%2F1683188611078EmvS2_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('남은 인생 10년', '20230524', '12', 125, 58.0, '스무 살이 되던 해, 수 만명 중 1명이 걸리는 난치병으로 10년의 삶을 선고받은 ‘마츠리’는 삶의 의지를 잃은 ‘카즈토’를 만나 사랑에 빠진다. 처음 만난 봄, 즐거운 여름, 아름답던 가을, 깊어진 겨울까지 하루하루 애틋하게 사랑한 두 사람 하지만 쌓이는 추억만큼 줄어드는 시간 앞에 결국 ‘마츠리’는 ‘카즈토’를 떠나기로 결심하는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230510_198%2F1683685620093FUnws_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('스즈메의 문단속', '20230308', '12', 122, 65.0, '“이 근처에 폐허 없니? 문을 찾고 있어” 규슈의 한적한 마을에 살고 있는 소녀 ‘스즈메’는 문을 찾아 여행 중인 청년 ‘소타’를 만난다. 그의 뒤를 쫓아 산속 폐허에서 발견한 낡은 문. ‘스즈메’가 무언가에 이끌리듯 문을 열자 마을에 재난의 위기가 닥쳐오고 가문 대대로 문 너머의 재난을 봉인하는 ‘소타’를 도와 간신히 문을 닫는다. “닫아야만 하잖아요, 여기를!” 재난을 막았다는 안도감도 잠시, 수수께끼의 고양이 ‘다이진’이 나타나 ‘소타’를 의자로 바꿔 버리고 일본 각지의 폐허에 재난을 부르는 문이 열리기 시작하자 ‘스즈메’는 의자가 된 ‘소타’와 함께 재난을 막기 위한 여정에 나선다. “꿈이 아니었어” 규슈, 시코쿠, 고베, 도쿄 재난을 막기 위해 일본 전역을 돌며 필사적으로 문을 닫아가던 중 어릴 적 고향에 닿은 ‘스즈메’는 잊고 있던 진실과 마주하게 되는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230206_264%2F1675649061557DaJHD_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('빅트립2 : 아기곰 배달 대작전', '20230527', 'AL', 90, 2.0, '또! 하늘에서 아기가 떨어졌다?! 아기 팬더를 배달한 게 엊그제 같은데, 이번엔 아기 반달곰이 뚝! 떨어졌다 그런데 무려, 동물왕국 대통령 후보의 아들이라고?! ‘믹믹’과 ‘오스카’는 동물왕국의 평화를 위해, 다시 한번 아기를 배달하기로 결심한다 애니멀 특송단, 배달 시작합니다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230509_13%2F1683615521743gQqU3_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('남은 인생 10년', '20230524', '12', 125, 58.0, '스무 살이 되던 해, 수 만명 중 1명이 걸리는 난치병으로 10년의 삶을 선고받은 ‘마츠리’는 삶의 의지를 잃은 ‘카즈토’를 만나 사랑에 빠진다. 처음 만난 봄, 즐거운 여름, 아름답던 가을, 깊어진 겨울까지 하루하루 애틋하게 사랑한 두 사람 하지만 쌓이는 추억만큼 줄어드는 시간 앞에 결국 ‘마츠리’는 ‘카즈토’를 떠나기로 결심하는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230510_198%2F1683685620093FUnws_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('사슴의 왕', '20230525', '12', 113, 68.0, '“온 세상을 뒤덮은 전염병, 유일한 희망인 최강의 전사를 찾아라!” 한때 최강의 전사로 이름을 떨쳤던 반은 제국의 노예가 되어 소금광산에 갇히게 된다. 어느 날 밤, 갑작스레 들이닥친 들개의 습격에서 죽을 고비를 넘긴 반은 또 한 명의 살아남은 소녀 유나와 함께 소금광산을 탈출한다. 한편, 미지의 전염병 ‘미차르’의 원인과 치료법을 찾던 천재 의사 홋사르는 습격의 유일한 생존자 반에게 치료의 실마리가 있음을 직감한다. 반을 생포하기 위해 수수께끼의 여인 사에가 그를 뒤쫓기 시작하고, 살아남은 자와 살아남으려는 자들의 이해관계가 서로 교차하기 시작하는데….', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230525_216%2F1684977045742mVuEO_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('빅트립2 : 아기곰 배달 대작전', '20230527', 'AL', 90, 2.0, '또! 하늘에서 아기가 떨어졌다?! 아기 팬더를 배달한 게 엊그제 같은데, 이번엔 아기 반달곰이 뚝! 떨어졌다 그런데 무려, 동물왕국 대통령 후보의 아들이라고?! ‘믹믹’과 ‘오스카’는 동물왕국의 평화를 위해, 다시 한번 아기를 배달하기로 결심한다 애니멀 특송단, 배달 시작합니다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230509_13%2F1683615521743gQqU3_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('슬픔의 삼각형', '20230517', '15', 147, 73.0, '호화 크루즈에 #협찬 으로 승선한 인플루언서 모델 커플. 각양각색의 부자들과 휴가를 즐기던 사이, 뜻밖의 사건으로 배가 전복되고 8명만이 간신히 무인도에 도착한다. 할 줄 아는 거라곤 구조 대기뿐인 사람들… 이때 존재감을 드러내는 건, “여기선 내가 캡틴입니다. 자, 내가 누구라고요?”', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230518_94%2F1684389723408gJwFX_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('사슴의 왕', '20230525', '12', 113, 68.0, '“온 세상을 뒤덮은 전염병, 유일한 희망인 최강의 전사를 찾아라!” 한때 최강의 전사로 이름을 떨쳤던 반은 제국의 노예가 되어 소금광산에 갇히게 된다. 어느 날 밤, 갑작스레 들이닥친 들개의 습격에서 죽을 고비를 넘긴 반은 또 한 명의 살아남은 소녀 유나와 함께 소금광산을 탈출한다. 한편, 미지의 전염병 ‘미차르’의 원인과 치료법을 찾던 천재 의사 홋사르는 습격의 유일한 생존자 반에게 치료의 실마리가 있음을 직감한다. 반을 생포하기 위해 수수께끼의 여인 사에가 그를 뒤쫓기 시작하고, 살아남은 자와 살아남으려는 자들의 이해관계가 서로 교차하기 시작하는데….', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230525_216%2F1684977045742mVuEO_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('존 윅 4', '20230412', '19', 169, 16.0, '죽을 위기에서 살아난 ‘존 윅’은 ‘최고 회의’를 쓰러트릴 방법을 찾아낸다. 비로소 완전한 자유의 희망을 보지만, NEW 빌런 ‘그라몽 후작’과 전 세계의 최강 연합은 ‘존 윅’의 오랜 친구까지 적으로 만들어 버리고, 새로운 위기에 놓인 ‘존 윅’은 최후의 반격을 준비하는데,, 레전드 액션 블록버스터 <존 윅>의 새로운 챕터가 열린다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230329_142%2F1680055399492ipxkq_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('슬픔의 삼각형', '20230517', '15', 147, 73.0, '호화 크루즈에 #협찬 으로 승선한 인플루언서 모델 커플. 각양각색의 부자들과 휴가를 즐기던 사이, 뜻밖의 사건으로 배가 전복되고 8명만이 간신히 무인도에 도착한다. 할 줄 아는 거라곤 구조 대기뿐인 사람들… 이때 존재감을 드러내는 건, “여기선 내가 캡틴입니다. 자, 내가 누구라고요?”', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230518_94%2F1684389723408gJwFX_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('문재인입니다', '20230510', '12', 114, 71.0, '대한민국 제19대 대통령으로 5년의 임기를 마치고 퇴임한 문재인 전 대통령은 평산마을에서 모든 짐을 내려놓고 새 삶을 꾸린다. 텃밭을 가꾸고 개와 고양이의 밥을 챙기는 것이 일과이고, 수염을 깎지 않고 편한 옷을 입을 수 있는 것이 자유이다. 퇴임 이후 최초로 공개되는 평산마을에서의 일상과 인터뷰, 오랜 시간 곁에서 동고동락한 이들의 이야기를 통해 ‘사람 문재인’을 이해해보려 한다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230503_79%2F1683075104588SRmr2_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('존 윅 4', '20230412', '18', 169, 16.0, '죽을 위기에서 살아난 ‘존 윅’은 ‘최고 회의’를 쓰러트릴 방법을 찾아낸다. 비로소 완전한 자유의 희망을 보지만, NEW 빌런 ‘그라몽 후작’과 전 세계의 최강 연합은 ‘존 윅’의 오랜 친구까지 적으로 만들어 버리고, 새로운 위기에 놓인 ‘존 윅’은 최후의 반격을 준비하는데,, 레전드 액션 블록버스터 <존 윅>의 새로운 챕터가 열린다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230329_142%2F1680055399492ipxkq_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('드림', '20230426', '12', 125, 45.0, '선수 생활 사상 최악의 위기를 맞은 쏘울리스 축구 선수 홍대(박서준) 계획도, 의지도 없던 홈리스 풋볼 월드컵 감독으로 재능기부에 나서게 된다 각본 없는 각본(?)으로 열정리스 현실파 PD 소민(아이유)이 다큐 제작으로 합류하게 되면서 뜯어진 운동화와 슬리퍼, 늘어진 반팔 티셔츠를 필두로 운동이라고는 한 번도 해본 적 없는 특별한(!) 선수들이 국가대표로 선발된다 택견인지 축구인지 헷갈리는 실력과 발보다 말이 앞서는 홈리스 선수들의 환장할 팀워크, 다큐에 대사와 상황 그리고 진정성 없는 연출을 강요하는 소민에 기가 막히는 감독 홍대 하지만 포기할 틈도 없이, 월드컵 출전일은 코앞으로 다가오는데...! 이들의 도전은 성공할 수 있을까? 쏘울리스 감독, 열정리스 PD, 그리고 홈리스 국대 부족한 것 투성인 드림팀의 생애 단 한 번의 기회!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230403_204%2F1680507641170NKvOl_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('문재인입니다', '20230510', '12', 114, 71.0, '대한민국 제19대 대통령으로 5년의 임기를 마치고 퇴임한 문재인 전 대통령은 평산마을에서 모든 짐을 내려놓고 새 삶을 꾸린다. 텃밭을 가꾸고 개와 고양이의 밥을 챙기는 것이 일과이고, 수염을 깎지 않고 편한 옷을 입을 수 있는 것이 자유이다. 퇴임 이후 최초로 공개되는 평산마을에서의 일상과 인터뷰, 오랜 시간 곁에서 동고동락한 이들의 이야기를 통해 ‘사람 문재인’을 이해해보려 한다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230503_79%2F1683075104588SRmr2_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('트랜스포머', '20230606', 'UN', 0, 9.0, '전 우주의 행성을 집어삼키는 절대자, ‘유니크론’의 부하 ‘스커지’는 ‘테러콘’들을 이끌고 지구에 당도한다. 그에 맞서기 위해 지구에 정체를 숨기고 있던 트랜스포머 ‘오토봇’ 군단이 모습을 드러내고 또 다른 트랜스포머 진영인 ‘맥시멀’과 힘을 합친다. 옵티머스 프라임이 이끄는 ‘오토봇’과 옵티머스 프라이멀을 중심으로 한 ‘맥시멀’. 모두의 운명을 건 그들의 압도적 전투가 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230508_296%2F1683508018406dn21H_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('드림', '20230426', '12', 125, 45.0, '선수 생활 사상 최악의 위기를 맞은 쏘울리스 축구 선수 홍대(박서준) 계획도, 의지도 없던 홈리스 풋볼 월드컵 감독으로 재능기부에 나서게 된다 각본 없는 각본(?)으로 열정리스 현실파 PD 소민(아이유)이 다큐 제작으로 합류하게 되면서 뜯어진 운동화와 슬리퍼, 늘어진 반팔 티셔츠를 필두로 운동이라고는 한 번도 해본 적 없는 특별한(!) 선수들이 국가대표로 선발된다 택견인지 축구인지 헷갈리는 실력과 발보다 말이 앞서는 홈리스 선수들의 환장할 팀워크, 다큐에 대사와 상황 그리고 진정성 없는 연출을 강요하는 소민에 기가 막히는 감독 홍대 하지만 포기할 틈도 없이, 월드컵 출전일은 코앞으로 다가오는데...! 이들의 도전은 성공할 수 있을까? 쏘울리스 감독, 열정리스 PD, 그리고 홈리스 국대 부족한 것 투성인 드림팀의 생애 단 한 번의 기회!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230403_204%2F1680507641170NKvOl_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('스프린터', '20230524', '12', 87, 40.0, '은퇴만 남은 신기록 보유자 ‘현수’ 최고의 자리를 잃을까 두려운 ‘정호’ 유망주였지만 팀 해체 위기에 놓인 ‘준서’ 그래도, 계속 달려야 하니까. 제자리에. 차렷. GO!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230427_189%2F1682576835819UPl2L_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('트랜스포머', '20230606', 'UN', 0, 9.0, '전 우주의 행성을 집어삼키는 절대자, ‘유니크론’의 부하 ‘스커지’는 ‘테러콘’들을 이끌고 지구에 당도한다. 그에 맞서기 위해 지구에 정체를 숨기고 있던 트랜스포머 ‘오토봇’ 군단이 모습을 드러내고 또 다른 트랜스포머 진영인 ‘맥시멀’과 힘을 합친다. 옵티머스 프라임이 이끄는 ‘오토봇’과 옵티머스 프라이멀을 중심으로 한 ‘맥시멀’. 모두의 운명을 건 그들의 압도적 전투가 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230508_296%2F1683508018406dn21H_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('메리 마이 데드 바디', '20230517', '12', 129, 31.0, '혈기왕성한 형사 우밍한은 중요한 사건 현장에서 도로에 흩어진 증거물을 수집하던 중 의문의 붉은 봉투를 발견하고 무심코 줍는다. 그때부터 밍한에게 벌어지는 불길한 사건들! 자신에게 다가온 ''운명''을 한사코 거부하던 밍한은 거듭되는 생명의 위협에 마지못해 인생 최대의 결심을 하는데... 얼결에 ''부부''가 된 귀신과 최악의 빌런을 잡기 위해 인간+귀신 콤비가 벌이는 극강의 공조 수사! 코믹과 액션을 버무리고 감동과 반전까지 가미한, 풀옵션 오감으로 즐기는 블록버스터. 인류애 넘치는 콤비의 격정적인 공조가 마침내 시작된다! 이 콤비도, 두 사람의 공조 수사도 완전히 다 미쳤다!!!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230419_110%2F1681896506395L2m4y_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('스프린터', '20230524', '12', 87, 40.0, '은퇴만 남은 신기록 보유자 ‘현수’ 최고의 자리를 잃을까 두려운 ‘정호’ 유망주였지만 팀 해체 위기에 놓인 ‘준서’ 그래도, 계속 달려야 하니까. 제자리에. 차렷. GO!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230427_189%2F1682576835819UPl2L_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('롱디', '20230510', '12', 101, 29.0, '사회초년생 ‘도하’와 인디 뮤지션 ‘태인’이 장거리 연애를 시작하면서 벌이는 언택트 러브 스토리', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230510_292%2F1683699014075weS1p_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('메리 마이 데드 바디', '20230517', '12', 129, 31.0, '혈기왕성한 형사 우밍한은 중요한 사건 현장에서 도로에 흩어진 증거물을 수집하던 중 의문의 붉은 봉투를 발견하고 무심코 줍는다. 그때부터 밍한에게 벌어지는 불길한 사건들! 자신에게 다가온 ''운명''을 한사코 거부하던 밍한은 거듭되는 생명의 위협에 마지못해 인생 최대의 결심을 하는데... 얼결에 ''부부''가 된 귀신과 최악의 빌런을 잡기 위해 인간+귀신 콤비가 벌이는 극강의 공조 수사! 코믹과 액션을 버무리고 감동과 반전까지 가미한, 풀옵션 오감으로 즐기는 블록버스터. 인류애 넘치는 콤비의 격정적인 공조가 마침내 시작된다! 이 콤비도, 두 사람의 공조 수사도 완전히 다 미쳤다!!!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230419_110%2F1681896506395L2m4y_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('울지마 엄마', '20230517', 'AL', 78, 3.0, '행복한 나날을 보내던 세 가정에 청천벽력처럼 찾아온 암 소식. 누군가의 남편이자 아내 그리고 누군가의 부모인 세 엄마는 죽음에 대한 두려움 보다 남은 가족들에 대한 걱정만 가득하다. 생과 사의 갈림길에 서 있는 4기 암 환자들. 그들의 마지막 여정을 카메라에 담는다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230420_283%2F1681978562743JnkI4_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('롱디', '20230510', '12', 101, 29.0, '사회초년생 ‘도하’와 인디 뮤지션 ‘태인’이 장거리 연애를 시작하면서 벌이는 언택트 러브 스토리', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230510_292%2F1683699014075weS1p_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('옥수역귀신', '20230419', '15', 80, 56.0, '특종이 필요한 기자 ‘나영’은 옥수역에서 근무하는 친구 ‘우원’을 통해 ‘옥수역’에서 계속해서 일어난 사망사건들을 듣게 된다. ‘나영’은 ‘우원’과 함께 취재를 시작하고 그녀에게 계속 괴이한 일들이 벌어지는데… 무언가 있다. 옥수역에…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230419_143%2F168187149954769TL2_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('울지마 엄마', '20230517', 'AL', 78, 3.0, '행복한 나날을 보내던 세 가정에 청천벽력처럼 찾아온 암 소식. 누군가의 남편이자 아내 그리고 누군가의 부모인 세 엄마는 죽음에 대한 두려움 보다 남은 가족들에 대한 걱정만 가득하다. 생과 사의 갈림길에 서 있는 4기 암 환자들. 그들의 마지막 여정을 카메라에 담는다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230420_283%2F1681978562743JnkI4_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('내 아내 이야기', '20230524', '19', 169, 62.0, '1년 365일을 바다 위에서 지내는 선장 ‘야코프’는 매일 반복되는 일상에 지쳐 있다. 어느 날, 친구에게 농담 삼아 던진 말을 시작으로 그의 인생은 특별한 2막을 맞이하게 되는데… “지금 카페에 들어오는 손님과 결혼할게” “그녀는 내 평생의 사랑이 될 테니까”', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230502_161%2F1683005266103l2NOp_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('옥수역귀신', '20230419', '15', 80, 56.0, '특종이 필요한 기자 ‘나영’은 옥수역에서 근무하는 친구 ‘우원’을 통해 ‘옥수역’에서 계속해서 일어난 사망사건들을 듣게 된다. ‘나영’은 ‘우원’과 함께 취재를 시작하고 그녀에게 계속 괴이한 일들이 벌어지는데… 무언가 있다. 옥수역에…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230419_143%2F168187149954769TL2_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('줄리아의 인생극장', '20230524', '12', 121, 32.0, '2052년 파리. 80세의 줄리아는 생을 만끽했다. 인생은 매 순간 우연의 연속이었고, 인생은 드라마틱하게 흘렀다. 만일 그날 여권을 잊어버리지 않았다면! 서점에서 책을 떨어뜨리지 않았다면! 스쿠터 운전을 하지 않았더라면! 매 순간 사소한 일상의 조각들이 줄리아의 인생을 휘젓는다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230502_177%2F1683006108237nDSIv_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('내 아내 이야기', '20230524', '18', 169, 62.0, '1년 365일을 바다 위에서 지내는 선장 ‘야코프’는 매일 반복되는 일상에 지쳐 있다. 어느 날, 친구에게 농담 삼아 던진 말을 시작으로 그의 인생은 특별한 2막을 맞이하게 되는데… “지금 카페에 들어오는 손님과 결혼할게” “그녀는 내 평생의 사랑이 될 테니까”', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230502_161%2F1683005266103l2NOp_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('카일리 블루스', '20230524', '12', 110, 6.0, '안개가 자욱한 도시 카일리. 의사 겸 시인 천성은 그곳에서 유령 같은 삶을 살고 있다. 꿈에서 연거푸 돌아가신 어머니를 마주한 천성은 버려진 조카를 찾기 위해 카일리를 떠나 전위안으로 향한다. 그길에서 당마이라는 자그마한 마을을 통과하게 되고 천성의 과거, 현재, 미래가 꿈결 같이 뒤섞이기 시작한다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230502_218%2F1683013551243BPmWN_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('줄리아의 인생극장', '20230524', '12', 121, 32.0, '2052년 파리. 80세의 줄리아는 생을 만끽했다. 인생은 매 순간 우연의 연속이었고, 인생은 드라마틱하게 흘렀다. 만일 그날 여권을 잊어버리지 않았다면! 서점에서 책을 떨어뜨리지 않았다면! 스쿠터 운전을 하지 않았더라면! 매 순간 사소한 일상의 조각들이 줄리아의 인생을 휘젓는다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230502_177%2F1683006108237nDSIv_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('클로즈', '20230503', '12', 104, 6.0, '서로가 세상의 전부였던 레오와 레미는 친구들에게 관계를 의심받기 시작한다. 이후 낯선 시선이 두려워진 레오는 레미와 거리를 두고, 홀로 남겨진 레미는 걷잡을 수 없는 감정에 빠져들고 만다. 점차 균열이 깊어져 가던 어느 날, 레오는 믿을 수 없는 현실을 마주하게 되는데...', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230406_198%2F1680745401581lnXTd_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('카일리 블루스', '20230524', '12', 110, 6.0, '안개가 자욱한 도시 카일리. 의사 겸 시인 천성은 그곳에서 유령 같은 삶을 살고 있다. 꿈에서 연거푸 돌아가신 어머니를 마주한 천성은 버려진 조카를 찾기 위해 카일리를 떠나 전위안으로 향한다. 그길에서 당마이라는 자그마한 마을을 통과하게 되고 천성의 과거, 현재, 미래가 꿈결 같이 뒤섞이기 시작한다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230502_218%2F1683013551243BPmWN_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('토리와 로키타', '20230510', '15', 89, 38.0, '“제 누나, 로키타는 왜 체류증을 못 받나요?” 누나와 함께 살고 싶은 토리 취직을 해서 토리를 학교에 보내고 싶은 로키타 서로의 보호자가 되기로 결심한 이들의 아름다운 이야기 #지켜주고싶은남매 #토리와로키타', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230511_137%2F1683775414557IjHdR_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('클로즈', '20230503', '12', 104, 6.0, '서로가 세상의 전부였던 레오와 레미는 친구들에게 관계를 의심받기 시작한다. 이후 낯선 시선이 두려워진 레오는 레미와 거리를 두고, 홀로 남겨진 레미는 걷잡을 수 없는 감정에 빠져들고 만다. 점차 균열이 깊어져 가던 어느 날, 레오는 믿을 수 없는 현실을 마주하게 되는데...', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230406_198%2F1680745401581lnXTd_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('말이야 바른 말이지', '20230517', 'AL', 68, 51.0, '누가 더 악덕한지 겨루는 기업 관리자들 냥육권을 두고 다툼 중인 헤어진 동거 커플 태어날 손주의 본적에 이견이 있는 부녀 남성혐오 논란에 빠진 회사를 구해야 하는 팀장과 사원 블링블링 프러포즈 이벤트에 진심인 5년차 커플 서로 다른 새로운 마음을 알게 된 직장상사와 부하직원 말이야 바른 말이지, 이게 바로 우리들의 자화상 뼈 때리는 현실, 뼈저리는 공감이 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230427_132%2F1682580632870yCsM6_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('토리와 로키타', '20230510', '15', 89, 38.0, '“제 누나, 로키타는 왜 체류증을 못 받나요?” 누나와 함께 살고 싶은 토리 취직을 해서 토리를 학교에 보내고 싶은 로키타 서로의 보호자가 되기로 결심한 이들의 아름다운 이야기 #지켜주고싶은남매 #토리와로키타', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230511_137%2F1683775414557IjHdR_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('거신: 바람의 아이', '20230518', 'AL', 93, 68.0, '‘바람의 신주’를 지키기 위한 시공초월 로봇 액션이 시작된다! 제주의 오랜 전설로 내려오던 ‘바람의 신주’를 찾아 탐험을 하던 현대의 과학자들은 우연한 사고로 1230년대 탐라로 타임슬립 하게 된다. 한편, 탐라의 전설이 예언한 운명의 소녀 ‘영등’은 ‘바람의 신주’를 탐내는 해적들에게 쫓기던 중 ‘유랑’을 만나 위기에서 벗어난다. 하지만 해적들은 세상을 파괴할 힘을 가졌다는 신주를 차지하기 위해 탐라를 공격하고, 적귀에 맞설 거대 돌하르방 로봇 ‘거신’이 폭포 속에서 모습을 드러내는데… 과연 ‘거신’과 바람의 힘을 가진 운명의 소녀 ‘영등’은 ‘바람의 신주’를 지켜낼 수 있을까?', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230509_159%2F1683592962532n7IP2_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('말이야 바른 말이지', '20230517', 'AL', 68, 51.0, '누가 더 악덕한지 겨루는 기업 관리자들 냥육권을 두고 다툼 중인 헤어진 동거 커플 태어날 손주의 본적에 이견이 있는 부녀 남성혐오 논란에 빠진 회사를 구해야 하는 팀장과 사원 블링블링 프러포즈 이벤트에 진심인 5년차 커플 서로 다른 새로운 마음을 알게 된 직장상사와 부하직원 말이야 바른 말이지, 이게 바로 우리들의 자화상 뼈 때리는 현실, 뼈저리는 공감이 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230427_132%2F1682580632870yCsM6_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('리턴 투 서울', '20230503', '15', 119, 61.0, '“ 다시 서울로 돌아가요 당장! ” 우연히 자신이 태어난 서울로 리턴한 25세 프레디, 어쩌다 한국 부모를 찾으면서 시작된 어쩌면 운명적인 여정', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230420_18%2F1681978667045EtRRR_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('거신: 바람의 아이', '20230518', 'AL', 93, 68.0, '‘바람의 신주’를 지키기 위한 시공초월 로봇 액션이 시작된다! 제주의 오랜 전설로 내려오던 ‘바람의 신주’를 찾아 탐험을 하던 현대의 과학자들은 우연한 사고로 1230년대 탐라로 타임슬립 하게 된다. 한편, 탐라의 전설이 예언한 운명의 소녀 ‘영등’은 ‘바람의 신주’를 탐내는 해적들에게 쫓기던 중 ‘유랑’을 만나 위기에서 벗어난다. 하지만 해적들은 세상을 파괴할 힘을 가졌다는 신주를 차지하기 위해 탐라를 공격하고, 적귀에 맞설 거대 돌하르방 로봇 ‘거신’이 폭포 속에서 모습을 드러내는데… 과연 ‘거신’과 바람의 힘을 가진 운명의 소녀 ‘영등’은 ‘바람의 신주’를 지켜낼 수 있을까?', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230509_159%2F1683592962532n7IP2_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('극장판 리틀 슈퍼맨 샘샘', '20230518', 'AL', 78, 2.0, '꼬마 히어로들, 드디어 출동?! 우주 영웅 학교 신입생 ‘샘샘’과 ‘메가’ 친구들과 웃고 떠드는 기쁜 나날도 잠시, 우주 독재자 ‘화통킹’이 만든 우울덩어리 괴물이 우주인들의 행복을 빼앗기 시작한다! 과연, 꼬마 히어로 ‘샘샘’과 화성의 공주님 ‘메가’는 우울덩어리 괴물에 맞서 사람들의 웃음을 지켜낼 수 있을까? 5월, 초짜 히어로들의 우주 구출 대작전이 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230508_270%2F1683522615524VniHo_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('리턴 투 서울', '20230503', '15', 119, 61.0, '“ 다시 서울로 돌아가요 당장! ” 우연히 자신이 태어난 서울로 리턴한 25세 프레디, 어쩌다 한국 부모를 찾으면서 시작된 어쩌면 운명적인 여정', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230420_18%2F1681978667045EtRRR_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('자전거 도둑', '', 'UN', 21, NULL, '등록금을 마련하기 위해 고급 자전거의 안장을 훔쳐 파는 여자가 있다. 어느 날 자신의 자전거 안장을 누군가 훔쳐간다. 도둑이 도둑을 쫓아다니는 상황이 벌어진다. (남동철) [제19회 부산국제영화제]', 'https://search.pstatic.net/common?type=ofullfill&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20140926_18%2F1411694910521lzOor_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('극장판 리틀 슈퍼맨 샘샘', '20230518', 'AL', 78, 2.0, '꼬마 히어로들, 드디어 출동?! 우주 영웅 학교 신입생 ‘샘샘’과 ‘메가’ 친구들과 웃고 떠드는 기쁜 나날도 잠시, 우주 독재자 ‘화통킹’이 만든 우울덩어리 괴물이 우주인들의 행복을 빼앗기 시작한다! 과연, 꼬마 히어로 ‘샘샘’과 화성의 공주님 ‘메가’는 우울덩어리 괴물에 맞서 사람들의 웃음을 지켜낼 수 있을까? 5월, 초짜 히어로들의 우주 구출 대작전이 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230508_270%2F1683522615524VniHo_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('장기자랑', '20230405', '12', 93, 38.0, '2014년 그날 이후, 집 밖으로 나서기 어려웠던 엄마들은 지나가듯 얘기한 ‘재밌겠다’ 한마디에 연극을 시작하게 된다 그런데 이게 웬걸? ‘연기’라는 뒤늦은 재능을 발견하고 열정을 불태운다 그러나 새로운 연극 ‘장기자랑’을 준비하는 엄마들 사이의 질투와 갈등은 깊어지고 급기야 몇몇은 극단을 나가버리는데… 일곱 엄마들의 좌충우돌 연극 도전기! 우리 잘 할 수 있을까?', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230314_175%2F1678780154285nt25t_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('자전거 도둑', '', 'UN', 21, NULL, '등록금을 마련하기 위해 고급 자전거의 안장을 훔쳐 파는 여자가 있다. 어느 날 자신의 자전거 안장을 누군가 훔쳐간다. 도둑이 도둑을 쫓아다니는 상황이 벌어진다. (남동철) [제19회 부산국제영화제]', 'https://search.pstatic.net/common?type=ofullfill&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20140926_18%2F1411694910521lzOor_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('라이스보이 슬립스', '20230419', '15', 117, 69.0, '1990년 모든 게 낯선 캐나다에서 서로가 유일한 가족이었던 엄마 ''소영''과 아들 ''동현''의 잊지 못할 시간을 담은, 문득 집이 그리워질 따스한 이야기', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230323_285%2F1679535067044t6fkW_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('장기자랑', '20230405', '12', 93, 38.0, '2014년 그날 이후, 집 밖으로 나서기 어려웠던 엄마들은 지나가듯 얘기한 ‘재밌겠다’ 한마디에 연극을 시작하게 된다 그런데 이게 웬걸? ‘연기’라는 뒤늦은 재능을 발견하고 열정을 불태운다 그러나 새로운 연극 ‘장기자랑’을 준비하는 엄마들 사이의 질투와 갈등은 깊어지고 급기야 몇몇은 극단을 나가버리는데… 일곱 엄마들의 좌충우돌 연극 도전기! 우리 잘 할 수 있을까?', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230314_175%2F1678780154285nt25t_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('페이퍼 스파이더스', '20230518', '15', 109, 46.0, '남편과 사별하고 사랑스러운 딸 멜라니(스테파니아 오웬) 마저 독립을 준비하게 되자 엄마인 던(릴리 테일러)은 마음 깊숙한 곳에서부터 불안감을 느끼게 된다. 그러던 어느 날, 새로 이사 온 이웃이 던의 집 앞 나무를 긁게 되고 언쟁을 펼치는데, 자신을 향한 복수심에 이웃이 우리를 감시한다고 생각하는 던은 편집증이라는 정신 장애를 겪게 되고 그렇게 평화로운 일상이 깨지게 된다. 한편, 멜라니는 엄마와 평화로웠던 일상을 되찾기 위한 노력을 하지만 엄마의 정신 장애가 점점 심각해지고 결국 던은 자신의 딸마저 의심하게 되는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230503_20%2F1683101303297MO50g_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('라이스보이 슬립스', '20230419', '15', 117, 69.0, '1990년 모든 게 낯선 캐나다에서 서로가 유일한 가족이었던 엄마 ''소영''과 아들 ''동현''의 잊지 못할 시간을 담은, 문득 집이 그리워질 따스한 이야기', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230323_285%2F1679535067044t6fkW_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('칠중주: 홍콩 이야기', '20230511', '12', 112, 4.0, '<영웅본색>, <동사서독>, <천장지구>… 영화사에서 결코 빼놓을 수 없는 최고의 마스터피스들이 탄생한 곳. 한평생 영화에 뜨거운 삶을 바쳐온 7명의 거장들이 홍콩을 향한 애틋한 그리움을 담아 보내온 한 편의 러브레터. 그렇게, 영화는 또다시 시작될 것이다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230404_212%2F1680571161681KDQ5e_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('페이퍼 스파이더스', '20230518', '15', 109, 46.0, '남편과 사별하고 사랑스러운 딸 멜라니(스테파니아 오웬) 마저 독립을 준비하게 되자 엄마인 던(릴리 테일러)은 마음 깊숙한 곳에서부터 불안감을 느끼게 된다. 그러던 어느 날, 새로 이사 온 이웃이 던의 집 앞 나무를 긁게 되고 언쟁을 펼치는데, 자신을 향한 복수심에 이웃이 우리를 감시한다고 생각하는 던은 편집증이라는 정신 장애를 겪게 되고 그렇게 평화로운 일상이 깨지게 된다. 한편, 멜라니는 엄마와 평화로웠던 일상을 되찾기 위한 노력을 하지만 엄마의 정신 장애가 점점 심각해지고 결국 던은 자신의 딸마저 의심하게 되는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230503_20%2F1683101303297MO50g_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('거울 속 외딴 성', '20230412', '12', 116, 33.0, '학교에서도 집에서도 마음 둘 곳 없이 외로운 시간을 보내던 ‘코코로’. 어느 날, 방 안의 거울이 갑자기 빛나기 시작하고, ‘코코로’는 홀린 듯 거울 속으로 빨려 들어가게 되는데… 거울 속 세상은 바다 위에 떠있는 신비로운 성이었고, 그곳에서 처음 보는 여섯 명의 친구들과 늑대 가면을 쓴 정체불명의 소녀 ‘늑대님’을 만나게 된다. “성에 숨겨진 열쇠를 찾으면, 원하는 소원을 한 가지 들어주지” 열쇠를 찾으며 조금씩 가까워진 ‘코코로’와 친구들은 뭔가 수상한 점을 하나씩 발견하게 되는데… 모든 수수께끼가 풀리는 순간 상상을 초월하는 기적이 펼쳐진다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230314_226%2F1678778000131NKJfd_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('칠중주: 홍콩 이야기', '20230511', '12', 112, 4.0, '<영웅본색>, <동사서독>, <천장지구>… 영화사에서 결코 빼놓을 수 없는 최고의 마스터피스들이 탄생한 곳. 한평생 영화에 뜨거운 삶을 바쳐온 7명의 거장들이 홍콩을 향한 애틋한 그리움을 담아 보내온 한 편의 러브레터. 그렇게, 영화는 또다시 시작될 것이다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230404_212%2F1680571161681KDQ5e_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('바깥 나라의 소녀', '20230516', '12', 70, 72.0, '옛날 아주 먼 곳에 두 나라가 있었으니, 세계는 ''안''과 ''밖''으로 분단되었고 저주를 초래하는 이형이 사는 땅은 ''바깥 나라''라고 불리었다. 어느 날, 사람이 사는 땅 ''안쪽 나라''와의 국경에서 한 이형이 방치된 시체 속 한 소녀를 건진다. 소녀는 자신을 ''시바''라고 부르며, 자신을 주운 이형을 ''선생님''이라고 경모했다. 서로 어울리지 않는 두 사람 사이의 고요한 조율- 이건 아침과 저녁, 그 사이에 멈춰선 두 사람의 이야기', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230510_214%2F1683685795684a08UJ_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('거울 속 외딴 성', '20230412', '12', 116, 33.0, '학교에서도 집에서도 마음 둘 곳 없이 외로운 시간을 보내던 ‘코코로’. 어느 날, 방 안의 거울이 갑자기 빛나기 시작하고, ‘코코로’는 홀린 듯 거울 속으로 빨려 들어가게 되는데… 거울 속 세상은 바다 위에 떠있는 신비로운 성이었고, 그곳에서 처음 보는 여섯 명의 친구들과 늑대 가면을 쓴 정체불명의 소녀 ‘늑대님’을 만나게 된다. “성에 숨겨진 열쇠를 찾으면, 원하는 소원을 한 가지 들어주지” 열쇠를 찾으며 조금씩 가까워진 ‘코코로’와 친구들은 뭔가 수상한 점을 하나씩 발견하게 되는데… 모든 수수께끼가 풀리는 순간 상상을 초월하는 기적이 펼쳐진다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230314_226%2F1678778000131NKJfd_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('엑소시스트: 더 바티칸', '20230510', '15', 103, 53.0, '바티칸이 인정한 공식 수석 엑소시스트이자 최고의 구마사제 ''가브리엘 아모르트’ 신부(러셀 크로우)는 한 어린 소년에게 들린 악마를 구마하기 위해 스페인으로 향한다. 그리고 그곳에서 바티칸이 숨겨온 충격적인 비밀과 마주하고, ''토마스 에스퀴벨’ 신부(다니엘 조바토)와 함께 진실을 파헤치게 되는데...', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230420_90%2F168196423306617SY0_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('바깥 나라의 소녀', '20230516', '12', 70, 72.0, '옛날 아주 먼 곳에 두 나라가 있었으니, 세계는 ''안''과 ''밖''으로 분단되었고 저주를 초래하는 이형이 사는 땅은 ''바깥 나라''라고 불리었다. 어느 날, 사람이 사는 땅 ''안쪽 나라''와의 국경에서 한 이형이 방치된 시체 속 한 소녀를 건진다. 소녀는 자신을 ''시바''라고 부르며, 자신을 주운 이형을 ''선생님''이라고 경모했다. 서로 어울리지 않는 두 사람 사이의 고요한 조율- 이건 아침과 저녁, 그 사이에 멈춰선 두 사람의 이야기', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230510_214%2F1683685795684a08UJ_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('이니셰린의 밴시', '20230315', '15', 114, 60.0, '아일랜드의 외딴 섬마을 ‘이니셰린’. 주민 모두가 인정하는 절친 ‘파우릭’(콜린 파렐)과 ‘콜름’(브렌단 글리슨)은 하루도 빠짐없이 함께 술을 마시며 수다를 떨 정도로 다정하고 돈독한 사이다. 어느 날, 돌연 ‘파우릭’에게 절교를 선언하는 ‘콜름’. 절교를 받아들일 수 없는 ‘파우릭’은 그를 찾아가 이유를 묻지만 돌아오는 건 변심한 친구의 차가운 한마디 - “그냥 이제 자네가 싫어졌어”. 관계를 회복해 보려 할수록 상황은 더욱 악화되어 가기만 하고 평온했던 그들의 일상과 마을은 점점 파국으로 치닫는데… 예고 없이 찾아온 절교 선언, 평온했던 삶이 뜨겁게 타오른다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230315_144%2F16788437761420tjuY_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('엑소시스트: 더 바티칸', '20230510', '15', 103, 53.0, '바티칸이 인정한 공식 수석 엑소시스트이자 최고의 구마사제 ''가브리엘 아모르트’ 신부(러셀 크로우)는 한 어린 소년에게 들린 악마를 구마하기 위해 스페인으로 향한다. 그리고 그곳에서 바티칸이 숨겨온 충격적인 비밀과 마주하고, ''토마스 에스퀴벨’ 신부(다니엘 조바토)와 함께 진실을 파헤치게 되는데...', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230420_90%2F168196423306617SY0_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('물안에서', '20230412', '12', 61, 63.0, '배우를 하겠다고 노력하던 젊은 남자가 갑자기 자신의 창조성을 확인하겠다며 사비를 털어 자기 연출의 영화를 찍겠다고 한다. 같은 학교를 다녔던 세 사람이 돌과 바람 많은 큰 섬에 도착한다. 뭘 찍을 지 모르겠는 젊은 남자는 하루종일 두 사람을 대동하고 여기저기를 돌아다닌다. 그러다 넓은 해변에서 혼자 쓰레기를 줍고 있는 여자를 보게 되고, 남자는 그녀의 봉사활동에 감동 받아 그녀와 짧은 대화를 나누게 된다. 남자는 드디어 그 만남을 통해 하나의 이야기를 만들 수 있게 되는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230320_201%2F1679294379243mPKcP_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('이니셰린의 밴시', '20230315', '15', 114, 60.0, '아일랜드의 외딴 섬마을 ‘이니셰린’. 주민 모두가 인정하는 절친 ‘파우릭’(콜린 파렐)과 ‘콜름’(브렌단 글리슨)은 하루도 빠짐없이 함께 술을 마시며 수다를 떨 정도로 다정하고 돈독한 사이다. 어느 날, 돌연 ‘파우릭’에게 절교를 선언하는 ‘콜름’. 절교를 받아들일 수 없는 ‘파우릭’은 그를 찾아가 이유를 묻지만 돌아오는 건 변심한 친구의 차가운 한마디 - “그냥 이제 자네가 싫어졌어”. 관계를 회복해 보려 할수록 상황은 더욱 악화되어 가기만 하고 평온했던 그들의 일상과 마을은 점점 파국으로 치닫는데… 예고 없이 찾아온 절교 선언, 평온했던 삶이 뜨겁게 타오른다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230315_144%2F16788437761420tjuY_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('리바운드', '20230405', '12', 122, 13.0, '농구선수 출신 공익근무요원 ‘양현’은 해체 위기에 놓인 부산중앙고 농구부의 신임 코치로 발탁된다. 하지만 전국대회에서의 첫 경기 상대는 고교농구 최강자 용산고. 팀워크가 무너진 중앙고는 몰수패라는 치욕의 결과를 낳고 학교는 농구부 해체까지 논의하지만, ‘양현’은 MVP까지 올랐던 고교 시절을 떠올리며 다시 선수들을 모은다. 주목받던 천재 선수였지만 슬럼프에 빠진 가드 ‘기범’ 부상으로 꿈을 접은 올라운더 스몰 포워드 ‘규혁’ 점프력만 좋은 축구선수 출신의 괴력 센터 ‘순규’ 길거리 농구만 해온 파워 포워드 ‘강호’ 농구 경력 7년 차지만 만년 벤치 식스맨 ‘재윤’ 농구 열정만 만렙인 자칭 마이클 조던 ‘진욱’까지 아무도 주목하지 않은 최약체 팀이었지만 신임 코치와 6명의 선수가 2012년 전국 고교농구대회에서 써 내려간 8일간의 기적 모두가 불가능이라 말할 때, 우리는 ‘리바운드’라는 또 다른 기회를 잡는다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230314_230%2F1678778778401QNFnU_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('물안에서', '20230412', '12', 61, 63.0, '배우를 하겠다고 노력하던 젊은 남자가 갑자기 자신의 창조성을 확인하겠다며 사비를 털어 자기 연출의 영화를 찍겠다고 한다. 같은 학교를 다녔던 세 사람이 돌과 바람 많은 큰 섬에 도착한다. 뭘 찍을 지 모르겠는 젊은 남자는 하루종일 두 사람을 대동하고 여기저기를 돌아다닌다. 그러다 넓은 해변에서 혼자 쓰레기를 줍고 있는 여자를 보게 되고, 남자는 그녀의 봉사활동에 감동 받아 그녀와 짧은 대화를 나누게 된다. 남자는 드디어 그 만남을 통해 하나의 이야기를 만들 수 있게 되는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230320_201%2F1679294379243mPKcP_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('더 웨일', '20230301', '15', 117, 59.0, '272kg의 거구로 세상을 거부한 채 살아가는 대학 강사 ‘찰리’는 남은 시간이 얼마 없음을 느끼고 오랫동안 만나지 못한 10대 딸 ‘엘리’를 집으로 초대한다. 그리고, 매일 자신을 찾아와 에세이 한 편을 완성하면 전 재산을 주겠다고 제안한다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230320_188%2F1679293190711Wj7E4_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('리바운드', '20230405', '12', 122, 13.0, '농구선수 출신 공익근무요원 ‘양현’은 해체 위기에 놓인 부산중앙고 농구부의 신임 코치로 발탁된다. 하지만 전국대회에서의 첫 경기 상대는 고교농구 최강자 용산고. 팀워크가 무너진 중앙고는 몰수패라는 치욕의 결과를 낳고 학교는 농구부 해체까지 논의하지만, ‘양현’은 MVP까지 올랐던 고교 시절을 떠올리며 다시 선수들을 모은다. 주목받던 천재 선수였지만 슬럼프에 빠진 가드 ‘기범’ 부상으로 꿈을 접은 올라운더 스몰 포워드 ‘규혁’ 점프력만 좋은 축구선수 출신의 괴력 센터 ‘순규’ 길거리 농구만 해온 파워 포워드 ‘강호’ 농구 경력 7년 차지만 만년 벤치 식스맨 ‘재윤’ 농구 열정만 만렙인 자칭 마이클 조던 ‘진욱’까지 아무도 주목하지 않은 최약체 팀이었지만 신임 코치와 6명의 선수가 2012년 전국 고교농구대회에서 써 내려간 8일간의 기적 모두가 불가능이라 말할 때, 우리는 ‘리바운드’라는 또 다른 기회를 잡는다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230314_230%2F1678778778401QNFnU_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('조제, 호랑이 그리고 물고기들', '20210331', '12', 98, 44.0, '“이름이 뭐야?” “조제” 취미인 그림과 책과 상상 속에서, 자신의 세계를 그리며 살아가는 ‘조제’ 어려서부터 휠체어를 탄 그녀는 어느 날, 언덕길에서 굴러떨어질 뻔한걸, 대학생 ‘츠네오’에게 도움을 받게 된다. 해양생물학을 전공하는 ‘츠네오’는 멕시코에서만 서식하는 환상의 물고기 떼를 언젠가 그 눈으로 보겠다는 꿈을 쫓아다니며 아르바이트로 날을 지새우는 대학생. 그런 ‘츠네오’에게 ‘조제’와 둘이 살고있는 조모가 어떤 아르바이트를 제안한다. 바로 ‘조제’의 부탁을 받아 그녀를 상대해 주는 것. 그러나 삐딱하고 입이 나쁜 ‘조제’는 ‘츠네오’에게 신랄하게 대하고, ‘츠네오’도 ‘조제’에게 참지 않고 정면으로 부딪친다. 그런 가운데, 각자의 마음속과 좁혀져 가는 두 사람의 마음의 거리. 그 만남 속에서 ‘조제’는 마음을 굳게 먹고 꿈꾸던 바깥 세계로 ‘츠네오’와 함께 뛰쳐나갈 것을 결정하지만…….', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230427_105%2F16825858976552nfPE_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('더 웨일', '20230301', '15', 117, 59.0, '272kg의 거구로 세상을 거부한 채 살아가는 대학 강사 ‘찰리’는 남은 시간이 얼마 없음을 느끼고 오랫동안 만나지 못한 10대 딸 ‘엘리’를 집으로 초대한다. 그리고, 매일 자신을 찾아와 에세이 한 편을 완성하면 전 재산을 주겠다고 제안한다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230320_188%2F1679293190711Wj7E4_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('스트리머', '20230510', '15', 89, 10.0, '한 BJ가 남긴 기괴한 영상의 진위를 밝히겠다며 한 폐건물로 모인 5명의 스트리머들. 각자 라이브 방송을 진행하며 건물을 살펴보던 그들의 섬뜩하고 소름 끼치는 현장은 그야말로 리얼하게 생중계 되는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230421_280%2F1682042631945oUMEK_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('조제, 호랑이 그리고 물고기들', '20210331', '12', 98, 44.0, '“이름이 뭐야?” “조제” 취미인 그림과 책과 상상 속에서, 자신의 세계를 그리며 살아가는 ‘조제’ 어려서부터 휠체어를 탄 그녀는 어느 날, 언덕길에서 굴러떨어질 뻔한걸, 대학생 ‘츠네오’에게 도움을 받게 된다. 해양생물학을 전공하는 ‘츠네오’는 멕시코에서만 서식하는 환상의 물고기 떼를 언젠가 그 눈으로 보겠다는 꿈을 쫓아다니며 아르바이트로 날을 지새우는 대학생. 그런 ‘츠네오’에게 ‘조제’와 둘이 살고있는 조모가 어떤 아르바이트를 제안한다. 바로 ‘조제’의 부탁을 받아 그녀를 상대해 주는 것. 그러나 삐딱하고 입이 나쁜 ‘조제’는 ‘츠네오’에게 신랄하게 대하고, ‘츠네오’도 ‘조제’에게 참지 않고 정면으로 부딪친다. 그런 가운데, 각자의 마음속과 좁혀져 가는 두 사람의 마음의 거리. 그 만남 속에서 ‘조제’는 마음을 굳게 먹고 꿈꾸던 바깥 세계로 ‘츠네오’와 함께 뛰쳐나갈 것을 결정하지만…….', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230427_105%2F16825858976552nfPE_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('2퍼센트', '20230427', '12', 109, 28.0, '오랜 조감독 생활과 연이은 실패는 물론 설상가상 시한부 판정을 받은 강문정 감독 꿈을 접으려던 그 순간, 꿈만 같은 일이 벌어졌다 바로, 주연 배우가 캐스팅된 것! 그것도, 누구나 아는 국민 배우? 그렇게, 바쁘지만 꿈 같은 날들 속에서 열심히 영화를 준비하던 그녀는 촬영 시작 D-1, 청천벽력 같은 소식을 듣게 된다 내 영화의 주인공이 사라졌다고?! 이렇게 끝낼 순 없어! 인생은 변수가 많아서 재밌는 거잖아? 영화처럼!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230417_255%2F1681697204213J1WQi_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('스트리머', '20230510', '15', 89, 10.0, '한 BJ가 남긴 기괴한 영상의 진위를 밝히겠다며 한 폐건물로 모인 5명의 스트리머들. 각자 라이브 방송을 진행하며 건물을 살펴보던 그들의 섬뜩하고 소름 끼치는 현장은 그야말로 리얼하게 생중계 되는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230421_280%2F1682042631945oUMEK_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('피기', '20230426', '15', 99, 32.0, '내 이름은 사라. 나를 돼지라 부르며 괴롭히던 친구들이 납치당하는 것을 보게 되었다. 작은 마을에서 살인 사건도 벌어졌다. 끔찍한 사건의 유일한 목격자가 된 것 같다 그렇다면… 신고한다 VS 안 한다', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230315_203%2F1678847867469Qotzg_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('2퍼센트', '20230427', '12', 109, 28.0, '오랜 조감독 생활과 연이은 실패는 물론 설상가상 시한부 판정을 받은 강문정 감독 꿈을 접으려던 그 순간, 꿈만 같은 일이 벌어졌다 바로, 주연 배우가 캐스팅된 것! 그것도, 누구나 아는 국민 배우? 그렇게, 바쁘지만 꿈 같은 날들 속에서 열심히 영화를 준비하던 그녀는 촬영 시작 D-1, 청천벽력 같은 소식을 듣게 된다 내 영화의 주인공이 사라졌다고?! 이렇게 끝낼 순 없어! 인생은 변수가 많아서 재밌는 거잖아? 영화처럼!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230417_255%2F1681697204213J1WQi_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('킬링 로맨스', '20230414', '15', 107, 9.0, '대재앙 같은 발연기로 국민 조롱거리로 전락한 톱스타 ‘여래’(이하늬). 현실에서 벗어나고자 떠난 남태평양 ‘콸라’섬에서 운명처럼 자신을 구해준 재벌 ‘조나단’(이선균)을 만나 결혼을 하고 새로운 인생을 꿈꾸며 돌연 은퇴를 선언한다. 한편, 서울대가 당연한 집안에서 홀로 고독한 입시 싸움 중인 4수생 ‘범우’(공명)는 한때 자신의 최애였던 여래가 옆집에 이사온 것을 알게 되고 날마다 옥상에서 단독 팬미팅(?)을 여는 호사를 누린다. 그러던 어느 날 조나단의 사업 확장을 위한 인형 역할에 지친 여래는 완벽한 스크린 컴백을 위해 범우에게 SOS를 보내게 되고 이들은 여래의 인생을 되찾기 위한 죽여주는 계획을 함께 모의하는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230414_79%2F16814517611575tadE_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('피기', '20230426', '15', 99, 32.0, '내 이름은 사라. 나를 돼지라 부르며 괴롭히던 친구들이 납치당하는 것을 보게 되었다. 작은 마을에서 살인 사건도 벌어졌다. 끔찍한 사건의 유일한 목격자가 된 것 같다 그렇다면… 신고한다 VS 안 한다', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230315_203%2F1678847867469Qotzg_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('스트레이트 스토리', '20011201', 'AL', 110, 14.0, '지긋한 나이에 병은 점점 깊어지지만 도움은 필요 없는 고집불통 츤데레 할아버지 ‘앨빈’ 어느 날, 연락을 끊고 지냈던 형이 쓰러졌다는 연락을 받고 형을 만나기 위해 떠날 계획을 세운다. 심각한 노안에 허리도 좋지 않은 앨빈은 운전면허도, 차도 없다. 유일한 교통수단은 낡고 이상한 잔디 깍이 트랙터뿐. 트랙터에 소시지와 장작을 가득 싣고 형과의 관계를 회복하기 위해 그렇게 앨빈은 힘든 몸을 이끌고 6주간의 긴 여행을 시작하는데..', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230413_129%2F1681375293807jQUQF_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('킬링 로맨스', '20230414', '15', 107, 9.0, '대재앙 같은 발연기로 국민 조롱거리로 전락한 톱스타 ‘여래’(이하늬). 현실에서 벗어나고자 떠난 남태평양 ‘콸라’섬에서 운명처럼 자신을 구해준 재벌 ‘조나단’(이선균)을 만나 결혼을 하고 새로운 인생을 꿈꾸며 돌연 은퇴를 선언한다. 한편, 서울대가 당연한 집안에서 홀로 고독한 입시 싸움 중인 4수생 ‘범우’(공명)는 한때 자신의 최애였던 여래가 옆집에 이사온 것을 알게 되고 날마다 옥상에서 단독 팬미팅(?)을 여는 호사를 누린다. 그러던 어느 날 조나단의 사업 확장을 위한 인형 역할에 지친 여래는 완벽한 스크린 컴백을 위해 범우에게 SOS를 보내게 되고 이들은 여래의 인생을 되찾기 위한 죽여주는 계획을 함께 모의하는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230414_79%2F16814517611575tadE_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('항구의 니쿠코짱!', '20230427', 'AL', 97, 68.0, '“보통날이 제일 좋은 거야!” 평범한 인생도 ‘갓생’으로 만드는 무한 긍정 에너지 ‘니쿠코짱’. 정이 많아 허다한 날 남자에게 속는 그녀는 사라진 남자를 찾아 딸 ‘키쿠코’와 함께 작은 항구 마을에 도착하고, 그곳에서 운명의 고깃집(!)을 만난 후 마을에 정착하기로 결심한다. 그리고 어느덧 항구 마을에서 사춘기를 맞이한 딸 ‘키쿠코’는 어김없이 마을 최강 인싸력을 발휘하는 ‘니쿠코짱’이 요즘 들어 부끄럽다. “키쿠코, 오늘은 어떤 날이었어?” 잘 먹고, 잘 싸고, 잘 자고, 평범한 날이 최고라는 ‘니쿠코짱’을 도저히 이해할 수 없는 ‘키쿠코’. 그런 딸의 속도 모르고 ‘니쿠코짱’은 밤마다 누군가와 비밀스러운 통화까지?! 달라도 너무 다른 두 모녀 사이는 좀처럼 좁혀질 기미가 없는 가운데, 어느 날 둘 사이를 바꿔 놓을 뜻밖의 비밀이 밝혀지는데…! 두 모녀의 별일 없는 하루가 모인 맛난 인생 이야기! 마음의 공복을 채워줄 사랑스러운 그녀가 온다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230411_26%2F1681190684121Ej4fw_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('스트레이트 스토리', '20011201', 'AL', 110, 14.0, '지긋한 나이에 병은 점점 깊어지지만 도움은 필요 없는 고집불통 츤데레 할아버지 ‘앨빈’ 어느 날, 연락을 끊고 지냈던 형이 쓰러졌다는 연락을 받고 형을 만나기 위해 떠날 계획을 세운다. 심각한 노안에 허리도 좋지 않은 앨빈은 운전면허도, 차도 없다. 유일한 교통수단은 낡고 이상한 잔디 깍이 트랙터뿐. 트랙터에 소시지와 장작을 가득 싣고 형과의 관계를 회복하기 위해 그렇게 앨빈은 힘든 몸을 이끌고 6주간의 긴 여행을 시작하는데..', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230413_129%2F1681375293807jQUQF_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('사랑의 고고학', '20230412', '15', 163, 35.0, '만난 지 8시간 만에 사랑에 빠진 영실과 인식. 인식은 그런 영실을 자유로운 영혼이라 확신하며 어떠한 상황에서도 함께할 것이라는 약속을 받아낸다. 시간이 지날수록 영실에 대한 인식의 집착은 심해지고, 영실은 뒤틀린 관계 속에서도 인식과의 약속을 지키고자 한다. 하지만 영실의 노력에도 헤어진 두 사람. 8년 동안의 불온했던 과거의 굴레에서 벗어나 영실은 자신의 사랑에 대해 정면으로 응시할 준비를 시작한다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230324_267%2F16796490639638nJFn_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('항구의 니쿠코짱!', '20230427', 'AL', 97, 68.0, '“보통날이 제일 좋은 거야!” 평범한 인생도 ‘갓생’으로 만드는 무한 긍정 에너지 ‘니쿠코짱’. 정이 많아 허다한 날 남자에게 속는 그녀는 사라진 남자를 찾아 딸 ‘키쿠코’와 함께 작은 항구 마을에 도착하고, 그곳에서 운명의 고깃집(!)을 만난 후 마을에 정착하기로 결심한다. 그리고 어느덧 항구 마을에서 사춘기를 맞이한 딸 ‘키쿠코’는 어김없이 마을 최강 인싸력을 발휘하는 ‘니쿠코짱’이 요즘 들어 부끄럽다. “키쿠코, 오늘은 어떤 날이었어?” 잘 먹고, 잘 싸고, 잘 자고, 평범한 날이 최고라는 ‘니쿠코짱’을 도저히 이해할 수 없는 ‘키쿠코’. 그런 딸의 속도 모르고 ‘니쿠코짱’은 밤마다 누군가와 비밀스러운 통화까지?! 달라도 너무 다른 두 모녀 사이는 좀처럼 좁혀질 기미가 없는 가운데, 어느 날 둘 사이를 바꿔 놓을 뜻밖의 비밀이 밝혀지는데…! 두 모녀의 별일 없는 하루가 모인 맛난 인생 이야기! 마음의 공복을 채워줄 사랑스러운 그녀가 온다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230411_26%2F1681190684121Ej4fw_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('제비', '20230412', '15', 138, 66.0, '대학가의 봄날이 유독 뜨거웠던 1983년, 학생 운동에 앞장선 동지이자 비밀 연인 사이였던 ‘제비’와 ‘은숙’, 그리고 은숙을 사랑하기에 ‘프락치’가 될 수밖에 없던 한 사람. 40년 뒤, 세 사람의 이야기를 알게 된 은숙의 아들 ‘호연’은 그들의 사랑과 혁명 그리고 비밀을 하나 둘 밝혀 나간다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230307_240%2F1678157851715rydqo_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('사랑의 고고학', '20230412', '15', 163, 35.0, '만난 지 8시간 만에 사랑에 빠진 영실과 인식. 인식은 그런 영실을 자유로운 영혼이라 확신하며 어떠한 상황에서도 함께할 것이라는 약속을 받아낸다. 시간이 지날수록 영실에 대한 인식의 집착은 심해지고, 영실은 뒤틀린 관계 속에서도 인식과의 약속을 지키고자 한다. 하지만 영실의 노력에도 헤어진 두 사람. 8년 동안의 불온했던 과거의 굴레에서 벗어나 영실은 자신의 사랑에 대해 정면으로 응시할 준비를 시작한다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230324_267%2F16796490639638nJFn_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('패왕별희 디 오리지널', '19931224', '15', 171, 49.0, '어렸을 때부터 함께 경극을 해온 ‘두지’(장국영)와 ‘시투’(장풍의). 세상에 둘도 없는 절친한 아우와 형이지만, ‘두지’는 남몰래 ‘시투’에 대한 마음을 품고 있다. 하지만 ‘시투’는 여인 ‘주샨’(공리)에 마음을 빼앗기고, 그로 인해 ‘두지’는 감정의 소용돌이에 빠지게 되는데… 사랑과 운명, 아름다움을 뒤바꾼 화려한 막이 열린다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230324_111%2F1679648047129DBhmL_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('제비', '20230412', '15', 138, 66.0, '대학가의 봄날이 유독 뜨거웠던 1983년, 학생 운동에 앞장선 동지이자 비밀 연인 사이였던 ‘제비’와 ‘은숙’, 그리고 은숙을 사랑하기에 ‘프락치’가 될 수밖에 없던 한 사람. 40년 뒤, 세 사람의 이야기를 알게 된 은숙의 아들 ‘호연’은 그들의 사랑과 혁명 그리고 비밀을 하나 둘 밝혀 나간다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230307_240%2F1678157851715rydqo_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('파벨만스', '20230322', '12', 151, 36.0, '난생 처음 극장에서 스크린을 마주한 순간부터 영화와 사랑에 빠진 소년 ‘새미’(가브리엘 라벨). 아빠 ‘버트’(폴 다노)의 8mm 카메라를 들고 일상의 모든 순간을 담기 위해 열중하던 새미는 우연히 필름에 포착된 가족의 비밀을 알게 되고 충격에 휩싸인다. 진실을 비추는 필름의 힘을 실감한 새미에게 크고 작은 삶의 변화가 일어나고 엄마 ‘미치’(미셸 윌리엄스)의 응원으로 영화를 향한 열정은 더욱 뜨거워져만 가는데… 영원히 간직하고픈 기억, 영화의 모든 순간과 사랑에 빠진다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230320_293%2F1679279877582ii4eD_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('패왕별희 디 오리지널', '19931224', '15', 171, 49.0, '어렸을 때부터 함께 경극을 해온 ‘두지’(장국영)와 ‘시투’(장풍의). 세상에 둘도 없는 절친한 아우와 형이지만, ‘두지’는 남몰래 ‘시투’에 대한 마음을 품고 있다. 하지만 ‘시투’는 여인 ‘주샨’(공리)에 마음을 빼앗기고, 그로 인해 ‘두지’는 감정의 소용돌이에 빠지게 되는데… 사랑과 운명, 아름다움을 뒤바꾼 화려한 막이 열린다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230324_111%2F1679648047129DBhmL_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('남자는 처음을 원하고 여자는 마지막을 원한다', '20230518', '12', 80, 43.0, '그 남자의 첫 기억 ''혜지''를 보고 첫눈에 반하게 된 ''동준''. 용기 내 마음을 표현하지만, ‘혜지’는 웃으며 다음을 기약한다. 아쉬움을 뒤로하고 친구와 만났던 그날, 그의 앞에서 ''혜지''가 나타나는데... 그 여자의 마지막 기억 ''동준''과의 미래를 꿈꾸는 ''혜지''. 하지만 자꾸만 ''동준''은 진지한 대화를 피하려고 한다. 섭섭함과 결혼 문제로 크게 싸운 그날, 그녀의 앞에서 ‘동준’이 사라지게 되는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230504_61%2F16831675185437o9JN_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('파벨만스', '20230322', '12', 151, 36.0, '난생 처음 극장에서 스크린을 마주한 순간부터 영화와 사랑에 빠진 소년 ‘새미’(가브리엘 라벨). 아빠 ‘버트’(폴 다노)의 8mm 카메라를 들고 일상의 모든 순간을 담기 위해 열중하던 새미는 우연히 필름에 포착된 가족의 비밀을 알게 되고 충격에 휩싸인다. 진실을 비추는 필름의 힘을 실감한 새미에게 크고 작은 삶의 변화가 일어나고 엄마 ‘미치’(미셸 윌리엄스)의 응원으로 영화를 향한 열정은 더욱 뜨거워져만 가는데… 영원히 간직하고픈 기억, 영화의 모든 순간과 사랑에 빠진다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230320_293%2F1679279877582ii4eD_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('드리핀 스페셜 무비: 에덴', '20230517', 'AL', 30, NULL, '''Villan''z Era''의 끝에 능력이 사라지고 평화를 찾게 된 드리핀 그들은 미지의 이끌림에 의해 환상의 정원 ''에덴''에 발을 들인다. 6명의 소년들은 에덴에서 여유로운 시간을 보내며 능력 상실에 따른 혼란을 각자의 방법으로 극복하고, 다가 올 미래에 대한 선택을 하는데... 매혹적인 타락천사로 돌아온 드리핀의 ''Seven Sins'', 그 이전 순백의 드리핀 성장 단편 필름. 드리핀은 어떤 미래를 선택할 것인가?', 'http://cdn.slist.kr/news/photo/202305/447442_720837_4928.jpeg', 'Y');
+VALUES ('남자는 처음을 원하고 여자는 마지막을 원한다', '20230518', '12', 80, 43.0, '그 남자의 첫 기억 ''혜지''를 보고 첫눈에 반하게 된 ''동준''. 용기 내 마음을 표현하지만, ‘혜지’는 웃으며 다음을 기약한다. 아쉬움을 뒤로하고 친구와 만났던 그날, 그의 앞에서 ''혜지''가 나타나는데... 그 여자의 마지막 기억 ''동준''과의 미래를 꿈꾸는 ''혜지''. 하지만 자꾸만 ''동준''은 진지한 대화를 피하려고 한다. 섭섭함과 결혼 문제로 크게 싸운 그날, 그녀의 앞에서 ‘동준’이 사라지게 되는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230504_61%2F16831675185437o9JN_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('그래도 내가 하지 않았어', '20081211', '12', 143, 30.0, '회사 면접을 보러 만원 지하철에 오른 ‘가네코 텟페이’는 성추행범으로 몰려 억울한 누명을 쓰게 된다. 현행범으로 체포된 ‘텟페이’는 자신의 결백을 주장하지만, 경찰들은 거짓 자백과 합의를 유도하며 그를 유혹한다. 결국 그의 증언은 조금도 받아들여지지 않은 채 사건은 검찰로 넘어가게 되고, ‘텟페이’를 변호하기 위해 베테랑 변호사 ‘아라카와 마사요시’와 ‘스도 리코’가 고용된다. 유죄 선고율 99.9%! 두 변호사를 포함한 ‘텟페이’의 가족과 친구들은 그의 무죄를 증명하기 위해 함께 애쓰며 2년에 걸친 긴 전쟁이 시작된다. 과연 ‘텟페이’는 자신의 누명을 벗고 명예를 회복할 수 있을까?', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230404_49%2F1680586553226s7lLR_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('드리핀 스페셜 무비: 에덴', '20230517', 'AL', 30, NULL, '''Villan''z Era''의 끝에 능력이 사라지고 평화를 찾게 된 드리핀 그들은 미지의 이끌림에 의해 환상의 정원 ''에덴''에 발을 들인다. 6명의 소년들은 에덴에서 여유로운 시간을 보내며 능력 상실에 따른 혼란을 각자의 방법으로 극복하고, 다가 올 미래에 대한 선택을 하는데... 매혹적인 타락천사로 돌아온 드리핀의 ''Seven Sins'', 그 이전 순백의 드리핀 성장 단편 필름. 드리핀은 어떤 미래를 선택할 것인가?', 'http://cdn.slist.kr/news/photo/202305/447442_720837_4928.jpeg', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('유랑지구2', '20230510', '12', 173, 34.0, '태양계 소멸의 위기를 맞은 인류는 지구 표면에 거대한 엔진을 달아 궤도를 옮기는 ‘유랑지구 프로젝트’에 돌입한다. 하지만, 데이터베이스로 영생을 가지려는 ‘디지털 라이프’와 대립하게 되며 프로젝트는 난관에 부딪히게 되고, 그 과정 속 달과의 충돌이라는 예상치 못한 대재앙에 놓이게 되는데… 살아남기 위한 선택은 단 하나, 달을 파괴하라!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230413_63%2F1681364174871Hli1M_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('그래도 내가 하지 않았어', '20081211', '12', 143, 30.0, '회사 면접을 보러 만원 지하철에 오른 ‘가네코 텟페이’는 성추행범으로 몰려 억울한 누명을 쓰게 된다. 현행범으로 체포된 ‘텟페이’는 자신의 결백을 주장하지만, 경찰들은 거짓 자백과 합의를 유도하며 그를 유혹한다. 결국 그의 증언은 조금도 받아들여지지 않은 채 사건은 검찰로 넘어가게 되고, ‘텟페이’를 변호하기 위해 베테랑 변호사 ‘아라카와 마사요시’와 ‘스도 리코’가 고용된다. 유죄 선고율 99.9%! 두 변호사를 포함한 ‘텟페이’의 가족과 친구들은 그의 무죄를 증명하기 위해 함께 애쓰며 2년에 걸친 긴 전쟁이 시작된다. 과연 ‘텟페이’는 자신의 누명을 벗고 명예를 회복할 수 있을까?', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230404_49%2F1680586553226s7lLR_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('무명', '20230426', '15', 132, 4.0, '1941년 일본은 진주만을 기습 공격하고, 상하이를 점령한다. 이에 맞서 상하이에서는 비밀 결사가 결성되고, 정체를 감춘 채 일본 조직 내 침투한 요원들은 비밀리에 첩보 작전을 펼치지만 반역자들의 계속되는 방해로 인해 위험에 놓이는데…. 누가 누구의 적인지도 알 수 없고, 오늘의 동료마저 믿을 수 없는 혼란의 시대, 이름 없는 스파이들의 소리 없는 싸움이 시작된다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230516_278%2F1684227467675o0ymH_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('유랑지구2', '20230510', '12', 173, 34.0, '태양계 소멸의 위기를 맞은 인류는 지구 표면에 거대한 엔진을 달아 궤도를 옮기는 ‘유랑지구 프로젝트’에 돌입한다. 하지만, 데이터베이스로 영생을 가지려는 ‘디지털 라이프’와 대립하게 되며 프로젝트는 난관에 부딪히게 되고, 그 과정 속 달과의 충돌이라는 예상치 못한 대재앙에 놓이게 되는데… 살아남기 위한 선택은 단 하나, 달을 파괴하라!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230413_63%2F1681364174871Hli1M_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('튤립 모양', '20230419', '12', 106, 54.0, '유리코는 몇 년 전 운명처럼 스쳐 지나간 한국 남자를 잊지 못해 얼굴도 정확히 기억 못하는 그를 찾아 공주에 온다. 석영은 깊은 관심을 가지고 있던 무성영화 시기 한 일본 배우와 똑같이 생긴 여인을 우연히 마주친다. 두 사람의 만남을 다룬 이야기. 사랑과 예술에 관한 우화.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230330_283%2F1680166428515QeANI_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('무명', '20230426', '15', 132, 4.0, '1941년 일본은 진주만을 기습 공격하고, 상하이를 점령한다. 이에 맞서 상하이에서는 비밀 결사가 결성되고, 정체를 감춘 채 일본 조직 내 침투한 요원들은 비밀리에 첩보 작전을 펼치지만 반역자들의 계속되는 방해로 인해 위험에 놓이는데…. 누가 누구의 적인지도 알 수 없고, 오늘의 동료마저 믿을 수 없는 혼란의 시대, 이름 없는 스파이들의 소리 없는 싸움이 시작된다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230516_278%2F1684227467675o0ymH_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('라스트 필름 쇼', '20230412', 'AL', 109, 46.0, '인도의 작은 마을에 사는 자유로운 영혼을 가진 소년 ‘사메이’는 우연히 영화를 보게 되고, 극장에서 스크린으로 향한 한줄기 빛을 보고 영화와 열정적인 사랑에 빠지게 된다. 영화를 보기 위해 장사도 잘되지 않는 아빠의 작은 찻집에서 돈을 훔치는가 하면 학교도 빼먹기 일쑤다. 한편, 자신의 아들이 영화에 빠진 걸 알게 된 아빠는 ''더러운'' 영화 세계에서 발을 떼라는 경고까지 하지만 이미 영화에 흠뻑 빠진 ‘사메이’에겐 들리지 않는다. 어느 날, 몰래 학교를 빼고 영화를 보러 간 갤럭시 극장에서 영사 기사 ‘파잘’을 만나며 친해진 둘은 은밀한 거래를 하게 된다. 바로 엄마가 정성껏 싸준 도시락을 건네는 대신 극장 영사실에서 영화를 마음껏 볼 수 있게 해주는 것! 이들의 ''도시락-영화'' 거래는 그렇게 변치 않는 우정으로 발전하고 영화에 흠뻑 빠진 ‘사메이’는 친구들과 함께 자신들의 꿈인 35mm 영화를 만들기 시작하는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230328_14%2F1679988990775TvqHm_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('튤립 모양', '20230419', '12', 106, 54.0, '유리코는 몇 년 전 운명처럼 스쳐 지나간 한국 남자를 잊지 못해 얼굴도 정확히 기억 못하는 그를 찾아 공주에 온다. 석영은 깊은 관심을 가지고 있던 무성영화 시기 한 일본 배우와 똑같이 생긴 여인을 우연히 마주친다. 두 사람의 만남을 다룬 이야기. 사랑과 예술에 관한 우화.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230330_283%2F1680166428515QeANI_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('불멸의 여자', '20230405', '15', 87, 41.0, '화장품 매장 직원 희경(이음)과 승아(이정경). 불쾌한 감정, 우울한 기운은 배제하고 세상에서 가장 행복한 직원으로 손님을 맞이하는 두 사람은 화기애애한 어느 날, 화장품 반품 문의 전화가 걸려온다. 눈가 주름방지용 화장품을 샀는데 오히려 눈가 주름이 더 늘었다며 불만을 토로하는 고객, 정란(윤가현). 만족스럽지 못한 서비스에 매장을 찾아온 정란은 갑질을 통해 환불을 요구하기 시작한다. 비가 오나 눈이 오나 웃어야 하는 판매원 희경과 승아는 정란의 끊임없는 접객 태도 지적에 마트 지점장 상필(안내상)에서 도움을 청하게 되고, 정란은 승아에게 진심을 담은 사과의 표현으로 무릎을 꿇고 잘못을 빌 것을 요구하는데… 마트 개점 이래 최고의 진상 손님 등장! 과연 희경과 승아는 계속되는 갑질에 끝까지 웃을 수 있을까?', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230308_271%2F1678237003242njiPo_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('라스트 필름 쇼', '20230412', 'AL', 109, 46.0, '인도의 작은 마을에 사는 자유로운 영혼을 가진 소년 ‘사메이’는 우연히 영화를 보게 되고, 극장에서 스크린으로 향한 한줄기 빛을 보고 영화와 열정적인 사랑에 빠지게 된다. 영화를 보기 위해 장사도 잘되지 않는 아빠의 작은 찻집에서 돈을 훔치는가 하면 학교도 빼먹기 일쑤다. 한편, 자신의 아들이 영화에 빠진 걸 알게 된 아빠는 ''더러운'' 영화 세계에서 발을 떼라는 경고까지 하지만 이미 영화에 흠뻑 빠진 ‘사메이’에겐 들리지 않는다. 어느 날, 몰래 학교를 빼고 영화를 보러 간 갤럭시 극장에서 영사 기사 ‘파잘’을 만나며 친해진 둘은 은밀한 거래를 하게 된다. 바로 엄마가 정성껏 싸준 도시락을 건네는 대신 극장 영사실에서 영화를 마음껏 볼 수 있게 해주는 것! 이들의 ''도시락-영화'' 거래는 그렇게 변치 않는 우정으로 발전하고 영화에 흠뻑 빠진 ‘사메이’는 친구들과 함께 자신들의 꿈인 35mm 영화를 만들기 시작하는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230328_14%2F1679988990775TvqHm_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('해피 투게더', '19980822', '15', 97, 58.0, '홍콩을 떠나 지구 반대편 부에노스아이레스에 온 ‘보영’과 ‘아휘’ 이과수 폭포를 찾아가던 중 두 사람은 사소한 다툼 끝에 이별하고 각자의 길을 떠난다. 얼마 후 상처투성이로 ‘아휘’의 앞에 다시 나타난 ‘보영’은 무작정 “다시 시작하자”고 말한다. 서로를 위로하며 점차 행복한 시간을 보내는 두 사람. 하지만 ‘보영’의 변심이 두려운 ‘아휘’와 ‘아휘’의 구속이 견디기 힘든 ‘보영’은 또다시 서로의 마음에 상처 내는 말을 내뱉은 뒤 헤어지는데...', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230313_9%2F1678671557948Hmsvz_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('불멸의 여자', '20230405', '15', 87, 41.0, '화장품 매장 직원 희경(이음)과 승아(이정경). 불쾌한 감정, 우울한 기운은 배제하고 세상에서 가장 행복한 직원으로 손님을 맞이하는 두 사람은 화기애애한 어느 날, 화장품 반품 문의 전화가 걸려온다. 눈가 주름방지용 화장품을 샀는데 오히려 눈가 주름이 더 늘었다며 불만을 토로하는 고객, 정란(윤가현). 만족스럽지 못한 서비스에 매장을 찾아온 정란은 갑질을 통해 환불을 요구하기 시작한다. 비가 오나 눈이 오나 웃어야 하는 판매원 희경과 승아는 정란의 끊임없는 접객 태도 지적에 마트 지점장 상필(안내상)에서 도움을 청하게 되고, 정란은 승아에게 진심을 담은 사과의 표현으로 무릎을 꿇고 잘못을 빌 것을 요구하는데… 마트 개점 이래 최고의 진상 손님 등장! 과연 희경과 승아는 계속되는 갑질에 끝까지 웃을 수 있을까?', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230308_271%2F1678237003242njiPo_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('여섯 개의 밤', '20230329', '12', 81, 12.0, '엔진 고장으로 예정에 없던 도시에 불시착한 뉴욕행 비행기 레이오버 호텔에 묵게 된 여섯 명의 여행객들은 낯섦과 설렘, 비밀과 진실, 폭로와 고백 사이 저마다의 이유로 요동치는 잠들 수 없는 밤과 마주한다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230228_102%2F1677560655777NM772_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('해피 투게더', '19980822', '15', 97, 58.0, '홍콩을 떠나 지구 반대편 부에노스아이레스에 온 ‘보영’과 ‘아휘’ 이과수 폭포를 찾아가던 중 두 사람은 사소한 다툼 끝에 이별하고 각자의 길을 떠난다. 얼마 후 상처투성이로 ‘아휘’의 앞에 다시 나타난 ‘보영’은 무작정 “다시 시작하자”고 말한다. 서로를 위로하며 점차 행복한 시간을 보내는 두 사람. 하지만 ‘보영’의 변심이 두려운 ‘아휘’와 ‘아휘’의 구속이 견디기 힘든 ‘보영’은 또다시 서로의 마음에 상처 내는 말을 내뱉은 뒤 헤어지는데...', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230313_9%2F1678671557948Hmsvz_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('흐르다', '20230329', '12', 123, 47.0, '캐나다 워킹홀리데이를 준비하던 취업준비생 진영에게 어느 날 갑자기 찾아온 엄마의 죽음. 아빠가 운영하던 공장에도 문제가 생기고 진영은 아빠를 외면할 수도, 캐나다행을 포기할 수도 없다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230310_186%2F1678438619099snsiJ_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'Y');
+VALUES ('여섯 개의 밤', '20230329', '12', 81, 12.0, '엔진 고장으로 예정에 없던 도시에 불시착한 뉴욕행 비행기 레이오버 호텔에 묵게 된 여섯 명의 여행객들은 낯섦과 설렘, 비밀과 진실, 폭로와 고백 사이 저마다의 이유로 요동치는 잠들 수 없는 밤과 마주한다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230228_102%2F1677560655777NM772_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+
+INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
+VALUES ('흐르다', '20230329', '12', 123, 47.0, '캐나다 워킹홀리데이를 준비하던 취업준비생 진영에게 어느 날 갑자기 찾아온 엄마의 죽음. 아빠가 운영하던 공장에도 문제가 생기고 진영은 아빠를 외면할 수도, 캐나다행을 포기할 수도 없다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230310_186%2F1678438619099snsiJ_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('에브리씽 에브리웨어 올 앳 원스+', '20230301', '15', 150, 7.0, '미국에 이민 와 힘겹게 세탁소를 운영하던 에블린은 세무당국의 조사에 시달리던 어느 날 남편의 이혼 요구와 삐딱하게 구는 딸로 인해 대혼란에 빠진다. 그 순간 에블린은 멀티버스 안에서 수천, 수만의 자신이 세상을 살아가고 있다는 사실을 알게 되고, 그 모든 능력을 빌려와 위기의 세상과 가족을 구해야 하는 운명에 처한다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230217_188%2F1676599847794aO7NN_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
@@ -3051,10 +3090,10 @@ INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO
 VALUES ('마인드케이지', '20230531', '15', 96, 50.0, '사건의 실마리를 얻기 위해 형사와 살인범의 고도의 심리전이 시작되다! 어느 날, 성당에 천사의 모습으로 정성스럽게 꾸며진 사체가 발견되고, 형사 ‘제이크’는 5년 전 자신이 잡아들인 살인마 르프브르, 일명 ‘예술가’라 불리는 연쇄 살인마를 떠올린다. 그를 모방한 모방 범죄라 판단한 형사 ‘메리’는 예술가를 찾아가 단서를 얻고자 하지만, 범인을 잡기 위한 수사는 점점 예술가에게 집중되고, 메리는 또 다른 살인을 막기 위해 다시 예술가를 찾아간다. 예술가는 메리에게 알 수 없는 발언을 하고, 메리는 예술가가 자신에게 건넨 조각상 속에서 메모를 발견하는데… 과연 메리는 연쇄 살인을 멈출 수 있을까?', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230524_300%2F1684895516306xYy5v_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('동경의 주먹', '20010127', '19', 87, NULL, '츠다와 고지마는 고등학교 시절 그들의 여자친구가 자신들 앞에서 불량배들에게 무참히 폭행당하고 죽자 힘을 길러 복수하자고 다짐한다. 하지만 고지마만이 권투를 배우며 계속 힘을 키우고, 심약한 츠다는 결국 포기하고 평범한 샐러리맨으로 돌아간다. 그러던 어느 날 동경에서 무료하게 살아가던 츠다는 친구 고지마가 자신의 애인 히즈루를 범했다고 거짓말을 하자, 의처증 증세를 보이며 애인 히즈루를 의심한다. 결국 츠다는 친구에게 주먹다짐을 해보지만 권투선수인 고지마에게 무참하게 맞을 뿐이다. 같이 동거하던 애인 히즈루마저 아예 고지마의 집으로 거처를 옮기자 츠다는 점점 더 분노하고 고지마가 다니는 체육관에 다니기 시작한다. 연습에 온 힘을 다하던 중 둘은 연습경기를 갖기도 하지만, 이상하게도 고지마 역시 히즈루가 자신의 집으로 들어온 뒤부터는 맘이 약해지기 시작한다. 결국 츠다와 고지마는 각각 권투시합을 갖게 되는데, 이 둘은 처참하게 무너진다. 그 어느 누구도 동경 안에서 성공할 수 없는 듯 츠다가 자신을 억누르는 듯한 동경의 거대한 건물군을 바라보면서 영화는 끝이 난다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230525_179%2F1684982124907UM3yd_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('동경의 주먹', '20010127', '18', 87, NULL, '츠다와 고지마는 고등학교 시절 그들의 여자친구가 자신들 앞에서 불량배들에게 무참히 폭행당하고 죽자 힘을 길러 복수하자고 다짐한다. 하지만 고지마만이 권투를 배우며 계속 힘을 키우고, 심약한 츠다는 결국 포기하고 평범한 샐러리맨으로 돌아간다. 그러던 어느 날 동경에서 무료하게 살아가던 츠다는 친구 고지마가 자신의 애인 히즈루를 범했다고 거짓말을 하자, 의처증 증세를 보이며 애인 히즈루를 의심한다. 결국 츠다는 친구에게 주먹다짐을 해보지만 권투선수인 고지마에게 무참하게 맞을 뿐이다. 같이 동거하던 애인 히즈루마저 아예 고지마의 집으로 거처를 옮기자 츠다는 점점 더 분노하고 고지마가 다니는 체육관에 다니기 시작한다. 연습에 온 힘을 다하던 중 둘은 연습경기를 갖기도 하지만, 이상하게도 고지마 역시 히즈루가 자신의 집으로 들어온 뒤부터는 맘이 약해지기 시작한다. 결국 츠다와 고지마는 각각 권투시합을 갖게 되는데, 이 둘은 처참하게 무너진다. 그 어느 누구도 동경 안에서 성공할 수 없는 듯 츠다가 자신을 억누르는 듯한 동경의 거대한 건물군을 바라보면서 영화는 끝이 난다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230525_179%2F1684982124907UM3yd_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('악당들', '20230531', '19', 89, 41.0, '익명의 고객이 의뢰한 일을 완수만 한다면 특별사면을 보장하겠다는 무법 변호사의 제안을 받고 알제리 감옥에서 가석방된 빅 산드로 조직원 ‘세르조’. 살인을 즐기며 자아도취에 빠졌던 과거를 세탁하고 고급스러운 저택에 가정을 꾸린 킬러 ‘토니’. 국가를 뒤흔들 기밀문서를 빼앗겨 시궁창에 숨은 마피아 보스 ‘칼리굴라’. 15년 전에 일어났던 살인 사건의 진실을 앞에 두고 다시 만난 나쁜 녀석들은 죽음과 맞바꾼 마지막 피의 거래를 시작하는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230517_187%2F1684291432586AdAjk_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('악당들', '20230531', '18', 89, 41.0, '익명의 고객이 의뢰한 일을 완수만 한다면 특별사면을 보장하겠다는 무법 변호사의 제안을 받고 알제리 감옥에서 가석방된 빅 산드로 조직원 ‘세르조’. 살인을 즐기며 자아도취에 빠졌던 과거를 세탁하고 고급스러운 저택에 가정을 꾸린 킬러 ‘토니’. 국가를 뒤흔들 기밀문서를 빼앗겨 시궁창에 숨은 마피아 보스 ‘칼리굴라’. 15년 전에 일어났던 살인 사건의 진실을 앞에 두고 다시 만난 나쁜 녀석들은 죽음과 맞바꾼 마지막 피의 거래를 시작하는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230517_187%2F1684291432586AdAjk_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('익스파이어드', '20230601', '15', 102, 48.0, '''감성제어의 비밀을 찾아라!'' 사이보그와 인간이 공존하는 미래의 홍콩 인간 역시 사이보그처럼 감정을 잊은 채 살아간다. 고독하게 살아가던 사이보그 암살자 ''잭''은 우연히 노래방 가수 ''에이프럴''과 만나게 되고, 점점 그녀에게 빠져들며 이상한 감정을 느끼게 된다. 그녀에게 빠져들수록 고통을 느끼게 되는 ''잭''은 자신의 감성이 제어되고 있음을 알게 되고 그 비밀을 찾기 위해 과거를 파헤치기 시작하는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230523_76%2F1684810664145BO50I_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
@@ -3063,7 +3102,7 @@ INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO
 VALUES ('세인트 세이야: 더 비기닝', '20230531', '12', 112, 53.0, '인류를 지킬 것인가, 파멸시킬 것인가! 강력한 힘을 가진 전쟁과 지혜의 신 ‘아테나’의 환생! 세상을 구할 수호 기사가 깨어난다! 어린 시절 누나 ''패트리샤''가 납치된 후 홀로 자란 ''세이야'' 슬럼가 지하 격투장에서 벌어지는 결투로 근근이 살아가던 중, 위기의 상황에서 자신도 알지 못했던 미스터리한 힘이 발현되면서 ''아테나''를 찾고 있던 ''구라드''의 무장 조직에게 쫓기게 된다. 수수께끼의 남자 ''알먼 키도''에 의해 가까스로 목숨을 구한 ''세이야''는 그를 따라 도착한 은신처에서 ''아테나''의 환생인 ''시에나''와 마주한다. 오래전, 다른 신들에 맞서 인간을 지키던 전쟁과 지혜의 신 ‘아테나’ ‘알먼 키도’는 ‘시에나’에게 잠재된 ‘아테나’의 힘이 곧 깨어날 것이며, ‘세이야’는 ‘아테나’를 수호하고 세상을 지킬 성투사의 운명을 가졌다는 사실을 알려주는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230522_229%2F1684732462918ND1sV_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('6월의 뱀', '20041210', '19', 77, 55.0, '무덥고 끈적한 장마철의 도쿄. 결벽증이 있는 중년의 샐러리맨 시게히코와 심리치료센터에서 전화상담원으로 일하는 젊고 아름다운 린코는 외견상 평화롭고 풍족한 삶을 영위하고 있는 듯하지만 부부생활도, 아이도 없는 그들 부부의 생활은 건조하기 짝이 없다. 어느 날 그녀는 ‘남편에겐 비밀’이라고 쓰인 낯선 봉투를 받는다. 놀랍게도 그 안에는 그녀가 은밀한 행위를 하고 있는 장면을 가까이서 생생하게 찍힌 사진들이 들어있다. 공포와 수치심에 사로잡힌 그녀에게 또다시 봉투가 도착한다. 이번에는 그녀가 거울 앞에서 대담한 옷을 입고 짙은 화장을 하는 장면이 담겨있는 사진이 들어있다. 그리고 그녀에게 걸려온 한 통의 전화. “사진과 필름을 돌려받으려면 내 말을 들어!” 누군가 그녀를 감시하고 있다! 장대비가 쏟아지는 토요일, 린코는 사진과 필름을 돌려받기 공포에 떨면서도 전화로 그의 명령을 들으며 짧디짧은 스커트를 입고 집을 나선다. 낯선 목소리는 점점 수치스럽고 치욕스러운 일들을 그녀에게 강요하고, 그녀는 그 요구를 그대로 따를 수밖에 없다. 마침내 모든 요구를 들어준 후 사진과 원본 필름을 돌려받고 안도하는 린코. 그런데 수치심과 공포 속에서도 낯선 목소리의 요구는 어느새 그녀의 몸속 깊이 잠들어있던 관능을 일깨운다. 그리고, 또다시 걸려온 전화. “아직 안심하긴 일러, 사진은 또 있다.!” 시게히코는 어느 날, 아내의 놀라운 모습이 찍힌 사진 한 장을 발견한다. 강렬한 의혹과 질투에 몸을 떠는 시게히코. 그리고 그는 정신을 잃는다. 정신이 들자 그는 온몸이 결박된 채 악몽인지 현실인지 분간할 수 없는 이상한 광경들을 강제로 보게 된다. 자신에게 무슨 일이 일어나고 있는 것인지, 최근 들어 수상쩍기 그지 없는 아내에게 도대체 어떤 일이 벌어지고 있는 것인지, 혼란과 공포와 의혹 속에서 갈등하던 그는 며칠 뒤 아내의 뒤를 미행한다. 한밤의 외진 공터. 쏟아지는 굵은 빗줄기. 급정거하는 차의 타이어 소리, 이어 터지기 시작하는 카메라 플래쉬. 그리고 드러나는 린코의 눈부신 나신! 린코와 시게히코, 그리고 정체불명 사이코 스토커 사이에서 벌어지는 욕망과 폭력의 게임! 과연 승자는 누가 될 것인가?', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230525_203%2F1684979958724o4uEp_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('6월의 뱀', '20041210', '18', 77, 55.0, '무덥고 끈적한 장마철의 도쿄. 결벽증이 있는 중년의 샐러리맨 시게히코와 심리치료센터에서 전화상담원으로 일하는 젊고 아름다운 린코는 외견상 평화롭고 풍족한 삶을 영위하고 있는 듯하지만 부부생활도, 아이도 없는 그들 부부의 생활은 건조하기 짝이 없다. 어느 날 그녀는 ‘남편에겐 비밀’이라고 쓰인 낯선 봉투를 받는다. 놀랍게도 그 안에는 그녀가 은밀한 행위를 하고 있는 장면을 가까이서 생생하게 찍힌 사진들이 들어있다. 공포와 수치심에 사로잡힌 그녀에게 또다시 봉투가 도착한다. 이번에는 그녀가 거울 앞에서 대담한 옷을 입고 짙은 화장을 하는 장면이 담겨있는 사진이 들어있다. 그리고 그녀에게 걸려온 한 통의 전화. “사진과 필름을 돌려받으려면 내 말을 들어!” 누군가 그녀를 감시하고 있다! 장대비가 쏟아지는 토요일, 린코는 사진과 필름을 돌려받기 공포에 떨면서도 전화로 그의 명령을 들으며 짧디짧은 스커트를 입고 집을 나선다. 낯선 목소리는 점점 수치스럽고 치욕스러운 일들을 그녀에게 강요하고, 그녀는 그 요구를 그대로 따를 수밖에 없다. 마침내 모든 요구를 들어준 후 사진과 원본 필름을 돌려받고 안도하는 린코. 그런데 수치심과 공포 속에서도 낯선 목소리의 요구는 어느새 그녀의 몸속 깊이 잠들어있던 관능을 일깨운다. 그리고, 또다시 걸려온 전화. “아직 안심하긴 일러, 사진은 또 있다.!” 시게히코는 어느 날, 아내의 놀라운 모습이 찍힌 사진 한 장을 발견한다. 강렬한 의혹과 질투에 몸을 떠는 시게히코. 그리고 그는 정신을 잃는다. 정신이 들자 그는 온몸이 결박된 채 악몽인지 현실인지 분간할 수 없는 이상한 광경들을 강제로 보게 된다. 자신에게 무슨 일이 일어나고 있는 것인지, 최근 들어 수상쩍기 그지 없는 아내에게 도대체 어떤 일이 벌어지고 있는 것인지, 혼란과 공포와 의혹 속에서 갈등하던 그는 며칠 뒤 아내의 뒤를 미행한다. 한밤의 외진 공터. 쏟아지는 굵은 빗줄기. 급정거하는 차의 타이어 소리, 이어 터지기 시작하는 카메라 플래쉬. 그리고 드러나는 린코의 눈부신 나신! 린코와 시게히코, 그리고 정체불명 사이코 스토커 사이에서 벌어지는 욕망과 폭력의 게임! 과연 승자는 누가 될 것인가?', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230525_203%2F1684979958724o4uEp_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('총알 발레', '20230605', '15', 87, NULL, 'CM 제작 회사에 근무하는 고다는 10년을 사귄 연인 키리코가 권총으로 자살하자 권총에 광적으로 집착하게 된다. 어느 날 술에 취한 고다는 길에서 만난 불량배들에게 시비를 걸다 집단 구타를 당하는데, 불량배들은 고다를 그들의 아지트로 끌고 가 돈을 내놓으라며 협박한다. 고다는 불량배들에 대한 복수심으로 진짜 권총을 구하지만 얻지 못하고, 거리를 헤매다 지친 나머지 자신이 직접 권총을 만들어 불량배들을 습격하나 장난감같은 권총으로 그들의 비웃음만 산다. 그러던 중 고다는 불량배들 중 하나인 소녀 치사토가 죽음을 바라고 있다는 것을 알게 된다. 치사토의 패거리들은 다른 패들과 싸움을 벌일 계획을 세우고 있으며 치사토는 그 사이에서 죽기로 마음먹고 있다. 결국 고다를 괴롭히던 불량배들과 다른 패거리 사이에 싸움이 일어나고 고다는 진짜 권총을 얻어 그들의 싸움 속으로 뛰어드는데...', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230525_268%2F1684980890342t6Urv_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
@@ -3102,7 +3141,7 @@ INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO
 VALUES ('나의 사소한 슬픔', '20230614', '15', 103, 40.0, '언니가 ‘자살시도’를 했다는 엄마의 전화를 받았다. 작가라면서 글 한 줄 쓰는 것도 힘겹고, 이혼 위기로 엉망진창인 동생도 이렇게 잘 살고 있는데… 다정한 남편에 해외순회 공연까지 다니는 잘 나가는 피아니스트인 자기가 도대체 왜? 아빠처럼 그렇게, ‘똑같이’ 죽고 싶었던 거야? 그러고도 정신 못 차리고 엄마, 형부 몰래 ‘스위스’로 데려다 달라고? 언니는 왜 죽고 싶은 걸까? 자살할 사람은 정해져 있는 걸까? 언니는 자기가 가장 좋아하는 시처럼, ‘나의 사소한 슬픔’을 그 누구에게도, 나에게조차 토해낼 수 없었던 걸까?', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230518_259%2F16843874087351DUfX_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('순응자', '20160128', '19', 113, 67.0, '로마의 유복한 집안에서 자란 마르첼로는 어린 시절의 트라우마와 정신병원에 입원해 있는 아버지로 인해 불안에 시달린다. 남들처럼 평범하게 살아가는 것이 유일한 목적인 그는 평범한 가정을 이루고자 중산층 집안의 줄리아와 결혼하고, 대중의 강력한 지지를 받는 무솔리니 정권의 비밀경찰에 자원한다. 첫 임무로, 자신의 스승이자 프랑스에서 정치적 망명 중인 반독재 인사 콰드리 교수의 암살을 지시 받은 마르첼로는 파리로 신혼여행을 떠나 콰드리 교수와 그의 아내 안나에게 접근한다. 처음엔 경계와 의심을 늦추지 않던 이들 부부는 그를 차차 신뢰하게 되지만, 안나에게 걷잡을 수 없이 끌리게 된 마르첼로는 자신의 본심과 임무 사이에서 혼란을 겪게 되는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230517_183%2F1684286736893ylk0Y_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('순응자', '20160128', '18', 113, 67.0, '로마의 유복한 집안에서 자란 마르첼로는 어린 시절의 트라우마와 정신병원에 입원해 있는 아버지로 인해 불안에 시달린다. 남들처럼 평범하게 살아가는 것이 유일한 목적인 그는 평범한 가정을 이루고자 중산층 집안의 줄리아와 결혼하고, 대중의 강력한 지지를 받는 무솔리니 정권의 비밀경찰에 자원한다. 첫 임무로, 자신의 스승이자 프랑스에서 정치적 망명 중인 반독재 인사 콰드리 교수의 암살을 지시 받은 마르첼로는 파리로 신혼여행을 떠나 콰드리 교수와 그의 아내 안나에게 접근한다. 처음엔 경계와 의심을 늦추지 않던 이들 부부는 그를 차차 신뢰하게 되지만, 안나에게 걷잡을 수 없이 끌리게 된 마르첼로는 자신의 본심과 임무 사이에서 혼란을 겪게 되는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230517_183%2F1684286736893ylk0Y_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('위대한 작은 농장', '20230614', 'AL', 91, 61.0, '위대한 자연 속 작은 농장이 안내할 미래의 희망! LA 도심 속 아파트에 살던 신혼부부 감독 존과 요리사 몰리. 안락사 위기에서 구한 반려견 토드가 밤낮 없이 짖어 이웃들로부터 쫓겨날 위기에 처한다. 이들은 과감하게 도시를 떠나 자연과 함께하는 전통식 농장을 짓기로 결심하고, 축구장 100배 면적의 척박한 황무지를 변화시킬 무모한 도전을 시작한다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20190130_28%2F1548837588925GAUpO_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
@@ -3117,7 +3156,7 @@ INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO
 VALUES ('실버맨', '20230614', '12', 97, 24.0, '인생 2회차 ‘할배달’이 왔다! 늙어버린 청춘들의 특별한 택배 트립! 고독사를 준비하던 독고 할배 ‘순철’은 진짜 죽을 위기를 넘기자 다시 삶의 욕구가 타오른다! 정신을 차린 ‘순철’은 ‘실버맨 심부름센터’를 찾아가고, 면접부터 말아먹고 그곳에서 만난 미스터리 택배맨 ‘탁배’를 무작정 따라나서며 새로운 세상을 마주하는데… 고집불통 할배들의 좌충우돌 동행기가 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230518_211%2F1684378637672XvXDE_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('전봇대 소년의 모험', '20230615', '19', 46, 72.0, '등에 전봇대가 난 소년이, 강철 흡혈귀가 지배하는 가까운 미래의 세계로 타임 슬립한다. 미래에서 전봇대 소년을 기다리고 있던 수수께끼의 여교사 살리바 선생. 전봇대 소년은 살리바 선생과 함께 흡혈 그룹이 만들고 있는 초대형 암흑 병기가 완성되는 것을 막으러 대모험에 나선다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230525_112%2F16849793200152KvrF_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('전봇대 소년의 모험', '20230615', '18', 46, 72.0, '등에 전봇대가 난 소년이, 강철 흡혈귀가 지배하는 가까운 미래의 세계로 타임 슬립한다. 미래에서 전봇대 소년을 기다리고 있던 수수께끼의 여교사 살리바 선생. 전봇대 소년은 살리바 선생과 함께 흡혈 그룹이 만들고 있는 초대형 암흑 병기가 완성되는 것을 막으러 대모험에 나선다.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230525_112%2F16849793200152KvrF_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('극장판 극주부도', '20230616', '12', 118, 72.0, '전국을 주름 잡던 야쿠자 ''타츠''. ''미쿠''를 만나 결혼하면서 야쿠자 생활을 청산하고 전업주부가 되기로 한다. 겉으로는 무서워 보이지만 그 누구보다도 가족을 아끼고 사랑하는 츤데레 가정주부인 ''타츠''와 집안일은 꽝이지만 다정한 워킹맘 ''미쿠'', 나이에 비해 성숙한 딸 ''히마와리'' 세 명의 가족을 둘러싼, 다혈질 부하와 어설픈 순경, 알바생 등이 함께 펼치는 진지하고도 웃긴 일상 이야기.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230525_101%2F16849780313273iQYz_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
@@ -3129,7 +3168,7 @@ INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO
 VALUES ('제이홉 인 더 박스', '20230616', 'AL', 85, 52.0, '방탄소년단의 데뷔 10주년을 맞이하여, 전 세계 극장에서 개봉하는 제이홉 솔로 다큐멘터리. 다 같이 모여, 영화관 큰 스크린으로 즐기는 축제! I''m your HOPE. You''re my HOPE. I''m j-hope. 판도라 상자 안 가장 깊숙한 곳, 마지막으로 남은 것은 희망. 2022년 7월 31일 미국 시카고, 세계 최대 뮤직 페스티벌 ‘롤라팔루자’에 제이홉은 솔로 아티스트로서, 대한민국 뮤지션 최초로 메인 스테이지 헤드라이너로 무대에 섰다. 춤밖에 모르던 정호석에서 세계적인 그룹 방탄소년단의 메인 댄서이자 래퍼가 된 제이홉. ‘Dynamite’와 ‘Butter’의 대대적인 성공 이후, 그는 첫 공식 솔로 앨범 작업을 시작한다. 솔로 아티스트로서의 정체성에 대한 고민과 불안이 불현듯 밀려들지만, 제이홉은 자신에 대한 용기와 믿음, 춤과 음악 그 자체를 즐기는 긍정의 힘으로, 이제 상자 밖으로 나와 세상을 맞이하기 위한 준비에 나선다. ‘Jack In The Box’의 제작기와 리스닝 파티, ‘롤라팔루자’의 공연 준비부터 무대 위 비상하는 모습까지 200여 일간 아티스트 제이홉의 일상의 기록을 담아낸 다큐멘터리.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230526_61%2F1685077286930O6MvJ_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('귀공자', '20230621', '19', 118, 29.0, '“난 단 한번도 타겟을 놓쳐 본 적이 없거든” 필리핀에서 불법 경기장을 전전하며 병든 어머니와 살아가는 복싱 선수 ‘마르코’. 어머니의 수술비 마련을 위해 평생 본 적 없는 아버지를 만나러 한국으로 향하던 그의 앞에 정체불명의 남자 ‘귀공자’가 나타나 그를 추격하기 시작한다. ‘마르코’ 주위를 쑥대밭으로 만들며 숨통을 조여오는 ‘귀공자’를 필두로, ‘마르코’를 집요하게 추격하는 재벌 2세 ‘한이사’, 필리핀에 이어 한국에서 우연히 ‘마르코’와 재회한 미스터리한 인물 ‘윤주’까지. 각기 다른 목적을 가진 이들은 단 하나의 타겟을 쫓아 모여들고, 그 무엇도 예측할 수 없는 혼란과 광기 속 ‘마르코’는 충격적인 진실을 마주하게 되는데… 단 하나의 타겟, 광기의 추격이 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230523_134%2F1684822002870Wvc5c_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('귀공자', '20230621', '18', 118, 29.0, '“난 단 한번도 타겟을 놓쳐 본 적이 없거든” 필리핀에서 불법 경기장을 전전하며 병든 어머니와 살아가는 복싱 선수 ‘마르코’. 어머니의 수술비 마련을 위해 평생 본 적 없는 아버지를 만나러 한국으로 향하던 그의 앞에 정체불명의 남자 ‘귀공자’가 나타나 그를 추격하기 시작한다. ‘마르코’ 주위를 쑥대밭으로 만들며 숨통을 조여오는 ‘귀공자’를 필두로, ‘마르코’를 집요하게 추격하는 재벌 2세 ‘한이사’, 필리핀에 이어 한국에서 우연히 ‘마르코’와 재회한 미스터리한 인물 ‘윤주’까지. 각기 다른 목적을 가진 이들은 단 하나의 타겟을 쫓아 모여들고, 그 무엇도 예측할 수 없는 혼란과 광기 속 ‘마르코’는 충격적인 진실을 마주하게 되는데… 단 하나의 타겟, 광기의 추격이 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230523_134%2F1684822002870Wvc5c_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('굿바이', '20081030', '12', 130, 41.0, '도쿄에서 첼리스트로 활동하던 ‘다이고’(모토키 마사히로)는 갑작스런 악단 해체로 아내 ‘미카’(히로스에 료코)와 고향으로 돌아간다. “연령, 경험 무관! 정규직 보장!” 여행사 구인 광고로 면접을 보고 바로 합격! 그러나 여행사는 국내도, 해외도 아닌 인생에서의 마지막 여행인 죽음을 배웅하는 장례지도회사! ‘다이고’는 ‘이쿠에이’(야마자키 츠토무)에게 일을 배우며 사명감을 갖게 되지만, ‘미카’와 주변 친구들은 그를 피할 만큼 새 출발을 반대하는데… 모두에게 전하는 사랑의 인사, “다녀오세요. 다시 만나요, 우리”', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20201216_180%2F1608106548353LSftG_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
@@ -3141,7 +3180,7 @@ INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO
 VALUES ('206: 사라지지 않는', '20230621', '12', 96, 6.0, '90세를 넘긴 나이에도 불구하고 765,000kV의 거대한 송전탑과 맞서 싸운 김말해 할머니 투쟁의 시작은 한국전쟁이었다. 한국전쟁 발발 전후 국가에 의해 은폐된, 민간인이 남녀노소 할 것 없이 무차별하게 학살당한 사건. 김말해 할머니와 또 다른 김말해''들''은 이 사건으로 가족을 잃고 침묵할 수밖에 없었다. 정확한 피해 규모도, 희생자 수도 알 수 없는 상황. 한국전쟁 정전 70년의 세월이 흘렀지만 그들의 시간은 멈춰있다. 그리고 국가 차원의 유해 발굴을 주도하던 진실화해위원회가 해체되자, 시민들은 자발적으로 공동조사단을 꾸려 그들을 찾아 나선다. "직업도, 배경도 다른 우리의 공통된 목표는 오직 하나. 인간을 구성하는 206개의 뼈를 가족의 품으로 돌려주는 것입니다" 국가가 은폐한 진실을 찾아 나선 시민 발굴단의 기록 <206: 사라지지 않는>', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230524_105%2F1684915701334NfJMg_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('인드림', '20230621', '19', 88, 31.0, '“너도 다른 사람 꿈속에 들어올 수 있구나?” 아버지의 병원비를 마련하기 위해 임상 실험에 참가했던 ‘홍화’는 타인의 꿈을 통제할 수 있는 ‘드림 워킹’ 능력을 갖게 된다. 어느 날, 친구 ‘지은’의 꿈속에 들어갔던 ‘홍화’는 자신과 똑같은 능력을 가진 연쇄살인범 ‘재인’과 맞닥뜨리고 살해 위기에 놓인 ‘지은’을 구하기 위해 형사 ‘상준’을 찾아가는데… ‘재인’은 ‘홍화’에게 위험한 제안을 하고 꿈과 현실을 오가는 두 사람의 쫓고 쫓기는 추적이 펼쳐진다!', '', 'N');
+VALUES ('인드림', '20230621', '18', 88, 31.0, '“너도 다른 사람 꿈속에 들어올 수 있구나?” 아버지의 병원비를 마련하기 위해 임상 실험에 참가했던 ‘홍화’는 타인의 꿈을 통제할 수 있는 ‘드림 워킹’ 능력을 갖게 된다. 어느 날, 친구 ‘지은’의 꿈속에 들어갔던 ‘홍화’는 자신과 똑같은 능력을 가진 연쇄살인범 ‘재인’과 맞닥뜨리고 살해 위기에 놓인 ‘지은’을 구하기 위해 형사 ‘상준’을 찾아가는데… ‘재인’은 ‘홍화’에게 위험한 제안을 하고 꿈과 현실을 오가는 두 사람의 쫓고 쫓기는 추적이 펼쳐진다!', '', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('스파이더맨: 어크로스 더 유니버스', '20230621', 'UN', 0, 53.0, '스파이더맨 VS 스파이더맨?! 여러 성장통을 겪으며 새로운 스파이더맨이 된 ‘마일스 모랄레스’. 그 앞에 다른 평행세계의 스파이더우먼 ‘그웬’이 다시 나타난다. 모든 차원의 멀티버스 속 스파이더맨들을 만나게 되지만, 질서에 대한 신념이 부딪히며 예상치 못한 균열이 생기는데… 상상 그 이상을 넘어서는 멀티버스의 세계가 열린다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230515_135%2F1684114755356LjnGu_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
@@ -3162,13 +3201,13 @@ INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO
 VALUES ('하나님의 마음', '20230628', '12', 102, 46.0, '“왜 하필 하나님께서는 외아들을 번제로 바치라고 하셨을까?” 어느 날 밤, 하나님이 아브라함을 찾아와 모리아 땅으로 가서 외아들 이삭을 번제로 바치라고 명령하신다. 아브라함은 다음 날 아내 사라를 뒤로 한 채 이삭과 3일간의 험난한 여정을 시작한다. “왜 하필 100살에 낳은 아들 이삭을 제물로 바치라고 하시는 걸까?” “왜 하필 3일이나 가야 하는 모리아에서 제사를 드리라고 하시는 걸까?” 탄식으로 가득한 질문은 여정 내내 계속되지만 마침내 예루살렘 모리아 산에서 그 해답을 찾게 되는데..', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230512_160%2F1683859952797tadW2_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('악마들', '', '19', 105, NULL, '부모에게 버림받은 10대 소년이 누이에게 품은 파괴적이고 왜곡된 열정을 그린 유년판 <베티 블루>. 두 아역 배우의 신들린 듯한 연기가 소름을 돋게 한다. 시카고국제영화제 금상. 토론토국제영화제 초청작, 산세바스찬영화제 초청작. 13세의 클로에와 12세의 조셉. 태어나면서부터 부모에게 버림받은 이들은 외부 세계와의 접촉을 거부하고, 서로에게만 의지하며 살아간다. 자폐증 증세를 보이는 클로에는 기괴한 웃음만을 흘리며 정처 없이 발길을 옮기고, 조셉은 그에게 단 하나뿐인 가족인 클로에를 보호하고, 어딘가에 있을 그들의 집을 찾기 위해 누이를 인도한다. 그러던 중, 마침내 그들은 보호소로 찾아온 어머니를 만나게 되고, 그들이 친남매가 아니라는 사실을 듣게 되는데.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20120130_196%2F1327916549947neAo4_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('악마들', '', '18', 105, NULL, '부모에게 버림받은 10대 소년이 누이에게 품은 파괴적이고 왜곡된 열정을 그린 유년판 <베티 블루>. 두 아역 배우의 신들린 듯한 연기가 소름을 돋게 한다. 시카고국제영화제 금상. 토론토국제영화제 초청작, 산세바스찬영화제 초청작. 13세의 클로에와 12세의 조셉. 태어나면서부터 부모에게 버림받은 이들은 외부 세계와의 접촉을 거부하고, 서로에게만 의지하며 살아간다. 자폐증 증세를 보이는 클로에는 기괴한 웃음만을 흘리며 정처 없이 발길을 옮기고, 조셉은 그에게 단 하나뿐인 가족인 클로에를 보호하고, 어딘가에 있을 그들의 집을 찾기 위해 누이를 인도한다. 그러던 중, 마침내 그들은 보호소로 찾아온 어머니를 만나게 되고, 그들이 친남매가 아니라는 사실을 듣게 되는데.', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20120130_196%2F1327916549947neAo4_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('기적을 믿는 소녀', '20230705', 'AL', 100, 64.0, '하나님의 기적을 믿는 어린 소녀 ‘사라’는 호수로 낚시하러 가서 죽은 새를 발견하고 기도하는데 집으로 돌아가려 할 때 죽은 새가 살아난다. 사라는 하나님이 자신의 기도에 응답해서 새를 살린 거라고 말하지만 오빠와 그의 여자친구 ‘신디’는 그 광경을 같이 보고도 믿으려 하지 않는다. 상심한 사라는 외할아버지 ‘샘’과 단짝 친구 ‘마크’ 에게 호수에서 있었던 일을 이야기하는데, 그날 밤 사라는 심하게 앓는다. 며칠 후 오빠 축구팀의 라이벌 ‘앨비’ 일행들과 시비가 붙는 바람에 앨비의 개가 차에 치여 죽는 사고가 발생하지만 사라의 기도로 개가 다시 살아나고, 연이어 하반신 마비의 마크도 걷게 되자 어린 소녀가 하나님의 기적을 행한다는 소문이 퍼지면서 많은 사람들이 몰려들어 사라와 가족들은 혼란을 겪는데... 당신 곁으로 기적이 찾아옵니다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230524_234%2F1684906588727KfalP_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('보 이즈 어프레이드', '20230705', '19', 179, 59.0, '편집증을 앓는 ‘보’와 그를 집착적으로 사랑하는 엄마 ‘모나’ 엄마를 무조건 만나러 가야 하는 보의 기억과 환상, 현실이 뒤섞인 공포를 경험하게 되는 기이한 여정', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230523_68%2F1684820461764yc73Q_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('보 이즈 어프레이드', '20230705', '18', 179, 59.0, '편집증을 앓는 ‘보’와 그를 집착적으로 사랑하는 엄마 ‘모나’ 엄마를 무조건 만나러 가야 하는 보의 기억과 환상, 현실이 뒤섞인 공포를 경험하게 되는 기이한 여정', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230523_68%2F1684820461764yc73Q_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('극장판 도라에몽: 진구와 하늘의 유토피아', '20230708', 'UN', 107, NULL, '', '', 'N');
@@ -3213,13 +3252,13 @@ INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO
 VALUES ('어디로 가고 싶으신가요', '202306--', '12', 104, 58.0, '어느 봄날, 갑작스러운 사고로 남편인 ‘도경’을 잃은 ‘명지’는 슬픔에서 벗어나기 위해 폴란드 바르샤바로 잠시 떠난다. 하지만 ‘도경’의 소식을 모르는 대학 동창 ‘현석’과의 재회에 ‘명지’는 낯선 곳에서 불쑥불쑥 남편과의 추억을 마주하게 되는데… 한편, 같은 사고로 단짝 친구인 ‘지용’과 이별한 ‘해수’는 곳곳에 남겨진 친구의 빈자리를 느끼며 하나뿐인 동생을 잃고 몸이 마비된 ‘지용’의 누나 ‘지은’을 돕는다. 그러던 중 ‘해수’는 ‘지은’에게 새 편지지와 함께 ‘명지’의 주소를 건네는데… 홀로 남겨진 나와 당신에게 들려주고 싶은 다정한 말 한마디 “어디로 가고 싶으신가요”', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230504_5%2F1683170269277T2zNI_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('라방', '202306--', '19', 90, 19.0, '“내 여자친구가 인터넷 몰카 라이브 방송에 나온다?!” 대기업 취업도 쉽지 않고 친구가 보낸 불법 몰카 라이브 방송 링크를 여자친구 수진에게 들켜 헤어질 위기에 처한 프리랜서 PD ‘동주’. 수진의 생일날 이벤트를 준비하던 중 의문의 라이브 방송 링크가 전송되고 링크가 자동으로 열리는데… “아이디 486번 고객님이 입장되었습니다” 실시간으로 시작되는 몰카 라이브 방송! 그런데 모니터를 통해 여자친구 ‘수진’이 나타나고 동주는 충격에 빠지게 된다. 정체불명의 ‘젠틀맨’과 정신을 잃은 ‘수진’, ‘동주’는 사랑하는 수진을 구하기 위해 라이브 방송에 참여하기 시작하지만 ‘젠틀맨’은 라이브 방송을 점점 최악의 상황으로 끌고 가는데… 1분 1초를 다투는 숨 막히는 실시간 라이브 추격전이 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230515_242%2F1684128359736AvvPO_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('라방', '202306--', '18', 90, 19.0, '“내 여자친구가 인터넷 몰카 라이브 방송에 나온다?!” 대기업 취업도 쉽지 않고 친구가 보낸 불법 몰카 라이브 방송 링크를 여자친구 수진에게 들켜 헤어질 위기에 처한 프리랜서 PD ‘동주’. 수진의 생일날 이벤트를 준비하던 중 의문의 라이브 방송 링크가 전송되고 링크가 자동으로 열리는데… “아이디 486번 고객님이 입장되었습니다” 실시간으로 시작되는 몰카 라이브 방송! 그런데 모니터를 통해 여자친구 ‘수진’이 나타나고 동주는 충격에 빠지게 된다. 정체불명의 ‘젠틀맨’과 정신을 잃은 ‘수진’, ‘동주’는 사랑하는 수진을 구하기 위해 라이브 방송에 참여하기 시작하지만 ‘젠틀맨’은 라이브 방송을 점점 최악의 상황으로 끌고 가는데… 1분 1초를 다투는 숨 막히는 실시간 라이브 추격전이 시작된다!', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230515_242%2F1684128359736AvvPO_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('플래닛', '', '12', 114, NULL, '''우주정거장 미르''에서는 24시간 뒤 지나갈 소행성을 추적 중 운석 충돌 가능성을 말하지만 무시되고 만다. 한편. 지구에서는 이러한 영문도 모른 채\ 지구를 비켜갈 화려한 유성우의 우주쇼를 볼 기대에 들떠 있다. 그 시간, 소행성 뒤 편 사각 지대의 운석 파편들이 핵폭탄 보다 10배 강력한 파워로 우주정거장을 파괴한 후 지구를 향해 나아가고…. 소행성에 강타당한 지구는 모든 건물과 도로가 붕괴되며 대재앙이 펼쳐지는데...', 'https://img.megabox.co.kr/SharedImg/2023/05/25/7ObfF4ehnSp0Y2M6vT1sGtWJQ46OeLpk_420.jpg', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
-VALUES ('바비', '20121025', '19', 98, 27.0, '핸드폰 고리를 팔며 생활비를 버는 어린 순영(김새론)에게는 지적 장애를 가진 아빠와 뭐든 완벽한 바비 인형이 되고 싶어하는 철없는 동생 순자(김아론), 안하무인인 작은 아빠 망택(이천희)이 있다. 심장병을 앓고 있는 둘째 딸을 위해 순영이 필요했던 미국인 스티브와 바비 부녀가 찾아오게 되고 이를 알면서도 돈을 위해 조카를 미국으로 보내려는 작은 아빠는 순영에게 강제적으로 미국으로의 입양을 권한다. 하지만 정작 미국에 가지 못해 안달 난 순자는 자신이 언니 대신 가기 위해 온갖 수를 쓰고 그 사실을 모르는 순영은 미국에 가면 더 나은 삶을 살 수 있을 거라는 생각에 동생 순자를 대신 데려가 달라 한다. 바비는 착한 순영과 함께 살기를 원했지만 아빠의 음모를 뒤늦게 알고 심한 충격을 받는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20121002_205%2F1349163028816vJBie_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
+VALUES ('바비', '20121025', '18', 98, 27.0, '핸드폰 고리를 팔며 생활비를 버는 어린 순영(김새론)에게는 지적 장애를 가진 아빠와 뭐든 완벽한 바비 인형이 되고 싶어하는 철없는 동생 순자(김아론), 안하무인인 작은 아빠 망택(이천희)이 있다. 심장병을 앓고 있는 둘째 딸을 위해 순영이 필요했던 미국인 스티브와 바비 부녀가 찾아오게 되고 이를 알면서도 돈을 위해 조카를 미국으로 보내려는 작은 아빠는 순영에게 강제적으로 미국으로의 입양을 권한다. 하지만 정작 미국에 가지 못해 안달 난 순자는 자신이 언니 대신 가기 위해 온갖 수를 쓰고 그 사실을 모르는 순영은 미국에 가면 더 나은 삶을 살 수 있을 거라는 생각에 동생 순자를 대신 데려가 달라 한다. 바비는 착한 순영과 함께 살기를 원했지만 아빠의 음모를 뒤늦게 알고 심한 충격을 받는데…', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20121002_205%2F1349163028816vJBie_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
 
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('미션 임파서블: 데드 레코닝 PART ONE', '202307--', 'UN', 0, 9.0, '', 'https://search.pstatic.net/common?type=o&size=480x720&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20230518_114%2F1684378173601f45h9_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2', 'N');
@@ -3239,7 +3278,6 @@ VALUES ('빈틈없는 사이', '202307--', '15', 112, 1.0, '벽 사이로 옆집
 INSERT INTO MOVIE (TITLE, RELEASE_DATE, GRADE_CODE, RUNNING_TIME, DIST_NUM, INFO, POSTER, IS_SHOWING) 
 VALUES ('아버지의 마음', '202307--', 'AL', 99, 42.0, '행복하지 않다고 말하는 시대에 살고 있는 우리는 행복한 삶을 추구한다. 하지만 자신의 노력으로 더 나은 미래를 만들 수 없다고 느낄 때, 행복을 박탈당하게 된다. 늪에서 헤어 나오지 못하는 이들을 향해 마음을 주는 사람들. 절망의 늪에서 펼쳐지는 기적의 이야기 70년 전, 굶주림과 추위 속에서 죽어가는 한국전쟁고아를 아버지의 마음으로 바라보며 눈물 훔치던 이가 있었는데 에버렛 스완슨(Everett Swanson, 1913-1965)이었다. 그가 한국전쟁고아를 향한 연민으로 시작하게 된 컴패션 Compassion은 한국인 고아 캐시를 비롯해 10만 명 이상의 한국 어린이에게 기적을 선물했다. 또한 그가 품었던 아버지 마음은 전 세계 아이들을 향해 흘러갔다. 1994년 아버지를 잃은 르완다 소년 메소드와 2020년, 아들을 잃은 한국 아버지 황태환의 이야기 한 사람의 힘으로 세상을 바꾸고 선한 영향력을 끼치는 사랑의 릴레이 그것은 주는 사람, 받는 사람이 함께 성장하는 희망과 감동의 이야기다. 자, 그렇다면 이제부터 우리는 무엇을 해야 할까?', '', 'N');
 
---SET DEFINE OFF
 
 INSERT INTO MOVIE_ACTOR (MOIVE_NUM, ACT_NUM, IS_MAIN) 
 VALUES (1, 1, 'Y');
@@ -5958,682 +5996,684 @@ VALUES (136, 150);
 --SET DEFINE OFF
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (1, 'MU');
+VALUES (1, '17');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (1, 'FA');
+VALUES (1, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (1, 'FT');
+VALUES (1, '02');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (1, 'RO');
+VALUES (1, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (2, 'AC');
+VALUES (2, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (2, 'CR');
+VALUES (2, '16');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (3, 'AC');
+VALUES (3, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (3, 'AD');
+VALUES (3, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (3, 'SF');
+VALUES (3, '18');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (4, 'AN');
+VALUES (4, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (4, 'AD');
+VALUES (4, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (4, 'CO');
+VALUES (4, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (5, 'AN');
+VALUES (5, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (5, 'FA');
+VALUES (5, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (5, 'CO');
+VALUES (5, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (5, 'AD');
+VALUES (5, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (5, 'MU');
+VALUES (5, '17');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (6, 'AN');
+VALUES (6, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (7, 'AN');
+VALUES (7, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (8, 'DR');
+VALUES (8, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (8, 'RO');
+VALUES (8, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (9, 'AN');
+VALUES (9, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (10, 'AN');
+VALUES (10, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (11, 'CO');
+VALUES (11, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (11, 'DR');
+VALUES (11, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (12, 'AC');
+VALUES (12, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (13, 'DA');
+VALUES (13, '10');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (14, 'CO');
+VALUES (14, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (14, 'DR');
+VALUES (14, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (15, 'AC');
+VALUES (15, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (15, 'SF');
+VALUES (15, '18');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (16, 'DR');
+VALUES (16, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (17, 'CO');
+VALUES (17, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (17, 'AC');
+VALUES (17, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (18, 'RO');
+VALUES (18, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (18, 'CO');
+VALUES (18, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (19, 'DA');
+VALUES (19, '10');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (20, 'HO');
+VALUES (20, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (20, 'MY');
+VALUES (20, '13');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (21, 'RO');
+VALUES (21, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (22, 'DR');
+VALUES (22, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (22, 'RO');
+VALUES (22, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (23, 'DR');
+VALUES (23, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (23, 'MY');
+VALUES (23, '13');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (24, 'DR');
+VALUES (24, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (25, 'DR');
+VALUES (25, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (26, 'CO');
+VALUES (26, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (27, 'AN');
+VALUES (27, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (28, 'DR');
+VALUES (28, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (29, 'AN');
+VALUES (29, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (29, 'AD');
+VALUES (29, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (29, 'FA');
+VALUES (29, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (30, 'DR');
+VALUES (30, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (31, 'DA');
+VALUES (31, '10');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (32, 'FA');
+VALUES (32, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (32, 'DR');
+VALUES (32, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (33, 'DR');
+VALUES (33, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (33, 'FA');
+VALUES (33, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (34, 'DR');
+VALUES (34, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (35, 'AN');
+VALUES (35, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (35, 'DR');
+VALUES (35, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (35, 'FT');
+VALUES (35, '02');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (36, 'AN');
+VALUES (36, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (36, 'FT');
+VALUES (36, '02');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (36, 'DR');
+VALUES (36, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (37, 'HO');
+VALUES (37, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (37, 'TH');
+VALUES (37, '07');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (38, 'CO');
+VALUES (38, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (38, 'DR');
+VALUES (38, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (39, 'DR');
+VALUES (39, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (40, 'DR');
+VALUES (40, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (41, 'DR');
+VALUES (41, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (42, 'AN');
+VALUES (42, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (42, 'DR');
+VALUES (42, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (43, 'HO');
+VALUES (43, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (43, 'MY');
+VALUES (43, '13');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (44, 'DR');
+VALUES (44, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (45, 'TH');
+VALUES (45, '07');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (46, 'CO');
+VALUES (46, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (47, 'DR');
+VALUES (47, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (48, 'AN');
+VALUES (48, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (49, 'DR');
+VALUES (49, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (50, 'DR');
+VALUES (50, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (51, 'DR');
+VALUES (51, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (51, 'RO');
+VALUES (51, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (52, 'DR');
+VALUES (52, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (53, 'RO');
+VALUES (53, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (53, 'DR');
+VALUES (53, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (54, 'DR');
+VALUES (54, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (55, 'DR');
+VALUES (55, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (56, 'SF');
+VALUES (56, '18');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (57, 'TH');
+VALUES (57, '07');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (57, 'AC');
+VALUES (57, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (58, 'DR');
+VALUES (58, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (58, 'RO');
+VALUES (58, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (59, 'DR');
+VALUES (59, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (60, 'DR');
+VALUES (60, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (61, 'DR');
+VALUES (61, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (62, 'DR');
+VALUES (62, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (62, 'RO');
+VALUES (62, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (62, 'FA');
+VALUES (62, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (63, 'DR');
+VALUES (63, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (64, 'AC');
+VALUES (64, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (64, 'CO');
+VALUES (64, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (65, 'CR');
+VALUES (65, '16');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (65, 'AC');
+VALUES (65, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (66, 'AN');
+VALUES (66, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (66, 'AD');
+VALUES (66, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (66, 'FT');
+VALUES (66, '02');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (66, 'AC');
+VALUES (66, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (67, 'AC');
+VALUES (67, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (67, 'CO');
+VALUES (67, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (67, 'DR');
+VALUES (67, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (68, 'DR');
+VALUES (68, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (69, 'RO');
+VALUES (69, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (70, 'DR');
+VALUES (70, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (71, 'DR');
+VALUES (71, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (72, 'DR');
+VALUES (72, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (73, 'CR');
+VALUES (73, '16');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (73, 'DR');
+VALUES (73, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (73, 'TH');
+VALUES (73, '07');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (73, 'HO');
+VALUES (73, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (74, 'DR');
+VALUES (74, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (75, 'CR');
+VALUES (75, '16');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (75, 'AC');
+VALUES (75, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (76, 'SF');
+VALUES (76, '18');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (77, 'AC');
+VALUES (77, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (77, 'FT');
+VALUES (77, '02');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (78, 'MY');
+VALUES (78, '13');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (79, 'AC');
+VALUES (79, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (79, 'RO');
+VALUES (79, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (79, 'CR');
+VALUES (79, '16');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (80, 'AC');
+VALUES (80, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (80, 'SF');
+VALUES (80, '18');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (81, 'HO');
+VALUES (81, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (81, 'MY');
+VALUES (81, '13');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (81, 'TH');
+VALUES (81, '07');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (82, 'AN');
+VALUES (82, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (82, 'DR');
+VALUES (82, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (82, 'RO');
+VALUES (82, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (83, 'CO');
+VALUES (83, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (83, 'DR');
+VALUES (83, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (84, 'DR');
+VALUES (84, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (85, 'CO');
+VALUES (85, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (85, 'DR');
+VALUES (85, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (86, 'DR');
+VALUES (86, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (86, 'RO');
+VALUES (86, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (86, 'CO');
+VALUES (86, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (87, 'CO');
+VALUES (87, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (88, 'WA');
+VALUES (88, '14');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (88, 'AC');
+VALUES (88, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (89, 'DR');
+VALUES (89, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (90, 'DR');
+VALUES (90, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (91, 'DR');
+VALUES (91, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (92, 'DA');
+VALUES (92, '10');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (93, 'AC');
+VALUES (93, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (93, 'HO');
+VALUES (93, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (93, 'TH');
+VALUES (93, '07');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (94, 'AN');
+VALUES (94, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (95, 'DR');
+VALUES (95, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (96, 'SF');
+VALUES (96, '18');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (96, 'AC');
+VALUES (96, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (96, 'HO');
+VALUES (96, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (96, 'FT');
+VALUES (96, '02');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (97, 'CO');
+VALUES (97, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (98, 'DA');
+VALUES (98, '10');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (99, 'DA');
+VALUES (99, '10');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (100, 'AC');
+VALUES (100, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (101, 'DR');
+VALUES (101, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (102, 'HO');
+VALUES (102, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (102, 'CO');
+VALUES (102, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (103, 'DA');
+VALUES (103, '10');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (104, 'AC');
+VALUES (104, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (104, 'TH');
+VALUES (104, '07');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (105, 'AN');
+VALUES (105, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (106, 'DA');
+VALUES (106, '10');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (107, 'CO');
+VALUES (107, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (107, 'RO');
+VALUES (107, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (108, 'AN');
+VALUES (108, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (108, 'AD');
+VALUES (108, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (108, 'CO');
+VALUES (108, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (108, 'FA');
+VALUES (108, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (109, 'DR');
+VALUES (109, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (110, 'DR');
+VALUES (110, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (111, 'DR');
+VALUES (111, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (112, 'DR');
+VALUES (112, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (112, 'FA');
+VALUES (112, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (113, 'AD');
+VALUES (113, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (113, 'HO');
+VALUES (113, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (114, 'AN');
+VALUES (114, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (115, 'AN');
+VALUES (115, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (115, 'FA');
+VALUES (115, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (115, 'FT');
+VALUES (115, '02');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (116, 'AN');
+VALUES (116, '15');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (117, 'CR');
+VALUES (117, '16');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (118, 'CO');
+VALUES (118, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (118, 'DR');
+VALUES (118, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (119, 'DR');
+VALUES (119, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (119, 'SF');
+VALUES (119, '18');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (120, 'DR');
+VALUES (120, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (121, 'AC');
+VALUES (121, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (121, 'AD');
+VALUES (121, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (121, 'FT');
+VALUES (121, '02');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (122, 'AC');
+VALUES (122, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (122, 'AD');
+VALUES (122, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (123, 'CO');
+VALUES (123, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (123, 'HO');
+VALUES (123, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (124, 'DR');
+VALUES (124, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (125, 'CO');
+VALUES (125, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (125, 'RO');
+VALUES (125, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (126, 'CR');
+VALUES (126, '16');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (126, 'AC');
+VALUES (126, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (127, 'DR');
+VALUES (127, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (129, 'SF');
+VALUES (129, '18');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (130, 'DR');
+VALUES (130, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (131, 'AC');
+VALUES (131, '19');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (131, 'AD');
+VALUES (131, '06');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (131, 'TH');
+VALUES (131, '07');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (132, 'DA');
+VALUES (132, '10');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (133, 'DR');
+VALUES (133, '01');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (133, 'FA');
+VALUES (133, '12');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (134, 'HO');
+VALUES (134, '04');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (134, 'MY');
+VALUES (134, '13');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (134, 'TH');
+VALUES (134, '07');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (135, 'RO');
+VALUES (135, '05');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (135, 'CO');
+VALUES (135, '11');
 
 INSERT INTO MOVIE_GENRE (MOVIE_NUM, GENRE_CODE) 
-VALUES (136, 'DA');
+VALUES (136, '10');
+
+COMMIT

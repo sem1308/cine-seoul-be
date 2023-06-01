@@ -26,6 +26,7 @@ public class DirectorService {
         Director director = Director
                 .builder()
                 .name(insertDirectorDTO.getName())
+                .imgUrl(insertDirectorDTO.getImgUrl())
                 .build();
         return directorRepository.save(director);
     }
