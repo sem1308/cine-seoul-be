@@ -37,7 +37,7 @@ public class Movie {
     private String poster;
 
     @Column(name = "IS_SHOWING", nullable = false)
-    private char isShowing;
+    private Is isShowing;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DIST_NUM")
@@ -59,4 +59,22 @@ public class Movie {
     @Builder.Default
     private List<MovieActor> movieActorList = new ArrayList<>();
 
+    @Builder
+
+    public Movie(Long movieNum, String title, String info, String releaseDate, int runningTime,String poster, Is isShowing, Distributor distributor, Grade grade, List<MovieGenre> movieGenreList, List<MovieDirector> movieDirectorList, List<MovieActor> movieActorList) {
+        this.movieNum = movieNum;
+        this.title = title;
+        this.info = info;
+        this.releaseDate = releaseDate;
+        this.runningTime = runningTime;
+        this.poster = poster;
+        this.isShowing = isShowing;
+        this.distributor = distributor;
+        this.grade = grade;
+        this.movieGenreList = movieGenreList;
+        this.movieDirectorList = movieDirectorList;
+        this.movieActorList = movieActorList;
+        this.distributor.getMovieList().add(this);
+        this.grade.getMovieList().add(this);
+    }
 }
