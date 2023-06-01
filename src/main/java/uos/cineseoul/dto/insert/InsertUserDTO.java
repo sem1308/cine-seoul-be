@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uos.cineseoul.annotation.IdStartsWithEnglish;
+
 import javax.validation.constraints.Size;
 
 @AllArgsConstructor()
@@ -15,6 +17,7 @@ import javax.validation.constraints.Size;
 @Builder
 public class InsertUserDTO {
     @Size(max = 100, min = 0)
+    @IdStartsWithEnglish
     private String id;
 
     // 입력 비밀번호 자리수 제한
