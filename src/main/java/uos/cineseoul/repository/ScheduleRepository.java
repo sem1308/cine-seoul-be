@@ -18,8 +18,8 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     //@Query("select s from SCHEDULE s where s.schedTime between :start and :end")
     List<Schedule> findAllBySchedTimeBetween(LocalDateTime start, LocalDateTime end);
 
-    /* 날짜, 상영관 번호로 일정 조회 */
-    @Query("select s from SCHEDULE s where schedTime = :schedTime and s.screen.screenNum = :screenNum")
+    // 날짜, 상영관 번호로 일정 조회
+    @Query("select s from SCHEDULE s where s.schedTime = :schedTime and s.screen.screenNum = :screenNum")
     Optional<Schedule> findBySchedTimeAndScreenNum(@Param("schedTime")LocalDateTime schedTime, @Param("screenNum")Long screenNum);
 
     // 상영일정으로 정렬 (오름차순)

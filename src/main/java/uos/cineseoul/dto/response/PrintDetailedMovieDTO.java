@@ -2,6 +2,7 @@ package uos.cineseoul.dto.response;
 
 import lombok.Data;
 import uos.cineseoul.entity.movie.Movie;
+import uos.cineseoul.utils.enums.Is;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class PrintDetailedMovieDTO {
 
     private int runningTime;
 
-    private char isShowing;
+    private Is isShowing;
 
     private String distName;
 

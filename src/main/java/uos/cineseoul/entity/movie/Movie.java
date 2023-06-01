@@ -1,18 +1,16 @@
 package uos.cineseoul.entity.movie;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import uos.cineseoul.utils.enums.Is;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @Builder
 public class Movie {
 
@@ -60,7 +58,6 @@ public class Movie {
     private List<MovieActor> movieActorList = new ArrayList<>();
 
     @Builder
-
     public Movie(Long movieNum, String title, String info, String releaseDate, int runningTime,String poster, Is isShowing, Distributor distributor, Grade grade, List<MovieGenre> movieGenreList, List<MovieDirector> movieDirectorList, List<MovieActor> movieActorList) {
         this.movieNum = movieNum;
         this.title = title;
