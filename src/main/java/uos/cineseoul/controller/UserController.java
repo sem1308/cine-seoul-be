@@ -68,7 +68,7 @@ public class UserController {
 
         ReturnMessage<String> msg = new ReturnMessage<>();
         List<String> roles = new ArrayList<>();
-        roles.add(user.getRole());
+        roles.add(user.getRole().toString());
         String token = jwtTokenProvider.createToken(user.getUserNum(),user.getId(),user.getName(),roles);
         msg.setMessage("로그인이 완료되었습니다.");
         msg.setStatus(StatusEnum.OK);

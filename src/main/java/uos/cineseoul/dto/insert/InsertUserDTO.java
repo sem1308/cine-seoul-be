@@ -7,7 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uos.cineseoul.annotation.IdStartsWithEnglish;
+import uos.cineseoul.utils.enums.UserRole;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Size;
 
 @AllArgsConstructor()
@@ -28,7 +31,8 @@ public class InsertUserDTO {
     private String name;
 
     @Size(max = 1, min = 1)
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     @NotNull
     @Size(max = 13, min = 13)

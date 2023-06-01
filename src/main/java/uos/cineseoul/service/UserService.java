@@ -16,6 +16,7 @@ import uos.cineseoul.entity.User;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.UserMapper;
 import uos.cineseoul.repository.UserRepository;
+import uos.cineseoul.utils.enums.UserRole;
 
 import java.util.*;
 
@@ -84,7 +85,7 @@ public class UserService {
         checkDuplicate(user.getId());
 
         user.setPw(passwordEncoder.encode(user.getPw()));
-        if(!user.getRole().equals("N")){
+        if(!user.getRole().equals(UserRole.N)){
             user.setPoint(0);
         }
 
