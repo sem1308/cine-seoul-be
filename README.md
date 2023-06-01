@@ -60,7 +60,7 @@
 ## 코드
 + GRADE_CODE
 
-  | GENRE_CODE | GENRE_NAME |
+  | GRADE_CODE | GRADE_NAME |
   |------------|------------|
   | 12	        | 12세 관람가    |
   | 15	        | 15세 관람가    |
