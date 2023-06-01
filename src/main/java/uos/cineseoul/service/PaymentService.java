@@ -34,37 +34,37 @@ public class PaymentService {
         this.accountService = accountService;
     }
 
-    public List<PrintPaymentDTO> findAll() {
+    public List<Payment> findAll() {
         List<Payment> paymentList = paymentRepo.findAll();
         if (paymentList.isEmpty()) {
             throw new ResourceNotFoundException("결제 내역이 없습니다.");
         }
-        return getPrintDTOList(paymentList);
+        return paymentList;
     }
 
-    public PrintPaymentDTO findOneByNum(Long num) {
+    public Payment findOneByNum(Long num) {
         Payment payment = paymentRepo.findById(num).orElseThrow(()->{
             throw new ResourceNotFoundException("번호가 "+ num +"인 결제 내역이 없습니다.");
         });
-        return getPrintDTO(payment);
+        return payment;
     }
-    public List<PrintPaymentDTO> findByUserNum(Long userNum) {
+    public List<Payment> findByUserNum(Long userNum) {
         List<Payment> paymentList = paymentRepo.findByUserNum(userNum);
         if (paymentList.isEmpty()) {
             throw new ResourceNotFoundException(userNum+"번 유저에 대한 결제 내역이 없습니다.");
         }
-        return getPrintDTOList(paymentList);
+        return paymentList;
     }
-    public List<PrintPaymentDTO> findByUserId(String userId) {
+    public List<Payment> findByUserId(String userId) {
         List<Payment> paymentList = paymentRepo.findByUserId(userId);
         if (paymentList.isEmpty()) {
             throw new ResourceNotFoundException("유저 "+userId+"에 대한 결제 내역이 없습니다.");
         }
-        return getPrintDTOList(paymentList);
+        return paymentList;
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public PrintPaymentDTO insert(InsertPaymentDTO paymentDTO) {
+    public Payment insert(InsertPaymentDTO paymentDTO) {
         Payment payment = PaymentMapper.INSTANCE.toEntity(paymentDTO);
         Ticket ticket = payment.getTicket();
         User user = payment.getUser();
@@ -95,16 +95,16 @@ public class PaymentService {
 
         Payment savedPayment = paymentRepo.save(payment);
 
-        return getPrintDTO(savedPayment);
+        return savedPayment;
     }
 
-    private PrintPaymentDTO getPrintDTO(Payment payment){
+    public PrintPaymentDTO getPrintDTO(Payment payment){
         PrintPaymentDTO paymentDTO = PaymentMapper.INSTANCE.toDTO(payment);
         paymentDTO.setTicketNum(payment.getTicket().getTicketNum());
         return paymentDTO;
     }
 
-    private List<PrintPaymentDTO> getPrintDTOList(List<Payment> paymentList){
+    public List<PrintPaymentDTO> getPrintDTOList(List<Payment> paymentList){
         List<PrintPaymentDTO> pPaymentList = new ArrayList<>();
         paymentList.forEach(payment -> {
             pPaymentList.add(getPrintDTO(payment));
