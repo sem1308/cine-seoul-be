@@ -27,6 +27,6 @@ public class Account {
     private String cardNum;
 
     @CreationTimestamp
-    @Column(name="CREATED_AT", nullable = false)
+    @Column(name="CREATED_DATE", nullable = false)
     private LocalDateTime createdAt;
 }
