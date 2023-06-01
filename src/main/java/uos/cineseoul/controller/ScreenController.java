@@ -41,7 +41,7 @@ public class ScreenController {
         return new ResponseEntity<>(screenService.getPrintDTO(screen), HttpStatus.OK);
     }
 
-    @PostMapping()
+    @PostMapping("/admin")
     @ApiOperation(value = "상영관 등록", protocols = "http")
     public ResponseEntity register(@RequestBody InsertScreenDTO screenDTO) {
         Screen screen = screenService.insert(screenDTO);
@@ -53,7 +53,7 @@ public class ScreenController {
         return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 
-    @PutMapping()
+    @PutMapping("/admin")
     @ApiOperation(value = "상영관 정보 변경", protocols = "http")
     public ResponseEntity update(@RequestBody UpdateScreenDTO screenDTO) {
         Screen screen = screenService.update(screenDTO);

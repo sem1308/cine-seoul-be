@@ -79,7 +79,7 @@ public class ScheduleController {
     }
 
 
-    @PostMapping()
+    @PostMapping("/admin")
     @ApiOperation(value = "상영일정 등록", protocols = "http")
     public ResponseEntity<ReturnMessage> register(@RequestBody CreateScheduleDTO scheduleDTO) {
         Schedule schedule = scheduleService.insert(scheduleDTO.toInsertDTO(screenService.findOneByNum(scheduleDTO.getScreenNum()),movieService.findMovie(scheduleDTO.getMovieNum())));
@@ -91,7 +91,7 @@ public class ScheduleController {
         return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 
-    @PutMapping()
+    @PutMapping("/admin")
     @ApiOperation(value = "상영일정 정보 변경", protocols = "http")
     public ResponseEntity<ReturnMessage> update(@RequestBody FixScheduleDTO scheduleDTO) {
         Screen screen;
