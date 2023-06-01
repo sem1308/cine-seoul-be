@@ -23,14 +23,14 @@ public class MovieActor {
     @JoinColumn(name = "ACT_NUM")
     private Actor actor;
 
-    @Column(name = "IS_MAIN", columnDefinition = "CHAR(1)", nullable = true)
-    private String isMain;
+    @Column(name = "CREDIT_ROLE", columnDefinition = "CHAR(1)", nullable = false)
+    private String creditRole;
 
     @Builder
-    public MovieActor(Movie movie, Actor actor, String isMain) {
+    public MovieActor(Movie movie, Actor actor, String creditRole) {
         this.movie = movie;
         this.actor = actor;
-        this.isMain = isMain;
+        this.creditRole = creditRole;
         movie.getMovieActorList().add(this);
         actor.getMovieActorList().add(this);
     }
