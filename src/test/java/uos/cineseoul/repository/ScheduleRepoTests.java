@@ -1,4 +1,4 @@
-package uos.cineseoul;
+package uos.cineseoul.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -77,15 +77,13 @@ class ScheduleRepoTests {
 
 		Long screenNum = 1L;
 
+		Screen screen = screenRepo.findById(screenNum).get();
 		InsertScheduleDTO scheduleDTO = InsertScheduleDTO.builder().order(order)
-										.screenNum(screenNum).schedTime(schedTime).build();
+										.screen(screen).schedTime(schedTime).build();
 
 		Schedule schedule = ScheduleMapper.INSTANCE.toEntity(scheduleDTO);
 
-		Screen screen = screenRepo.findById(screenNum).get();
 		Integer emptySeat = screen.getTotalSeat();
-
-		schedule.setScreen(screen);
 		schedule.setEmptySeat(emptySeat);
 
 		Schedule savedSched = scheduleRepo.save(schedule);
@@ -120,16 +118,16 @@ class ScheduleRepoTests {
 		Screen s = ScreenMapper.INSTANCE.toEntity(screenDTO);
 		Screen saved = screenRepo.save(s);
 
-		UpdateScheduleDTO scheduleDTO = UpdateScheduleDTO.builder().schedNum(2L).screenNum(saved.getScreenNum()).build();
+		UpdateScheduleDTO scheduleDTO = UpdateScheduleDTO.builder().screen(saved).build();
 
-		Schedule schedule = scheduleRepo.findById(scheduleDTO.getSchedNum()).get();
+		Schedule schedule = scheduleRepo.findById(2L).get();
 
 		ScheduleMapper.INSTANCE.updateFromDto(scheduleDTO, schedule);
 
 		Screen screen = null;
 		Integer emptySeat = 0;
-		if(scheduleDTO.getScreenNum()!=null){
-			screen = screenRepo.findById(scheduleDTO.getScreenNum()).orElse(null);
+		if(scheduleDTO.getScreen()!=null){
+			screen = screenRepo.findById(scheduleDTO.getScreen().getScreenNum()).orElse(null);
 			emptySeat = screen.getTotalSeat();
 			schedule.setScreen(screen);
 			schedule.setEmptySeat(emptySeat);
@@ -141,7 +139,7 @@ class ScheduleRepoTests {
 		//System.out.println("변경된 상영일정 : " + savedSched.getSchedTime());
 
 		//assert savedSched.getOrder().equals(order);
-		if(scheduleDTO.getScreenNum()!=null){
+		if(scheduleDTO.getScreen().getScreenNum()!=null){
 			assert savedSched.getEmptySeat().equals(emptySeat);
 			assert savedSched.getScreen().equals(screen);
 

@@ -1,4 +1,4 @@
-package uos.cineseoul;
+package uos.cineseoul.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import uos.cineseoul.dto.insert.InsertPaymentDTO;
 import uos.cineseoul.dto.response.PrintPaymentDTO;
-import uos.cineseoul.entity.PaymentMethod;
+import uos.cineseoul.entity.Ticket;
+import uos.cineseoul.entity.User;
 import uos.cineseoul.exception.ResourceNotFoundException;
-import uos.cineseoul.repository.PaymentMethodRepository;
-import uos.cineseoul.service.PaymentService;
-import uos.cineseoul.utils.enums.PaymentMethodType;
+import uos.cineseoul.repository.TicketRepository;
+import uos.cineseoul.utils.enums.PaymentMethod;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -21,7 +21,9 @@ class PaymentServiceTests {
 	@Autowired
 	PaymentService paymentService;
 	@Autowired
-	PaymentMethodRepository paymentMethodRepo;
+	TicketService ticketService;
+	@Autowired
+	UserService userService;
 	@Test
 	@Transactional
 	void paymentTestByMapper() {
@@ -29,10 +31,13 @@ class PaymentServiceTests {
 
 		Long userNum = 1L;
 		Long ticketNum = 1L;
-		PaymentMethodType paymentMethodCode = PaymentMethodType.C000;
+		PaymentMethod paymentMethod = PaymentMethod.C00;
 
-		InsertPaymentDTO paymentDTO = InsertPaymentDTO.builder().ticketNum(ticketNum)
-				.price(price).userNum(userNum).paymentMethodCode(paymentMethodCode).build();
+		Ticket ticket = ticketService.findOneByNum(ticketNum);
+		User user = userService.findOneByNum(ticketNum);
+
+		InsertPaymentDTO paymentDTO = InsertPaymentDTO.builder().ticket(ticket)
+				.price(price).user(user).paymentMethod(paymentMethod).build();
 
 		PrintPaymentDTO savedPayment = paymentService.insert(paymentDTO);
 	}
@@ -43,15 +48,6 @@ class PaymentServiceTests {
 		PrintPaymentDTO payment = paymentService.findOneByNum(paymentNum);
 
 		assert payment.getPaymentNum().equals(paymentNum);
-	}
-
-	@Test
-	void findMethodTest() {
-		PaymentMethodType paymentMethodCode = PaymentMethodType.C000;
-
-		PaymentMethod pm = paymentMethodRepo.findById(paymentMethodCode).orElseThrow(()->{
-			throw new ResourceNotFoundException(paymentMethodCode +"인 결제 방법이 없습니다.");
-		});
 	}
 
 	@Test

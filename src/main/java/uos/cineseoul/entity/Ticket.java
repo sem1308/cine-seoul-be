@@ -29,12 +29,12 @@ public class Ticket{
     @Column(name="SALE_PRICE", nullable = false, unique = false)
     private Integer salePrice;
 
-    @Column(name="ISSUED", nullable = false, unique = false, columnDefinition = "char(1)")
+    @Column(name="TICKET_STATE", nullable = false, unique = false, columnDefinition = "char(1)")
     @Enumerated(EnumType.STRING)
-    private TicketState issued;
+    private TicketState ticketState;
 
     @CreationTimestamp
-    @Column(name="CREATED_AT", nullable = false)
+    @Column(name="REVERVATION_DATE", nullable = false)
     private LocalDateTime createdAt;
 
     /* Foreign Key */

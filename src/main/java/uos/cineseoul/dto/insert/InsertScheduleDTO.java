@@ -3,6 +3,7 @@ package uos.cineseoul.dto.insert;
 import lombok.*;
 import uos.cineseoul.entity.ScheduleSeat;
 import uos.cineseoul.entity.Screen;
+import uos.cineseoul.entity.movie.Movie;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -19,5 +20,7 @@ public class InsertScheduleDTO {
 
     private Integer order;
 
-    private Long screenNum;
+    private Screen screen;
+
+    private Movie movie;
 }

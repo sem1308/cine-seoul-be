@@ -12,7 +12,6 @@ import uos.cineseoul.entity.*;
 import uos.cineseoul.exception.DataInconsistencyException;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.PaymentMapper;
-import uos.cineseoul.repository.PaymentMethodRepository;
 import uos.cineseoul.repository.PaymentRepository;
 import uos.cineseoul.repository.TicketRepository;
 import uos.cineseoul.repository.UserRepository;
@@ -25,17 +24,13 @@ import java.util.List;
 @Service
 public class PaymentService {
     private final PaymentRepository paymentRepo;
-    private final PaymentMethodRepository paymentMethodRepo;
     private final TicketRepository ticketRepo;
-    private final UserRepository userRepo;
     private final AccountService accountService;
 
     @Autowired
-    public PaymentService(PaymentRepository paymentRepo, TicketRepository ticketRepo,UserRepository userRepo, PaymentMethodRepository paymentMethodRepo, AccountService accountService) {
+    public PaymentService(PaymentRepository paymentRepo, TicketRepository ticketRepo,AccountService accountService) {
         this.paymentRepo = paymentRepo;
         this.ticketRepo = ticketRepo;
-        this.userRepo = userRepo;
-        this.paymentMethodRepo = paymentMethodRepo;
         this.accountService = accountService;
     }
 
@@ -71,49 +66,32 @@ public class PaymentService {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public PrintPaymentDTO insert(InsertPaymentDTO paymentDTO) {
         Payment payment = PaymentMapper.INSTANCE.toEntity(paymentDTO);
+        Ticket ticket = payment.getTicket();
+        User user = payment.getUser();
 
-        User user = userRepo.findById(paymentDTO.getUserNum()).orElseThrow(()->{
-            throw new ResourceNotFoundException("번호가 "+ paymentDTO.getUserNum() +"인 사용자가 없습니다.");
-        });
-
-        Ticket ticket = ticketRepo.findById(paymentDTO.getTicketNum()).orElseThrow(()->{
-            throw new ResourceNotFoundException("번호가 "+ paymentDTO.getTicketNum() +"인 티켓이 없습니다.");
-        });
-        
         // 결제 가격과 티켓 판매 가격 일치여부 확인
         if(!ticket.getSalePrice().equals(payment.getPrice())){
             throw new DataInconsistencyException("결제 가격과 티켓 판매 가격이 일치하지 않습니다.");
         }
 
         // 이미 발행된 티켓인지 확인
-        if(ticket.getIssued().equals(TicketState.Y)){
+        if(ticket.getTicketState().equals(TicketState.Y)){
             throw new ResourceNotFoundException("이미 발행된 티켓입니다.");
         }else{
-            ticket.setIssued(TicketState.Y);
+            ticket.setTicketState(TicketState.Y);
             ticketRepo.save(ticket);
         }
 
-        PaymentMethod pm = paymentMethodRepo.findById(paymentDTO.getPaymentMethodCode()).orElseThrow(()->{
-            throw new ResourceNotFoundException(paymentDTO.getPaymentMethodCode() +"인 결제 방법이 없습니다.");
-        });
-
-        switch (pm.getPaymentMethodCode()){
-            case A000:
+        switch (payment.getPaymentMethod().toString().indexOf(0)){
+            case 'A':
                 accountService.payByAccountNum(paymentDTO.getPrice(),paymentDTO.getAccountNum());
                 break;
-            case C000:
+            case 'C':
                 accountService.payByCardNum(paymentDTO.getPrice(),user.getName(),paymentDTO.getCardNum());
+                accountService.checkVaildity(paymentDTO.getCardNum(),user.getName());
+                payment.setApprovalNum(accountService.getApprovalNum(paymentDTO.getCardNum()));
                 break;
         }
-        if(pm.getName().equals("card")){
-            accountService.checkVaildity(paymentDTO.getCardNum(),user.getName());
-            payment.setApprovalNum(accountService.getApprovalNum(paymentDTO.getCardNum()));
-        }
-
-        payment.setUser(user);
-        payment.setTicket(ticket);
-        payment.setPaymentMethod(pm);
-        payment.setState(PayState.Y);
 
         Payment savedPayment = paymentRepo.save(payment);
 
