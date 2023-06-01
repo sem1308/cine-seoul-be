@@ -2,7 +2,6 @@ package uos.cineseoul.dto.create;
 
 import lombok.*;
 import uos.cineseoul.dto.insert.InsertScheduleDTO;
-import uos.cineseoul.dto.insert.InsertSeatDTO;
 import uos.cineseoul.entity.Screen;
 import uos.cineseoul.entity.movie.Movie;
 

@@ -2,8 +2,6 @@ package uos.cineseoul.dto.create;
 
 import lombok.*;
 import uos.cineseoul.dto.insert.InsertPaymentDTO;
-import uos.cineseoul.dto.insert.InsertScheduleDTO;
-import uos.cineseoul.entity.Screen;
 import uos.cineseoul.entity.Ticket;
 import uos.cineseoul.entity.User;
 import uos.cineseoul.utils.enums.PayState;

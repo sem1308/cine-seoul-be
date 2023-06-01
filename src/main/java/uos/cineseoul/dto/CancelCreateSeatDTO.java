@@ -3,9 +3,7 @@ package uos.cineseoul.dto;
 import lombok.*;
 import uos.cineseoul.dto.insert.InsertTicketDTO;
 import uos.cineseoul.dto.update.UpdateTicketDTO;
-import uos.cineseoul.entity.Schedule;
 import uos.cineseoul.entity.ScheduleSeat;
-import uos.cineseoul.entity.Seat;
 import uos.cineseoul.entity.User;
 import uos.cineseoul.utils.enums.TicketState;
 

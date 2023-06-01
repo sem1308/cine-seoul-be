@@ -18,7 +18,8 @@ import uos.cineseoul.mapper.UserMapper;
 import uos.cineseoul.repository.UserRepository;
 import uos.cineseoul.utils.enums.UserRole;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {

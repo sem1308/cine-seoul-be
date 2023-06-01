@@ -5,7 +5,6 @@ import uos.cineseoul.utils.enums.TicketState;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.validation.constraints.Size;
 
 @AllArgsConstructor()
 @NoArgsConstructor(force = true)

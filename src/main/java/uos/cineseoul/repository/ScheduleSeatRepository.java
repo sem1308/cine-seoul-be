@@ -7,7 +7,6 @@ import uos.cineseoul.entity.Schedule;
 import uos.cineseoul.entity.ScheduleSeat;
 import uos.cineseoul.entity.Seat;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 

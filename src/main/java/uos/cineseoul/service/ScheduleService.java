@@ -9,14 +9,15 @@ import org.springframework.transaction.annotation.Transactional;
 import uos.cineseoul.dto.insert.InsertScheduleDTO;
 import uos.cineseoul.dto.response.PrintScheduleDTO;
 import uos.cineseoul.dto.update.UpdateScheduleDTO;
-import uos.cineseoul.entity.*;
+import uos.cineseoul.entity.Schedule;
+import uos.cineseoul.entity.ScheduleSeat;
+import uos.cineseoul.entity.Screen;
+import uos.cineseoul.entity.Seat;
 import uos.cineseoul.exception.ForbiddenException;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.ScheduleMapper;
 import uos.cineseoul.repository.ScheduleRepository;
 import uos.cineseoul.repository.ScheduleSeatRepository;
-import uos.cineseoul.repository.ScreenRepository;
-import uos.cineseoul.repository.SeatRepository;
 import uos.cineseoul.utils.enums.Is;
 
 import java.time.LocalDateTime;

@@ -1,19 +1,12 @@
 package uos.cineseoul.entity;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.*;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import uos.cineseoul.utils.enums.UserRole;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity(name = "USERS")
 @AllArgsConstructor()

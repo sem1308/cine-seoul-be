@@ -8,14 +8,14 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import uos.cineseoul.dto.insert.InsertPaymentDTO;
 import uos.cineseoul.dto.response.PrintPaymentDTO;
-import uos.cineseoul.entity.*;
+import uos.cineseoul.entity.Payment;
+import uos.cineseoul.entity.Ticket;
+import uos.cineseoul.entity.User;
 import uos.cineseoul.exception.DataInconsistencyException;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.PaymentMapper;
 import uos.cineseoul.repository.PaymentRepository;
 import uos.cineseoul.repository.TicketRepository;
-import uos.cineseoul.repository.UserRepository;
-import uos.cineseoul.utils.enums.PayState;
 import uos.cineseoul.utils.enums.TicketState;
 
 import java.util.ArrayList;

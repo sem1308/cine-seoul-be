@@ -1,11 +1,7 @@
 package uos.cineseoul.dto.insert;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import uos.cineseoul.annotation.IdStartsWithEnglish;
 import uos.cineseoul.utils.enums.UserRole;
 

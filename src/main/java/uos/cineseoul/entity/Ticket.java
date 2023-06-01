@@ -1,15 +1,11 @@
 package uos.cineseoul.entity;
 
-import java.time.LocalDateTime;
-import javax.persistence.*;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import uos.cineseoul.utils.enums.TicketState;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity(name = "TICKET")
 @AllArgsConstructor()

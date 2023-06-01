@@ -3,7 +3,8 @@ package uos.cineseoul.dto.response;
 import lombok.*;
 import uos.cineseoul.utils.enums.TicketState;
 
-import javax.persistence.*;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor()

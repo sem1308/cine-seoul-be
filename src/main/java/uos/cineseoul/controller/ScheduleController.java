@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import uos.cineseoul.dto.create.CreateScheduleDTO;
 import uos.cineseoul.dto.fix.FixScheduleDTO;
 import uos.cineseoul.dto.response.PrintScheduleDTO;
-import uos.cineseoul.dto.update.UpdateScheduleDTO;
 import uos.cineseoul.entity.Schedule;
 import uos.cineseoul.entity.Screen;
 import uos.cineseoul.service.ScheduleService;
