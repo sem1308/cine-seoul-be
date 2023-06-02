@@ -104,11 +104,6 @@ public class TicketService {
         if(ticket.getTicketState().equals(TicketState.C)){
             throw new ForbiddenException("이미 취소된 티켓입니다.");
         }
-        // 비회원 처리
-        UserRole userRole = ticket.getUser().getRole();
-        if(userRole.equals(UserRole.N)){
-            throw new ForbiddenException("비회원 티켓은 정보를 변경하지 못합니다.");
-        }
 
         // 판매가격 처리
         if(ticketDTO.getSalePrice()!=null && ticketDTO.getSalePrice() > ticket.getStdPrice()){
@@ -119,7 +114,7 @@ public class TicketService {
 
         // 티켓 취소 처리
         if(ticket.getTicketState().equals(TicketState.C)){
-            cancelProcess(ticket,userRole);
+            cancelProcess(ticket,ticket.getUser().getRole());
         }
 
         Ticket updatedTicket = ticketRepo.save(ticket);
@@ -157,10 +152,6 @@ public class TicketService {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public Ticket changeSeat(Long ticketNum, InsertTicketDTO insertTicketDTO) {
         Ticket ticket = findOneByNum(ticketNum);
-        // 비회원 처리
-        if(ticket.getUser().getRole().equals(UserRole.N)){
-            throw new ForbiddenException("비회원은 자리 변경이 불가합니다.");
-        }
         // 이미 취소된 티켓인지 확인
         if(ticket.getTicketState().equals(TicketState.C)){
             throw new ForbiddenException("이미 취소된 티켓입니다.");

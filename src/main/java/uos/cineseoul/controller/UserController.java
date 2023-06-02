@@ -62,7 +62,7 @@ public class UserController {
 
     @PostMapping("/login")
     @ApiOperation(value = "사용자 로그인", protocols = "http")
-    public ResponseEntity login(@RequestBody @Valid LoginDTO loginInfo, @RequestParam(value="userNum", required = false) boolean isMember ) {
+    public ResponseEntity login(@RequestBody @Valid LoginDTO loginInfo, @RequestParam(value="isMember", required = false) boolean isMember ) {
         User user;
         if(isMember)
             user = userService.login(loginInfo);

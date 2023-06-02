@@ -18,6 +18,7 @@ import uos.cineseoul.service.TicketService;
 import uos.cineseoul.service.UserService;
 import uos.cineseoul.utils.ReturnMessage;
 import uos.cineseoul.utils.enums.StatusEnum;
+import uos.cineseoul.utils.enums.UserRole;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -93,14 +94,19 @@ public class TicketController {
         return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 
-    @PostMapping("/cancel/register")
+    @PutMapping("/cancel/register")
     @Transactional
     @ApiOperation(value = "티켓 취소 및 재등록", protocols = "http")
     public ResponseEntity cancelAndRegister(@RequestBody CancelCreateSeatDTO ticketDTO) {
         InsertTicketDTO iTicketDTO = ticketDTO.toInsertDTO(userService.findOneByNum(ticketDTO.getUserNum()),scheduleService.findScheduleSeat(ticketDTO.getSchedNum(),ticketDTO.getSeatNum()));
-        ticketService.update(ticketDTO.getTicketNum(), ticketDTO.toUpdateDTO());
-
         Ticket ticket = ticketService.insert(iTicketDTO);
+
+        if(ticket.getUser().getRole().equals(UserRole.N)){
+            ticketService.delete(ticketDTO.getTicketNum());
+        }else{
+            ticketService.update(ticketDTO.getTicketNum(), ticketDTO.toUpdateDTO());
+        }
+
         ReturnMessage<PrintTicketDTO> msg = new ReturnMessage<>();
         msg.setMessage("티켓 취소 및 재등록이 완료되었습니다.");
         msg.setData(ticketService.getPrintDTO(ticket));
