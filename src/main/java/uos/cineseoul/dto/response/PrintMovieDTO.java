@@ -1,6 +1,9 @@
 package uos.cineseoul.dto.response;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import uos.cineseoul.entity.movie.Movie;
 import uos.cineseoul.utils.enums.Is;
 
@@ -8,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Builder
+@AllArgsConstructor()
 public class PrintMovieDTO {
     private Long movieNum;
 

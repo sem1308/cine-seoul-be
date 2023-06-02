@@ -21,6 +21,7 @@ import uos.cineseoul.utils.enums.StatusEnum;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController()
@@ -38,45 +39,35 @@ public class ScheduleController {
     }
 
     @GetMapping()
-    @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "전체 상영일정 목록 조회", protocols = "http")
-    public ResponseEntity<List<PrintScheduleDTO>> lookUpScheduleList() {
-        List<Schedule> scheduleList = scheduleService.findAll();
+    @ApiOperation(value = "특정 조건의 상영일정 목록 조회 (filter: movieNum , date)", protocols = "http")
+    public ResponseEntity<List<PrintScheduleDTO>> lookUpScheduleListByMovie(@RequestParam(value="movieNum", required = false) Long movieNum,
+                                                                            @ApiParam(value = "yyyy-MM-dd", required = false) @RequestParam(value="date", required = false) String date) {
+        List<Schedule> scheduleList;
+        if (movieNum != null && date != null) {
+            // 특정 영화와 특정 날짜의 상영일정 조회
+            LocalDateTime st = LocalDateTime.of(LocalDate.parse(date), LocalTime.of(0,0,0));
+            scheduleList = scheduleService.findByMovieAndDate(movieNum, st);
+        } else if (movieNum != null) {
+            // 특정 영화의 상영일정 조회
+            scheduleList = scheduleService.findByMovie(movieNum);
+        } else if (date != null) {
+            // 특정 날짜의 상영일정 조회
+            LocalDateTime st = LocalDateTime.of(LocalDate.parse(date), LocalTime.of(0,0,0));
+            scheduleList = scheduleService.findByDate(st);
+        } else{
+            // 전체 상영일정 목록 조회
+            scheduleList = scheduleService.findAll();
+        }
         return new ResponseEntity<>(scheduleService.getPrintDTOList(scheduleList), HttpStatus.OK);
     }
 
     @GetMapping("/{num}")
-    @ApiOperation(value = "상영일정 상세 조회", protocols = "http")
+    @ApiOperation(value = "상영일정 번호로 조회", protocols = "http")
     public ResponseEntity<PrintScheduleDTO> lookUpScheduleByNum(@PathVariable("num") Long num) {
         Schedule schedule = scheduleService.findOneByNum(num);
 
         return new ResponseEntity<>(scheduleService.getPrintDTO(schedule), HttpStatus.OK);
     }
-
-    @GetMapping("/date/{schedTime}")
-    @ApiOperation(value = "특정 날짜의 상영일정 조회", protocols = "http")
-    public ResponseEntity<List<PrintScheduleDTO>> lookUpScheduleListByDate(@ApiParam(value = "yyyy-MM-dd", required = true) @PathVariable("schedTime") String schedTime) {
-        LocalDateTime st = LocalDateTime.of(LocalDate.parse(schedTime), LocalTime.of(0,0,0));
-        List<Schedule> scheduleList = scheduleService.findByDate(st);
-        return new ResponseEntity<>(scheduleService.getPrintDTOList(scheduleList), HttpStatus.OK);
-    }
-
-    @GetMapping("/movie/{movieNum}")
-    @ApiOperation(value = "특정 영화의 상영일정 조회", protocols = "http")
-    public ResponseEntity<List<PrintScheduleDTO>> lookUpScheduleListByMovie(@PathVariable("movieNum") Long movieNum) {
-        List<Schedule> scheduleList = scheduleService.findByMovie(movieNum);
-        return new ResponseEntity<>(scheduleService.getPrintDTOList(scheduleList), HttpStatus.OK);
-    }
-
-    @GetMapping("/movie")
-    @ApiOperation(value = "특정 영화와 특정 날짜의 상영일정 조회", protocols = "http")
-    public ResponseEntity<List<PrintScheduleDTO>> lookUpScheduleListByMovieAndDate(@RequestParam(value="movieNum", required = true) Long movieNum,
-                                                                                  @ApiParam(value = "yyyy-MM-dd", required = true) @RequestParam(value="schedTime", required = true) String schedTime) {
-        LocalDateTime st = LocalDateTime.of(LocalDate.parse(schedTime), LocalTime.of(0,0,0));
-        List<Schedule> scheduleList = scheduleService.findByMovieAndDate(movieNum, st);
-        return new ResponseEntity<>(scheduleService.getPrintDTOList(scheduleList), HttpStatus.OK);
-    }
-
 
     @PostMapping("/admin")
     @ApiOperation(value = "상영일정 등록", protocols = "http")

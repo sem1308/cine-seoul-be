@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import uos.cineseoul.dto.create.CreateSeatDTO;
 import uos.cineseoul.dto.fix.FixSeatDTO;
 import uos.cineseoul.dto.response.PrintSeatDTO;
+import uos.cineseoul.entity.Payment;
 import uos.cineseoul.entity.Screen;
 import uos.cineseoul.entity.Seat;
 import uos.cineseoul.service.ScreenService;
@@ -30,27 +31,24 @@ public class SeatController {
         this.screenService = screenService;
     }
 
-    @GetMapping()
-    @ApiOperation(value = "전체 좌석 목록 조회", protocols = "http")
-    public ResponseEntity<List<PrintSeatDTO>> lookUpSeatList() {
-        List<Seat> seatList = seatService.findAll();
+    @GetMapping("/admin")
+    @ApiOperation(value = "전체 좌석 목록 조회 (filter : screenNum)", protocols = "http")
+    public ResponseEntity<List<PrintSeatDTO>> lookUpSeatList(@RequestParam(value="screenNum", required = false) Long screenNum) {
+        List<Seat> seatList;
+        if(screenNum!=null){
+            seatList = seatService.findAllByScreenNum(screenNum);
+        }else{
+            seatList = seatService.findAll();
+        }
         return new ResponseEntity<>(seatService.getPrintDTOList(seatList), HttpStatus.OK);
     }
 
-    @GetMapping("/{num}")
-    @ApiOperation(value = "좌석 상세 조회", protocols = "http")
+    @GetMapping("/admin/{num}")
+    @ApiOperation(value = "좌석 번호로 조회", protocols = "http")
     public ResponseEntity<PrintSeatDTO> lookUpSeatByNum(@PathVariable("num") Long num) {
         Seat seat = seatService.findOneByNum(num);
 
         return new ResponseEntity<>(seatService.getPrintDTO(seat), HttpStatus.OK);
-    }
-
-    @GetMapping("/screen/{num}")
-    @ApiOperation(value = "상영관의 좌석 목록 조회", protocols = "http")
-    public ResponseEntity<List<PrintSeatDTO>> lookUpSeatByUserNum(@PathVariable("num") Long num) {
-        List<Seat> seatList = seatService.findAllByScreenNum(num);
-
-        return new ResponseEntity<>(seatService.getPrintDTOList(seatList), HttpStatus.OK);
     }
 
     @PostMapping("/admin")

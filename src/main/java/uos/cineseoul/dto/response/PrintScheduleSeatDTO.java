@@ -1,6 +1,10 @@
 package uos.cineseoul.dto.response;
 
 import lombok.*;
+import uos.cineseoul.utils.enums.Is;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @AllArgsConstructor()
 @NoArgsConstructor(force = true)
@@ -12,5 +16,6 @@ public class PrintScheduleSeatDTO {
 
     private PrintSeatDTO seat;
 
-    private String occupied;
+    @Enumerated(EnumType.STRING)
+    private Is isOccupied;
 }

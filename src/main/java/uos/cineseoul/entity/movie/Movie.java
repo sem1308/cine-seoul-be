@@ -34,7 +34,8 @@ public class Movie {
     @Column(name = "POSTER", nullable = true)
     private String poster;
 
-    @Column(name = "IS_SHOWING", nullable = false)
+    @Column(name = "IS_SHOWING", nullable = false, columnDefinition = "CHAR(1)")
+    @Enumerated(EnumType.STRING)
     private Is isShowing;
 
     @ManyToOne(fetch = FetchType.LAZY)

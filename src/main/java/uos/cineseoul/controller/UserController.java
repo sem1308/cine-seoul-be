@@ -33,7 +33,7 @@ public class UserController {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    @GetMapping()
+    @GetMapping("/admin")
     @ApiOperation(value = "전체 사용자 목록 조회", protocols = "http")
     public List<PrintUserDTO> lookUpUserList() {
         List<User> users = userService.findAll();
@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @GetMapping("/{num}")
-    @ApiOperation(value = "사용자 상세 조회", protocols = "http")
+    @ApiOperation(value = "사용자 번호로 조회", protocols = "http")
     public ResponseEntity<PrintUserDTO> lookUpUser(@PathVariable("num") Long num) {
         User user = userService.findOneByNum(num);
 
