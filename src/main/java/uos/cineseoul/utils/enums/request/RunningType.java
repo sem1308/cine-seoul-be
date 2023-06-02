@@ -1,4 +1,4 @@
-package uos.cineseoul.utils.enums;
+package uos.cineseoul.utils.enums.request;
 
 public enum RunningType {
     showing("상영중"),
