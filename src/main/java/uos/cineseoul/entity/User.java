@@ -35,7 +35,7 @@ public class User{
     @Column(name="NAME", nullable = true, unique = false, length = 100)
     private String name;
 
-    @Column(name="RESIDENT_NUM", nullable = false, length = 13)
+    @Column(name="RESIDENT_NUM", nullable = true, length = 13)
     private String residentNum;
 
     @Column(name = "PHONE_NUM", nullable = false, length = 11)

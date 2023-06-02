@@ -22,7 +22,7 @@ public class Ticket{
     @Column(name="STD_PRICE", nullable = false, unique = false)
     private Integer stdPrice;
 
-    @Column(name="SALE_PRICE", nullable = false, unique = false)
+    @Column(name="SALE_PRICE", nullable = true, unique = false)
     private Integer salePrice;
 
     @Column(name="TICKET_STATE", nullable = false, unique = false, columnDefinition = "char(1)")
@@ -38,7 +38,7 @@ public class Ticket{
     @JoinColumn(name = "USER_NUM", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumns({
             @JoinColumn(name = "SCHED_NUM", referencedColumnName = "SCHED_NUM"),
             @JoinColumn(name = "SEAT_NUM", referencedColumnName = "SEAT_NUM")
