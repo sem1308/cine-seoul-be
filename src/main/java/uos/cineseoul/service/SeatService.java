@@ -2,6 +2,8 @@ package uos.cineseoul.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -35,6 +37,14 @@ public class SeatService {
 
     public List<Seat> findAll() {
         List<Seat> seatList = seatRepo.findAll();
+        if (seatList.isEmpty()) {
+            throw new ResourceNotFoundException("좌석이 없습니다.");
+        }
+        return seatList;
+    }
+
+    public Page<Seat> findAll(Pageable pageable) {
+        Page<Seat> seatList = seatRepo.findAll(pageable);
         if (seatList.isEmpty()) {
             throw new ResourceNotFoundException("좌석이 없습니다.");
         }

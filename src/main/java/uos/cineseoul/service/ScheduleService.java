@@ -2,6 +2,8 @@ package uos.cineseoul.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -44,6 +46,11 @@ public class ScheduleService {
         return scheduleList;
     }
 
+    public Page<Schedule> findAll(Pageable pageable) {
+        Page<Schedule> scheduleList = scheduleRepo.findAll(pageable);
+        return scheduleList;
+    }
+
     // 특정 날짜에 해당하는 상영일정 불러오기
     public List<Schedule> findByDate(LocalDateTime time) {
         // 특정 날짜의 상영일정 검색
@@ -51,6 +58,14 @@ public class ScheduleService {
         LocalDateTime endDatetime = LocalDateTime.of(time.toLocalDate(), time.toLocalTime().of(23,59,59));
 
         List<Schedule> scheduleList = scheduleRepo.findAllBySchedTimeBetween(startDatetime, endDatetime);
+        return scheduleList;
+    }
+    public Page<Schedule> findByDate(LocalDateTime time, Pageable pageable) {
+        // 특정 날짜의 상영일정 검색
+        LocalDateTime startDatetime = LocalDateTime.of(time.toLocalDate(), time.toLocalTime().of(0,0,0));
+        LocalDateTime endDatetime = LocalDateTime.of(time.toLocalDate(), time.toLocalTime().of(23,59,59));
+
+        Page<Schedule> scheduleList = scheduleRepo.findAllBySchedTimeBetween(startDatetime, endDatetime, pageable);
         return scheduleList;
     }
 
@@ -63,10 +78,22 @@ public class ScheduleService {
         List<Schedule> scheduleList = scheduleRepo.findByMovieNumAndDateBetween(startDatetime, endDatetime, movieNum);
         return scheduleList;
     }
+    public Page<Schedule> findByMovieAndDate(Long movieNum, LocalDateTime time, Pageable pageable) {
+        // 특정 날짜의 상영일정 검색
+        LocalDateTime startDatetime = LocalDateTime.of(time.toLocalDate(), time.toLocalTime().of(0,0,0));
+        LocalDateTime endDatetime = LocalDateTime.of(time.toLocalDate(), time.toLocalTime().of(23,59,59));
+
+        Page<Schedule> scheduleList = scheduleRepo.findByMovieNumAndDateBetween(startDatetime, endDatetime, movieNum, pageable);
+        return scheduleList;
+    }
 
     //특정 영화의 상영일정 불러오기
     public List<Schedule> findByMovie(Long movieNum) {
         List<Schedule> scheduleList = scheduleRepo.findByMovieNum(movieNum);
+        return scheduleList;
+    }
+    public Page<Schedule> findByMovie(Long movieNum, Pageable pageable) {
+        Page<Schedule> scheduleList = scheduleRepo.findByMovieNum(movieNum, pageable);
         return scheduleList;
     }
 
@@ -159,18 +186,22 @@ public class ScheduleService {
         });
     }
 
-    public PrintScheduleDTO getPrintDTO(Schedule schedule){
+    public PrintScheduleDTO getPrintDTO(Schedule schedule, boolean isShowSeats){
         PrintScheduleDTO printScheduleDTO = ScheduleMapper.INSTANCE.toDTO(schedule);
-        printScheduleDTO.getScheduleSeats().forEach(ss->{
-            ss.getSeat().setSeatPrice(ss.getSeat().getSeatGrade().getPrice());
-        });
+        if(isShowSeats){
+            printScheduleDTO.getScheduleSeats().forEach(ss->{
+                ss.getSeat().setSeatPrice(ss.getSeat().getSeatGrade().getPrice());
+            });
+        }else{
+            printScheduleDTO.setScheduleSeats(null);
+        }
         return printScheduleDTO;
     }
 
-    public List<PrintScheduleDTO> getPrintDTOList(List<Schedule> scheduleList){
+    public List<PrintScheduleDTO> getPrintDTOList(List<Schedule> scheduleList, boolean isShowSeats){
         List<PrintScheduleDTO> pScheduleList = new ArrayList<>();
         scheduleList.forEach(schedule -> {
-            pScheduleList.add(getPrintDTO(schedule));
+            pScheduleList.add(getPrintDTO(schedule, isShowSeats));
         });
         return pScheduleList;
     }

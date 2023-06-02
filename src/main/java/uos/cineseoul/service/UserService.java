@@ -3,6 +3,8 @@ package uos.cineseoul.service;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -35,9 +37,11 @@ public class UserService {
     public List<User> findAll() {
         List<User> userList = userRepo.findAll();
 
-        if (userList.isEmpty()) {
-            throw new ResourceNotFoundException("사용자가 없습니다.");
-        }
+        return userList;
+    }
+
+    public Page<User> findAll(Pageable pageable) {
+        Page<User> userList = userRepo.findAll(pageable);
 
         return userList;
     }
