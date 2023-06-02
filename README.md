@@ -1,6 +1,5 @@
 # CinemaSeoul Backend
 
----
 ## 폴더 구조
 ```
 ├─sqls
@@ -9,6 +8,7 @@
     │  ├─java
     │  │  └─uos
     │  │      └─cineseoul
+    │  │          ├─annotation
     │  │          ├─config
     │  │          ├─controller
     │  │          │  └─movie
@@ -16,6 +16,7 @@
     │  │          │  ├─create
     │  │          │  ├─fix
     │  │          │  ├─insert
+    │  │          │  ├─request
     │  │          │  ├─response
     │  │          │  └─update
     │  │          ├─entity
@@ -28,14 +29,14 @@
     │  │          │  └─movie
     │  │          └─utils
     │  │              └─enums
+    │  │                  └─request
     │  └─resources
     └─test
         └─java
-            └─uos
-                └─cineseoul
-                    ├─repository
-                    └─service
-
+          └─uos
+              └─cineseoul
+                  ├─repository
+                  └─service
 ```
 + sqls
   + cine-seoul-dummy-account-data.sql
