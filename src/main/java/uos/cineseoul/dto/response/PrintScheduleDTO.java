@@ -21,5 +21,7 @@ public class PrintScheduleDTO {
 
     private PrintScreenNotSeatsDTO screen;
 
+    private PrintMovieDTO movie;
+
     private List<PrintScheduleSeatNotSchedDTO> scheduleSeats;
 }
