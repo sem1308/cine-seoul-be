@@ -1,7 +1,7 @@
 package uos.cineseoul.dto.response;
 
 import lombok.*;
-import uos.cineseoul.utils.enums.GradeType;
+import uos.cineseoul.utils.enums.SeatGrade;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -19,7 +19,7 @@ public class PrintSeatDTO {
     private String col;
 
     @Enumerated(EnumType.STRING)
-    private GradeType seatGrade;
+    private SeatGrade seatGrade;
 
     private Integer seatPrice;
 

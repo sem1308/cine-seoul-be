@@ -2,7 +2,7 @@ package uos.cineseoul.dto.insert;
 
 import lombok.*;
 import uos.cineseoul.entity.Screen;
-import uos.cineseoul.utils.enums.GradeType;
+import uos.cineseoul.utils.enums.SeatGrade;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -18,7 +18,7 @@ public class InsertSeatDTO {
     private String col;
 
     @Enumerated(EnumType.STRING)
-    private GradeType seatGrade;
+    private SeatGrade seatGrade;
 
     private Screen screen;
 }
