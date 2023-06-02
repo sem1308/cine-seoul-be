@@ -46,7 +46,7 @@ class MovieRepositoryTest {
             System.out.println(m.getTitle());
         }
 
-        List<Movie> showing = movieRepository.findAllByIsShowing('T');
+        List<Movie> showing = movieRepository.findAllByIsShowing(Is.Y);
         showing.forEach(m -> System.out.println(m.getTitle()));
 
         List<Movie> allByReleaseDateAfter = movieRepository.findAllByReleaseDateAfter("20101203");
