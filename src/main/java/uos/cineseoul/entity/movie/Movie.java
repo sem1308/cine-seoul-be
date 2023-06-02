@@ -29,10 +29,13 @@ public class Movie {
     private String releaseDate;
 
     @Column(name = "RUNNING_TIME", nullable = true)
-    private int runningTime;
+    private Integer runningTime;
 
     @Column(name = "POSTER", nullable = true)
     private String poster;
+
+    @Column(name = "TICKET_COUNT", nullable = true)
+    private Integer ticketCount;
 
     @Column(name = "IS_SHOWING", nullable = false, columnDefinition = "CHAR(1)")
     @Enumerated(EnumType.STRING)
@@ -59,13 +62,14 @@ public class Movie {
     private List<MovieActor> movieActorList = new ArrayList<>();
 
     @Builder
-    public Movie(Long movieNum, String title, String info, String releaseDate, int runningTime,String poster, Is isShowing, Distributor distributor, Grade grade, List<MovieGenre> movieGenreList, List<MovieDirector> movieDirectorList, List<MovieActor> movieActorList) {
+    public Movie(Long movieNum, String title, String info, String releaseDate, int runningTime,String poster, Integer ticketCount, Is isShowing, Distributor distributor, Grade grade, List<MovieGenre> movieGenreList, List<MovieDirector> movieDirectorList, List<MovieActor> movieActorList) {
         this.movieNum = movieNum;
         this.title = title;
         this.info = info;
         this.releaseDate = releaseDate;
         this.runningTime = runningTime;
         this.poster = poster;
+        this.ticketCount = ticketCount;;
         this.isShowing = isShowing;
         this.distributor = distributor;
         this.grade = grade;

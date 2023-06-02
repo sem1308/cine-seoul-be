@@ -2,6 +2,7 @@ package uos.cineseoul.controller;
 
 
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,16 +21,13 @@ import uos.cineseoul.utils.enums.StatusEnum;
 import java.util.List;
 
 @RestController()
+@RequiredArgsConstructor
 @RequestMapping("/seat")
 public class SeatController {
 
     private final SeatService seatService;
     private final ScreenService screenService;
-    @Autowired
-    public SeatController(SeatService seatService, ScreenService screenService) {
-        this.seatService = seatService;
-        this.screenService = screenService;
-    }
+
 
     @GetMapping("/admin")
     @ApiOperation(value = "전체 좌석 목록 조회 (filter : screenNum)", protocols = "http")

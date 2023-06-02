@@ -2,6 +2,7 @@ package uos.cineseoul.controller;
 
 
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +18,11 @@ import uos.cineseoul.utils.enums.StatusEnum;
 import java.util.List;
 
 @RestController()
+@RequiredArgsConstructor
 @RequestMapping("/screen")
 public class ScreenController {
 
     private final ScreenService screenService;
-    @Autowired
-    public ScreenController(ScreenService screenService) {
-        this.screenService = screenService;
-    }
 
     @GetMapping("/admin")
     @ApiOperation(value = "전체 상영관 목록 조회", protocols = "http")

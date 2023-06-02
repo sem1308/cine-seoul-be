@@ -56,8 +56,5 @@ class PaymentServiceTests {
 		String userId = "sem1308";
 		// by userNum
 		List<Payment> paymentList1 = paymentService.findByUserNum(userNum);
-
-		// by userId
-		List<Payment> paymentList2 = paymentService.findByUserId(userId);
 	}
 }

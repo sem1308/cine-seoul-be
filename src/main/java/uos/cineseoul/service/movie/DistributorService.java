@@ -1,12 +1,17 @@
 package uos.cineseoul.service.movie;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uos.cineseoul.dto.insert.InsertDistributorDTO;
 import uos.cineseoul.entity.movie.Distributor;
+import uos.cineseoul.entity.movie.Genre;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.repository.DistributorRepository;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -14,6 +19,16 @@ import uos.cineseoul.repository.DistributorRepository;
 public class DistributorService {
 
     private final DistributorRepository distributorRepository;
+
+    public List<Distributor> findDistributorList() {
+        List<Distributor> distributorList = distributorRepository.findAll();
+        return distributorList;
+    }
+
+    public Page<Distributor> findDistributorList(Pageable pageable) {
+        Page<Distributor> distributorList = distributorRepository.findAll(pageable);
+        return distributorList;
+    }
 
     public Distributor findDistributor(Long distNum) {
         Distributor distributor = distributorRepository.findByDistNum(distNum).orElseThrow(

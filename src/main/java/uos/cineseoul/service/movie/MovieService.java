@@ -1,6 +1,9 @@
 package uos.cineseoul.service.movie;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uos.cineseoul.dto.insert.InsertMovieDTO;
@@ -8,6 +11,7 @@ import uos.cineseoul.dto.update.UpdateMovieDTO;
 import uos.cineseoul.entity.movie.*;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.repository.*;
+import uos.cineseoul.utils.enums.Is;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,6 +44,20 @@ public class MovieService {
         return movieList;
     }
 
+    public Page<Movie> findAllMovie(Pageable pageable, String genre) {
+        Page<Movie> movieList;
+        if(genre!=null){
+            Genre g = genreRepository.findById(genre).orElseThrow(()->new ResourceNotFoundException("해당 코드의 장르가 없습니다."));
+            movieList = movieRepository.findAllByMovieGenreList_Genre(g,pageable);
+        }else {
+            movieList = movieRepository.findAll(pageable);
+        }
+        if (movieList.isEmpty()) {
+            throw new ResourceNotFoundException("영화 목록이 없습니다.");
+        }
+        return movieList;
+    }
+
     public Movie findMovie(Long movieNum) {
         Movie movie = movieRepository.findByMovieNum(movieNum).orElseThrow(
                 () -> new ResourceNotFoundException("해당 번호의 영화가 없습니다.")
@@ -55,7 +73,7 @@ public class MovieService {
     }
 
     public List<Movie> findAllShowingMovie() {
-        List<Movie> movieList = movieRepository.findAllByIsShowing('T');
+        List<Movie> movieList = movieRepository.findAllByIsShowing(Is.Y);
         if (movieList.isEmpty())
             throw new ResourceNotFoundException("상영중인 영화가 없습니다.");
         return movieList;
@@ -65,6 +83,22 @@ public class MovieService {
         LocalDateTime now = LocalDateTime.now();
         String nowTypeString = String.format("%d%02d%02d", now.getYear(), now.getMonthValue(), now.getDayOfMonth());
         List<Movie> movieList = movieRepository.findAllByReleaseDateAfter(nowTypeString);
+        if (movieList.isEmpty())
+            throw new ResourceNotFoundException("상영예정인 영화가 없습니다.");
+        return movieList;
+    }
+
+    public Page<Movie> findAllShowingMovie(Pageable pageable) {
+        Page<Movie> movieList = movieRepository.findAllByIsShowing(Is.Y,pageable);
+        if (movieList.isEmpty())
+            throw new ResourceNotFoundException("상영중인 영화가 없습니다.");
+        return movieList;
+    }
+
+    public Page<Movie> findAllWillReleaseMovie(Pageable pageable) {
+        LocalDateTime now = LocalDateTime.now();
+        String nowTypeString = String.format("%d%02d%02d", now.getYear(), now.getMonthValue(), now.getDayOfMonth());
+        Page<Movie> movieList = movieRepository.findAllByReleaseDateAfter(nowTypeString,pageable);
         if (movieList.isEmpty())
             throw new ResourceNotFoundException("상영예정인 영화가 없습니다.");
         return movieList;

@@ -83,8 +83,5 @@ class TicketServiceTests {
 		List<Ticket> ticketList1 = ticketService.findByUserNum(userNum);
 
 		System.out.println("유저 "+userId+"의 티켓 수: "+ticketList1.size());
-		// by userId
-		List<Ticket> ticketList2 = ticketService.findByUserId(userId);
-		System.out.println(userNum+"번 유저의 티켓 수: "+ticketList2.size());
 	}
 }

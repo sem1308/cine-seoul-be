@@ -3,6 +3,8 @@ package uos.cineseoul.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -50,9 +52,21 @@ public class TicketService {
 
     public List<Ticket> findAll() {
         List<Ticket> ticketList = ticketRepo.findAll();
-//        if (ticketList.isEmpty()) {
-//            throw new ResourceNotFoundException("티켓이 없습니다.");
-//        }
+        return ticketList;
+    }
+
+    public Page<Ticket> findAll(Pageable pageable) {
+        Page<Ticket> ticketList = ticketRepo.findAll(pageable);
+        return ticketList;
+    }
+
+    public List<Ticket> findByUserNum(Long userNum) {
+        List<Ticket> ticketList = ticketRepo.findByUserNum(userNum);
+        return ticketList;
+    }
+
+    public Page<Ticket> findByUserNum(Long userNum, Pageable pageable) {
+        Page<Ticket> ticketList = ticketRepo.findByUser_UserNum(userNum, pageable);
         return ticketList;
     }
 
@@ -61,20 +75,6 @@ public class TicketService {
             throw new ResourceNotFoundException("번호가 "+ num +"인 티켓이 없습니다.");
         });
         return ticket;
-    }
-    public List<Ticket> findByUserNum(Long userNum) {
-        List<Ticket> ticketList = ticketRepo.findByUserNum(userNum);
-//        if (ticketList.isEmpty()) {
-//            throw new ResourceNotFoundException(userNum+"번 유저에 대한 티켓이 없습니다.");
-//        }
-        return ticketList;
-    }
-    public List<Ticket> findByUserId(String userId) {
-        List<Ticket> ticketList = ticketRepo.findByUserID(userId);
-//        if (ticketList.isEmpty()) {
-//            throw new ResourceNotFoundException("유저 "+userId+"에 대한 티켓이 없습니다.");
-//        }
-        return ticketList;
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
@@ -104,11 +104,6 @@ public class TicketService {
         if(ticket.getTicketState().equals(TicketState.C)){
             throw new ForbiddenException("이미 취소된 티켓입니다.");
         }
-        // 비회원 처리
-        UserRole userRole = ticket.getUser().getRole();
-        if(userRole.equals(UserRole.N)){
-            throw new ForbiddenException("비회원 티켓은 정보를 변경하지 못합니다.");
-        }
 
         // 판매가격 처리
         if(ticketDTO.getSalePrice()!=null && ticketDTO.getSalePrice() > ticket.getStdPrice()){
@@ -119,7 +114,7 @@ public class TicketService {
 
         // 티켓 취소 처리
         if(ticket.getTicketState().equals(TicketState.C)){
-            cancelProcess(ticket,userRole);
+            cancelProcess(ticket,ticket.getUser().getRole());
         }
 
         Ticket updatedTicket = ticketRepo.save(ticket);
@@ -157,10 +152,6 @@ public class TicketService {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public Ticket changeSeat(Long ticketNum, InsertTicketDTO insertTicketDTO) {
         Ticket ticket = findOneByNum(ticketNum);
-        // 비회원 처리
-        if(ticket.getUser().getRole().equals(UserRole.N)){
-            throw new ForbiddenException("비회원은 자리 변경이 불가합니다.");
-        }
         // 이미 취소된 티켓인지 확인
         if(ticket.getTicketState().equals(TicketState.C)){
             throw new ForbiddenException("이미 취소된 티켓입니다.");

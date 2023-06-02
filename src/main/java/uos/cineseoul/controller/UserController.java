@@ -2,12 +2,19 @@ package uos.cineseoul.controller;
 
 
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uos.cineseoul.dto.insert.InsertUserDTO;
 import uos.cineseoul.dto.request.LoginDTO;
+import uos.cineseoul.dto.response.PrintPageDTO;
+import uos.cineseoul.dto.response.PrintTicketDTO;
 import uos.cineseoul.dto.response.PrintUserDTO;
 import uos.cineseoul.dto.update.UpdateUserDTO;
 import uos.cineseoul.entity.User;
@@ -21,23 +28,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController()
+@RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
     private final JwtTokenProvider jwtTokenProvider;
 
-    @Autowired
-    public UserController(UserService userService, JwtTokenProvider jwtTokenProvider) {
-        this.userService = userService;
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
-
     @GetMapping("/admin")
     @ApiOperation(value = "전체 사용자 목록 조회", protocols = "http")
-    public List<PrintUserDTO> lookUpUserList() {
-        List<User> users = userService.findAll();
-        return userService.getPrintDTOList(users);
+    public ResponseEntity<PrintPageDTO> lookUpUserList(@RequestParam(value="sort_name", required = false, defaultValue = "0") boolean isSortName,
+                                             @RequestParam(value="sort_dir", required = false) Sort.Direction sortDir,
+                                             @RequestParam(value="page", required = false, defaultValue = "0") int page,
+                                             @RequestParam(value="size", required = false, defaultValue = "12") int size) {
+        Pageable pageable;
+        if(sortDir==null) sortDir = Sort.Direction.ASC;
+        String sortBy = "userNum";
+        if(isSortName) sortBy = "name";
+        if(sortDir.equals(Sort.Direction.ASC)){
+            pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
+        }else{
+            pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
+        }
+        Page<User> userList = userService.findAll(pageable);
+        List<PrintUserDTO> printUserDTOS = userService.getPrintDTOList(userList.getContent());
+        return new ResponseEntity<>(new PrintPageDTO<>(printUserDTOS,userList.getTotalPages()), HttpStatus.OK);
     }
 
     @GetMapping("/{num}")
@@ -62,7 +77,7 @@ public class UserController {
 
     @PostMapping("/login")
     @ApiOperation(value = "사용자 로그인", protocols = "http")
-    public ResponseEntity login(@RequestBody @Valid LoginDTO loginInfo, @RequestParam(value="userNum", required = false) boolean isMember ) {
+    public ResponseEntity login(@RequestBody @Valid LoginDTO loginInfo, @RequestParam(value="isMember", required = false) boolean isMember ) {
         User user;
         if(isMember)
             user = userService.login(loginInfo);

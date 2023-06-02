@@ -2,6 +2,8 @@
 package uos.cineseoul.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -42,12 +44,14 @@ public class PaymentService {
         return paymentList;
     }
 
-    public Payment findOneByNum(Long num) {
-        Payment payment = paymentRepo.findById(num).orElseThrow(()->{
-            throw new ResourceNotFoundException("번호가 "+ num +"인 결제 내역이 없습니다.");
-        });
-        return payment;
+    public Page<Payment> findAll(Pageable pageable) {
+        Page<Payment> paymentList = paymentRepo.findAll(pageable);
+        if (paymentList.isEmpty()) {
+            throw new ResourceNotFoundException("결제 내역이 없습니다.");
+        }
+        return paymentList;
     }
+
     public List<Payment> findByUserNum(Long userNum) {
         List<Payment> paymentList = paymentRepo.findByUserNum(userNum);
         if (paymentList.isEmpty()) {
@@ -55,12 +59,17 @@ public class PaymentService {
         }
         return paymentList;
     }
-    public List<Payment> findByUserId(String userId) {
-        List<Payment> paymentList = paymentRepo.findByUserId(userId);
-        if (paymentList.isEmpty()) {
-            throw new ResourceNotFoundException("유저 "+userId+"에 대한 결제 내역이 없습니다.");
-        }
+
+    public Page<Payment> findByUserNum(Long userNum, Pageable pageable) {
+        Page<Payment> paymentList = paymentRepo.findByUserNum(userNum, pageable);
         return paymentList;
+    }
+
+    public Payment findOneByNum(Long num) {
+        Payment payment = paymentRepo.findById(num).orElseThrow(()->{
+            throw new ResourceNotFoundException("번호가 "+ num +"인 결제 내역이 없습니다.");
+        });
+        return payment;
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)

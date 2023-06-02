@@ -1,5 +1,7 @@
 package uos.cineseoul.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,6 +21,9 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     @Query("select p from PAYMENT p where p.user.userNum = :userNum")
     List<Payment> findByUserNum(@Param("userNum") Long userNum);
+
+    @Query("select p from PAYMENT p where p.user.userNum = :userNum")
+    Page<Payment> findByUserNum(@Param("userNum") Long userNum, Pageable pageable);
 
     Optional<Payment> findByTicket(Ticket ticket);
     @Query("select p from PAYMENT p where p.ticket.ticketNum = :ticketNum")
