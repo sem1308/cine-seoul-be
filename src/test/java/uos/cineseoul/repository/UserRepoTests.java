@@ -9,6 +9,7 @@ import uos.cineseoul.dto.update.UpdateUserDTO;
 import uos.cineseoul.entity.User;
 import uos.cineseoul.mapper.UserMapper;
 import uos.cineseoul.repository.UserRepository;
+import uos.cineseoul.utils.enums.UserRole;
 
 import javax.transaction.Transactional;
 
@@ -23,7 +24,7 @@ class UserRepoTests {
 
 		// mapper test
 		InsertUserDTO userDTO = InsertUserDTO.builder().id("sem1308").pw("1308").name("한수한")
-				.residentNum("9902211111111").phoneNum("010XXXXXXXX").role("M").build();
+				.residentNum("9902211111111").phoneNum("010XXXXXXXX").role(UserRole.M).build();
 
 		User user = UserMapper.INSTANCE.toEntity(userDTO);
 		if(!user.getRole().equals("N")){
