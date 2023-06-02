@@ -39,8 +39,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Cinema-Seoul Backend APIs")
-                .description("show bacchus's apis")
+                .title("CinemaSeoul Backend APIs")
+                .description("show CinemaSeoul's apis")
                 .contact(new Contact("cineseoul", "", ""))
                 .version("1.0")
                 .build();
