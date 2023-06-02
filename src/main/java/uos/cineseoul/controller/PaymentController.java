@@ -32,25 +32,23 @@ public class PaymentController {
     }
 
     @GetMapping()
-    @ApiOperation(value = "전체 결제내역 목록 조회", protocols = "http")
-    public ResponseEntity<List<PrintPaymentDTO>> lookUpPaymentList() {
-        List<Payment> paymentList = paymentService.findAll();
+    @ApiOperation(value = "전체 결제내역 목록 조회 (filter : userNum)", protocols = "http")
+    public ResponseEntity<List<PrintPaymentDTO>> lookUpPaymentList(@RequestParam(value="userNum", required = false) Long userNum) {
+        List<Payment> paymentList;
+        if(userNum!=null){
+            paymentList = paymentService.findByUserNum(userNum);
+        }else{
+            paymentList = paymentService.findAll();
+        }
         return new ResponseEntity<>(paymentService.getPrintDTOList(paymentList), HttpStatus.OK);
     }
 
     @GetMapping("/{num}")
-    @ApiOperation(value = "결제내역 상세 조회", protocols = "http")
+    @ApiOperation(value = "결제내역 번호로 조회", protocols = "http")
     public ResponseEntity<PrintPaymentDTO> lookUpPaymentByNum(@PathVariable("num") Long num) {
         Payment payment = paymentService.findOneByNum(num);
 
         return new ResponseEntity<>(paymentService.getPrintDTO(payment), HttpStatus.OK);
-    }
-
-    @GetMapping("/user/{num}")
-    @ApiOperation(value = "사용자의 결제내역 조회", protocols = "http")
-    public ResponseEntity<List<PrintPaymentDTO>> lookUpPaymentListByDate(@PathVariable("num") Long num) {
-        List<Payment> paymentList = paymentService.findByUserNum(num);
-        return new ResponseEntity<>(paymentService.getPrintDTOList(paymentList), HttpStatus.OK);
     }
 
     @PostMapping()
