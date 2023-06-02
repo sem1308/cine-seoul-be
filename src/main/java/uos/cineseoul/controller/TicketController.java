@@ -37,26 +37,23 @@ public class TicketController {
     }
 
     @GetMapping()
-    @ApiOperation(value = "전체 티켓 목록 조회", protocols = "http")
-    public ResponseEntity<List<PrintTicketDTO>> lookUpTicketList() {
-        List<Ticket> ticketList = ticketService.findAll();
+    @ApiOperation(value = "전체 티켓 목록 조회 (filter : userNum)", protocols = "http")
+    public ResponseEntity<List<PrintTicketDTO>> lookUpTicketList(@RequestParam(value="userNum", required = false) Long userNum) {
+        List<Ticket> ticketList;
+        if(userNum!=null){
+            ticketList = ticketService.findByUserNum(userNum);
+        }else{
+            ticketList = ticketService.findAll();
+        }
         return new ResponseEntity<>(ticketService.getPrintDTOList(ticketList), HttpStatus.OK);
     }
 
     @GetMapping("/{num}")
-    @ApiOperation(value = "티켓 상세 조회", protocols = "http")
+    @ApiOperation(value = "티켓 번호로 조회", protocols = "http")
     public ResponseEntity<PrintTicketDTO> lookUpTicketByNum(@PathVariable("num") Long num) {
         Ticket ticket = ticketService.findOneByNum(num);
 
         return new ResponseEntity<>(ticketService.getPrintDTO(ticket), HttpStatus.OK);
-    }
-
-    @GetMapping("/user/{num}")
-    @ApiOperation(value = "사용자의 티켓 목록 조회", protocols = "http")
-    public ResponseEntity<List<PrintTicketDTO>> lookUpTicketByUserNum(@PathVariable("num") Long num) {
-        List<Ticket> ticketList = ticketService.findByUserNum(num);
-
-        return new ResponseEntity<>(ticketService.getPrintDTOList(ticketList), HttpStatus.OK);
     }
 
     @PostMapping()
