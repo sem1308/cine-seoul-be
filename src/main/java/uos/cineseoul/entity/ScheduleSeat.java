@@ -24,6 +24,6 @@ public class ScheduleSeat {
     private Seat seat;
 
     @Column(name="IS_OCCUPIED", nullable = false, unique = false, columnDefinition = "char(1)")
-//    @ColumnDefault("N")
+    @Enumerated(EnumType.STRING)
     private Is isOccupied;
 }
