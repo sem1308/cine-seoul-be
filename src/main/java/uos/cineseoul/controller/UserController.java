@@ -20,6 +20,7 @@ import uos.cineseoul.dto.update.UpdateUserDTO;
 import uos.cineseoul.entity.User;
 import uos.cineseoul.service.UserService;
 import uos.cineseoul.utils.JwtTokenProvider;
+import uos.cineseoul.utils.PageUtil;
 import uos.cineseoul.utils.ReturnMessage;
 import uos.cineseoul.utils.enums.StatusEnum;
 
@@ -41,15 +42,9 @@ public class UserController {
                                              @RequestParam(value="sort_dir", required = false) Sort.Direction sortDir,
                                              @RequestParam(value="page", required = false, defaultValue = "0") int page,
                                              @RequestParam(value="size", required = false, defaultValue = "12") int size) {
-        Pageable pageable;
-        if(sortDir==null) sortDir = Sort.Direction.ASC;
-        String sortBy = "userNum";
-        if(isSortName) sortBy = "name";
-        if(sortDir.equals(Sort.Direction.ASC)){
-            pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
-        }else{
-            pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
-        }
+        String sortBy = isSortName ? "name" :"userNum";
+        Pageable pageable = PageUtil.setPageable(page, size,sortBy,sortDir);
+
         Page<User> userList = userService.findAll(pageable);
         List<PrintUserDTO> printUserDTOS = userService.getPrintDTOList(userList.getContent());
         return new ResponseEntity<>(new PrintPageDTO<>(printUserDTOS,userList.getTotalPages()), HttpStatus.OK);

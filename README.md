@@ -54,8 +54,8 @@
       MOVIE_DIRECTOR
       MOVIE_GENRE
       ```
-  + cine-seoul-dummy-account-data.sql
-    + dummy 계좌 정보 데이터
+  + cine-seoul-screen-seat-data.sql
+    + 상영관-좌석 데이터
     
 ## 코드
 + GRADE_CODE

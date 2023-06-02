@@ -88,17 +88,29 @@ public class MovieService {
         return movieList;
     }
 
-    public Page<Movie> findAllShowingMovie(Pageable pageable) {
-        Page<Movie> movieList = movieRepository.findAllByIsShowing(Is.Y,pageable);
+    public Page<Movie> findAllShowingMovie(Pageable pageable, String genre) {
+        Page<Movie> movieList;
+        if(genre!=null){
+            Genre g = genreRepository.findById(genre).orElseThrow(()->new ResourceNotFoundException("해당 코드의 장르가 없습니다."));
+            movieList = movieRepository.findAllByIsShowingAndMovieGenreList_Genre(Is.Y,g,pageable);
+        }else {
+            movieList = movieRepository.findAllByIsShowing(Is.Y,pageable);
+        }
         if (movieList.isEmpty())
             throw new ResourceNotFoundException("상영중인 영화가 없습니다.");
         return movieList;
     }
 
-    public Page<Movie> findAllWillReleaseMovie(Pageable pageable) {
+    public Page<Movie> findAllWillReleaseMovie(Pageable pageable, String genre) {
         LocalDateTime now = LocalDateTime.now();
         String nowTypeString = String.format("%d%02d%02d", now.getYear(), now.getMonthValue(), now.getDayOfMonth());
-        Page<Movie> movieList = movieRepository.findAllByReleaseDateAfter(nowTypeString,pageable);
+        Page<Movie> movieList;
+        if(genre!=null){
+            Genre g = genreRepository.findById(genre).orElseThrow(()->new ResourceNotFoundException("해당 코드의 장르가 없습니다."));
+            movieList = movieRepository.findAllByReleaseDateAfterAndMovieGenreList_Genre(nowTypeString,g,pageable);
+        }else {
+            movieList = movieRepository.findAllByReleaseDateAfter(nowTypeString, pageable);
+        }
         if (movieList.isEmpty())
             throw new ResourceNotFoundException("상영예정인 영화가 없습니다.");
         return movieList;

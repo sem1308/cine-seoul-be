@@ -24,6 +24,7 @@ import uos.cineseoul.entity.User;
 import uos.cineseoul.service.ScheduleService;
 import uos.cineseoul.service.TicketService;
 import uos.cineseoul.service.UserService;
+import uos.cineseoul.utils.PageUtil;
 import uos.cineseoul.utils.ReturnMessage;
 import uos.cineseoul.utils.enums.StatusEnum;
 import uos.cineseoul.utils.enums.UserRole;
@@ -47,15 +48,8 @@ public class TicketController {
                                                          @RequestParam(value="sort_dir", required = false) Sort.Direction sortDir,
                                                          @RequestParam(value="page", required = false, defaultValue = "0") int page,
                                                          @RequestParam(value="size", required = false, defaultValue = "12") int size) {
-        Pageable pageable;
-        if(sortDir==null) sortDir = Sort.Direction.ASC;
-        String sortBy = "ticketNum";
-        if(isSortCreatedDate) sortBy = "createdAt";
-        if(sortDir.equals(Sort.Direction.ASC)){
-            pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
-        }else{
-            pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
-        }
+        String sortBy = isSortCreatedDate ? "createdAt" :"ticketNum";
+        Pageable pageable = PageUtil.setPageable(page, size,sortBy,sortDir);
 
         Page<Ticket> ticketList;
         if(userNum!=null){

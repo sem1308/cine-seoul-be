@@ -17,6 +17,7 @@ import uos.cineseoul.entity.movie.Director;
 import uos.cineseoul.entity.movie.Distributor;
 import uos.cineseoul.entity.movie.Grade;
 import uos.cineseoul.service.movie.DistributorService;
+import uos.cineseoul.utils.PageUtil;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -38,15 +39,9 @@ public class DistributorController {
                                                        @RequestParam(value="sort_dir", required = false) Sort.Direction sortDir,
                                                        @RequestParam(value="page", required = false, defaultValue = "0") int page,
                                                        @RequestParam(value="size", required = false, defaultValue = "12") int size) {
-        Pageable pageable;
-        if(sortDir==null) sortDir = Sort.Direction.ASC;
-        String sortBy = "distNum";
-        if(isSortName) sortBy = "name";
-        if(sortDir.equals(Sort.Direction.ASC)){
-            pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
-        }else{
-            pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
-        }
+        String sortBy = isSortName? "name" : "distNum";
+        Pageable pageable = PageUtil.setPageable(page, size,sortBy,sortDir);
+        
         Page<Distributor> distributorList = distributorService.findDistributorList(pageable);
         List<PrintDistributorDTO> printDistributorDTOS = distributorList
                 .stream()

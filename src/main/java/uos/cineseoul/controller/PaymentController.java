@@ -19,6 +19,7 @@ import uos.cineseoul.entity.Payment;
 import uos.cineseoul.service.PaymentService;
 import uos.cineseoul.service.TicketService;
 import uos.cineseoul.service.UserService;
+import uos.cineseoul.utils.PageUtil;
 import uos.cineseoul.utils.ReturnMessage;
 import uos.cineseoul.utils.enums.StatusEnum;
 
@@ -42,15 +43,8 @@ public class PaymentController {
                                                           @RequestParam(value="sort_dir", required = false) Sort.Direction sortDir,
                                                           @RequestParam(value="page", required = false, defaultValue = "0") int page,
                                                           @RequestParam(value="size", required = false, defaultValue = "12") int size) {
-        Pageable pageable;
-        if(sortDir==null) sortDir = Sort.Direction.ASC;
-        String sortBy = "paymentNum";
-        if(isSortCreatedDate) sortBy = "createdAt";
-        if(sortDir.equals(Sort.Direction.ASC)){
-            pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
-        }else{
-            pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
-        }
+        String sortBy = isSortCreatedDate ? "createdAt" :"paymentNum";
+        Pageable pageable = PageUtil.setPageable(page, size,sortBy,sortDir);
 
         Page<Payment> paymentList;
         if(userNum!=null){

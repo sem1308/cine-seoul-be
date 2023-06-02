@@ -22,6 +22,7 @@ import uos.cineseoul.entity.Screen;
 import uos.cineseoul.service.ScheduleService;
 import uos.cineseoul.service.ScreenService;
 import uos.cineseoul.service.movie.MovieService;
+import uos.cineseoul.utils.PageUtil;
 import uos.cineseoul.utils.ReturnMessage;
 import uos.cineseoul.utils.enums.StatusEnum;
 
@@ -52,15 +53,8 @@ public class ScheduleController {
                                                                 @RequestParam(value="sort_dir", required = false) Sort.Direction sortDir,
                                                                 @RequestParam(value="page", required = false, defaultValue = "0") int page,
                                                                 @RequestParam(value="size", required = false, defaultValue = "12") int size) {
-        Pageable pageable;
-        if(sortDir==null) sortDir = Sort.Direction.ASC;
-        String sortBy = "schedNum";
-        if(isSortOrder) sortBy = "order";
-        if(sortDir.equals(Sort.Direction.ASC)){
-            pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
-        }else{
-            pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
-        }
+        String sortBy = isSortOrder ? "order" :"schedNum";
+        Pageable pageable = PageUtil.setPageable(page, size,sortBy,sortDir);
 
         Page<Schedule> scheduleList;
         if (movieNum != null && date != null) {
