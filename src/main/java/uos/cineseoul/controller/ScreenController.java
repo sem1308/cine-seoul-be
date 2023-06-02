@@ -26,14 +26,14 @@ public class ScreenController {
         this.screenService = screenService;
     }
 
-    @GetMapping()
+    @GetMapping("/admin")
     @ApiOperation(value = "전체 상영관 목록 조회", protocols = "http")
     public ResponseEntity<List<PrintScreenDTO>> lookUpScreenList() {
         List<Screen> screenList = screenService.findAll();
         return new ResponseEntity<>(screenService.getPrintDTOList(screenList), HttpStatus.OK);
     }
 
-    @GetMapping("/{num}")
+    @GetMapping("/admin/{num}")
     @ApiOperation(value = "상영관 번호로 조회", protocols = "http")
     public ResponseEntity<PrintScreenDTO> lookUpScreenByNum(@PathVariable("num") Long num) {
         Screen screen = screenService.findOneByNum(num);

@@ -33,7 +33,7 @@ public class UserController {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    @GetMapping()
+    @GetMapping("/admin")
     @ApiOperation(value = "전체 사용자 목록 조회", protocols = "http")
     public List<PrintUserDTO> lookUpUserList() {
         List<User> users = userService.findAll();

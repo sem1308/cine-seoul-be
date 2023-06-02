@@ -31,7 +31,7 @@ public class SeatController {
         this.screenService = screenService;
     }
 
-    @GetMapping()
+    @GetMapping("/admin")
     @ApiOperation(value = "전체 좌석 목록 조회 (filter : screenNum)", protocols = "http")
     public ResponseEntity<List<PrintSeatDTO>> lookUpSeatList(@RequestParam(value="screenNum", required = false) Long screenNum) {
         List<Seat> seatList;
@@ -43,7 +43,7 @@ public class SeatController {
         return new ResponseEntity<>(seatService.getPrintDTOList(seatList), HttpStatus.OK);
     }
 
-    @GetMapping("/{num}")
+    @GetMapping("/admin/{num}")
     @ApiOperation(value = "좌석 번호로 조회", protocols = "http")
     public ResponseEntity<PrintSeatDTO> lookUpSeatByNum(@PathVariable("num") Long num) {
         Seat seat = seatService.findOneByNum(num);
