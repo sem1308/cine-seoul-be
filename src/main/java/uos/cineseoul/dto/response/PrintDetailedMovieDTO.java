@@ -20,17 +20,19 @@ public class PrintDetailedMovieDTO {
 
     private int runningTime;
 
+    private String poster;
+
     private Is isShowing;
 
     private String distName;
 
-    private String gradeName;
+    private PrintGradeDTO gradeName;
 
-    private List<String> genreList;
+    private List<PrintGenreDTO> genreList;
 
-    private List<String> directorList;
+    private List<PrintDirectorDTO> directorList;
 
-    private List<String> actorList;
+    private List<PrintActorDTO> actorList;
 
     public PrintDetailedMovieDTO(Movie movie) {
         this.movieNum = movie.getMovieNum();
@@ -38,20 +40,21 @@ public class PrintDetailedMovieDTO {
         this.info = movie.getInfo();
         this.releaseDate = movie.getReleaseDate();
         this.runningTime = movie.getRunningTime();
+        this.poster = movie.getPoster();
         this.isShowing = movie.getIsShowing();
         this.distName = movie.getDistributor().getName();
-        this.gradeName = movie.getGrade().getName();
+        this.gradeName = new PrintGradeDTO(movie.getGrade());
         this.genreList = new ArrayList<>();
         this.directorList = new ArrayList<>();
         this.actorList = new ArrayList<>();
         movie.getMovieGenreList().forEach(
-                movieGenre -> genreList.add(movieGenre.getGenre().getName())
+                movieGenre -> genreList.add(new PrintGenreDTO(movieGenre.getGenre()))
         );
         movie.getMovieActorList().forEach(
-                movieActor -> actorList.add(movieActor.getActor().getName())
+                movieActor -> actorList.add(new PrintActorDTO(movieActor.getActor()))
         );
         movie.getMovieDirectorList().forEach(
-                movieDirector -> directorList.add(movieDirector.getDirector().getName())
+                movieDirector -> directorList.add(new PrintDirectorDTO(movieDirector.getDirector()))
         );
     }
 }

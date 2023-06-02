@@ -22,7 +22,9 @@ public class PrintMovieDTO {
 
     private String releaseDate;
 
-    private int runningTime;
+    private Integer runningTime;
+
+    private Integer ticketCount;
 
     private Is isShowing;
 
@@ -32,7 +34,7 @@ public class PrintMovieDTO {
 
     private String poster;
 
-    private List<String> genreList;
+    private List<PrintGenreDTO> genreList;
 
 
     public PrintMovieDTO(Movie movie) {
@@ -40,6 +42,7 @@ public class PrintMovieDTO {
         this.title = movie.getTitle();
         this.releaseDate = movie.getReleaseDate();
         this.runningTime = movie.getRunningTime();
+        this.ticketCount = movie.getTicketCount();
         this.isShowing = movie.getIsShowing();
         if(movie.getDistributor()!=null)
             this.distName = movie.getDistributor().getName();
@@ -48,7 +51,7 @@ public class PrintMovieDTO {
         this.poster = movie.getPoster();
         this.genreList = new ArrayList<>();
         movie.getMovieGenreList().forEach(
-                movieGenre -> genreList.add(movieGenre.getGenre().getName())
+                movieGenre -> genreList.add(new PrintGenreDTO(movieGenre.getGenre()))
         );
     }
 }
