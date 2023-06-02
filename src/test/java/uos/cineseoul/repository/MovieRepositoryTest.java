@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import uos.cineseoul.entity.movie.Movie;
+import uos.cineseoul.utils.enums.Is;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ class MovieRepositoryTest {
                 .builder()
                 .title("영화1")
                 .releaseDate("20110101")
-                .isShowing('F')
+                .isShowing(Is.N)
                 .info("")
                 .runningTime(1)
                 .build();
@@ -32,7 +33,7 @@ class MovieRepositoryTest {
                 .builder()
                 .title("영화2")
                 .releaseDate("20100101")
-                .isShowing('T')
+                .isShowing(Is.Y)
                 .info("")
                 .runningTime(1)
                 .build();

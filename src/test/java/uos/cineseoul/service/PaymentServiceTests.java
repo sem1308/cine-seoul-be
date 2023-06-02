@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import uos.cineseoul.dto.insert.InsertPaymentDTO;
 import uos.cineseoul.dto.response.PrintPaymentDTO;
+import uos.cineseoul.entity.Payment;
 import uos.cineseoul.entity.Ticket;
 import uos.cineseoul.entity.User;
 import uos.cineseoul.exception.ResourceNotFoundException;
@@ -38,13 +39,13 @@ class PaymentServiceTests {
 		InsertPaymentDTO paymentDTO = InsertPaymentDTO.builder().ticket(ticket)
 				.price(price).user(user).paymentMethod(paymentMethod).build();
 
-		PrintPaymentDTO savedPayment = paymentService.insert(paymentDTO);
+		Payment savedPayment = paymentService.insert(paymentDTO);
 	}
 
 	@Test
 	void findOneTest() {
 		Long paymentNum = 1L;
-		PrintPaymentDTO payment = paymentService.findOneByNum(paymentNum);
+		Payment payment = paymentService.findOneByNum(paymentNum);
 
 		assert payment.getPaymentNum().equals(paymentNum);
 	}
@@ -54,9 +55,9 @@ class PaymentServiceTests {
 		Long userNum = 1L;
 		String userId = "sem1308";
 		// by userNum
-		List<PrintPaymentDTO> paymentList1 = paymentService.findByUserNum(userNum);
+		List<Payment> paymentList1 = paymentService.findByUserNum(userNum);
 
 		// by userId
-		List<PrintPaymentDTO> paymentList2 = paymentService.findByUserId(userId);
+		List<Payment> paymentList2 = paymentService.findByUserId(userId);
 	}
 }

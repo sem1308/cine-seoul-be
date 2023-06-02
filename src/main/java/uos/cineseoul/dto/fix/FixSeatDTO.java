@@ -1,7 +1,6 @@
 package uos.cineseoul.dto.fix;
 
 import lombok.*;
-import uos.cineseoul.dto.insert.InsertSeatDTO;
 import uos.cineseoul.dto.update.UpdateSeatDTO;
 import uos.cineseoul.entity.Screen;
 import uos.cineseoul.utils.enums.GradeType;

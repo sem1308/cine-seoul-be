@@ -1,27 +1,12 @@
 package uos.cineseoul.entity;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import uos.cineseoul.utils.enums.UserRole;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity(name = "USERS")
 @AllArgsConstructor()
@@ -60,7 +45,8 @@ public class User{
     private Integer point;
 
     @Column(name = "ROLE", nullable = false, columnDefinition = "char(1)")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     @CreationTimestamp
     @Column(name="CREATED_DATE", nullable = false)

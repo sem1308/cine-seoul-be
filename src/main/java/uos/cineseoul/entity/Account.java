@@ -3,7 +3,9 @@ package uos.cineseoul.entity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity(name = "ACCOUNT")
@@ -27,6 +29,6 @@ public class Account {
     private String cardNum;
 
     @CreationTimestamp
-    @Column(name="CREATED_AT", nullable = false)
+    @Column(name="CREATED_DATE", nullable = false)
     private LocalDateTime createdAt;
 }

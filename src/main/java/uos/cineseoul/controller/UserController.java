@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uos.cineseoul.dto.insert.InsertUserDTO;
+import uos.cineseoul.dto.request.LoginDTO;
 import uos.cineseoul.dto.response.PrintUserDTO;
 import uos.cineseoul.dto.update.UpdateUserDTO;
 import uos.cineseoul.entity.User;
@@ -15,9 +16,9 @@ import uos.cineseoul.utils.JwtTokenProvider;
 import uos.cineseoul.utils.ReturnMessage;
 import uos.cineseoul.utils.enums.StatusEnum;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController()
 @RequestMapping("/user")
@@ -49,7 +50,7 @@ public class UserController {
 
     @PostMapping()
     @ApiOperation(value = "사용자 회원가입", protocols = "http")
-    public ResponseEntity register(@RequestBody InsertUserDTO userDTO) {
+    public ResponseEntity register(@RequestBody @Valid InsertUserDTO userDTO) {
         User user = userService.insert(userDTO);
         ReturnMessage<PrintUserDTO> msg = new ReturnMessage<>();
         msg.setMessage("회원가입이 완료되었습니다.");
@@ -61,12 +62,12 @@ public class UserController {
 
     @PostMapping("/login")
     @ApiOperation(value = "사용자 로그인", protocols = "http")
-    public ResponseEntity login(@RequestBody Map<String, String> loginInfo) {
+    public ResponseEntity login(@RequestBody @Valid LoginDTO loginInfo) {
         User user = userService.login(loginInfo);
 
         ReturnMessage<String> msg = new ReturnMessage<>();
         List<String> roles = new ArrayList<>();
-        roles.add(user.getRole());
+        roles.add(user.getRole().toString());
         String token = jwtTokenProvider.createToken(user.getUserNum(),user.getId(),user.getName(),roles);
         msg.setMessage("로그인이 완료되었습니다.");
         msg.setStatus(StatusEnum.OK);
@@ -76,7 +77,6 @@ public class UserController {
     }
 
     @PutMapping()
-    @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "사용자 정보 변경", protocols = "http")
     public ResponseEntity<ReturnMessage> update(@RequestBody UpdateUserDTO userDTO) {
         User user = userService.update(userDTO);

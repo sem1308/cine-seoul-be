@@ -1,7 +1,10 @@
 package uos.cineseoul.dto.response;
 
 import lombok.*;
+import uos.cineseoul.utils.enums.UserRole;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor()
@@ -24,7 +27,8 @@ public class PrintUserDTO {
 
     private Integer point;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     private LocalDateTime createdAt;
 }

@@ -1,7 +1,6 @@
 package uos.cineseoul.dto.fix;
 
 import lombok.*;
-import uos.cineseoul.dto.insert.InsertScheduleDTO;
 import uos.cineseoul.dto.update.UpdateScheduleDTO;
 import uos.cineseoul.entity.Screen;
 

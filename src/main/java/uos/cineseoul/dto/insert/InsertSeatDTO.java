@@ -4,8 +4,8 @@ import lombok.*;
 import uos.cineseoul.entity.Screen;
 import uos.cineseoul.utils.enums.GradeType;
 
-import javax.persistence.*;
-import javax.validation.constraints.Size;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @AllArgsConstructor()
 @NoArgsConstructor(force = true)

@@ -2,8 +2,6 @@ package uos.cineseoul.dto.response;
 
 import lombok.*;
 
-import java.util.List;
-
 @AllArgsConstructor()
 @NoArgsConstructor(force = true)
 @Setter

@@ -9,14 +9,17 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import uos.cineseoul.dto.insert.InsertUserDTO;
+import uos.cineseoul.dto.request.LoginDTO;
 import uos.cineseoul.dto.response.PrintUserDTO;
 import uos.cineseoul.dto.update.UpdateUserDTO;
 import uos.cineseoul.entity.User;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.UserMapper;
 import uos.cineseoul.repository.UserRepository;
+import uos.cineseoul.utils.enums.UserRole;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -53,13 +56,13 @@ public class UserService {
         return user;
     }
 
-    public User login(@NotNull Map<String, String> loginInfo) {
-        User user = userRepo.findByUserId(loginInfo.get("id")).orElseThrow(() -> {
+    public User login(@NotNull LoginDTO loginInfo) {
+        User user = userRepo.findByUserId(loginInfo.getId()).orElseThrow(() -> {
             throw new ResourceNotFoundException("아이디 또는 비밀번호가 틀렸습니다.");
         });
 
         // 암호 일치 확인
-        if (!passwordEncoder.matches(loginInfo.get("pw"), user.getPw())) {
+        if (!passwordEncoder.matches(loginInfo.getPw(), user.getPw())) {
             throw new ResourceNotFoundException("아이디 또는 비밀번호가 틀렸습니다.");
         }
 
@@ -83,7 +86,7 @@ public class UserService {
         checkDuplicate(user.getId());
 
         user.setPw(passwordEncoder.encode(user.getPw()));
-        if(!user.getRole().equals("N")){
+        if(!user.getRole().equals(UserRole.N)){
             user.setPoint(0);
         }
 

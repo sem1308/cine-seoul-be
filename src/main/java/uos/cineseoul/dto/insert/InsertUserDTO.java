@@ -1,11 +1,12 @@
 package uos.cineseoul.dto.insert;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import uos.cineseoul.annotation.IdStartsWithEnglish;
+import uos.cineseoul.utils.enums.UserRole;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Size;
 
 @AllArgsConstructor()
@@ -15,6 +16,7 @@ import javax.validation.constraints.Size;
 @Builder
 public class InsertUserDTO {
     @Size(max = 100, min = 0)
+    @IdStartsWithEnglish
     private String id;
 
     // 입력 비밀번호 자리수 제한
@@ -25,7 +27,8 @@ public class InsertUserDTO {
     private String name;
 
     @Size(max = 1, min = 1)
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     @NotNull
     @Size(max = 13, min = 13)

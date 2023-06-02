@@ -10,12 +10,17 @@ import org.springframework.transaction.annotation.Transactional;
 import uos.cineseoul.dto.insert.InsertTicketDTO;
 import uos.cineseoul.dto.response.PrintTicketDTO;
 import uos.cineseoul.dto.update.UpdateTicketDTO;
-import uos.cineseoul.entity.*;
+import uos.cineseoul.entity.Payment;
+import uos.cineseoul.entity.ScheduleSeat;
+import uos.cineseoul.entity.Ticket;
 import uos.cineseoul.exception.DataInconsistencyException;
 import uos.cineseoul.exception.ForbiddenException;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.TicketMapper;
-import uos.cineseoul.repository.*;
+import uos.cineseoul.repository.PaymentRepository;
+import uos.cineseoul.repository.ScheduleSeatRepository;
+import uos.cineseoul.repository.TicketRepository;
+import uos.cineseoul.utils.enums.Is;
 import uos.cineseoul.utils.enums.PayState;
 import uos.cineseoul.utils.enums.TicketState;
 
@@ -71,11 +76,11 @@ public class TicketService {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public Ticket insert(InsertTicketDTO ticketDTO) {
         ScheduleSeat scheduleSeat = ticketDTO.getScheduleSeat();
-        if(scheduleSeat.getOccupied().equals("Y")){
+        if(scheduleSeat.getIsOccupied().equals(Is.Y)){
             throw new DuplicateKeyException("해당 상영일정 좌석에 대해 이미 예약이 되어있습니다.");
         }
 
-        scheduleSeat.setOccupied("Y");
+        scheduleSeat.setIsOccupied(Is.Y);
         scheduleSeatRepo.save(scheduleSeat);
 
         Ticket ticket = TicketMapper.INSTANCE.toEntity(ticketDTO);
