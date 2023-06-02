@@ -12,6 +12,7 @@ import uos.cineseoul.dto.fix.FixTicketDTO;
 import uos.cineseoul.dto.insert.InsertTicketDTO;
 import uos.cineseoul.dto.response.PrintTicketDTO;
 import uos.cineseoul.entity.Ticket;
+import uos.cineseoul.entity.User;
 import uos.cineseoul.service.ScheduleService;
 import uos.cineseoul.service.TicketService;
 import uos.cineseoul.service.UserService;
@@ -59,7 +60,7 @@ public class TicketController {
     @PostMapping()
     @ApiOperation(value = "티켓 등록", protocols = "http")
     public ResponseEntity register(@RequestBody CreateTicketDTO ticketDTO) {
-        InsertTicketDTO iTicketDTO = ticketDTO.toInsertDTO(userService.findOneByNum(ticketDTO.getSchedNum()),scheduleService.findScheduleSeat(ticketDTO.getSchedNum(),ticketDTO.getSeatNum()));
+        InsertTicketDTO iTicketDTO = ticketDTO.toInsertDTO(userService.findOneByNum(ticketDTO.getUserNum()),scheduleService.findScheduleSeat(ticketDTO.getSchedNum(),ticketDTO.getSeatNum()));
         Ticket ticket = ticketService.insert(iTicketDTO);
         ReturnMessage<PrintTicketDTO> msg = new ReturnMessage<>();
         msg.setMessage("티켓 예매가 완료되었습니다.");
@@ -81,12 +82,24 @@ public class TicketController {
         return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 
+    @DeleteMapping("/{num}")
+    @ApiOperation(value = "비회원 티켓 삭제 by 티켓 번호", protocols = "http")
+    public ResponseEntity delete(@PathVariable("num") Long num) {
+        ticketService.delete(num);
+        ReturnMessage<PrintTicketDTO> msg = new ReturnMessage<>();
+        msg.setMessage("티켓 삭제가 완료되었습니다.");
+        msg.setStatus(StatusEnum.OK);
+
+        return new ResponseEntity<>(msg, HttpStatus.OK);
+    }
+
     @PostMapping("/cancel/register")
     @Transactional
     @ApiOperation(value = "티켓 취소 및 재등록", protocols = "http")
     public ResponseEntity cancelAndRegister(@RequestBody CancelCreateSeatDTO ticketDTO) {
+        InsertTicketDTO iTicketDTO = ticketDTO.toInsertDTO(userService.findOneByNum(ticketDTO.getUserNum()),scheduleService.findScheduleSeat(ticketDTO.getSchedNum(),ticketDTO.getSeatNum()));
         ticketService.update(ticketDTO.getTicketNum(), ticketDTO.toUpdateDTO());
-        InsertTicketDTO iTicketDTO = ticketDTO.toInsertDTO(userService.findOneByNum(ticketDTO.getSchedNum()),scheduleService.findScheduleSeat(ticketDTO.getSchedNum(),ticketDTO.getSeatNum()));
+
         Ticket ticket = ticketService.insert(iTicketDTO);
         ReturnMessage<PrintTicketDTO> msg = new ReturnMessage<>();
         msg.setMessage("티켓 취소 및 재등록이 완료되었습니다.");

@@ -10,9 +10,7 @@ import uos.cineseoul.entity.Screen;
 import uos.cineseoul.entity.Seat;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.SeatMapper;
-import uos.cineseoul.repository.ScreenRepository;
-import uos.cineseoul.repository.SeatRepository;
-import uos.cineseoul.utils.enums.GradeType;
+import uos.cineseoul.utils.enums.SeatGrade;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -35,7 +33,7 @@ class SeatRepoTests {
 		Long screenNum = 1L;
 		String row1 = "H";
 		String col1 = "10";
-		GradeType seatGrade1 = GradeType.A;
+		SeatGrade seatGrade1 = SeatGrade.A;
 
 		// 상영관 불러오기
 		Screen screen = screenRepo.findById(screenNum).get();
@@ -51,7 +49,7 @@ class SeatRepoTests {
 
 		String row2 = "E";
 		String col2 = "15";
-		GradeType seatGrade2 = GradeType.B;
+		SeatGrade seatGrade2 = SeatGrade.B;
 
 		InsertSeatDTO seatDTO2 = InsertSeatDTO.builder().row(row2).col(col2)
 				.seatGrade(seatGrade2).screen(screen).build();
@@ -83,7 +81,7 @@ class SeatRepoTests {
 		//Long screenNum = 1L;
 		String row = "D"; // 원래 H
 		String col = "15"; // 원래 10
-		GradeType seatGrade = GradeType.C;// 원래 A
+		SeatGrade seatGrade = SeatGrade.C;// 원래 A
 
 		Seat seat = seatRepo.findById(seatNum).get();
 

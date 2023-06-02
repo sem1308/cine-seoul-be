@@ -20,11 +20,11 @@ public class PrintTicketDTO {
     private Integer salePrice;
 
     @Enumerated(EnumType.STRING)
-    private TicketState issued;
+    private TicketState ticketState;
 
     private LocalDateTime createdAt;
 
     private PrintUserDTO user;
 
-    private PrintScheduleSeatDTO scheduleSeat;
+    private PrintScheduleSeatForTicketDTO scheduleSeat;
 }

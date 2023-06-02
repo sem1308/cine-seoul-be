@@ -6,13 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import uos.cineseoul.dto.insert.InsertSeatDTO;
-import uos.cineseoul.dto.response.PrintSeatDTO;
 import uos.cineseoul.dto.update.UpdateSeatDTO;
 import uos.cineseoul.entity.Screen;
 import uos.cineseoul.entity.Seat;
 import uos.cineseoul.repository.ScreenRepository;
-import uos.cineseoul.service.SeatService;
-import uos.cineseoul.utils.enums.GradeType;
+import uos.cineseoul.utils.enums.SeatGrade;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -31,7 +29,7 @@ class SeatServiceTests {
 		Long screenNum = 1L;
 		String row1 = "E";
 		String col1 = "11";
-		GradeType seatGrade1 = GradeType.A;
+		SeatGrade seatGrade1 = SeatGrade.A;
 
 		Screen screenBefore = screenRepo.findById(screenNum).get();
 		Integer screenBeforeTS = screenBefore.getTotalSeat();
@@ -52,7 +50,7 @@ class SeatServiceTests {
 		Long screenNum = 1L;
 		String row = "D"; // 원래 H
 		String col = "15"; // 원래 10
-		GradeType seatGrade = GradeType.C; // 원래 A
+		SeatGrade seatGrade = SeatGrade.C; // 원래 A
 
 		Seat basicSeat = seatService.findOneByNum(seatNum);
 		Screen basicScreen = basicSeat.getScreen();

@@ -10,6 +10,7 @@ import uos.cineseoul.dto.update.UpdateTicketDTO;
 import uos.cineseoul.entity.*;
 import uos.cineseoul.mapper.TicketMapper;
 import uos.cineseoul.repository.*;
+import uos.cineseoul.utils.enums.Is;
 import uos.cineseoul.utils.enums.TicketState;
 
 import javax.transaction.Transactional;
@@ -40,7 +41,7 @@ class TicketRepoTests {
 
 		InsertTicketDTO ticketDTO = InsertTicketDTO.builder().stdPrice(stdPrice).salePrice(salePrice)
 				.user(user).scheduleSeat(scheduleSeat).build();
-		scheduleSeat.setOccupied("Y");
+		scheduleSeat.setIsOccupied(Is.N);
 		scheduleSeatRepo.save(scheduleSeat);
 
 		Ticket ticket = TicketMapper.INSTANCE.toEntity(ticketDTO);

@@ -1,7 +1,7 @@
 package uos.cineseoul.dto.response;
 
 import lombok.*;
-import uos.cineseoul.utils.enums.SeatGrade;
+import uos.cineseoul.utils.enums.Is;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,17 +11,11 @@ import javax.persistence.Enumerated;
 @Setter
 @Getter
 @Builder
-public class PrintSeatDTO {
-    private Long seatNum;
+public class PrintScheduleSeatForTicketDTO {
+    private PrintScheduleNotSchedSeatDTO schedule;
 
-    private String row;
-
-    private String col;
+    private PrintSeatDTO seat;
 
     @Enumerated(EnumType.STRING)
-    private SeatGrade seatGrade;
-
-    private Integer seatPrice;
-
-    private Long screenNum;
+    private Is isOccupied;
 }

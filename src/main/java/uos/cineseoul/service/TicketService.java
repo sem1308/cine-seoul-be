@@ -20,9 +20,11 @@ import uos.cineseoul.mapper.TicketMapper;
 import uos.cineseoul.repository.PaymentRepository;
 import uos.cineseoul.repository.ScheduleSeatRepository;
 import uos.cineseoul.repository.TicketRepository;
+import uos.cineseoul.repository.UserRepository;
 import uos.cineseoul.utils.enums.Is;
 import uos.cineseoul.utils.enums.PayState;
 import uos.cineseoul.utils.enums.TicketState;
+import uos.cineseoul.utils.enums.UserRole;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,21 +36,23 @@ public class TicketService {
     private final ScheduleSeatRepository scheduleSeatRepo;
     private final AccountService accountService;
     private final PaymentRepository paymentRepo;
+    private final UserRepository userRepo;
 
     @Autowired
     public TicketService(TicketRepository ticketRepo, ScheduleSeatRepository scheduleSeatRepo,
-                         AccountService accountService, PaymentRepository paymentRepo) {
+                         AccountService accountService, PaymentRepository paymentRepo, UserRepository userRepo) {
         this.ticketRepo = ticketRepo;
         this.scheduleSeatRepo = scheduleSeatRepo;
         this.accountService = accountService;
         this.paymentRepo = paymentRepo;
+        this.userRepo = userRepo;
     }
 
     public List<Ticket> findAll() {
         List<Ticket> ticketList = ticketRepo.findAll();
-        if (ticketList.isEmpty()) {
-            throw new ResourceNotFoundException("티켓이 없습니다.");
-        }
+//        if (ticketList.isEmpty()) {
+//            throw new ResourceNotFoundException("티켓이 없습니다.");
+//        }
         return ticketList;
     }
 
@@ -60,16 +64,16 @@ public class TicketService {
     }
     public List<Ticket> findByUserNum(Long userNum) {
         List<Ticket> ticketList = ticketRepo.findByUserNum(userNum);
-        if (ticketList.isEmpty()) {
-            throw new ResourceNotFoundException(userNum+"번 유저에 대한 티켓이 없습니다.");
-        }
+//        if (ticketList.isEmpty()) {
+//            throw new ResourceNotFoundException(userNum+"번 유저에 대한 티켓이 없습니다.");
+//        }
         return ticketList;
     }
     public List<Ticket> findByUserId(String userId) {
         List<Ticket> ticketList = ticketRepo.findByUserID(userId);
-        if (ticketList.isEmpty()) {
-            throw new ResourceNotFoundException("유저 "+userId+"에 대한 티켓이 없습니다.");
-        }
+//        if (ticketList.isEmpty()) {
+//            throw new ResourceNotFoundException("유저 "+userId+"에 대한 티켓이 없습니다.");
+//        }
         return ticketList;
     }
 
@@ -100,23 +104,69 @@ public class TicketService {
         if(ticket.getTicketState().equals(TicketState.C)){
             throw new ForbiddenException("이미 취소된 티켓입니다.");
         }
-        
+        // 비회원 처리
+        UserRole userRole = ticket.getUser().getRole();
+        if(userRole.equals(UserRole.N)){
+            throw new ForbiddenException("비회원 티켓은 정보를 변경하지 못합니다.");
+        }
+
+        // 판매가격 처리
+        if(ticketDTO.getSalePrice()!=null && ticketDTO.getSalePrice() > ticket.getStdPrice()){
+            throw new DataInconsistencyException("표준 가격보다 판매 가격이 더 높습니다.");
+        }
+
         TicketMapper.INSTANCE.updateFromDto(ticketDTO,ticket);
+
+        // 티켓 취소 처리
+        if(ticket.getTicketState().equals(TicketState.C)){
+            cancelProcess(ticket,userRole);
+        }
 
         Ticket updatedTicket = ticketRepo.save(ticket);
 
         return updatedTicket;
     }
 
+    // 비회원 티켓 삭제 - 비회원 까지 삭제
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public void delete(Long ticketNum) {
+        Ticket ticket = findOneByNum(ticketNum);
+
+        UserRole userRole = ticket.getUser().getRole();
+        if(!userRole.equals(UserRole.N)){
+            throw new ForbiddenException("비회원 티켓이 아니면 삭제하지 못합니다.");
+        }
+        cancelProcess(ticket,userRole);
+        ticketRepo.delete(ticket);
+        //비회원 티켓이 없을때만 삭제
+        if(findByUserNum(ticket.getUser().getUserNum()).isEmpty()){
+            userRepo.delete(ticket.getUser());
+        }
+    }
+
+    private void cancelProcess(Ticket ticket, UserRole userRole) {
+        // 환불
+        checkStateAndRefund(ticket,userRole);
+        // 상영일정-좌석 수정
+        ScheduleSeat scheduleSeat = ticket.getScheduleSeat();
+        scheduleSeat.setIsOccupied(Is.N);
+        scheduleSeatRepo.save(scheduleSeat);
+    }
+
+
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public Ticket changeSeat(Long ticketNum, InsertTicketDTO insertTicketDTO) {
         Ticket ticket = findOneByNum(ticketNum);
+        // 비회원 처리
+        if(ticket.getUser().getRole().equals(UserRole.N)){
+            throw new ForbiddenException("비회원은 자리 변경이 불가합니다.");
+        }
         // 이미 취소된 티켓인지 확인
         if(ticket.getTicketState().equals(TicketState.C)){
             throw new ForbiddenException("이미 취소된 티켓입니다.");
         }
 
-        checkIssuedAndRefund(ticket);
+        checkStateAndRefund(ticket, ticket.getUser().getRole());
 
         // 새로운 자리의 티켓 생성
         Ticket newTicket = insert(insertTicketDTO);
@@ -124,8 +174,8 @@ public class TicketService {
         return newTicket;
     }
 
-    private void checkIssuedAndRefund(Ticket ticket){
-        Optional<Payment> p = paymentRepo.findByTicketNumAndState(ticket.getTicketNum(), PayState.Y);
+    private void checkStateAndRefund(Ticket ticket, UserRole role){
+        Optional<Payment> p = paymentRepo.findByTicketNum(ticket.getTicketNum());
         if(p.isPresent()){
             Payment payment = p.get();
             // 환불
@@ -140,17 +190,18 @@ public class TicketService {
                     // 포인트 환불
                     break;
             }
-            // 결제 취소 상태로 변경
-            payment.setState(PayState.C);
-            paymentRepo.save(payment);
+            if(role.equals(UserRole.N)){
+                paymentRepo.delete(payment);
+            }else{
+                // 결제 취소 상태로 변경
+                payment.setState(PayState.C);
+                paymentRepo.save(payment);
+            }
         }
     }
 
     private void assignPrice(Ticket ticket){
-        Integer price = ticket.getScheduleSeat().getSeat().getSeatGrade().getPrice();
-        if(ticket.getSalePrice() > price){
-            throw new DataInconsistencyException("좌석 가격보다 판매 가격이 더 높습니다.");
-        }
+        int price = ticket.getScheduleSeat().getSeat().getSeatGrade().getPrice();
         ticket.setStdPrice(price);
     }
 

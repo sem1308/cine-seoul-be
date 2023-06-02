@@ -1,7 +1,7 @@
 package uos.cineseoul.entity;
 
 import lombok.*;
-import uos.cineseoul.utils.enums.GradeType;
+import uos.cineseoul.utils.enums.SeatGrade;
 
 import javax.persistence.*;
 
@@ -25,7 +25,7 @@ public class Seat {
 
     @Column(name="SEAT_GRADE", nullable = false, unique = false, columnDefinition = "char(1)")
     @Enumerated(EnumType.STRING)
-    private GradeType seatGrade;
+    private SeatGrade seatGrade;
 
     /* Foreign Key */
     @ManyToOne(fetch = FetchType.LAZY)

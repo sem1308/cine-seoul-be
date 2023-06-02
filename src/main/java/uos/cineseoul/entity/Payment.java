@@ -26,6 +26,9 @@ public class Payment{
     @Column(name="PRICE", nullable = false, unique = false)
     private int price;
 
+    @Column(name="PAYED_POINT", nullable = true, unique = false)
+    private int payedPoint;
+
     @Column(name="STATE", columnDefinition = "char(1)")
     @Enumerated(EnumType.STRING)
     private PayState state;

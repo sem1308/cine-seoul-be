@@ -95,23 +95,14 @@ public class ScheduleService {
     public Schedule insert(InsertScheduleDTO scheduleDTO) {
         // 중복 체크
         checkDuplicate(scheduleDTO.getSchedTime(),scheduleDTO.getScreen().getScreenNum());
-
         // 엔티티 매핑
         Schedule schedule = ScheduleMapper.INSTANCE.toEntity(scheduleDTO);
-        Integer emptySeat = schedule.getScreen().getTotalSeat();
-
-        schedule.setEmptySeat(emptySeat);
-
+        schedule.setEmptySeat(schedule.getScreen().getTotalSeat());
         // 상영일정 저장
         Schedule savedSched = scheduleRepo.save(schedule);
 
-        // 상영일정-좌석에 저장
-        List<Seat> seatList = savedSched.getScreen().getSeats();
-
-        seatList.forEach(seat -> {
-            ScheduleSeat ss = ScheduleSeat.builder().schedule(savedSched).seat(seat).isOccupied(Is.N).build();
-            scheduleSeatRepo.save(ss);
-        });
+        // 상영일정-좌석 저장
+        insertScheduleSeat(savedSched, savedSched.getScreen());
 
         return savedSched;
     }
@@ -120,27 +111,15 @@ public class ScheduleService {
     public Schedule update(Long schedNum, UpdateScheduleDTO scheduleDTO) {
         // 업데이트할 상영일정 불러오기
         Schedule schedule = findOneByNum(schedNum);
-
-        Screen screen = scheduleDTO.getScreen();
+        Screen screenTo = scheduleDTO.getScreen();
         // 상영관이 바꼈으면 상영관 교체후 상영일정-좌석 재등록 (단, 이미 예약된 티켓이 있다면 거절)
-        if(screen!=null && !(screen.getScreenNum().equals(schedule.getScreen().getScreenNum()))){
-
-            // 예약되어있는 자리 처리
-            schedule.getScheduleSeats().forEach(ss -> {
-                if(ss.getIsOccupied().equals(Is.Y)){
-                    throw new ForbiddenException("이미 예약된 자리가 존재합니다.");
-                }else{
-                    scheduleSeatRepo.delete(ss);
-                }
-            });
-
-            // 새로운 자리 등록
-            List<Seat> seatList = screen.getSeats();
-            seatList.forEach(seat->{
-                ScheduleSeat ss = ScheduleSeat.builder().schedule(schedule).seat(seat).isOccupied(Is.N).build();
-                scheduleSeatRepo.save(ss);
-            });
-            schedule.setEmptySeat(screen.getTotalSeat());
+        if(screenTo!=null && !(screenTo.getScreenNum().equals(schedule.getScreen().getScreenNum()))){
+            // 기존 상영일정-좌석 삭제
+            deleteScheduleSeat(schedule);
+            // 빈좌석 재등록
+            schedule.setEmptySeat(screenTo.getTotalSeat());
+            // 새로운 상영일정-좌석 등록
+            insertScheduleSeat(schedule,screenTo);
         }
         // 상영일정 엔티티 매핑
         ScheduleMapper.INSTANCE.updateFromDto(scheduleDTO, schedule);
@@ -149,6 +128,35 @@ public class ScheduleService {
         Schedule savedSched = scheduleRepo.save(schedule);
 
         return savedSched;
+    }
+
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public void delete(Long schedNum) {
+        // 업데이트할 상영일정 불러오기
+        Schedule schedule = findOneByNum(schedNum);
+        // 상영일정-좌석 처리
+        deleteScheduleSeat(schedule);
+        // 상영일정 삭제
+        scheduleRepo.delete(schedule);
+    }
+
+    public void deleteScheduleSeat(Schedule schedule) {
+        // 예약된 상영일정-좌석이 없어야 제거
+        schedule.getScheduleSeats().forEach(ss -> {
+            if(ss.getIsOccupied().equals(Is.Y)){
+                throw new ForbiddenException("이미 예약된 자리가 존재합니다.");
+            }else{
+                scheduleSeatRepo.delete(ss);
+            }
+        });
+    }
+
+    public void insertScheduleSeat(Schedule schedule, Screen screen) {
+        List<Seat> seatList = screen.getSeats();
+        seatList.forEach(seat->{
+            ScheduleSeat ss = ScheduleSeat.builder().schedule(schedule).seat(seat).isOccupied(Is.N).build();
+            scheduleSeatRepo.save(ss);
+        });
     }
 
     public PrintScheduleDTO getPrintDTO(Schedule schedule){

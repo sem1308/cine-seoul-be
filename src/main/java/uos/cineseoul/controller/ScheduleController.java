@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import uos.cineseoul.dto.create.CreateScheduleDTO;
 import uos.cineseoul.dto.fix.FixScheduleDTO;
 import uos.cineseoul.dto.response.PrintScheduleDTO;
+import uos.cineseoul.dto.response.PrintTicketDTO;
 import uos.cineseoul.entity.Schedule;
 import uos.cineseoul.entity.Screen;
 import uos.cineseoul.service.ScheduleService;
@@ -94,6 +95,17 @@ public class ScheduleController {
         ReturnMessage<Long> msg = new ReturnMessage<>();
         msg.setMessage("상영일정 변경이 완료되었습니다.");
         msg.setData(schedule.getSchedNum());
+        msg.setStatus(StatusEnum.OK);
+
+        return new ResponseEntity<>(msg, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{num}")
+    @ApiOperation(value = "상영일정 삭제 by 상영일정 번호", protocols = "http")
+    public ResponseEntity delete(@PathVariable("num") Long num) {
+        scheduleService.delete(num);
+        ReturnMessage<PrintTicketDTO> msg = new ReturnMessage<>();
+        msg.setMessage("상영일정 삭제가 완료되었습니다.");
         msg.setStatus(StatusEnum.OK);
 
         return new ResponseEntity<>(msg, HttpStatus.OK);
