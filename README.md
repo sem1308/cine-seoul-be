@@ -101,3 +101,24 @@
   |26	|영화카툰|
   |27	|영화음악|
   |28	|영화패러디포스터|
+
+## API 권한
++ 권한 종류
+
+| 권한(역할)  | 이름       | 설명                                           |
+|---------|----------|----------------------------------------------|
+| A       | ADMIN    | role이 'A'여야만 요청 가능                           |
+| M       | MEMBER   | role이 'M'여야만 요청 가능                           |
+| N       | NOT MEMBER | role이 'N'여야만 요청 가능                           |
+| AUTH    | AUTH     | JWT 토큰이 valid해야 요청 가능 , 실제 회원 role에는 존재하지 않음 |
+| P       | PERMIT     | 무조건 허용 , 실제 회원 role에는 존재하지 않음    |
+
++ API 권한
+
+| API               | 권한      | 비고                 |
+|-------------------|---------|--------------------|
+| /\*\*/admin/\*\*	 | A       | admin이 들어간 api     |
+| /ticket/**        | AUTH | /ticket으로 시작하는 api |
+| /payment/**       | AUTH | /payment 시작하는 api  |
+| /user/*[0-9]      | AUTH | /user/{num} api    |
+| anyRequest       | P | 위 api를 제외한 모든 api  |
