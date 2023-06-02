@@ -34,7 +34,7 @@ public class ScreenController {
     }
 
     @GetMapping("/{num}")
-    @ApiOperation(value = "상영관 상세 조회", protocols = "http")
+    @ApiOperation(value = "상영관 번호로 조회", protocols = "http")
     public ResponseEntity<PrintScreenDTO> lookUpScreenByNum(@PathVariable("num") Long num) {
         Screen screen = screenService.findOneByNum(num);
 

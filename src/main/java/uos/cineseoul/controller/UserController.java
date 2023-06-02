@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @GetMapping("/{num}")
-    @ApiOperation(value = "사용자 상세 조회", protocols = "http")
+    @ApiOperation(value = "사용자 번호로 조회", protocols = "http")
     public ResponseEntity<PrintUserDTO> lookUpUser(@PathVariable("num") Long num) {
         User user = userService.findOneByNum(num);
 
