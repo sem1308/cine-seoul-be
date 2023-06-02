@@ -37,26 +37,11 @@ public class ScheduleService {
 
     public List<Schedule> findAll() {
         List<Schedule> scheduleList = scheduleRepo.findAll();
-        if (scheduleList.isEmpty()) {
-            throw new ResourceNotFoundException("상영일정이 없습니다.");
-        }
+//        if (scheduleList.isEmpty()) {
+//            throw new ResourceNotFoundException("상영일정이 없습니다.");
+//        }
 
         return scheduleList;
-    }
-
-    public ScheduleSeat findScheduleSeat(Long schedNum, Long seatNum) {
-        ScheduleSeat scheduleSeatList = scheduleSeatRepo.findBySchedNumAndSeatNum(schedNum,seatNum).orElseThrow(()->{
-            throw new ResourceNotFoundException("번호가 "+ schedNum +"인 상영일정에는 번호가"+seatNum+"인 좌석이 없습니다.");
-        });
-
-        return scheduleSeatList;
-    }
-
-    public Schedule findOneByNum(Long num) {
-        Schedule schedule = scheduleRepo.findById(num).orElseThrow(()->{
-            throw new ResourceNotFoundException("번호가 "+ num +"인 상영일정이 없습니다.");
-        });
-        return schedule;
     }
 
     // 특정 날짜에 해당하는 상영일정 불러오기
@@ -65,14 +50,7 @@ public class ScheduleService {
         LocalDateTime startDatetime = LocalDateTime.of(time.toLocalDate(), time.toLocalTime().of(0,0,0));
         LocalDateTime endDatetime = LocalDateTime.of(time.toLocalDate(), time.toLocalTime().of(23,59,59));
 
-        System.out.println("오늘 시작 날짜 : " + startDatetime);
-        System.out.println("오늘 끝 날짜 : " + endDatetime);
-
         List<Schedule> scheduleList = scheduleRepo.findAllBySchedTimeBetween(startDatetime, endDatetime);
-
-        scheduleList.forEach(sched -> {
-            System.out.println("오늘 상영일자 : " + sched.getSchedTime());
-        });
         return scheduleList;
     }
 
@@ -90,6 +68,21 @@ public class ScheduleService {
     public List<Schedule> findByMovie(Long movieNum) {
         List<Schedule> scheduleList = scheduleRepo.findByMovieNum(movieNum);
         return scheduleList;
+    }
+
+    public Schedule findOneByNum(Long num) {
+        Schedule schedule = scheduleRepo.findById(num).orElseThrow(()->{
+            throw new ResourceNotFoundException("번호가 "+ num +"인 상영일정이 없습니다.");
+        });
+        return schedule;
+    }
+
+    public ScheduleSeat findScheduleSeat(Long schedNum, Long seatNum) {
+        ScheduleSeat scheduleSeatList = scheduleSeatRepo.findBySchedNumAndSeatNum(schedNum,seatNum).orElseThrow(()->{
+            throw new ResourceNotFoundException("번호가 "+ schedNum +"인 상영일정에는 번호가"+seatNum+"인 좌석이 없습니다.");
+        });
+
+        return scheduleSeatList;
     }
 
     public void checkDuplicate(LocalDateTime schedTime, Long screenNum){
