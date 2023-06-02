@@ -3,7 +3,6 @@ package uos.cineseoul.controller.movie;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -15,18 +14,16 @@ import uos.cineseoul.dto.insert.InsertMovieDTO;
 import uos.cineseoul.dto.response.PrintDetailedMovieDTO;
 import uos.cineseoul.dto.response.PrintMovieDTO;
 import uos.cineseoul.dto.response.PrintPageDTO;
-import uos.cineseoul.dto.response.PrintPaymentDTO;
 import uos.cineseoul.dto.update.UpdateMovieDTO;
 import uos.cineseoul.entity.movie.Movie;
 import uos.cineseoul.service.movie.MovieService;
-import uos.cineseoul.utils.enums.RunningType;
-import uos.cineseoul.utils.enums.SortMovieBy;
+import uos.cineseoul.utils.PageUtil;
+import uos.cineseoul.utils.enums.request.RunningType;
+import uos.cineseoul.utils.enums.request.SortMovieBy;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -54,24 +51,17 @@ public class MovieController {
                                                                @RequestParam(value="sort_by", required = false) SortMovieBy sortBy,
                                                                @RequestParam(value="sort_dir", required = false) Sort.Direction sortDir,
                                                                @RequestParam(value="genre", required = false) String genre,
-                                                               @RequestParam(value="page", required = false, defaultValue = "0") int page,
-                                                               @RequestParam(value="size", required = false, defaultValue = "12") int size) {
-        Pageable pageable;
-        if(sortDir==null) sortDir = Sort.Direction.ASC;
-        if(sortBy==null) sortBy = SortMovieBy.MOVIENUM;
-        if(sortDir.equals(Sort.Direction.ASC)){
-            pageable = PageRequest.of(page, size, Sort.by(sortBy.getFieldName()).ascending());
-        }else{
-            pageable = PageRequest.of(page, size, Sort.by(sortBy.getFieldName()).descending());
-        }
+                                                               @RequestParam(value="page", required = false, defaultValue = "0") Integer page,
+                                                               @RequestParam(value="size", required = false, defaultValue = "12") Integer size) {
+        Pageable pageable = PageUtil.setPageable(page, size,sortBy==null?null:sortBy.getFieldName(),sortDir);
         Page<Movie> movieList;
         if(type==null)type=RunningType.all;
         switch (type){
             case showing:
-                movieList = movieService.findAllShowingMovie(pageable);
+                movieList = movieService.findAllShowingMovie(pageable, genre);
                 break;
             case upcomming:
-                movieList = movieService.findAllWillReleaseMovie(pageable);
+                movieList = movieService.findAllWillReleaseMovie(pageable, genre);
                 break;
             case all:
             default:
