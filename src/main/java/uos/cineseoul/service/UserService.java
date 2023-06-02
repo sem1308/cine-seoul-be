@@ -49,6 +49,21 @@ public class UserService {
         return user;
     }
 
+    public User findOneByPhoneNumAndRole(String phoneNum, UserRole role) {
+        User user = userRepo.findByPhoneNumAndRole(phoneNum, role).orElseThrow(()->{
+            throw new ResourceNotFoundException("역할이 "+role+"인 해당 전화번호에 대한 사용자가 없습니다.");
+        });
+        return user;
+    }
+
+//    public List<User> findByPhoneNum(String phoneNum) {
+//        List<User> userList = userRepo.findByPhoneNum(phoneNum);
+////        if(user.isEmpty()){
+////            throw new ResourceNotFoundException("해당 전화번호를 가진 사용자 정보가 없습니다.");
+////        }
+//        return userList;
+//    }
+
     public User findOneById(String id) {
         User user = userRepo.findByUserId(id).orElseThrow(()->{
             throw new ResourceNotFoundException("아이디가 "+id+"인 사용자가 없습니다.");
@@ -69,9 +84,22 @@ public class UserService {
         return user;
     }
 
-    public void checkDuplicate(String id){
+    public User loginNotMember(@NotNull LoginDTO loginInfo) {
+        User user = findOneByPhoneNumAndRole(loginInfo.getPhoneNum(),UserRole.N);
+        if(!user.getRole().equals(UserRole.N))
+            throw new ResourceNotFoundException("비회원이 아닙니다.");
+        return user;
+    }
+
+    public void checkDuplicateById(String id){
         if (userRepo.findByUserId(id).isPresent()) {
             throw new DuplicateKeyException("아이디가 존재합니다.");
+        }
+    }
+
+    public void checkDuplicateByPhoneNum(String phoneNum){
+        if (!userRepo.findByPhoneNum(phoneNum).isEmpty()) {
+            throw new DuplicateKeyException("해당 전화번호를 가진 회원 또는 비회원이 존재합니다.");
         }
     }
 
@@ -83,11 +111,16 @@ public class UserService {
     public User insert(InsertUserDTO userDTO) {
         User user = UserMapper.INSTANCE.toEntity(userDTO);
 
-        checkDuplicate(user.getId());
-
-        user.setPw(passwordEncoder.encode(user.getPw()));
-        if(!user.getRole().equals(UserRole.N)){
-            user.setPoint(0);
+        if(user.getRole().equals(UserRole.N)){
+            // 비회원
+            checkDuplicateByPhoneNum(user.getPhoneNum());
+        }else{
+            // not 비회원
+            checkDuplicateById(user.getId());
+            user.setPw(passwordEncoder.encode(user.getPw()));
+            if(!user.getRole().equals(UserRole.N)){
+                user.setPoint(0);
+            }
         }
 
         User newUser = userRepo.save(user);
