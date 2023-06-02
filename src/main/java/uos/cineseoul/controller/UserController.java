@@ -37,7 +37,7 @@ public class UserController {
 
     @GetMapping("/admin")
     @ApiOperation(value = "전체 사용자 목록 조회", protocols = "http")
-    public ResponseEntity<PrintPageDTO> lookUpUserList(@RequestParam(value="sort_name", required = false, defaultValue = "0") boolean isSortName,
+    public ResponseEntity<PrintPageDTO<PrintUserDTO>> lookUpUserList(@RequestParam(value="sort_name", required = false, defaultValue = "0") boolean isSortName,
                                              @RequestParam(value="sort_dir", required = false) Sort.Direction sortDir,
                                              @RequestParam(value="page", required = false, defaultValue = "0") int page,
                                              @RequestParam(value="size", required = false, defaultValue = "12") int size) {

@@ -42,7 +42,7 @@ public class TicketController {
 
     @GetMapping()
     @ApiOperation(value = "전체 티켓 목록 조회 (filter : userNum)", protocols = "http")
-    public ResponseEntity<PrintPageDTO> lookUpTicketList(@RequestParam(value="userNum", required = false) Long userNum,
+    public ResponseEntity<PrintPageDTO<PrintTicketDTO>> lookUpTicketList(@RequestParam(value="userNum", required = false) Long userNum,
                                                          @RequestParam(value="sort_created_date", required = false, defaultValue = "1") boolean isSortCreatedDate,
                                                          @RequestParam(value="sort_dir", required = false) Sort.Direction sortDir,
                                                          @RequestParam(value="page", required = false, defaultValue = "0") int page,

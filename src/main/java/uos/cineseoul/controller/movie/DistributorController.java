@@ -34,7 +34,7 @@ public class DistributorController {
 
     @GetMapping()
     @Operation(description = "감독 정보 목록을 조회한다.")
-    public ResponseEntity<PrintPageDTO> lookUpGenreList(@RequestParam(value="sort_name", required = false) boolean isSortName,
+    public ResponseEntity<PrintPageDTO<PrintDistributorDTO>> lookUpGenreList(@RequestParam(value="sort_name", required = false) boolean isSortName,
                                                        @RequestParam(value="sort_dir", required = false) Sort.Direction sortDir,
                                                        @RequestParam(value="page", required = false, defaultValue = "0") int page,
                                                        @RequestParam(value="size", required = false, defaultValue = "12") int size) {
