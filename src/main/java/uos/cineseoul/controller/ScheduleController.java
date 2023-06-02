@@ -45,7 +45,7 @@ public class ScheduleController {
 
     @GetMapping()
     @ApiOperation(value = "특정 조건의 상영일정 목록 조회 (filter: movieNum , date, show_seats)", protocols = "http")
-    public ResponseEntity<PrintPageDTO> lookUpScheduleListByMovie(@RequestParam(value="movieNum", required = false) Long movieNum,
+    public ResponseEntity<PrintPageDTO<PrintScheduleDTO>> lookUpScheduleListByMovie(@RequestParam(value="movieNum", required = false) Long movieNum,
                                                                 @ApiParam(value = "yyyy-MM-dd", required = false) @RequestParam(value="date", required = false) String date,
                                                                 @RequestParam(value="sort_order", required = false) boolean isSortOrder,
                                                                 @RequestParam(value="show_seats", required = false) boolean isShowSeats,

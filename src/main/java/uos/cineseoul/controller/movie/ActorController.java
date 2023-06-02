@@ -34,7 +34,7 @@ public class ActorController {
 
     @GetMapping()
     @Operation(description = "배우 목록을 조회한다.")
-    public ResponseEntity<PrintPageDTO> lookUpGenreList(@RequestParam(value="sort_name", required = false) boolean isSortName,
+    public ResponseEntity<PrintPageDTO<PrintActorDTO>> lookUpGenreList(@RequestParam(value="sort_name", required = false) boolean isSortName,
                                                        @RequestParam(value="sort_dir", required = false) Sort.Direction sortDir,
                                                        @RequestParam(value="page", required = false, defaultValue = "0") int page,
                                                        @RequestParam(value="size", required = false, defaultValue = "12") int size) {
@@ -53,9 +53,6 @@ public class ActorController {
                 .stream()
                 .map(a -> new PrintActorDTO(a))
                 .collect(Collectors.toList());
-        Map<String, Object> responseData = new HashMap<>();
-        responseData.put("list", printActorDTOS);
-        responseData.put("total_page", actorList.getTotalPages());
         return new ResponseEntity<>(new PrintPageDTO<>(printActorDTOS,actorList.getTotalPages()), HttpStatus.OK);
     }
 

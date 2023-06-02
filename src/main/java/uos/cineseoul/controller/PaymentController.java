@@ -37,7 +37,7 @@ public class PaymentController {
 
     @GetMapping()
     @ApiOperation(value = "전체 결제내역 목록 조회 (filter : userNum)", protocols = "http")
-    public ResponseEntity<PrintPageDTO> lookUpPaymentList(@RequestParam(value="userNum", required = false) Long userNum,
+    public ResponseEntity<PrintPageDTO<PrintPaymentDTO>> lookUpPaymentList(@RequestParam(value="userNum", required = false) Long userNum,
                                                           @RequestParam(value="sort_created_date", required = false, defaultValue = "1") boolean isSortCreatedDate,
                                                           @RequestParam(value="sort_dir", required = false) Sort.Direction sortDir,
                                                           @RequestParam(value="page", required = false, defaultValue = "0") int page,

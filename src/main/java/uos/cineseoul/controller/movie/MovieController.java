@@ -50,7 +50,7 @@ public class MovieController {
 
     @GetMapping()
     @Operation(description = "특정 조건으로 영화 목록을 조회한다.")
-    public ResponseEntity<PrintPageDTO> lookUpMovieList(@RequestParam(value="type", required = true) RunningType type,
+    public ResponseEntity<PrintPageDTO<PrintMovieDTO>> lookUpMovieList(@RequestParam(value="type", required = true) RunningType type,
                                                                @RequestParam(value="sort_by", required = false) SortMovieBy sortBy,
                                                                @RequestParam(value="sort_dir", required = false) Sort.Direction sortDir,
                                                                @RequestParam(value="genre", required = false) String genre,
