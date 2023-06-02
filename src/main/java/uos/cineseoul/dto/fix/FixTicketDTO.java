@@ -18,6 +18,9 @@ public class FixTicketDTO {
     // 티켓 상태
     private Long ticketNum ;
 
+    // 회원, 비회원 판단하기 위함
+    private Long userNum ;
+
     private Integer salePrice;
 
     @Enumerated(EnumType.STRING)

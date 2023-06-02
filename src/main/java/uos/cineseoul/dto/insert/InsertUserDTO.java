@@ -26,7 +26,6 @@ public class InsertUserDTO {
     @Size(max = 100, min = 0)
     private String name;
 
-    @Size(max = 1, min = 1)
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
