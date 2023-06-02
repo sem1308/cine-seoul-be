@@ -50,7 +50,7 @@ public class MovieController {
 
     @GetMapping()
     @Operation(description = "특정 조건으로 영화 목록을 조회한다.")
-    public ResponseEntity<PrintPageDTO<PrintMovieDTO>> lookUpMovieList(@RequestParam(value="type", required = true) RunningType type,
+    public ResponseEntity<PrintPageDTO<PrintMovieDTO>> lookUpMovieList(@RequestParam(value="type", required = false) RunningType type,
                                                                @RequestParam(value="sort_by", required = false) SortMovieBy sortBy,
                                                                @RequestParam(value="sort_dir", required = false) Sort.Direction sortDir,
                                                                @RequestParam(value="genre", required = false) String genre,
@@ -64,7 +64,8 @@ public class MovieController {
         }else{
             pageable = PageRequest.of(page, size, Sort.by(sortBy.getFieldName()).descending());
         }
-        Page<Movie> movieList = null;
+        Page<Movie> movieList;
+        if(type==null)type=RunningType.all;
         switch (type){
             case showing:
                 movieList = movieService.findAllShowingMovie(pageable);
@@ -73,6 +74,7 @@ public class MovieController {
                 movieList = movieService.findAllWillReleaseMovie(pageable);
                 break;
             case all:
+            default:
                 movieList = movieService.findAllMovie(pageable, genre);
                 break;
         }
