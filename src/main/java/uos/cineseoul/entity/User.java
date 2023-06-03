@@ -26,13 +26,13 @@ public class User{
     private List<Ticket> tickets;
     /* */
 
-    @Column(name="ID", nullable = true, unique = false, length = 100)
+    @Column(name="ID", nullable = true, length = 100)
     private String id;
 
-    @Column(name="PW", nullable = true, unique = false, length = 500)
+    @Column(name="PW", nullable = false, length = 500)
     private String pw;
 
-    @Column(name="NAME", nullable = true, unique = false, length = 100)
+    @Column(name="NAME", nullable = false, length = 100)
     private String name;
 
     @Column(name="RESIDENT_NUM", nullable = true, length = 13)

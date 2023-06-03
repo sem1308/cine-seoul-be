@@ -1,5 +1,6 @@
 package uos.cineseoul.service;
 
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import uos.cineseoul.dto.insert.InsertUserDTO;
 import uos.cineseoul.dto.request.LoginDTO;
+import uos.cineseoul.dto.request.LoginNotMemberDTO;
 import uos.cineseoul.dto.response.PrintUserDTO;
 import uos.cineseoul.dto.update.UpdateUserDTO;
 import uos.cineseoul.entity.User;
@@ -24,15 +26,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepo;
     private final PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public UserService(UserRepository userRepo, PasswordEncoder passwordEncoder) {
-        this.userRepo = userRepo;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     public List<User> findAll() {
         List<User> userList = userRepo.findAll();
@@ -88,10 +85,12 @@ public class UserService {
         return user;
     }
 
-    public User loginNotMember(@NotNull LoginDTO loginInfo) {
+    public User loginNotMember(@NotNull LoginNotMemberDTO loginInfo) {
         User user = findOneByPhoneNumAndRole(loginInfo.getPhoneNum(),UserRole.N);
-        if(!user.getRole().equals(UserRole.N))
-            throw new ResourceNotFoundException("비회원이 아닙니다.");
+        // 암호 일치 확인
+        if (!passwordEncoder.matches(loginInfo.getPw(), user.getPw())) {
+            throw new ResourceNotFoundException("비밀번호가 틀렸습니다.");
+        }
         return user;
     }
 
@@ -112,6 +111,11 @@ public class UserService {
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public void deleteByNum(Long num) {
+        userRepo.deleteById(num);
+    }
+
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public User insert(InsertUserDTO userDTO) {
         User user = UserMapper.INSTANCE.toEntity(userDTO);
 
@@ -121,12 +125,9 @@ public class UserService {
         }else{
             // not 비회원
             checkDuplicateById(user.getId());
-            user.setPw(passwordEncoder.encode(user.getPw()));
-            if(!user.getRole().equals(UserRole.N)){
-                user.setPoint(0);
-            }
+            user.setPoint(0);
         }
-
+        user.setPw(passwordEncoder.encode(user.getPw()));
         User newUser = userRepo.save(user);
 
         return newUser;
