@@ -116,10 +116,8 @@
 
 + API 권한
 
-| API               | 권한      | 비고                 |
-|-------------------|---------|--------------------|
-| /\*\*/admin/\*\*	 | A       | admin이 들어간 api     |
-| /ticket/**        | AUTH | /ticket으로 시작하는 api |
-| /payment/**       | AUTH | /payment 시작하는 api  |
-| /user/*[0-9]      | AUTH | /user/{num} api    |
-| anyRequest       | P | 위 api를 제외한 모든 api  |
+| API               | 권한      | 비고                |
+|-------------------|---------|-------------------|
+| /\*\*/admin/\*\*	 | A       | admin이 들어간 api    |
+| /\*\*/auth/\*\*	  | AUTH | auth가 들어간 api     |
+| anyRequest        | P | 위 api를 제외한 모든 api |
