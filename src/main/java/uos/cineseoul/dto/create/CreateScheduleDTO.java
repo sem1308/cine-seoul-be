@@ -22,8 +22,6 @@ public class CreateScheduleDTO {
     private Long movieNum;
 
     public InsertScheduleDTO toInsertDTO(Screen screen, Movie movie){
-        InsertScheduleDTO insertDTO = InsertScheduleDTO.builder().schedTime(schedTime).order(order).movie(movie).screen(screen).build();
-
-        return insertDTO;
+        return InsertScheduleDTO.builder().schedTime(schedTime).order(order).movie(movie).screen(screen).build();
     }
 }

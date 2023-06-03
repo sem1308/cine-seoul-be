@@ -14,7 +14,9 @@ import javax.validation.constraints.Size;
 @Getter
 @Builder
 public class InsertPaymentDTO {
-    private int price;
+    private Integer price;
+
+    private Integer payedPoint;
 
     @Size(max = 16, min=16)
     private String cardNum;

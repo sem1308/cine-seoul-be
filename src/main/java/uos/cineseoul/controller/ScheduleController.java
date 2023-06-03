@@ -86,11 +86,11 @@ public class ScheduleController {
 
     @PostMapping("/admin")
     @ApiOperation(value = "상영일정 등록", protocols = "http")
-    public ResponseEntity<ReturnMessage> register(@RequestBody CreateScheduleDTO scheduleDTO) {
+    public ResponseEntity<ReturnMessage<PrintScheduleDTO>> register(@RequestBody CreateScheduleDTO scheduleDTO) {
         Schedule schedule = scheduleService.insert(scheduleDTO.toInsertDTO(screenService.findOneByNum(scheduleDTO.getScreenNum()),movieService.findMovie(scheduleDTO.getMovieNum())));
-        ReturnMessage<Long> msg = new ReturnMessage<>();
+        ReturnMessage<PrintScheduleDTO> msg = new ReturnMessage<>();
         msg.setMessage("상영일정 등록이 완료되었습니다.");
-        msg.setData(schedule.getSchedNum());
+        msg.setData(scheduleService.getPrintDTO(schedule, false));
         msg.setStatus(StatusEnum.OK);
 
         return new ResponseEntity<>(msg, HttpStatus.OK);
@@ -98,7 +98,7 @@ public class ScheduleController {
 
     @PutMapping("/admin")
     @ApiOperation(value = "상영일정 정보 변경", protocols = "http")
-    public ResponseEntity<ReturnMessage> update(@RequestBody FixScheduleDTO scheduleDTO) {
+    public ResponseEntity<ReturnMessage<PrintScheduleDTO>> update(@RequestBody FixScheduleDTO scheduleDTO) {
         Screen screen;
         try{
             screen = screenService.findOneByNum(scheduleDTO.getScreenNum());
@@ -106,17 +106,17 @@ public class ScheduleController {
             screen = null;
         }
         Schedule schedule = scheduleService.update(scheduleDTO.getSchedNum(),scheduleDTO.toUpdateDTO(screen));
-        ReturnMessage<Long> msg = new ReturnMessage<>();
+        ReturnMessage<PrintScheduleDTO> msg = new ReturnMessage<>();
         msg.setMessage("상영일정 변경이 완료되었습니다.");
-        msg.setData(schedule.getSchedNum());
+        msg.setData(scheduleService.getPrintDTO(schedule, false));
         msg.setStatus(StatusEnum.OK);
 
         return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{num}")
+    @DeleteMapping("/admin/{num}")
     @ApiOperation(value = "상영일정 삭제 by 상영일정 번호", protocols = "http")
-    public ResponseEntity delete(@PathVariable("num") Long num) {
+    public ResponseEntity<ReturnMessage<PrintTicketDTO>> delete(@PathVariable("num") Long num) {
         scheduleService.delete(num);
         ReturnMessage<PrintTicketDTO> msg = new ReturnMessage<>();
         msg.setMessage("상영일정 삭제가 완료되었습니다.");

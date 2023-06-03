@@ -1,5 +1,6 @@
 package uos.cineseoul.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uos.cineseoul.entity.Account;
@@ -11,25 +12,19 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Service
+@RequiredArgsConstructor
 public class AccountService {
     private  final AccountRepository accountRepo;
-
-    @Autowired
-    public AccountService(AccountRepository accountRepo) {
-        this.accountRepo = accountRepo;
-    }
 
     public void payByAccountNum(Integer price, String accountNum){
         Account account = accountRepo.findById(accountNum)
                 .orElseThrow(() -> new ResourceNotFoundException("계좌 정보가 없습니다."));
-
         pay(account, price);
     }
 
     public void payByCardNum(Integer price, String cusName, String cardNum){
         Account account = accountRepo.findByCardNumAndOwnerName(cardNum,cusName)
                 .orElseThrow(() -> new ResourceNotFoundException("카드번호:"+cardNum+", 사용자 이름:"+cusName+"에 해당하는 카드 정보가 없습니다."));
-
         pay(account, price);
     }
 

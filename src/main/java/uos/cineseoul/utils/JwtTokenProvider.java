@@ -23,8 +23,8 @@ public class JwtTokenProvider {
 
     private String secretKey = "cineseoulbackendsecretkey120120120";
 
-    // 토큰 유효시간 30분
-    private long tokenValidTime = 30 * 60 * 1000L;
+    // 토큰 유효시간 300분 - 개발시에만 - prod 할땐 30분 or 60분 예전
+    private long tokenValidTime = 300 * 60 * 1000L;
 
     // private final UserDetailsService userDetailsService;
 

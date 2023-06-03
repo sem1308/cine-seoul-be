@@ -1,5 +1,6 @@
 package uos.cineseoul.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -18,13 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ScreenService {
     private final ScreenRepository screenRepo;
-
-    @Autowired
-    public ScreenService(ScreenRepository screenRepo) {
-        this.screenRepo = screenRepo;
-    }
 
     public List<Screen> findAll() {
         List<Screen> screenList = screenRepo.findAll();

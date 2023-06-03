@@ -15,7 +15,9 @@ import javax.validation.constraints.Size;
 @Getter
 @Builder
 public class CreatePaymentDTO {
-    private int price;
+    private Integer price;
+
+    private Integer payedPoint;
 
     @Size(max = 16, min=16)
     private String cardNum;
@@ -29,9 +31,7 @@ public class CreatePaymentDTO {
     private Long ticketNum;
 
     public InsertPaymentDTO toInsertDTO(User user, Ticket ticket){
-        InsertPaymentDTO insertDTO = InsertPaymentDTO.builder().price(price).cardNum(cardNum).accountNum(accountNum)
-                .paymentMethod(paymentMethod).user(user).ticket(ticket).state(PayState.Y).build();
-
-        return insertDTO;
+        return InsertPaymentDTO.builder().price(price).cardNum(cardNum).accountNum(accountNum)
+                .paymentMethod(paymentMethod).payedPoint(payedPoint).user(user).ticket(ticket).state(PayState.Y).build();
     }
 }

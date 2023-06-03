@@ -28,8 +28,6 @@ public class CreateSeatDTO {
     private Long screenNum;
 
     public InsertSeatDTO toInsertDTO(Screen screen){
-        InsertSeatDTO insertDTO = InsertSeatDTO.builder().row(row).col(col).seatGrade(seatGrade).screen(screen).build();
-
-        return insertDTO;
+        return InsertSeatDTO.builder().row(row).col(col).seatGrade(seatGrade).screen(screen).build();
     }
 }

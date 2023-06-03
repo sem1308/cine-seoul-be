@@ -5,8 +5,9 @@ import uos.cineseoul.annotation.IdStartsWithEnglish;
 import uos.cineseoul.annotation.PhoneNumCheck;
 
 @Data
-public class LoginDTO {
-    @IdStartsWithEnglish
-    String id;
+public class LoginNotMemberDTO {
+    String name;
     String pw;
+    @PhoneNumCheck
+    String phoneNum;
 }

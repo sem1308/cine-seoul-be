@@ -15,13 +15,6 @@ import javax.persistence.Enumerated;
 @Getter
 @Builder
 public class CreateTicketDTO {
-    private Integer stdPrice;
-
-    private Integer salePrice;
-
-    @Enumerated(EnumType.STRING)
-    private TicketState ticketState;
-
     private Long userNum;
 
     private Long schedNum;
@@ -29,9 +22,6 @@ public class CreateTicketDTO {
     private Long seatNum;
 
     public InsertTicketDTO toInsertDTO(User user, ScheduleSeat scheduleSeat){
-        InsertTicketDTO insertDTO = InsertTicketDTO.builder().stdPrice(stdPrice).salePrice(salePrice)
-                .ticketState(TicketState.N).user(user).scheduleSeat(scheduleSeat).build();
-
-        return insertDTO;
+        return InsertTicketDTO.builder().ticketState(TicketState.N).user(user).scheduleSeat(scheduleSeat).build();
     }
 }
