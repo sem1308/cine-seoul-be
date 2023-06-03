@@ -23,15 +23,16 @@ public class InsertUserDTO {
     private String id;
 
     // 입력 비밀번호 자리수 제한
+    @NotNull
     @Size(max = 16)
     private String pw;
 
+    @NotNull
     @Size(max = 100)
-    @Null
     private String name;
 
-    @Enumerated(EnumType.STRING)
     @NotNull
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     @ResidentNumCheck
