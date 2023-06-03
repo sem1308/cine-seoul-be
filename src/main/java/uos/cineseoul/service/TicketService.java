@@ -1,7 +1,7 @@
 
 package uos.cineseoul.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,19 +10,21 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import uos.cineseoul.dto.insert.InsertTicketDTO;
+import uos.cineseoul.dto.response.PrintGenreDTO;
 import uos.cineseoul.dto.response.PrintTicketDTO;
 import uos.cineseoul.dto.update.UpdateTicketDTO;
 import uos.cineseoul.entity.Payment;
 import uos.cineseoul.entity.ScheduleSeat;
 import uos.cineseoul.entity.Ticket;
+import uos.cineseoul.entity.movie.Movie;
 import uos.cineseoul.exception.DataInconsistencyException;
 import uos.cineseoul.exception.ForbiddenException;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.TicketMapper;
+import uos.cineseoul.repository.MovieRepository;
 import uos.cineseoul.repository.PaymentRepository;
 import uos.cineseoul.repository.ScheduleSeatRepository;
 import uos.cineseoul.repository.TicketRepository;
-import uos.cineseoul.repository.UserRepository;
 import uos.cineseoul.utils.enums.Is;
 import uos.cineseoul.utils.enums.PayState;
 import uos.cineseoul.utils.enums.TicketState;
@@ -33,22 +35,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class TicketService {
     private final TicketRepository ticketRepo;
     private final ScheduleSeatRepository scheduleSeatRepo;
     private final AccountService accountService;
     private final PaymentRepository paymentRepo;
-    private final UserRepository userRepo;
-
-    @Autowired
-    public TicketService(TicketRepository ticketRepo, ScheduleSeatRepository scheduleSeatRepo,
-                         AccountService accountService, PaymentRepository paymentRepo, UserRepository userRepo) {
-        this.ticketRepo = ticketRepo;
-        this.scheduleSeatRepo = scheduleSeatRepo;
-        this.accountService = accountService;
-        this.paymentRepo = paymentRepo;
-        this.userRepo = userRepo;
-    }
+    private final MovieRepository movieRepo;
 
     public List<Ticket> findAll() {
         List<Ticket> ticketList = ticketRepo.findAll();
@@ -83,7 +76,7 @@ public class TicketService {
         if(scheduleSeat.getIsOccupied().equals(Is.Y)){
             throw new DuplicateKeyException("해당 상영일정 좌석에 대해 이미 예약이 되어있습니다.");
         }
-
+        // 좌석 할당 처리
         scheduleSeat.setIsOccupied(Is.Y);
         scheduleSeatRepo.save(scheduleSeat);
 
@@ -93,6 +86,11 @@ public class TicketService {
         assignPrice(ticket);
 
         Ticket savedTicket = ticketRepo.save(ticket);
+
+        // 영화의 예매 수 1개 올리기
+        Movie movie = savedTicket.getScheduleSeat().getSchedule().getMovie();
+        movie.setTicketCount(movie.getTicketCount()+1);
+        movieRepo.save(movie);
 
         return savedTicket;
     }
@@ -122,7 +120,7 @@ public class TicketService {
         return updatedTicket;
     }
 
-    // 비회원 티켓 삭제 - 비회원 까지 삭제
+    // 비회원 티켓 삭제
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void delete(Long ticketNum) {
         Ticket ticket = findOneByNum(ticketNum);
@@ -133,10 +131,11 @@ public class TicketService {
         }
         cancelProcess(ticket,userRole);
         ticketRepo.delete(ticket);
-        //비회원 티켓이 없을때만 삭제
-        if(findByUserNum(ticket.getUser().getUserNum()).isEmpty()){
-            userRepo.delete(ticket.getUser());
-        }
+    }
+
+    public void checkUser(Long ticketNum, Long userNum){
+        if(!findOneByNum(ticketNum).getUser().getUserNum().equals(userNum))
+            throw new ForbiddenException("티켓 예매자와 현 사용자의 정보가 일치하지 않습니다.");
     }
 
     private void cancelProcess(Ticket ticket, UserRole userRole) {
@@ -146,23 +145,26 @@ public class TicketService {
         ScheduleSeat scheduleSeat = ticket.getScheduleSeat();
         scheduleSeat.setIsOccupied(Is.N);
         scheduleSeatRepo.save(scheduleSeat);
+        // 영화의 예매 수 1개 내리기
+        Movie movie = scheduleSeat.getSchedule().getMovie();
+        movie.setTicketCount(movie.getTicketCount()-1);
+        movieRepo.save(movie);
     }
 
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public Ticket changeSeat(Long ticketNum, InsertTicketDTO insertTicketDTO) {
-        Ticket ticket = findOneByNum(ticketNum);
-        // 이미 취소된 티켓인지 확인
-        if(ticket.getTicketState().equals(TicketState.C)){
-            throw new ForbiddenException("이미 취소된 티켓입니다.");
+    public Ticket changeSeat(Long ticketNum, InsertTicketDTO insertTicketDTO, UpdateTicketDTO updateTicketDTO) {
+        // 티켓 예매자 확인
+        checkUser(ticketNum, insertTicketDTO.getUser().getUserNum());
+        // 티켓 취소
+        if(insertTicketDTO.getUser().getRole().equals(UserRole.N)){
+            delete(ticketNum);
+        }else{
+            update(ticketNum, updateTicketDTO);
         }
-
-        checkStateAndRefund(ticket, ticket.getUser().getRole());
-
-        // 새로운 자리의 티켓 생성
-        Ticket newTicket = insert(insertTicketDTO);
-
-        return newTicket;
+        // 티켓 등록
+        Ticket ticket = insert(insertTicketDTO);
+        return ticket;
     }
 
     private void checkStateAndRefund(Ticket ticket, UserRole role){
@@ -198,6 +200,15 @@ public class TicketService {
 
     public PrintTicketDTO getPrintDTO(Ticket ticket){
         PrintTicketDTO ticketDTO = TicketMapper.INSTANCE.toDTO(ticket);
+        if(ticket.getScheduleSeat()!=null){
+            List<PrintGenreDTO> genreList = new ArrayList<>();
+            Movie movie = ticket.getScheduleSeat().getSchedule().getMovie();
+            movie.getMovieGenreList().forEach(movieGenre ->
+                    genreList.add(new PrintGenreDTO(movieGenre.getGenre()))
+            );
+            ticketDTO.getScheduleSeat().getSchedule().getMovie().setGenreList(genreList);
+            ticketDTO.getScheduleSeat().getSchedule().getMovie().setGradeName(movie.getGrade().getName());
+        }
         return ticketDTO;
     }
 
