@@ -24,10 +24,10 @@ public class Payment{
     private String approvalNum ;
 
     @Column(name="PRICE", nullable = false, unique = false)
-    private int price;
+    private Integer price;
 
     @Column(name="PAYED_POINT", nullable = true, unique = false)
-    private int payedPoint;
+    private Integer payedPoint;
 
     @Column(name="STATE", columnDefinition = "char(1)")
     @Enumerated(EnumType.STRING)
