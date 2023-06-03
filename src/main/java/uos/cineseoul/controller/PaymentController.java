@@ -36,7 +36,7 @@ public class PaymentController {
     private final UserService userService;
     private final TicketService ticketService;
 
-    @GetMapping()
+    @GetMapping("/auth")
     @ApiOperation(value = "전체 결제내역 목록 조회 (filter : userNum)", protocols = "http")
     public ResponseEntity<PrintPageDTO<PrintPaymentDTO>> lookUpPaymentList(@RequestParam(value="userNum", required = false) Long userNum,
                                                           @RequestParam(value="sort_created_date", required = false, defaultValue = "1") boolean isSortCreatedDate,
@@ -56,7 +56,7 @@ public class PaymentController {
         return new ResponseEntity<>(new PrintPageDTO<>(printPaymentDTOS,paymentList.getTotalPages()), HttpStatus.OK);
     }
 
-    @GetMapping("/{num}")
+    @GetMapping("/auth/{num}")
     @ApiOperation(value = "결제내역 번호로 조회", protocols = "http")
     public ResponseEntity<PrintPaymentDTO> lookUpPaymentByNum(@PathVariable("num") Long num) {
         Payment payment = paymentService.findOneByNum(num);
@@ -64,9 +64,9 @@ public class PaymentController {
         return new ResponseEntity<>(paymentService.getPrintDTO(payment), HttpStatus.OK);
     }
 
-    @PostMapping()
+    @PostMapping("/auth")
     @ApiOperation(value = "결제내역 등록", protocols = "http")
-    public ResponseEntity register(@RequestBody CreatePaymentDTO paymentDTO) {
+    public ResponseEntity<ReturnMessage<PrintPaymentDTO>> register(@RequestBody CreatePaymentDTO paymentDTO) {
         Payment payment = paymentService.insert(paymentDTO.toInsertDTO(userService.findOneByNum(paymentDTO.getUserNum())
                                                                             ,ticketService.findOneByNum(paymentDTO.getTicketNum())));
         ReturnMessage<PrintPaymentDTO> msg = new ReturnMessage<>();
