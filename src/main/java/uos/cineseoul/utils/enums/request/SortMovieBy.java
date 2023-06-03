@@ -3,9 +3,9 @@ package uos.cineseoul.utils.enums.request;
 public enum SortMovieBy {
     genre("movieGenreList.genre.name"),
     grade("grade"),
-    ticketCount("ticketCount"),
-    movieNum("movieNum"),
-    releaseDate("releaseDate");
+    ticket_count("ticketCount"),
+    movie_num("movieNum"),
+    release_date("releaseDate");
     String fieldName;
 
     SortMovieBy(String fieldName) {
