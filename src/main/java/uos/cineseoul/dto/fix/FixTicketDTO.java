@@ -24,8 +24,6 @@ public class FixTicketDTO {
     private TicketState ticketState;
 
     public UpdateTicketDTO toUpdateDTO(){
-        UpdateTicketDTO insertDTO = UpdateTicketDTO.builder().ticketState(ticketState).salePrice(salePrice).build();
-
-        return insertDTO;
+        return UpdateTicketDTO.builder().ticketState(ticketState).salePrice(salePrice).build();
     }
 }

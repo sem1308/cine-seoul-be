@@ -31,8 +31,6 @@ public class FixSeatDTO {
     private Long screenNum;
 
     public UpdateSeatDTO toUpdateDTO(Screen screen){
-        UpdateSeatDTO updateDTO = UpdateSeatDTO.builder().row(row).col(col).seatGrade(seatGrade).screen(screen).build();
-
-        return updateDTO;
+        return UpdateSeatDTO.builder().row(row).col(col).seatGrade(seatGrade).screen(screen).build();
     }
 }

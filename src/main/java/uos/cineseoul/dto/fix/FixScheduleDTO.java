@@ -21,8 +21,6 @@ public class FixScheduleDTO {
     private Long screenNum;
 
     public UpdateScheduleDTO toUpdateDTO(Screen screen){
-        UpdateScheduleDTO updateDTO = UpdateScheduleDTO.builder().schedTime(schedTime).order(order).screen(screen).build();
-
-        return updateDTO;
+        return UpdateScheduleDTO.builder().schedTime(schedTime).order(order).screen(screen).build();
     }
 }
