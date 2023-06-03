@@ -10,12 +10,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import uos.cineseoul.dto.create.CreatePaymentDTO;
+import uos.cineseoul.dto.insert.InsertTicketDTO;
 import uos.cineseoul.dto.response.PrintPageDTO;
 import uos.cineseoul.dto.response.PrintPaymentDTO;
 import uos.cineseoul.dto.response.PrintScheduleDTO;
 import uos.cineseoul.entity.Payment;
+import uos.cineseoul.entity.Ticket;
 import uos.cineseoul.service.PaymentService;
 import uos.cineseoul.service.TicketService;
 import uos.cineseoul.service.UserService;
@@ -23,6 +26,7 @@ import uos.cineseoul.utils.PageUtil;
 import uos.cineseoul.utils.ReturnMessage;
 import uos.cineseoul.utils.enums.StatusEnum;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +69,7 @@ public class PaymentController {
     }
 
     @PostMapping("/auth")
+    @Transactional
     @ApiOperation(value = "결제내역 등록", protocols = "http")
     public ResponseEntity<ReturnMessage<PrintPaymentDTO>> register(@RequestBody CreatePaymentDTO paymentDTO) {
         Payment payment = paymentService.insert(paymentDTO.toInsertDTO(userService.findOneByNum(paymentDTO.getUserNum())
@@ -72,6 +77,23 @@ public class PaymentController {
         ReturnMessage<PrintPaymentDTO> msg = new ReturnMessage<>();
         msg.setMessage("결제내역 등록이 완료되었습니다.");
         msg.setData(paymentService.getPrintDTO(payment));
+        msg.setStatus(StatusEnum.OK);
+
+        return new ResponseEntity<>(msg, HttpStatus.OK);
+    }
+
+    @PostMapping("/auth/list")
+    @Transactional
+    @ApiOperation(value = "결제내역 리스트 등록", protocols = "http")
+    public ResponseEntity<ReturnMessage<List<PrintPaymentDTO>>> registerList(@RequestBody CreatePaymentDTO paymentDTO) {
+        List<Payment> paymentList = new ArrayList<>();
+        paymentList.forEach(ticketDTO->{
+            paymentList.add(paymentService.insert(paymentDTO.toInsertDTO(userService.findOneByNum(paymentDTO.getUserNum())
+                    ,ticketService.findOneByNum(paymentDTO.getTicketNum()))));
+        });
+        ReturnMessage<List<PrintPaymentDTO>> msg = new ReturnMessage<>();
+        msg.setMessage("결제내역 등록이 완료되었습니다.");
+        msg.setData(paymentService.getPrintDTOList(paymentList));
         msg.setStatus(StatusEnum.OK);
 
         return new ResponseEntity<>(msg, HttpStatus.OK);
