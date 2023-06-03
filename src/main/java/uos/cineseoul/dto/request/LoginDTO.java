@@ -9,6 +9,4 @@ public class LoginDTO {
     @IdStartsWithEnglish
     String id;
     String pw;
-    @PhoneNumCheck
-    String phoneNum;
 }
