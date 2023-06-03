@@ -51,7 +51,7 @@ public class SeatController {
 
     @PostMapping("/admin")
     @ApiOperation(value = "좌석 등록", protocols = "http")
-    public ResponseEntity register(@RequestBody CreateSeatDTO seatDTO) {
+    public ResponseEntity<ReturnMessage<PrintSeatDTO>> register(@RequestBody CreateSeatDTO seatDTO) {
         Seat seat = seatService.insert(seatDTO.toInsertDTO(screenService.findOneByNum(seatDTO.getScreenNum())));
         ReturnMessage<PrintSeatDTO> msg = new ReturnMessage<>();
         msg.setMessage("좌석 등록이 완료되었습니다.");
@@ -63,7 +63,7 @@ public class SeatController {
 
     @PutMapping("/admin")
     @ApiOperation(value = "좌석 정보 변경", protocols = "http")
-    public ResponseEntity update(@RequestBody FixSeatDTO seatDTO) {
+    public ResponseEntity<ReturnMessage<PrintSeatDTO>> update(@RequestBody FixSeatDTO seatDTO) {
         Screen screen;
         try{
             screen = screenService.findOneByNum(seatDTO.getScreenNum());
