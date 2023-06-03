@@ -1,5 +1,6 @@
 package uos.cineseoul.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
@@ -23,17 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class SeatService {
     private final SeatRepository seatRepo;
     private final ScreenRepository screenRepo;
     private final ScheduleRepository scheduleRepo;
-
-    @Autowired
-    public SeatService(SeatRepository seatRepo, ScreenRepository screenRepo, ScheduleRepository scheduleRepo) {
-        this.seatRepo = seatRepo;
-        this.screenRepo = screenRepo;
-        this.scheduleRepo = scheduleRepo;
-    }
 
     public List<Seat> findAll() {
         List<Seat> seatList = seatRepo.findAll();
