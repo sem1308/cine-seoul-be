@@ -7,6 +7,8 @@ import uos.cineseoul.entity.ScheduleSeat;
 import uos.cineseoul.entity.User;
 import uos.cineseoul.utils.enums.TicketState;
 
+import java.util.List;
+
 @AllArgsConstructor()
 @NoArgsConstructor(force = true)
 @Setter
@@ -19,23 +21,17 @@ public class CancelCreateSeatDTO {
 
     private Long schedNum;
 
-    private Long seatNum;
+    private List<Long> seatNumList;
 
-    public InsertTicketDTO toInsertDTO(User user, ScheduleSeat scheduleSeat){
-        InsertTicketDTO insertDTO = InsertTicketDTO.builder().ticketState(TicketState.N)
-                .user(user).scheduleSeat(scheduleSeat).build();
-
-        return insertDTO;
+    public InsertTicketDTO toInsertDTO(User user){
+        return InsertTicketDTO.builder().ticketState(TicketState.N).stdPrice(0).user(user).build();
     }
 
     public UpdateTicketDTO toUpdateDTO(){
-        UpdateTicketDTO insertDTO = UpdateTicketDTO.builder().ticketState(TicketState.C).build();
-        return insertDTO;
+        return UpdateTicketDTO.builder().ticketState(TicketState.C).build();
     }
 
-    public InsertUpdateTicketDTO toInsertUpdateDTO(User user, ScheduleSeat scheduleSeat){
-        InsertUpdateTicketDTO insertUpdateTicketDTO = InsertUpdateTicketDTO.builder().ticketNum(ticketNum).insertTicketDTO(toInsertDTO(user,scheduleSeat))
-                                                                                    .updateTicketDTO(toUpdateDTO()).build();
-        return insertUpdateTicketDTO;
+    public InsertUpdateTicketDTO toInsertUpdateDTO(User user, List<ScheduleSeat> scheduleSeats){
+        return InsertUpdateTicketDTO.builder().ticketNum(ticketNum).insertTicketDTO(toInsertDTO(user)).updateTicketDTO(toUpdateDTO()).scheduleSeats(scheduleSeats).build();
     }
 }

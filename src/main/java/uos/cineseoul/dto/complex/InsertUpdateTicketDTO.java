@@ -3,10 +3,9 @@ package uos.cineseoul.dto.complex;
 import lombok.*;
 import uos.cineseoul.dto.insert.InsertTicketDTO;
 import uos.cineseoul.dto.update.UpdateTicketDTO;
-import uos.cineseoul.utils.enums.TicketState;
+import uos.cineseoul.entity.ScheduleSeat;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import java.util.List;
 
 @AllArgsConstructor()
 @NoArgsConstructor(force = true)
@@ -21,4 +20,7 @@ public class InsertUpdateTicketDTO {
     private InsertTicketDTO insertTicketDTO;
 
     private UpdateTicketDTO updateTicketDTO;
+
+    private List<ScheduleSeat> scheduleSeats;
+
 }

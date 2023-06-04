@@ -6,6 +6,8 @@ import uos.cineseoul.utils.enums.TicketState;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "TICKET")
 @AllArgsConstructor()
@@ -38,10 +40,7 @@ public class Ticket{
     @JoinColumn(name = "USER_NUM", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumns({
-            @JoinColumn(name = "SCHED_NUM", referencedColumnName = "SCHED_NUM"),
-            @JoinColumn(name = "SEAT_NUM", referencedColumnName = "SEAT_NUM")
-    })
-    private ScheduleSeat scheduleSeat;
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TicketScheduleSeat> ticketScheduleSeats = new ArrayList<>();
+
 }

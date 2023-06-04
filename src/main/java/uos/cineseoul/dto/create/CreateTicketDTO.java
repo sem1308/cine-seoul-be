@@ -8,6 +8,7 @@ import uos.cineseoul.utils.enums.TicketState;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import java.util.List;
 
 @AllArgsConstructor()
 @NoArgsConstructor(force = true)
@@ -19,9 +20,9 @@ public class CreateTicketDTO {
 
     private Long schedNum;
 
-    private Long seatNum;
+    private List<Long> seatNumList;
 
-    public InsertTicketDTO toInsertDTO(User user, ScheduleSeat scheduleSeat){
-        return InsertTicketDTO.builder().ticketState(TicketState.N).user(user).scheduleSeat(scheduleSeat).build();
+    public InsertTicketDTO toInsertDTO(User user){
+        return InsertTicketDTO.builder().ticketState(TicketState.N).user(user).stdPrice(0).build();
     }
 }

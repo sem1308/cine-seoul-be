@@ -1,6 +1,7 @@
 
 package uos.cineseoul.service;
 
+import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
@@ -40,6 +41,7 @@ public class TicketService {
     private final PaymentRepository paymentRepo;
     private final MovieRepository movieRepo;
     private final UserRepository userRepo;
+    private final TicketScheduleSeatRepository ticketScheduleSeatRepo;
 
     public List<Ticket> findAll() {
         List<Ticket> ticketList = ticketRepo.findAll();
@@ -69,42 +71,31 @@ public class TicketService {
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public Ticket insert(InsertTicketDTO ticketDTO) {
-        ScheduleSeat scheduleSeat = ticketDTO.getScheduleSeat();
-        if(scheduleSeat.getIsOccupied().equals(Is.Y)){
-            throw new DuplicateKeyException("해당 상영일정 좌석에 대해 이미 예약이 되어있습니다.");
-        }
-        // 좌석 할당 처리
-        scheduleSeat.setIsOccupied(Is.Y);
-        scheduleSeatRepo.save(scheduleSeat);
-
+    public Ticket insert(InsertTicketDTO ticketDTO, List<ScheduleSeat> scheduleSeats) {
         Ticket ticket = TicketMapper.INSTANCE.toEntity(ticketDTO);
-
-        // 가격 할당
-        assignPrice(ticket);
-
         Ticket savedTicket = ticketRepo.save(ticket);
 
-        // 상영일정 빈자리 수 1개 내리기
-        Schedule schedule = savedTicket.getScheduleSeat().getSchedule();
-        schedule.setEmptySeat(schedule.getEmptySeat()-1);
-        scheduleRepo.save(schedule);
-
-        // 영화의 예매 수 1개 올리기
-        Movie movie = schedule.getMovie();
-        movie.setTicketCount(movie.getTicketCount()+1);
-        movieRepo.save(movie);
-
-        return savedTicket;
-    }
-
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public List<Ticket> insertList(List<InsertTicketDTO> ticketDTOS) {
-        List<Ticket> ticketList = new ArrayList<>();
-        ticketDTOS.forEach(ticketDTO->{
-            ticketList.add(insert(ticketDTO));
+        // TODO: 이렇게 해도 동시에 예매하는게 해결될지?
+        scheduleSeats.forEach(scheduleSeat -> {
+            if(scheduleSeat.getIsOccupied().equals(Is.Y)){
+                throw new DuplicateKeyException("해당 상영일정 좌석에 대해 이미 예약이 되어있습니다.");
+            }
+            // 좌석 할당 처리
+            scheduleSeat.setIsOccupied(Is.Y);
+            scheduleSeatRepo.save(scheduleSeat);
+            // 티켓-상영일정-좌석 생성
+            TicketScheduleSeat ticketScheduleSeat = TicketScheduleSeat.builder().ticket(savedTicket).scheduleSeat(scheduleSeat).build();
+            ticketScheduleSeatRepo.save(ticketScheduleSeat);
+            // 상영일정 빈자리 수 1개 내리기
+            Schedule schedule = scheduleSeat.getSchedule();
+            schedule.setEmptySeat(schedule.getEmptySeat()-1);
+            scheduleRepo.save(schedule);
+            // 영화의 예매 수 1개 올리기
+            Movie movie = schedule.getMovie();
+            movie.setTicketCount(movie.getTicketCount()+1);
+            movieRepo.save(movie);
         });
-        return ticketList;
+        return savedTicket;
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
@@ -160,17 +151,19 @@ public class TicketService {
         // 환불
         checkStateAndRefund(ticket,userRole);
         // 상영일정-좌석 수정
-        ScheduleSeat scheduleSeat = ticket.getScheduleSeat();
-        scheduleSeat.setIsOccupied(Is.N);
-        scheduleSeatRepo.save(scheduleSeat);
-        // 상영일정 빈자리 수 1개 올리기
-        Schedule schedule = scheduleSeat.getSchedule();
-        schedule.setEmptySeat(schedule.getEmptySeat()+1);
-        scheduleRepo.save(schedule);
-        // 영화의 예매 수 1개 내리기
-        Movie movie = schedule.getMovie();
-        movie.setTicketCount(movie.getTicketCount()-1);
-        movieRepo.save(movie);
+        ticket.getTicketScheduleSeats().forEach(ticketScheduleSeat -> {
+            ScheduleSeat scheduleSeat = ticketScheduleSeat.getScheduleSeat();
+            scheduleSeat.setIsOccupied(Is.N);
+            scheduleSeatRepo.save(scheduleSeat);
+            // 상영일정 빈자리 수 1개 올리기
+            Schedule schedule = scheduleSeat.getSchedule();
+            schedule.setEmptySeat(schedule.getEmptySeat()+1);
+            scheduleRepo.save(schedule);
+            // 영화의 예매 수 1개 내리기
+            Movie movie = schedule.getMovie();
+            movie.setTicketCount(movie.getTicketCount()-1);
+            movieRepo.save(movie);
+        });
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
@@ -187,17 +180,8 @@ public class TicketService {
             update(ticketNum, updateTicketDTO);
         }
         // 티켓 등록
-        Ticket ticket = insert(insertTicketDTO);
+        Ticket ticket = insert(insertTicketDTO, insertUpdateTicketDTO.getScheduleSeats());
         return ticket;
-    }
-
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public List<Ticket> changeSeatList(List<InsertUpdateTicketDTO> insertUpdateTicketDTOS) {
-        List<Ticket> ticketList = new ArrayList<>();
-        insertUpdateTicketDTOS.forEach(ticketDTO->{
-            ticketList.add(changeSeat(ticketDTO));
-        });
-        return ticketList;
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
@@ -227,17 +211,11 @@ public class TicketService {
         }
     }
 
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    private void assignPrice(Ticket ticket){
-        int price = ticket.getScheduleSeat().getSeat().getSeatGrade().getPrice();
-        ticket.setStdPrice(price);
-    }
-
     public PrintTicketDTO getPrintDTO(Ticket ticket){
         PrintTicketDTO ticketDTO = TicketMapper.INSTANCE.toDTO(ticket);
-        if(ticket.getScheduleSeat()!=null){
+        if(ticket.getTicketScheduleSeats().get(0).getScheduleSeat()!=null){
             List<PrintGenreDTO> genreList = new ArrayList<>();
-            Movie movie = ticket.getScheduleSeat().getSchedule().getMovie();
+            Movie movie = ticket.getTicketScheduleSeats().get(0).getScheduleSeat().getSchedule().getMovie();
             movie.getMovieGenreList().forEach(movieGenre ->
                     genreList.add(new PrintGenreDTO(movieGenre.getGenre()))
             );
