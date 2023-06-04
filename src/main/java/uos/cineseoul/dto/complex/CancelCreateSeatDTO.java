@@ -1,4 +1,4 @@
-package uos.cineseoul.dto;
+package uos.cineseoul.dto.complex;
 
 import lombok.*;
 import uos.cineseoul.dto.insert.InsertTicketDTO;
@@ -31,5 +31,11 @@ public class CancelCreateSeatDTO {
     public UpdateTicketDTO toUpdateDTO(){
         UpdateTicketDTO insertDTO = UpdateTicketDTO.builder().ticketState(TicketState.C).build();
         return insertDTO;
+    }
+
+    public InsertUpdateTicketDTO toInsertUpdateDTO(User user, ScheduleSeat scheduleSeat){
+        InsertUpdateTicketDTO insertUpdateTicketDTO = InsertUpdateTicketDTO.builder().ticketNum(ticketNum).insertTicketDTO(toInsertDTO(user,scheduleSeat))
+                                                                                    .updateTicketDTO(toUpdateDTO()).build();
+        return insertUpdateTicketDTO;
     }
 }
