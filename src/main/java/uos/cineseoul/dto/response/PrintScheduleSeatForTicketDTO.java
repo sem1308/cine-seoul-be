@@ -12,8 +12,7 @@ import javax.persistence.Enumerated;
 @Getter
 @Builder
 public class PrintScheduleSeatForTicketDTO {
-    private PrintScheduleNotSchedSeatDTO schedule;
-
+//    private PrintScheduleNotSchedSeatDTO schedule;
     private PrintSeatDTO seat;
 
     @Enumerated(EnumType.STRING)

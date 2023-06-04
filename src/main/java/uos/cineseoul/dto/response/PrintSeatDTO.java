@@ -1,6 +1,7 @@
 package uos.cineseoul.dto.response;
 
 import lombok.*;
+import uos.cineseoul.entity.Seat;
 import uos.cineseoul.utils.enums.SeatGrade;
 
 import javax.persistence.EnumType;
@@ -24,4 +25,13 @@ public class PrintSeatDTO {
     private Integer seatPrice;
 
     private Long screenNum;
+
+    public PrintSeatDTO(Seat seat){
+        this.seatNum = seat.getSeatNum();
+        this.row = seat.getRow();
+        this.col = seat.getCol();
+        this.seatGrade = seat.getSeatGrade();
+        this.seatPrice = seat.getSeatGrade().getPrice();
+        this.screenNum = seat.getScreen().getScreenNum();
+    }
 }

@@ -15,8 +15,11 @@ import javax.persistence.Enumerated;
 public class FixTicketDTO {
     /* 티켓 변경 가능 속성 */
     // 판매 가격
+    // 티켓 가격 - 자리 변동시
     // 티켓 상태
     private Long ticketNum ;
+
+    private Integer stdPrice;
 
     private Integer salePrice;
 

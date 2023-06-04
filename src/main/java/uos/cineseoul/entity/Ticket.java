@@ -40,7 +40,8 @@ public class Ticket{
     @JoinColumn(name = "USER_NUM", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TicketScheduleSeat> ticketScheduleSeats = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TICKET_NUM", nullable = false, insertable = false, updatable = false)
+    private List<Reservation> reservations = new ArrayList<>();
 
 }

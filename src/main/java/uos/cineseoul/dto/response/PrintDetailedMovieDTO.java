@@ -42,7 +42,8 @@ public class PrintDetailedMovieDTO {
         this.runningTime = movie.getRunningTime();
         this.poster = movie.getPoster();
         this.isShowing = movie.getIsShowing();
-        this.distName = movie.getDistributor().getName();
+        if(movie.getDistributor()!=null)
+            this.distName = movie.getDistributor().getName();
         this.gradeName = new PrintGradeDTO(movie.getGrade());
         this.genreList = new ArrayList<>();
         this.directorList = new ArrayList<>();

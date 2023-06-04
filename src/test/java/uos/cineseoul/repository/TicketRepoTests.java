@@ -40,7 +40,7 @@ class TicketRepoTests {
 		ScheduleSeat scheduleSeat = scheduleSeatRepo.findBySchedNumAndSeatNum(schedNum,seatNum).get();
 
 		InsertTicketDTO ticketDTO = InsertTicketDTO.builder().stdPrice(stdPrice).salePrice(salePrice)
-				.user(user).scheduleSeat(scheduleSeat).build();
+				.user(user).build();
 		scheduleSeat.setIsOccupied(Is.N);
 		scheduleSeatRepo.save(scheduleSeat);
 
