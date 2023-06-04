@@ -9,22 +9,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import uos.cineseoul.dto.complex.InsertUpdateTicketDTO;
 import uos.cineseoul.dto.insert.InsertTicketDTO;
 import uos.cineseoul.dto.response.PrintGenreDTO;
 import uos.cineseoul.dto.response.PrintTicketDTO;
 import uos.cineseoul.dto.update.UpdateTicketDTO;
-import uos.cineseoul.entity.Payment;
-import uos.cineseoul.entity.ScheduleSeat;
-import uos.cineseoul.entity.Ticket;
+import uos.cineseoul.entity.*;
 import uos.cineseoul.entity.movie.Movie;
 import uos.cineseoul.exception.DataInconsistencyException;
 import uos.cineseoul.exception.ForbiddenException;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.TicketMapper;
-import uos.cineseoul.repository.MovieRepository;
-import uos.cineseoul.repository.PaymentRepository;
-import uos.cineseoul.repository.ScheduleSeatRepository;
-import uos.cineseoul.repository.TicketRepository;
+import uos.cineseoul.repository.*;
 import uos.cineseoul.utils.enums.Is;
 import uos.cineseoul.utils.enums.PayState;
 import uos.cineseoul.utils.enums.TicketState;
@@ -38,10 +34,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TicketService {
     private final TicketRepository ticketRepo;
+    private final ScheduleRepository scheduleRepo;
     private final ScheduleSeatRepository scheduleSeatRepo;
     private final AccountService accountService;
     private final PaymentRepository paymentRepo;
     private final MovieRepository movieRepo;
+    private final UserRepository userRepo;
 
     public List<Ticket> findAll() {
         List<Ticket> ticketList = ticketRepo.findAll();
@@ -87,12 +85,26 @@ public class TicketService {
 
         Ticket savedTicket = ticketRepo.save(ticket);
 
+        // 상영일정 빈자리 수 1개 내리기
+        Schedule schedule = savedTicket.getScheduleSeat().getSchedule();
+        schedule.setEmptySeat(schedule.getEmptySeat()-1);
+        scheduleRepo.save(schedule);
+
         // 영화의 예매 수 1개 올리기
-        Movie movie = savedTicket.getScheduleSeat().getSchedule().getMovie();
+        Movie movie = schedule.getMovie();
         movie.setTicketCount(movie.getTicketCount()+1);
         movieRepo.save(movie);
 
         return savedTicket;
+    }
+
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public List<Ticket> insertList(List<InsertTicketDTO> ticketDTOS) {
+        List<Ticket> ticketList = new ArrayList<>();
+        ticketDTOS.forEach(ticketDTO->{
+            ticketList.add(insert(ticketDTO));
+        });
+        return ticketList;
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
@@ -125,12 +137,17 @@ public class TicketService {
     public void delete(Long ticketNum) {
         Ticket ticket = findOneByNum(ticketNum);
 
-        UserRole userRole = ticket.getUser().getRole();
+        User user = ticket.getUser();
+        UserRole userRole = user.getRole();
         if(!userRole.equals(UserRole.N)){
             throw new ForbiddenException("비회원 티켓이 아니면 삭제하지 못합니다.");
         }
         cancelProcess(ticket,userRole);
         ticketRepo.delete(ticket);
+
+        if(user.getTickets().size()==1){
+            userRepo.deleteById(user.getUserNum());
+        }
     }
 
     public void checkUser(Long ticketNum, Long userNum){
@@ -138,6 +155,7 @@ public class TicketService {
             throw new ForbiddenException("티켓 예매자와 현 사용자의 정보가 일치하지 않습니다.");
     }
 
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     private void cancelProcess(Ticket ticket, UserRole userRole) {
         // 환불
         checkStateAndRefund(ticket,userRole);
@@ -145,15 +163,21 @@ public class TicketService {
         ScheduleSeat scheduleSeat = ticket.getScheduleSeat();
         scheduleSeat.setIsOccupied(Is.N);
         scheduleSeatRepo.save(scheduleSeat);
+        // 상영일정 빈자리 수 1개 올리기
+        Schedule schedule = scheduleSeat.getSchedule();
+        schedule.setEmptySeat(schedule.getEmptySeat()+1);
+        scheduleRepo.save(schedule);
         // 영화의 예매 수 1개 내리기
-        Movie movie = scheduleSeat.getSchedule().getMovie();
+        Movie movie = schedule.getMovie();
         movie.setTicketCount(movie.getTicketCount()-1);
         movieRepo.save(movie);
     }
 
-
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public Ticket changeSeat(Long ticketNum, InsertTicketDTO insertTicketDTO, UpdateTicketDTO updateTicketDTO) {
+    public Ticket changeSeat(InsertUpdateTicketDTO insertUpdateTicketDTO) {
+        Long ticketNum = insertUpdateTicketDTO.getTicketNum();
+        InsertTicketDTO insertTicketDTO = insertUpdateTicketDTO.getInsertTicketDTO();
+        UpdateTicketDTO updateTicketDTO = insertUpdateTicketDTO.getUpdateTicketDTO();
         // 티켓 예매자 확인
         checkUser(ticketNum, insertTicketDTO.getUser().getUserNum());
         // 티켓 취소
@@ -167,6 +191,16 @@ public class TicketService {
         return ticket;
     }
 
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public List<Ticket> changeSeatList(List<InsertUpdateTicketDTO> insertUpdateTicketDTOS) {
+        List<Ticket> ticketList = new ArrayList<>();
+        insertUpdateTicketDTOS.forEach(ticketDTO->{
+            ticketList.add(changeSeat(ticketDTO));
+        });
+        return ticketList;
+    }
+
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     private void checkStateAndRefund(Ticket ticket, UserRole role){
         Optional<Payment> p = paymentRepo.findByTicketNum(ticket.getTicketNum());
         if(p.isPresent()){
@@ -193,6 +227,7 @@ public class TicketService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     private void assignPrice(Ticket ticket){
         int price = ticket.getScheduleSeat().getSeat().getSeatGrade().getPrice();
         ticket.setStdPrice(price);
