@@ -83,10 +83,8 @@ public class TicketService {
         Ticket ticket = TicketMapper.INSTANCE.toEntity(ticketDTO);
 
         Ticket savedTicket = ticketRepo.save(ticket);
-        List<ReservationSeat> reservationSeatList = insertReservationSeatList(ticket, seatNumList);
-        List<TicketAudience> ticketAudienceList = insertTicketAudienceList(ticket, createTicketAudienceDTOList);
-        savedTicket.setReservationSeats(reservationSeatList);
-        savedTicket.setAudienceTypes(ticketAudienceList);
+        savedTicket.setReservationSeats(insertReservationSeatList(ticket, seatNumList));
+        savedTicket.setAudienceTypes(insertTicketAudienceList(ticket, createTicketAudienceDTOList));
         return savedTicket;
     }
 
