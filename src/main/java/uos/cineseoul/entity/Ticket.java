@@ -37,7 +37,7 @@ public class Ticket{
     private LocalDateTime createdAt;
 
     @CreationTimestamp
-    @Column(name="CANCEL_DATE", nullable = true, columnDefinition = "TIMESTAMP(6) DEFAULT null")
+    @Column(name="CANCEL_DATE", nullable = false)
     private LocalDateTime canceledAt;
 
     /* Foreign Key */
