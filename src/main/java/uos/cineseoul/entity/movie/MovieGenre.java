@@ -20,7 +20,7 @@ public class MovieGenre {
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "GENRE_CODE")
+    @JoinColumn(name = "GENRE_CODE",columnDefinition = "CHAR(2)")
     private Genre genre;
 
     @Builder
