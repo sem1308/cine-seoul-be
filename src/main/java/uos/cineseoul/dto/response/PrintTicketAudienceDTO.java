@@ -19,5 +19,7 @@ import java.util.List;
 public class PrintTicketAudienceDTO {
     private AudienceType audienceType;
 
+    private String displayName;
+
     private Integer count;
 }
