@@ -49,6 +49,10 @@ public class Payment{
     @Column(name="PAYED_DATE", nullable = false)
     private LocalDateTime createdAt;
 
+    @CreationTimestamp
+    @Column(name="CANCEL_DATE", nullable = true)
+    private LocalDateTime canceledAt;
+
     /* Foreign Key */
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "USER_NUM", nullable = false)

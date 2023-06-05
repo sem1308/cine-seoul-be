@@ -36,6 +36,10 @@ public class Ticket{
     @Column(name="REVERVATION_DATE", nullable = false)
     private LocalDateTime createdAt;
 
+    @CreationTimestamp
+    @Column(name="CANCEL_DATE", nullable = true)
+    private LocalDateTime canceledAt;
+
     /* Foreign Key */
 
     @ManyToOne(fetch = FetchType.LAZY)
