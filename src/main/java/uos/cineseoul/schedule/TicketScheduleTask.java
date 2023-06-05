@@ -13,6 +13,7 @@ import uos.cineseoul.entity.User;
 import uos.cineseoul.entity.movie.Movie;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.repository.*;
+import uos.cineseoul.service.TicketService;
 import uos.cineseoul.utils.enums.Is;
 import uos.cineseoul.utils.enums.TicketState;
 import uos.cineseoul.utils.enums.UserRole;
@@ -24,51 +25,29 @@ import java.util.List;
 @AllArgsConstructor
 public class TicketScheduleTask {
     private final TicketRepository ticketRepo;
-    private final ScheduleRepository scheduleRepo;
-    private final ScheduleSeatRepository scheduleSeatRepo;
-    private final MovieRepository movieRepo;
-    private final UserRepository userRepo;
-    private final ReservationSeatRepository reservationSeatRepo;
-    private final TicketAudienceRepository ticketAudienceRepo;
+    private final TicketService ticketService;
 
-    @Scheduled(cron = "0 0,15,30,45 * * * *") // 매 0, 15, 30, 45분마다 실행
-    @Transactional
-    public void deleteExpiredTickets() {
-        LocalDateTime dateTime = LocalDateTime.now().minusMinutes(10);
-        List<Ticket> ticketList = ticketRepo.findByTicketStateAndCreatedAtBefore(TicketState.N, dateTime);
+    private void deleteExpiredTickets(List<Ticket> ticketList) {
         if(!ticketList.isEmpty()){
             ticketList.forEach(ticket -> {
-                User user = ticket.getUser();
-                delete(ticket);
-                if(user.getRole().equals(UserRole.N) && user.getTickets().size()==1){
-                    userRepo.deleteById(user.getUserNum());
-                }
+                ticketService.delete(ticket);
             });
         }
     }
 
+    @Scheduled(cron = "0 0/1 * * * ?") // 매 1분 간격으로 결제가 되지 않은 상태이며 생성후 n분 지난 티켓 삭제
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    private void delete(Ticket ticket) {
-        // 상영일정-좌석 수정
-        ticket.getReservationSeats().forEach(reservationSeat -> {
-            ScheduleSeat scheduleSeat = scheduleSeatRepo.findByScheduleAndSeat(ticket.getSchedule(),reservationSeat.getSeat()).orElseThrow(()->{
-                throw new ResourceNotFoundException("해당 정보에 해당하는 상영일정-좌석이 없습니다.");
-            });
-            scheduleSeat.setIsOccupied(Is.N);
-            scheduleSeatRepo.save(scheduleSeat);
-            // 상영일정 빈자리 수 1개 올리기
-            Schedule schedule = scheduleSeat.getSchedule();
-            schedule.setEmptySeat(Math.min(schedule.getEmptySeat()+1,schedule.getScreen().getTotalSeat()));
-            scheduleRepo.save(schedule);
-            // 영화의 예매 수 1개 내리기
-            Movie movie = schedule.getMovie();
-            movie.setTicketCount(Math.max(movie.getTicketCount()-1,0));
-            movieRepo.save(movie);
-            reservationSeatRepo.delete(reservationSeat);
-        });
-        ticket.getAudienceTypes().forEach(ticketAudience -> {
-            ticketAudienceRepo.delete(ticketAudience);
-        });
-        ticketRepo.delete(ticket);
+    public void deleteExpiredTickets() {
+        LocalDateTime dateTime = LocalDateTime.now().minusMinutes(5); // 테스트를 위해 짧게 설정
+        List<Ticket> ticketList = ticketRepo.findByTicketStateAndCreatedAtBefore(TicketState.N, dateTime);
+        deleteExpiredTickets(ticketList);
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?") // 매일 자정마다 생성후 1달 지난 티켓 삭제
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public void deleteExpiredTicketsByMonth() {
+        LocalDateTime dateTime = LocalDateTime.now().minusMonths(1);
+        List<Ticket> ticketList = ticketRepo.findByCreatedAtBefore(dateTime);
+        deleteExpiredTickets(ticketList);
     }
 }

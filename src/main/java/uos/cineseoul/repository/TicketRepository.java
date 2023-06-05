@@ -19,7 +19,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     @Query("select t from TICKET t where t.user.id = :userID")
     List<Ticket> findByUserID(@Param("userID") String userID);
-
-    void deleteByTicketStateAndCreatedAtBefore(TicketState ticketState, LocalDateTime createdAt);
     List<Ticket> findByTicketStateAndCreatedAtBefore(TicketState ticketState, LocalDateTime createdAt);
+
+    List<Ticket> findByCreatedAtBefore(LocalDateTime createdAt);
 }
