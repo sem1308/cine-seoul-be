@@ -48,5 +48,8 @@ public class PrintTicketDTO {
         this.reservationSeats.forEach(reservation -> {
             reservation.getSeat().setSeatPrice(reservation.getSeat().getSeatGrade().getPrice());
         });
+        this.audienceTypes.forEach(audienceDTO -> {
+            audienceDTO.setDisplayName(audienceDTO.getAudienceType().getDisplayName());
+        });
     }
 }
