@@ -31,7 +31,7 @@ public class TicketScheduleTask {
     private final ReservationSeatRepository reservationSeatRepo;
     private final TicketAudienceRepository ticketAudienceRepo;
 
-    @Scheduled(fixedDelay = 900000) // 15분(900,000밀리초)마다 실행
+    @Scheduled(cron = "0 0,15,30,45 * * * *") // 매 0, 15, 30, 45분마다 실행
     @Transactional
     public void deleteExpiredTickets() {
         LocalDateTime dateTime = LocalDateTime.now().minusMinutes(10);
