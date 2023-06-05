@@ -24,6 +24,7 @@ import uos.cineseoul.mapper.ReservationSeatMapper;
 import uos.cineseoul.repository.*;
 import uos.cineseoul.utils.enums.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -89,6 +90,7 @@ public class TicketService {
         return savedTicket;
     }
 
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public List<ReservationSeat> insertReservationSeatList(Ticket ticket, List<Long> seatNumList){
         AtomicReference<Integer> price = new AtomicReference<>(0);
         List<ReservationSeat> reservationSeatList = new ArrayList<>();
@@ -129,6 +131,7 @@ public class TicketService {
         return reservationSeatList;
     }
 
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public List<TicketAudience> insertTicketAudienceList(Ticket ticket, List<CreateTicketAudienceDTO> createTicketAudienceDTOList){
         List<TicketAudience> ticketAudienceList = new ArrayList<>();
         createTicketAudienceDTOList.forEach(createTicketAudienceDTO -> {
@@ -183,6 +186,7 @@ public class TicketService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void checkUser(Long ticketNum, Long userNum){
         if(!findOneByNum(ticketNum).getUser().getUserNum().equals(userNum))
             throw new ForbiddenException("티켓 예매자와 현 사용자의 정보가 일치하지 않습니다.");
@@ -206,6 +210,7 @@ public class TicketService {
             movie.setTicketCount(movie.getTicketCount()-1);
             movieRepo.save(movie);
         });
+        ticket.setCanceledAt(LocalDateTime.now());
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
@@ -245,6 +250,7 @@ public class TicketService {
             }else{
                 // 결제 취소 상태로 변경
                 payment.setState(PayState.C);
+                payment.setCanceledAt(LocalDateTime.now());
                 paymentRepo.save(payment);
             }
         }
