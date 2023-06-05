@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "TICKET")
+@Entity(name = "TICKET_AUDIENCE")
 @AllArgsConstructor()
 @NoArgsConstructor()
 @Setter
@@ -25,5 +25,9 @@ public class TicketAudience {
 
     @Id
     @Column(name = "AUDIENCE_TYPE", nullable = false)
+    @Enumerated(EnumType.STRING)
     private AudienceType audienceType;
+
+    @Column(name = "COUNT", nullable = false)
+    private Integer count;
 }

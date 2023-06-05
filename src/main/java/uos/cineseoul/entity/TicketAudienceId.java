@@ -4,6 +4,7 @@ import lombok.*;
 import uos.cineseoul.utils.enums.AudienceType;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
@@ -12,7 +13,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class TicketAudienceId {
+public class TicketAudienceId implements Serializable {
     private Long ticket;
 
     private AudienceType audienceType;
