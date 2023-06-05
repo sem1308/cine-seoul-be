@@ -34,7 +34,7 @@ public class Movie {
     @Column(name = "POSTER", nullable = true)
     private String poster;
 
-    @Column(name = "TICKET_COUNT", nullable = false)
+    @Column(name = "TICKET_COUNT", nullable = true)
     private Integer ticketCount;
 
     @Column(name = "IS_SHOWING", nullable = false, columnDefinition = "CHAR(1)")
