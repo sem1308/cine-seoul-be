@@ -28,7 +28,7 @@ public class Ticket{
     @Column(name="SALE_PRICE", nullable = true, unique = false)
     private Integer salePrice;
 
-    @Column(name="TICKET_STATE", nullable = false, unique = false, columnDefinition = "char(1)")
+    @Column(name="TICKET_STATE", nullable = false, unique = false, columnDefinition = "CHAR(1)")
     @Enumerated(EnumType.STRING)
     private TicketState ticketState;
 
@@ -37,7 +37,7 @@ public class Ticket{
     private LocalDateTime createdAt;
 
     @CreationTimestamp
-    @Column(name="CANCEL_DATE", nullable = true)
+    @Column(name="CANCEL_DATE", nullable = true, columnDefinition = "TIMESTAMP(6) DEFAULT null")
     private LocalDateTime canceledAt;
 
     /* Foreign Key */
