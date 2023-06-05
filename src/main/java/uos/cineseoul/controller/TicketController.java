@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import uos.cineseoul.dto.complex.CancelRegisterTicketDTO;
 import uos.cineseoul.dto.create.CreateTicketDTO;
 import uos.cineseoul.dto.fix.FixTicketDTO;
-import uos.cineseoul.dto.insert.InsertReservationSeatDTO;
 import uos.cineseoul.dto.insert.InsertTicketDTO;
 import uos.cineseoul.dto.response.PrintPageDTO;
 import uos.cineseoul.dto.response.PrintTicketDTO;
-import uos.cineseoul.entity.ScheduleSeat;
+import uos.cineseoul.dto.update.UpdateTicketDTO;
 import uos.cineseoul.entity.Ticket;
 import uos.cineseoul.service.ScheduleService;
 import uos.cineseoul.service.TicketService;
@@ -25,12 +24,9 @@ import uos.cineseoul.utils.PageUtil;
 import uos.cineseoul.utils.ReturnMessage;
 import uos.cineseoul.utils.enums.StatusEnum;
 
-import org.springframework.transaction.annotation.Transactional;
 import uos.cineseoul.utils.enums.TicketState;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 @RestController()
 @RequestMapping("/ticket")
@@ -72,14 +68,9 @@ public class TicketController {
     @PostMapping("/auth")
     @ApiOperation(value = "티켓 등록", protocols = "http")
     public ResponseEntity<ReturnMessage<PrintTicketDTO>> register(@RequestBody CreateTicketDTO ticketDTO) {
-        AtomicReference<Integer> totalPrice = new AtomicReference<>(0);
-        List<ScheduleSeat> scheduleSeatList = new ArrayList<>();
-        List<InsertReservationSeatDTO> insertReservationSeatDTOS = new ArrayList<>();
-        fillInsertReservationSeatDTO(insertReservationSeatDTOS, scheduleSeatList, ticketDTO.getSeatNumList(), ticketDTO.getSchedNum(), totalPrice);
-
         InsertTicketDTO iTicketDTO = InsertTicketDTO.builder().ticketState(TicketState.N).schedule(scheduleService.findOneByNum(ticketDTO.getSchedNum()))
-                                                            .user(userService.findOneByNum(ticketDTO.getUserNum())).stdPrice(totalPrice.get()).build();
-        Ticket ticket = ticketService.insert(iTicketDTO, insertReservationSeatDTOS, scheduleSeatList, ticketDTO.getAudienceTypeList());
+                                                            .user(userService.findOneByNum(ticketDTO.getUserNum())).stdPrice(ticketDTO.getStdPrice()).build();
+        Ticket ticket = ticketService.insert(iTicketDTO,ticketDTO.getSeatNumList(), ticketDTO.getAudienceTypeDTOList());
         ReturnMessage<PrintTicketDTO> msg = new ReturnMessage<>();
         msg.setMessage("티켓 예매가 완료되었습니다.");
         msg.setData(ticketService.toPrintDTO(ticket));
@@ -112,15 +103,12 @@ public class TicketController {
     }
 
     @PutMapping("/auth/cancelregister")
-    @Transactional
     @ApiOperation(value = "티켓 취소 및 등록", protocols = "http")
     public ResponseEntity<ReturnMessage<PrintTicketDTO>> CancelAndRegister(@RequestBody CancelRegisterTicketDTO ticketDTO) {
-        AtomicReference<Integer> totalPrice = new AtomicReference<>(0);
-        List<ScheduleSeat> scheduleSeatList = new ArrayList<>();
-        List<InsertReservationSeatDTO> insertReservationSeatDTOS = new ArrayList<>();
-        fillInsertReservationSeatDTO(insertReservationSeatDTOS, scheduleSeatList, ticketDTO.getSeatNumList(), ticketDTO.getSchedNum(), totalPrice);
-
-        Ticket ticket = ticketService.cancelAndChangeSeat(ticketDTO.getTicketNum(), ticketDTO.toUpdateDTO(totalPrice),userService.findOneByNum(ticketDTO.getUserNum()), insertReservationSeatDTOS);
+        InsertTicketDTO insertTicketDTO = InsertTicketDTO.builder().ticketState(TicketState.N).stdPrice(ticketDTO.getStdPrice()).schedule(scheduleService.findOneByNum(ticketDTO.getSchedNum()))
+                                                        .user(userService.findOneByNum(ticketDTO.getUserNum())).build();
+        UpdateTicketDTO updateTicketDTO = UpdateTicketDTO.builder().ticketState(TicketState.C).build();
+        Ticket ticket = ticketService.cancelAndChangeSeat(ticketDTO.getTicketNum(),insertTicketDTO, updateTicketDTO, ticketDTO.getSeatNumList(), ticketDTO.getCreateTicketAudienceDTOList());
         ReturnMessage<PrintTicketDTO> msg = new ReturnMessage<>();
         msg.setMessage("티켓 취소 및 등록이 완료되었습니다.");
         msg.setData(ticketService.toPrintDTO(ticket));
@@ -128,17 +116,6 @@ public class TicketController {
 
         return new ResponseEntity<>(msg, HttpStatus.OK);
     }
-
-    private void fillInsertReservationSeatDTO(List<InsertReservationSeatDTO> insertReservationSeatDTOS, List<ScheduleSeat> scheduleSeatList,
-                                            List<Long> seatNumList, Long schedNum, AtomicReference<Integer> totalPrice){
-        seatNumList.forEach(seatNum -> {
-            ScheduleSeat scheduleSeat = scheduleService.findScheduleSeat(schedNum,seatNum);
-            totalPrice.updateAndGet(v -> v + scheduleSeat.getSeat().getSeatGrade().getPrice());
-            insertReservationSeatDTOS.add(InsertReservationSeatDTO.builder().seat(scheduleSeat.getSeat()).build());
-            scheduleSeatList.add(scheduleSeat);
-        });
-    }
-
 //    private void fillInsertReservationDTO(List<SeatTypeDTO> seatTypeDTOS, Long schedNum, AtomicReference<Integer> totalPrice){
 //        List<InsertReservationSeatDTO> insertReservationSeatDTOS = new ArrayList<>();
 //        seatTypeDTOS.forEach(seatTypeDTO -> {
