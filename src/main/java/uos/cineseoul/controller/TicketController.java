@@ -94,7 +94,7 @@ public class TicketController {
     @DeleteMapping("/auth/{num}")
     @ApiOperation(value = "비회원 티켓 삭제 by 티켓 번호", protocols = "http")
     public ResponseEntity<ReturnMessage<PrintTicketDTO>> delete(@PathVariable("num") Long num) {
-        ticketService.delete(num);
+        ticketService.deleteByNum(num);
         ReturnMessage<PrintTicketDTO> msg = new ReturnMessage<>();
         msg.setMessage("티켓 삭제가 완료되었습니다.");
         msg.setStatus(StatusEnum.OK);

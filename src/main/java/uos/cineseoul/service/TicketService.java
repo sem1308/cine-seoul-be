@@ -169,7 +169,7 @@ public class TicketService {
 
     // 비회원 티켓 삭제
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public void delete(Long ticketNum) {
+    public void deleteByNum(Long ticketNum) {
         Ticket ticket = findOneByNum(ticketNum);
 
         User user = ticket.getUser();
@@ -187,6 +187,33 @@ public class TicketService {
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public void delete(Ticket ticket) {
+        User user = ticket.getUser();
+
+        cancel(ticket);
+        ticketRepo.delete(ticket);
+
+        if(user.getTickets().size()==1){
+            userRepo.deleteById(user.getUserNum());
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public void deleteExpiredTickets(LocalDateTime dateTime){
+        List<Ticket> ticketList = ticketRepo.findByTicketStateAndCreatedAtBefore(TicketState.N, dateTime);
+        if(!ticketList.isEmpty()){
+            ticketList.forEach(ticket -> {
+                User user = ticket.getUser();
+                cancel(ticket);
+                if(user.getTickets().size()==1){
+                    userRepo.deleteById(user.getUserNum());
+                }
+            });
+        }
+        ticketRepo.deleteByTicketStateAndCreatedAtBefore(TicketState.N, dateTime);
+    }
+
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void checkUser(Long ticketNum, Long userNum){
         if(!findOneByNum(ticketNum).getUser().getUserNum().equals(userNum))
             throw new ForbiddenException("티켓 예매자와 현 사용자의 정보가 일치하지 않습니다.");
@@ -196,21 +223,28 @@ public class TicketService {
     private void cancelProcess(Ticket ticket, UserRole userRole) {
         // 환불
         checkStateAndRefund(ticket,userRole);
+        cancel(ticket);
+        ticket.setCanceledAt(LocalDateTime.now());
+    }
+
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    private void cancel(Ticket ticket) {
         // 상영일정-좌석 수정
         ticket.getReservationSeats().forEach(reservationSeat -> {
-            ScheduleSeat scheduleSeat = scheduleSeatRepo.findByScheduleAndSeat(ticket.getSchedule(),reservationSeat.getSeat()).get();
+            ScheduleSeat scheduleSeat = scheduleSeatRepo.findByScheduleAndSeat(ticket.getSchedule(),reservationSeat.getSeat()).orElseThrow(()->{
+                throw new ResourceNotFoundException("해당 정보에 해당하는 상영일정-좌석이 없습니다.");
+            });
             scheduleSeat.setIsOccupied(Is.N);
             scheduleSeatRepo.save(scheduleSeat);
             // 상영일정 빈자리 수 1개 올리기
             Schedule schedule = scheduleSeat.getSchedule();
-            schedule.setEmptySeat(schedule.getEmptySeat()+1);
+            schedule.setEmptySeat(Math.min(schedule.getEmptySeat()+1,schedule.getScreen().getTotalSeat()));
             scheduleRepo.save(schedule);
             // 영화의 예매 수 1개 내리기
             Movie movie = schedule.getMovie();
-            movie.setTicketCount(movie.getTicketCount()-1);
+            movie.setTicketCount(Math.max(movie.getTicketCount()-1,0));
             movieRepo.save(movie);
         });
-        ticket.setCanceledAt(LocalDateTime.now());
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
@@ -219,7 +253,7 @@ public class TicketService {
         checkUser(ticketNum, insertTicketDTO.getUser().getUserNum());
         // 티켓 취소
         if(insertTicketDTO.getUser().getRole().equals(UserRole.N)){
-            delete(ticketNum);
+            deleteByNum(ticketNum);
         }else{
             update(ticketNum, updateTicketDTO);
         }
