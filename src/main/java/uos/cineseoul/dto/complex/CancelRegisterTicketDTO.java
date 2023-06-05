@@ -1,6 +1,7 @@
 package uos.cineseoul.dto.complex;
 
 import lombok.*;
+import uos.cineseoul.dto.create.CreateTicketAudienceDTO;
 import uos.cineseoul.dto.misc.SeatTypeDTO;
 import uos.cineseoul.dto.update.UpdateTicketDTO;
 import uos.cineseoul.utils.enums.AudienceType;
@@ -21,11 +22,9 @@ public class CancelRegisterTicketDTO {
 
     private Long schedNum;
 
+    private Integer stdPrice;
+
     private List<Long> seatNumList;
 
-    private List<AudienceType> audienceTypeList;
-
-    public UpdateTicketDTO toUpdateDTO(AtomicReference<Integer> totalPrice){
-        return UpdateTicketDTO.builder().stdPrice(totalPrice.get()).salePrice(0).ticketState(TicketState.N).build();
-    }
+    private List<CreateTicketAudienceDTO> createTicketAudienceDTOList;
 }

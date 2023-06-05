@@ -1,7 +1,6 @@
 package uos.cineseoul.dto.response;
 
 import lombok.*;
-import uos.cineseoul.entity.Schedule;
 import uos.cineseoul.entity.Ticket;
 import uos.cineseoul.entity.movie.Movie;
 import uos.cineseoul.utils.enums.TicketState;
@@ -33,26 +32,21 @@ public class PrintTicketDTO {
 
     private PrintScheduleNotSchedSeatDTO schedule;
 
-    private List<PrintReservationDTO> reservations = new ArrayList<>();
+    private List<PrintReservationSeatDTO> reservationSeats = new ArrayList<>();
+
+    private List<PrintTicketAudienceDTO> audienceTypes = new ArrayList<>();
 
     public void setScheduleAndTicketScheduleSeats(Ticket ticket) {
         if(ticket.getReservationSeats()==null || ticket.getReservationSeats().size()==0) return;
         List<PrintGenreDTO> genreList = new ArrayList<>();
-        Schedule schedule = ticket.getReservationSeats().get(0).getScheduleSeat().getSchedule();
-        Movie movie = schedule.getMovie();
+        Movie movie = ticket.getSchedule().getMovie();
         movie.getMovieGenreList().forEach(movieGenre ->
                 genreList.add(new PrintGenreDTO(movieGenre.getGenre()))
         );
-        PrintScheduleNotSchedSeatDTO printSchedule = new PrintScheduleNotSchedSeatDTO(schedule);
-        printSchedule.getMovie().setGenreList(genreList);
-        printSchedule.getMovie().setGradeName(movie.getGrade().getName());
-        this.schedule = printSchedule;
-
-        List<PrintReservationDTO> reservations = new ArrayList<>();
-        ticket.getReservationSeats().forEach(reservation -> {
-            reservations.add(PrintReservationDTO.builder().seat(new PrintSeatDTO(reservation.getScheduleSeat().getSeat()))
-                                                                                    .audienceType(reservation.getAudienceType()).build());
+        this.schedule.getMovie().setGenreList(genreList);
+        this.schedule.getMovie().setGradeName(movie.getGrade().getName());
+        this.reservationSeats.forEach(reservation -> {
+            reservation.getSeat().setSeatPrice(reservation.getSeat().getSeatGrade().getPrice());
         });
-        this.reservations = reservations;
     }
 }

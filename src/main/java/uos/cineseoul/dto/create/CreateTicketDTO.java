@@ -1,12 +1,6 @@
 package uos.cineseoul.dto.create;
 
 import lombok.*;
-import uos.cineseoul.dto.insert.InsertReservationSeatDTO;
-import uos.cineseoul.dto.insert.InsertTicketDTO;
-import uos.cineseoul.entity.ScheduleSeat;
-import uos.cineseoul.entity.User;
-import uos.cineseoul.utils.enums.AudienceType;
-import uos.cineseoul.utils.enums.TicketState;
 
 import java.util.List;
 
@@ -20,7 +14,9 @@ public class CreateTicketDTO {
 
     private Long schedNum;
 
+    private Integer stdPrice;
+
     private List<Long> seatNumList;
 
-    private List<AudienceType> audienceTypeList;
+    private List<CreateTicketAudienceDTO> audienceTypeDTOList;
 }
