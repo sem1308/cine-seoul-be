@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import java.io.Serializable;
 
 @NoArgsConstructor
@@ -13,5 +14,6 @@ import java.io.Serializable;
 @Setter
 public class MovieGenreId implements Serializable {
     private Long movie;
+    @Column(length = 2)
     private String genre;
 }
