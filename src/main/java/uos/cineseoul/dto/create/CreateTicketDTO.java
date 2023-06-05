@@ -1,7 +1,7 @@
 package uos.cineseoul.dto.create;
 
 import lombok.*;
-import uos.cineseoul.dto.insert.InsertReservationDTO;
+import uos.cineseoul.dto.insert.InsertReservationSeatDTO;
 import uos.cineseoul.dto.insert.InsertTicketDTO;
 import uos.cineseoul.entity.ScheduleSeat;
 import uos.cineseoul.entity.User;
@@ -22,11 +22,5 @@ public class CreateTicketDTO {
 
     private List<Long> seatNumList;
 
-    public InsertTicketDTO toInsertDTO(User user){
-        return InsertTicketDTO.builder().ticketState(TicketState.N).user(user).stdPrice(0).build();
-    }
-
-    public InsertReservationDTO toInsertTicketScheduleSeatDTO(ScheduleSeat scheduleSeat, AudienceType audienceType){
-        return InsertReservationDTO.builder().scheduleSeat(scheduleSeat).audienceType(audienceType).build();
-    }
+    private List<AudienceType> audienceTypeList;
 }

@@ -36,9 +36,9 @@ public class PrintTicketDTO {
     private List<PrintReservationDTO> reservations = new ArrayList<>();
 
     public void setScheduleAndTicketScheduleSeats(Ticket ticket) {
-        if(ticket.getReservations()==null || ticket.getReservations().size()==0) return;
+        if(ticket.getReservationSeats()==null || ticket.getReservationSeats().size()==0) return;
         List<PrintGenreDTO> genreList = new ArrayList<>();
-        Schedule schedule = ticket.getReservations().get(0).getScheduleSeat().getSchedule();
+        Schedule schedule = ticket.getReservationSeats().get(0).getScheduleSeat().getSchedule();
         Movie movie = schedule.getMovie();
         movie.getMovieGenreList().forEach(movieGenre ->
                 genreList.add(new PrintGenreDTO(movieGenre.getGenre()))
@@ -49,7 +49,7 @@ public class PrintTicketDTO {
         this.schedule = printSchedule;
 
         List<PrintReservationDTO> reservations = new ArrayList<>();
-        ticket.getReservations().forEach(reservation -> {
+        ticket.getReservationSeats().forEach(reservation -> {
             reservations.add(PrintReservationDTO.builder().seat(new PrintSeatDTO(reservation.getScheduleSeat().getSeat()))
                                                                                     .audienceType(reservation.getAudienceType()).build());
         });
