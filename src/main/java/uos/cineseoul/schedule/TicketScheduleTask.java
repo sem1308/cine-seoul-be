@@ -13,8 +13,6 @@ import uos.cineseoul.entity.User;
 import uos.cineseoul.entity.movie.Movie;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.repository.*;
-import uos.cineseoul.service.AccountService;
-import uos.cineseoul.service.TicketService;
 import uos.cineseoul.utils.enums.Is;
 import uos.cineseoul.utils.enums.TicketState;
 import uos.cineseoul.utils.enums.UserRole;
