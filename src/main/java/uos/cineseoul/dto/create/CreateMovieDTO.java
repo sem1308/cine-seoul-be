@@ -1,6 +1,7 @@
 package uos.cineseoul.dto.create;
 
 import lombok.Data;
+import uos.cineseoul.utils.ActorAndRole;
 import uos.cineseoul.utils.enums.Is;
 
 import javax.validation.constraints.NotBlank;
@@ -28,19 +29,19 @@ public class CreateMovieDTO {
     @NotNull
     private Is isShowing;
 
+    private String poster;
+
     @NotNull
     private Long distNum;
 
-    @NotNull
     @Size(min = 2, max = 2)
     private String gradeCode;
 
-    @NotNull
     private List<String> genreCodeList;
 
-    @NotNull
     private List<Long> directorNumList;
 
-    @NotNull
-    private List<Long> actorNumList;
+    private List<ActorAndRole> actorNumList;
+
+    private List<String> countryCodeList;
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import uos.cineseoul.entity.Country;
 import uos.cineseoul.entity.movie.MovieActor;
 
 import javax.persistence.*;
@@ -30,4 +31,8 @@ public class Actor {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "actor")
     @Builder.Default
     private List<MovieActor> movieActorList = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "COUNTRY_CODE")
+    private Country country;
 }

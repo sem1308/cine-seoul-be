@@ -1,6 +1,7 @@
 package uos.cineseoul.dto.fix;
 
 import lombok.Data;
+import uos.cineseoul.utils.ActorAndRole;
 import uos.cineseoul.utils.enums.Is;
 
 import javax.validation.constraints.NotNull;
@@ -27,6 +28,8 @@ public class FixMovieDTO {
 
     private Long distNum;
 
+    private String poster;
+
     @Size(min = 2, max = 2)
     private String gradeCode;
 
@@ -34,5 +37,7 @@ public class FixMovieDTO {
 
     private List<Long> directorNumList;
 
-    private List<Long> actorNumList;
+    private List<ActorAndRole> actorNumList;
+
+    private List<String> countryList;
 }

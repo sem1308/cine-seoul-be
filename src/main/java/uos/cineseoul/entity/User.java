@@ -6,6 +6,7 @@ import uos.cineseoul.utils.enums.UserRole;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "USERS")
@@ -51,4 +52,8 @@ public class User{
     @CreationTimestamp
     @Column(name="CREATED_DATE", nullable = false)
     private LocalDateTime createdAt;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @Builder.Default
+    private List<Review> reviewList = new ArrayList<>();
 }

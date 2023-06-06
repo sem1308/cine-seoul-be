@@ -3,6 +3,7 @@ package uos.cineseoul.controller.movie;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import uos.cineseoul.utils.enums.request.SortMovieBy;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,12 +40,30 @@ public class MovieController {
         return ResponseEntity.ok(new PrintMovieDTO(movie));
     }
 
-    @GetMapping("/search")
-    @Operation(description = "영화 제목으로 영화를 검색한다.")
-    public ResponseEntity<PrintMovieDTO> lookUpMovieByTitle(@RequestParam("title") String title) {
-        Movie movie = movieService.findMovieByTitle(title);
-        return ResponseEntity.ok(new PrintMovieDTO(movie));
+//    @GetMapping("/search")
+//    @Operation(description = "영화 제목으로 영화를 검색한다.")
+//    public ResponseEntity<PrintMovieDTO> lookUpMovieByTitle(@RequestParam("title") String title) {
+//        Movie movie = movieService.findMovieByTitle(title);
+//        return ResponseEntity.ok(new PrintMovieDTO(movie));
+//    }
+
+    @GetMapping("search")
+    @Operation(description = "영화 제목으로 영화를 검색하며 유사한 결과값도 표시합니다.")
+    public ResponseEntity<List<PrintMovieDTO>> lookUpMovieByTitle(@RequestParam("title") String title) {
+        List<PrintMovieDTO> printMovieDTOList = movieService.findAllMovieLike(title).stream()
+                .map(PrintMovieDTO::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(printMovieDTOList);
     }
+
+    @GetMapping("/test")
+    public void l(@RequestParam String country)
+    {
+        Pageable pageable = PageRequest.of(0, 12);
+        Page<Movie> movies = movieService.findAllCountryMovie(pageable, country);
+        System.out.println("movies.getContent().get(0) = " + movies.getContent().get(0));
+    }
+
 
     @GetMapping()
     @Operation(description = "특정 조건으로 영화 목록을 조회한다.")
