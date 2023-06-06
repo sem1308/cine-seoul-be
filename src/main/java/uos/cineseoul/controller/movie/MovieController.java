@@ -56,13 +56,17 @@ public class MovieController {
         return ResponseEntity.ok(printMovieDTOList);
     }
 
-    @GetMapping("/test")
-    public void l(@RequestParam String country)
-    {
-        Pageable pageable = PageRequest.of(0, 12);
-        Page<Movie> movies = movieService.findAllCountryMovie(pageable, country);
-        System.out.println("movies.getContent().get(0) = " + movies.getContent().get(0));
-    }
+//    @GetMapping("/country")
+//    public ResponseEntity<PrintPageDTO<PrintMovieDTO>> lookupMovieCountryList(@RequestParam String country)
+//    {
+//        Pageable pageable = PageRequest.of(0, 12);
+//        Page<Movie> movieList = movieService.findAllCountryMovie(pageable, country);
+//        List<PrintMovieDTO> printMovieDTOS = new ArrayList<>();
+//        movieList.getContent().forEach(
+//                movie -> printMovieDTOS.add(new PrintMovieDTO(movie))
+//        );
+//        return new ResponseEntity<>(new PrintPageDTO<>(printMovieDTOS,movieList.getTotalPages()), HttpStatus.OK);
+//    }
 
 
     @GetMapping()
