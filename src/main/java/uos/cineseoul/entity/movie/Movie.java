@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -35,7 +36,8 @@ public class Movie {
     private String poster;
 
     @Column(name = "TICKET_COUNT", nullable = false, columnDefinition = "NUMBER(10) DEFAULT 0")
-    private Integer ticketCount;
+    @Builder.Default
+    private Integer ticketCount = 0;
 
     @Column(name = "IS_SHOWING", nullable = false, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Enumerated(EnumType.STRING)
@@ -49,17 +51,21 @@ public class Movie {
     @JoinColumn(name = "GRADE_CODE")
     private Grade grade;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", cascade = CascadeType.ALL)
     @Builder.Default
     private List<MovieGenre> movieGenreList = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", cascade = CascadeType.ALL)
     @Builder.Default
     private List<MovieDirector> movieDirectorList = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", cascade = CascadeType.ALL)
     @Builder.Default
     private List<MovieActor> movieActorList = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<MovieCountry> movieCountryList = new ArrayList<>();
 
     @Builder
     public Movie(Long movieNum, String title, String info, String releaseDate, int runningTime,String poster, Integer ticketCount, Is isShowing, Distributor distributor, Grade grade, List<MovieGenre> movieGenreList, List<MovieDirector> movieDirectorList, List<MovieActor> movieActorList) {

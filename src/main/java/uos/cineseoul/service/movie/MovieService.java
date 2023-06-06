@@ -8,13 +8,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uos.cineseoul.dto.insert.InsertMovieDTO;
 import uos.cineseoul.dto.update.UpdateMovieDTO;
+import uos.cineseoul.entity.Country;
 import uos.cineseoul.entity.movie.*;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.repository.*;
+import uos.cineseoul.utils.ActorAndRole;
+import uos.cineseoul.utils.enums.ActorRole;
 import uos.cineseoul.utils.enums.Is;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -30,11 +33,7 @@ public class MovieService {
 
     private final DirectorRepository directorRepository;
 
-    private final MovieActorRepository movieActorRepository;
-
-    private final MovieGenreRepository movieGenreRepository;
-
-    private final MovieDirectorRepository movieDirectorRepository;
+    private final CountryRepository countryRepository;
 
     public List<Movie> findAllMovie() {
         List<Movie> movieList = movieRepository.findAll();
@@ -46,10 +45,10 @@ public class MovieService {
 
     public Page<Movie> findAllMovie(Pageable pageable, String genre) {
         Page<Movie> movieList;
-        if(genre!=null){
-            Genre g = genreRepository.findById(genre).orElseThrow(()->new ResourceNotFoundException("해당 코드의 장르가 없습니다."));
-            movieList = movieRepository.findAllByMovieGenreList_Genre(g,pageable);
-        }else {
+        if (genre != null) {
+            Genre g = genreRepository.findById(genre).orElseThrow(() -> new ResourceNotFoundException("해당 코드의 장르가 없습니다."));
+            movieList = movieRepository.findAllByMovieGenreList_Genre(g, pageable);
+        } else {
             movieList = movieRepository.findAll(pageable);
         }
         if (movieList.isEmpty()) {
@@ -72,6 +71,12 @@ public class MovieService {
         return movie;
     }
 
+    public List<Movie> findAllMovieLike(String title) {
+        List<Movie> movieList = movieRepository.findAllByTitleContains(title);
+        movieList.sort(Comparator.comparingInt(movie -> Math.abs(movie.getTitle().length() - title.length())));
+        return movieList;
+    }
+
     public List<Movie> findAllShowingMovie() {
         List<Movie> movieList = movieRepository.findAllByIsShowing(Is.Y);
         if (movieList.isEmpty())
@@ -88,13 +93,28 @@ public class MovieService {
         return movieList;
     }
 
+    public Page<Movie> findAllCountryMovie(Pageable pageable, String country) {
+        Page<Movie> movieList;
+        movieList = movieRepository.findAllByMovieCountryList_Country(
+                countryRepository
+                        .findByCountryCode(country)
+                        .orElseThrow(
+                                () -> new ResourceNotFoundException("해당 코드의 국가가 없습니다.")
+                        ), pageable
+        );
+        if (movieList.isEmpty())
+            throw new ResourceNotFoundException("해당 국가의 영화가 없습니다.");
+        return movieList;
+    }
+
+
     public Page<Movie> findAllShowingMovie(Pageable pageable, String genre) {
         Page<Movie> movieList;
-        if(genre!=null){
-            Genre g = genreRepository.findById(genre).orElseThrow(()->new ResourceNotFoundException("해당 코드의 장르가 없습니다."));
-            movieList = movieRepository.findAllByIsShowingAndMovieGenreList_Genre(Is.Y,g,pageable);
-        }else {
-            movieList = movieRepository.findAllByIsShowing(Is.Y,pageable);
+        if (genre != null) {
+            Genre g = genreRepository.findById(genre).orElseThrow(() -> new ResourceNotFoundException("해당 코드의 장르가 없습니다."));
+            movieList = movieRepository.findAllByIsShowingAndMovieGenreList_Genre(Is.Y, g, pageable);
+        } else {
+            movieList = movieRepository.findAllByIsShowing(Is.Y, pageable);
         }
         if (movieList.isEmpty())
             throw new ResourceNotFoundException("상영중인 영화가 없습니다.");
@@ -105,10 +125,10 @@ public class MovieService {
         LocalDateTime now = LocalDateTime.now();
         String nowTypeString = String.format("%d%02d%02d", now.getYear(), now.getMonthValue(), now.getDayOfMonth());
         Page<Movie> movieList;
-        if(genre!=null){
-            Genre g = genreRepository.findById(genre).orElseThrow(()->new ResourceNotFoundException("해당 코드의 장르가 없습니다."));
-            movieList = movieRepository.findAllByReleaseDateAfterAndMovieGenreList_Genre(nowTypeString,g,pageable);
-        }else {
+        if (genre != null) {
+            Genre g = genreRepository.findById(genre).orElseThrow(() -> new ResourceNotFoundException("해당 코드의 장르가 없습니다."));
+            movieList = movieRepository.findAllByReleaseDateAfterAndMovieGenreList_Genre(nowTypeString, g, pageable);
+        } else {
             movieList = movieRepository.findAllByReleaseDateAfter(nowTypeString, pageable);
         }
         if (movieList.isEmpty())
@@ -117,6 +137,11 @@ public class MovieService {
     }
 
     public Movie update(UpdateMovieDTO updateMovieDTO) {
+
+        List<Genre> genreList = null;
+        List<Director> directorList = null;
+        List<Country> countryList = null;
+        Map<Actor, ActorRole> actorActorRoleMap = null;
 
         Movie movie = movieRepository.findByMovieNum(updateMovieDTO.getMovie_num()).orElseThrow(
                 () -> new ResourceNotFoundException("해당 영화가 없습니다.")
@@ -136,6 +161,48 @@ public class MovieService {
             movie.setGrade(grade);
         }
 
+        if (updateMovieDTO.getActorList() != null) {
+            actorActorRoleMap = new HashMap<>();
+            for (ActorAndRole actorAndRole : updateMovieDTO.getActorList()) {
+                actorActorRoleMap.put(actorRepository.findByActNum(actorAndRole.getActor()).orElseThrow(
+                        () -> new ResourceNotFoundException("해당 번호의 배우가 없습니다.")), actorAndRole.getRole()
+                );
+            }
+        }
+
+        if (updateMovieDTO.getDirectorList() != null) {
+            directorList = new ArrayList<>();
+            for (Long dirNum : updateMovieDTO.getDirectorList()) {
+                directorList.add(
+                        directorRepository.findByDirNum(dirNum).orElseThrow(
+                                () -> new ResourceNotFoundException("해당 번호의 감독이 없습니다.")
+                        )
+                );
+            }
+        }
+
+        if (updateMovieDTO.getGenreList() != null) {
+            genreList = new ArrayList<>();
+            for (String genreCode : updateMovieDTO.getGenreList()) {
+                genreList.add(
+                        genreRepository.findByGenreCode(genreCode).orElseThrow(
+                                () -> new ResourceNotFoundException("해당 번호의 장르가 없습니다.")
+                        )
+                );
+            }
+        }
+
+        if (updateMovieDTO.getCountryList() != null) {
+            countryList = new ArrayList<>();
+            for (String countryCode : updateMovieDTO.getCountryList()) {
+                countryList.add(
+                        countryRepository.findByCountryCode(countryCode).orElseThrow(
+                                () -> new ResourceNotFoundException("해당 번호의 국가가 없습니다.")
+                        )
+                );
+            }
+        }
+
         if (updateMovieDTO.getTitle() != null)
             movie.setTitle(updateMovieDTO.getTitle());
         if (updateMovieDTO.getInfo() != null)
@@ -146,82 +213,108 @@ public class MovieService {
             movie.setReleaseDate(updateMovieDTO.getReleaseDate());
         if (updateMovieDTO.getRunningTime() != null)
             movie.setRunningTime(updateMovieDTO.getRunningTime());
-        if (movie.getMovieActorList() != null &&
-                updateMovieDTO.getActorList() != null &&
-                !movie.getMovieActorList().equals(updateMovieDTO.getActorList())) {
-            for (MovieActor m : movieActorRepository.findAllByMovie(movie))
-                movieActorRepository.delete(m);
-            updateMovieDTO.getActorList().forEach(
-                    actorNum -> {
-                        Actor actor = actorRepository.findByActNum(actorNum).orElseThrow(
-                                () -> new ResourceNotFoundException("해당 번호의 배우가 없습니다.")
-                        );
-                        MovieActor movieActor = MovieActor
-                                .builder()
-                                .movie(movie)
-                                .actor(actor)
-                                .build();
-                        movieActorRepository.save(movieActor);
-                    }
-            );
-        }
-        if (movie.getMovieDirectorList() != null &&
-                updateMovieDTO.getDirectorList() != null &&
-                !movie.getMovieDirectorList().equals(updateMovieDTO.getDirectorList())) {
-            for (MovieDirector m : movieDirectorRepository.findAllByMovie(movie))
-                movieDirectorRepository.delete(m);
-            updateMovieDTO.getDirectorList().forEach(
-                    dirNum -> {
-                        Director director = directorRepository.findByDirNum(dirNum).orElseThrow(
-                                () -> new ResourceNotFoundException("해당 번호의 감독이 없습니다.")
-                        );
-                        MovieDirector movieDirector = MovieDirector
-                                .builder()
-                                .movie(movie)
-                                .director(director)
-                                .build();
-                        movieDirectorRepository.save(movieDirector);
-                    }
-            );
+        if (updateMovieDTO.getPoster() != null)
+            movie.setPoster(updateMovieDTO.getPoster());
 
+        if (genreList != null) {
+            movie.getMovieGenreList().clear();
+            for (Genre genre : genreList) {
+                MovieGenre movieGenre = MovieGenre
+                        .builder()
+                        .genre(genre)
+                        .movie(movie)
+                        .build();
+                movie.getMovieGenreList().add(movieGenre);
+            }
         }
-        if (updateMovieDTO.getGenreList() != null &&
-                updateMovieDTO.getGenreList() != null &&
-                !movie.getMovieGenreList().equals(updateMovieDTO.getGenreList())){
-            for (MovieGenre m : movieGenreRepository.findAllByMovie(movie))
-                movieGenreRepository.delete(m);
-            updateMovieDTO.getGenreList().forEach(
-                    genreCode -> {
-                        Genre genre = genreRepository.findByGenreCode(genreCode).orElseThrow(
-                                () -> new ResourceNotFoundException("해당 코드의 장르가 없습니다.")
-                        );
-                        MovieGenre movieGenre = MovieGenre
-                                .builder()
-                                .movie(movie)
-                                .genre(genre)
-                                .build();
-                        movieGenreRepository.save(movieGenre);
-                    }
-            );
+
+        if (actorActorRoleMap != null) {
+            movie.getMovieActorList().clear();
+            for (Map.Entry<Actor, ActorRole> entry : actorActorRoleMap.entrySet()) {
+                MovieActor movieActor = MovieActor
+                        .builder()
+                        .actor(entry.getKey())
+                        .movie(movie)
+                        .creditRole(entry.getValue())
+                        .build();
+                movie.getMovieActorList().add(movieActor);
+            }
         }
+
+        if (countryList != null) {
+            movie.getMovieCountryList().clear();
+            for (Country country : countryList) {
+                MovieCountry movieCountry = MovieCountry
+                        .builder()
+                        .movie(movie)
+                        .country(country)
+                        .build();
+                movie.getMovieCountryList().add(movieCountry);
+            }
+        }
+
+        if (directorList != null) {
+            movie.getMovieDirectorList().clear();
+            for (Director director : directorList) {
+                MovieDirector movieDirector = MovieDirector
+                        .builder()
+                        .movie(movie)
+                        .director(director)
+                        .build();
+                movie.getMovieDirectorList().add(movieDirector);
+            }
+        }
+
         return movieRepository.save(movie);
     }
 
     public Movie insert(InsertMovieDTO insertMovieDTO) {
 
-        Movie result;
+        Map<Actor, ActorRole> actorActorRoleMap = new HashMap<>();
+        List<Genre> genreList = new ArrayList<>();
+        List<Director> directorList = new ArrayList<>();
+        List<Country> countryList = new ArrayList<>();
+        Grade grade = null;
 
         Distributor distributor = distributorRepository.findByDistNum(insertMovieDTO.getDistNum()).orElseThrow(
                 () -> new ResourceNotFoundException("해당 배급사가 없습니다.")
         );
 
-        Grade grade = gradeRepository.findByGradeCode(insertMovieDTO.getGradeCode()).orElseThrow(
-                () -> new ResourceNotFoundException("해당 등급이 없습니다.")
+        if (insertMovieDTO.getGradeCode() != null)
+            grade = gradeRepository.findByGradeCode(insertMovieDTO.getGradeCode()).orElseThrow(
+                    () -> new ResourceNotFoundException("해당 등급이 없습니다.")
+            );
+
+        insertMovieDTO.getActorList().forEach(
+                actorAndRole ->
+                        actorActorRoleMap.put(actorRepository.findByActNum(actorAndRole.getActor()).orElseThrow(
+                                () -> new ResourceNotFoundException("해당 번호의 배우가 없습니다.")
+                        ), actorAndRole.getRole())
         );
+
+        insertMovieDTO.getDirectorList().forEach(
+                dirNum -> directorList.add(directorRepository.findByDirNum(dirNum).orElseThrow(
+                        () -> new ResourceNotFoundException("해당 번호의 감독이 없습니다.")
+                ))
+        );
+
+        insertMovieDTO.getGenreList().forEach(
+                genreCode -> genreList.add(genreRepository.findByGenreCode(genreCode).orElseThrow(
+                        () -> new ResourceNotFoundException("해당 코드의 장르가 없습니다.")
+                ))
+        );
+
+        insertMovieDTO.getCountryList().forEach(
+                countryCode -> countryList.add(countryRepository.findByCountryCode(countryCode).orElseThrow(
+                        () -> new ResourceNotFoundException("해당 코드의 국가가 없습니다.")
+                ))
+        );
+
 
         Movie movie = Movie
                 .builder()
                 .title(insertMovieDTO.getTitle())
+                .poster(insertMovieDTO.getPoster())
                 .isShowing(insertMovieDTO.getIsShowing())
                 .releaseDate(insertMovieDTO.getReleaseDate())
                 .distributor(distributor)
@@ -230,50 +323,41 @@ public class MovieService {
                 .info(insertMovieDTO.getInfo())
                 .build();
 
-        result = movieRepository.save(movie);
+        for (Map.Entry<Actor, ActorRole> entry : actorActorRoleMap.entrySet()) {
+            MovieActor movieActor = MovieActor.builder()
+                    .movie(movie)
+                    .actor(entry.getKey())
+                    .creditRole(entry.getValue())
+                    .build();
+            movie.getMovieActorList().add(movieActor);
+        }
 
-        insertMovieDTO.getActorList().forEach(
-                actorNum -> {
-                    Actor actor = actorRepository.findByActNum(actorNum).orElseThrow(
-                            () -> new ResourceNotFoundException("해당 번호의 배우가 없습니다.")
-                    );
-                    MovieActor movieActor = MovieActor
-                            .builder()
-                            .movie(movie)
-                            .actor(actor)
-                            .build();
-                    movieActorRepository.save(movieActor);
-                }
-        );
+        for (Genre genre : genreList) {
+            MovieGenre movieGenre = MovieGenre
+                    .builder()
+                    .movie(movie)
+                    .genre(genre)
+                    .build();
+            movie.getMovieGenreList().add(movieGenre);
+        }
 
-        insertMovieDTO.getDirectorList().forEach(
-                dirNum -> {
-                    Director director = directorRepository.findByDirNum(dirNum).orElseThrow(
-                            () -> new ResourceNotFoundException("해당 번호의 감독이 없습니다.")
-                    );
-                    MovieDirector movieDirector = MovieDirector
-                            .builder()
-                            .movie(movie)
-                            .director(director)
-                            .build();
-                    movieDirectorRepository.save(movieDirector);
-                }
-        );
+        for (Director director : directorList) {
+            MovieDirector movieDirector = MovieDirector
+                    .builder()
+                    .movie(movie)
+                    .director(director)
+                    .build();
+            movie.getMovieDirectorList().add(movieDirector);
+        }
 
-        insertMovieDTO.getGenreList().forEach(
-                genreCode -> {
-                    Genre genre = genreRepository.findByGenreCode(genreCode).orElseThrow(
-                            () -> new ResourceNotFoundException("해당 코드의 장르가 없습니다.")
-                    );
-                    MovieGenre movieGenre = MovieGenre
-                            .builder()
-                            .movie(movie)
-                            .genre(genre)
-                            .build();
-                    movieGenreRepository.save(movieGenre);
-                }
-        );
-
-        return result;
+        for (Country country : countryList) {
+            MovieCountry movieCountry = MovieCountry
+                    .builder()
+                    .movie(movie)
+                    .country(country)
+                    .build();
+            movie.getMovieCountryList().add(movieCountry);
+        }
+        return movieRepository.save(movie);
     }
 }

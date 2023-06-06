@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import uos.cineseoul.entity.Country;
 import uos.cineseoul.entity.movie.Genre;
 import uos.cineseoul.entity.movie.Movie;
 import uos.cineseoul.utils.enums.Is;
@@ -14,7 +15,11 @@ import java.util.Optional;
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     List<Movie> findAllByMovieGenreList_Genre(Genre genre);
+
+    List<Movie> findAllByTitleContains(String title);
     Page<Movie> findAllByMovieGenreList_Genre(Genre genre, Pageable pageable);
+
+    Page<Movie> findAllByMovieCountryList_Country(Country country, Pageable pageable);
     Optional<Movie> findByMovieNum(Long movieNum);
     Optional<Movie> findByTitle(String title);
     List<Movie> findAllByIsShowing(Is isShowing);
