@@ -2,10 +2,13 @@ package uos.cineseoul.entity;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import uos.cineseoul.utils.enums.AudienceType;
 import uos.cineseoul.utils.enums.TicketState;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "TICKET")
 @AllArgsConstructor()
@@ -33,15 +36,25 @@ public class Ticket{
     @Column(name="REVERVATION_DATE", nullable = false)
     private LocalDateTime createdAt;
 
+    @CreationTimestamp
+    @Column(name="CANCEL_DATE", nullable = true)
+    private LocalDateTime canceledAt;
+
     /* Foreign Key */
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "SCHED_NUM", nullable = false)
+    private Schedule schedule;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_NUM", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumns({
-            @JoinColumn(name = "SCHED_NUM", referencedColumnName = "SCHED_NUM"),
-            @JoinColumn(name = "SEAT_NUM", referencedColumnName = "SEAT_NUM")
-    })
-    private ScheduleSeat scheduleSeat;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TICKET_NUM", nullable = false, insertable = false, updatable = false)
+    private List<ReservationSeat> reservationSeats = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TICKET_NUM", nullable = false, insertable = false, updatable = false)
+    private List<TicketAudience> audienceTypes = new ArrayList<>();
 }

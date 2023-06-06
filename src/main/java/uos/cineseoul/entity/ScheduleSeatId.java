@@ -1,16 +1,21 @@
 package uos.cineseoul.entity;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Embeddable
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@EqualsAndHashCode
 public class ScheduleSeatId implements Serializable {
     private Long schedule;
+
     private Long seat;
 
     @Override

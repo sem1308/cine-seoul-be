@@ -34,10 +34,10 @@ public class Movie {
     @Column(name = "POSTER", nullable = true)
     private String poster;
 
-    @Column(name = "TICKET_COUNT", nullable = true)
+    @Column(name = "TICKET_COUNT", nullable = false, columnDefinition = "NUMBER(10) DEFAULT 0")
     private Integer ticketCount;
 
-    @Column(name = "IS_SHOWING", nullable = false, columnDefinition = "CHAR(1)")
+    @Column(name = "IS_SHOWING", nullable = false, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Enumerated(EnumType.STRING)
     private Is isShowing;
 

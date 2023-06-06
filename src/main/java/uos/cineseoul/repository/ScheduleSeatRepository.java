@@ -5,12 +5,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import uos.cineseoul.entity.Schedule;
 import uos.cineseoul.entity.ScheduleSeat;
+import uos.cineseoul.entity.ScheduleSeatId;
 import uos.cineseoul.entity.Seat;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ScheduleSeatRepository extends JpaRepository<ScheduleSeat, Long> {
+public interface ScheduleSeatRepository extends JpaRepository<ScheduleSeat, ScheduleSeatId> {
     // 상영 일정으로 조회
     List<ScheduleSeat> findAllBySchedule(Schedule schedule);
 

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import uos.cineseoul.dto.create.CreatePaymentDTO;
+import uos.cineseoul.dto.insert.InsertPaymentDTO;
 import uos.cineseoul.dto.insert.InsertTicketDTO;
 import uos.cineseoul.dto.response.PrintPageDTO;
 import uos.cineseoul.dto.response.PrintPaymentDTO;
@@ -69,7 +70,6 @@ public class PaymentController {
     }
 
     @PostMapping("/auth")
-    @Transactional
     @ApiOperation(value = "결제내역 등록", protocols = "http")
     public ResponseEntity<ReturnMessage<PrintPaymentDTO>> register(@RequestBody CreatePaymentDTO paymentDTO) {
         Payment payment = paymentService.insert(paymentDTO.toInsertDTO(userService.findOneByNum(paymentDTO.getUserNum())
@@ -83,14 +83,14 @@ public class PaymentController {
     }
 
     @PostMapping("/auth/list")
-    @Transactional
     @ApiOperation(value = "결제내역 리스트 등록", protocols = "http")
-    public ResponseEntity<ReturnMessage<List<PrintPaymentDTO>>> registerList(@RequestBody CreatePaymentDTO paymentDTO) {
-        List<Payment> paymentList = new ArrayList<>();
-        paymentList.forEach(ticketDTO->{
-            paymentList.add(paymentService.insert(paymentDTO.toInsertDTO(userService.findOneByNum(paymentDTO.getUserNum())
-                    ,ticketService.findOneByNum(paymentDTO.getTicketNum()))));
+    public ResponseEntity<ReturnMessage<List<PrintPaymentDTO>>> registerList(@RequestBody List<CreatePaymentDTO> paymentDTOS) {
+        List<InsertPaymentDTO> insertPaymentDTOS = new ArrayList<>();
+        paymentDTOS.forEach(paymentDTO->{
+            insertPaymentDTOS.add(paymentDTO.toInsertDTO(userService.findOneByNum(paymentDTO.getUserNum())
+                    ,ticketService.findOneByNum(paymentDTO.getTicketNum())));
         });
+        List<Payment> paymentList = paymentService.insertList(insertPaymentDTOS);
         ReturnMessage<List<PrintPaymentDTO>> msg = new ReturnMessage<>();
         msg.setMessage("결제내역 등록이 완료되었습니다.");
         msg.setData(paymentService.getPrintDTOList(paymentList));

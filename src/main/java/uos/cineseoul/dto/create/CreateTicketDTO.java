@@ -1,13 +1,8 @@
 package uos.cineseoul.dto.create;
 
 import lombok.*;
-import uos.cineseoul.dto.insert.InsertTicketDTO;
-import uos.cineseoul.entity.ScheduleSeat;
-import uos.cineseoul.entity.User;
-import uos.cineseoul.utils.enums.TicketState;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import java.util.List;
 
 @AllArgsConstructor()
 @NoArgsConstructor(force = true)
@@ -19,9 +14,9 @@ public class CreateTicketDTO {
 
     private Long schedNum;
 
-    private Long seatNum;
+    private Integer stdPrice;
 
-    public InsertTicketDTO toInsertDTO(User user, ScheduleSeat scheduleSeat){
-        return InsertTicketDTO.builder().ticketState(TicketState.N).user(user).scheduleSeat(scheduleSeat).build();
-    }
+    private List<Long> seatNumList;
+
+    private List<CreateTicketAudienceDTO> audienceTypeDTOList;
 }
