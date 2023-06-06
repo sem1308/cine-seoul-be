@@ -4,9 +4,7 @@ package uos.cineseoul.controller;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -29,10 +27,7 @@ import uos.cineseoul.utils.enums.StatusEnum;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController()
 @RequestMapping("/schedule")
@@ -115,11 +110,16 @@ public class ScheduleController {
     }
 
     @DeleteMapping("/admin/{num}")
-    @ApiOperation(value = "상영일정 삭제 by 상영일정 번호", protocols = "http")
-    public ResponseEntity<ReturnMessage<PrintTicketDTO>> delete(@PathVariable("num") Long num) {
-        scheduleService.delete(num);
+    @ApiOperation(value = "상영일정 삭제 by 상영일정 번호 (fileter: delete_only_seat - 상영일정-좌석만 삭제)", protocols = "http")
+    public ResponseEntity<ReturnMessage<PrintTicketDTO>> delete(@PathVariable("num") Long num, @RequestParam(value = "delete_only_seat", required = false) boolean deleteOnlySeat) {
         ReturnMessage<PrintTicketDTO> msg = new ReturnMessage<>();
-        msg.setMessage("상영일정 삭제가 완료되었습니다.");
+        if(deleteOnlySeat){
+            scheduleService.deleteScheduleSeat(scheduleService.findOneByNum(num));
+            msg.setMessage("상영일정-좌석 삭제가 완료되었습니다.");
+        }else{
+            scheduleService.delete(num);
+            msg.setMessage("상영일정 삭제가 완료되었습니다.");
+        }
         msg.setStatus(StatusEnum.OK);
 
         return new ResponseEntity<>(msg, HttpStatus.OK);
