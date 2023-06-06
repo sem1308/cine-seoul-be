@@ -1,36 +1,31 @@
 package uos.cineseoul.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import java.lang.reflect.Member;
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "REVIEW")
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Builder
 public class Review {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "REVIEW_NUM")
     private Long reviewNum;
 
     @Column(name = "CONTENTS", nullable = true, unique = false, length = 1500)
-    private String Contents;
+    private String contents;
 
     @Column(name = "SCORE", nullable = false)
-    @Min(value = 0)
-    @Max(value = 10)
     private Integer score;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "USER_NUM")
     private User user;
 
     @CreationTimestamp
