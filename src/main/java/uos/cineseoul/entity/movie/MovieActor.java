@@ -3,6 +3,7 @@ package uos.cineseoul.entity.movie;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import uos.cineseoul.utils.enums.ActorRole;
 
 import javax.persistence.*;
 
@@ -24,10 +25,11 @@ public class MovieActor {
     private Actor actor;
 
     @Column(name = "CREDIT_ROLE", columnDefinition = "CHAR(1)", nullable = false)
-    private String creditRole;
+    @Enumerated(EnumType.STRING)
+    private ActorRole creditRole;
 
     @Builder
-    public MovieActor(Movie movie, Actor actor, String creditRole) {
+    public MovieActor(Movie movie, Actor actor, ActorRole creditRole) {
         this.movie = movie;
         this.actor = actor;
         this.creditRole = creditRole;

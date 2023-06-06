@@ -34,6 +34,8 @@ public class PrintDetailedMovieDTO {
 
     private List<PrintActorDTO> actorList;
 
+    private List<PrintCountryDTO> countryList;
+
     public PrintDetailedMovieDTO(Movie movie) {
         this.movieNum = movie.getMovieNum();
         this.title = movie.getTitle();
@@ -56,6 +58,10 @@ public class PrintDetailedMovieDTO {
         );
         movie.getMovieDirectorList().forEach(
                 movieDirector -> directorList.add(new PrintDirectorDTO(movieDirector.getDirector()))
+        );
+
+        movie.getMovieCountryList().forEach(
+                movieCountry -> countryList.add(new PrintCountryDTO(movieCountry.getCountry()))
         );
     }
 }

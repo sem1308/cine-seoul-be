@@ -1,8 +1,8 @@
 package uos.cineseoul.dto.update;
 
 import lombok.Data;
-import uos.cineseoul.dto.create.CreateMovieDTO;
 import uos.cineseoul.dto.fix.FixMovieDTO;
+import uos.cineseoul.utils.ActorAndRole;
 import uos.cineseoul.utils.enums.Is;
 
 import java.util.List;
@@ -23,17 +23,22 @@ public class UpdateMovieDTO {
 
     private Long distNum;
 
+    private String poster;
+
     private String gradeCode;
 
     private List<String> genreList;
 
-    private List<Long> actorList;
+    private List<ActorAndRole> actorList;
 
     private List<Long> directorList;
+
+    private List<String> countryList;
 
     public UpdateMovieDTO(FixMovieDTO fixMovieDTO) {
         this.movie_num = fixMovieDTO.getMovie_num();
         this.title = fixMovieDTO.getTitle();
+        this.poster = fixMovieDTO.getPoster();
         this.info = fixMovieDTO.getInfo();
         this.releaseDate = fixMovieDTO.getReleaseDate();
         this.runningTime = fixMovieDTO.getRunningTime();
@@ -43,5 +48,6 @@ public class UpdateMovieDTO {
         this.genreList = fixMovieDTO.getGenreCodeList();
         this.actorList = fixMovieDTO.getActorNumList();
         this.directorList = fixMovieDTO.getDirectorNumList();
+        this.countryList = fixMovieDTO.getCountryList();
     }
 }
