@@ -46,7 +46,7 @@ public class Ticket{
     @JoinColumn(name = "SCHED_NUM", nullable = false)
     private Schedule schedule;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "USER_NUM", nullable = false)
     private User user;
 
