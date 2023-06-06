@@ -27,10 +27,10 @@ public class TicketScheduleTask {
     private final TicketRepository ticketRepo;
     private final TicketService ticketService;
 
-    private void deleteExpiredTickets(List<Ticket> ticketList) {
+    private void deleteExpiredTickets(List<Ticket> ticketList, boolean isChangeTicketCount) {
         if(!ticketList.isEmpty()){
             ticketList.forEach(ticket -> {
-                ticketService.delete(ticket);
+                ticketService.delete(ticket, isChangeTicketCount);
             });
         }
     }
@@ -40,7 +40,7 @@ public class TicketScheduleTask {
     public void deleteExpiredTickets() {
         LocalDateTime dateTime = LocalDateTime.now().minusMinutes(5); // 테스트를 위해 짧게 설정
         List<Ticket> ticketList = ticketRepo.findByTicketStateAndCreatedAtBefore(TicketState.N, dateTime);
-        deleteExpiredTickets(ticketList);
+        deleteExpiredTickets(ticketList, true);
     }
 
     @Scheduled(cron = "0 0 0 * * ?") // 매일 자정마다 생성후 1달 지난 티켓 삭제
@@ -48,6 +48,6 @@ public class TicketScheduleTask {
     public void deleteExpiredTicketsByMonth() {
         LocalDateTime dateTime = LocalDateTime.now().minusMonths(1);
         List<Ticket> ticketList = ticketRepo.findByCreatedAtBefore(dateTime);
-        deleteExpiredTickets(ticketList);
+        deleteExpiredTickets(ticketList, false);
     }
 }
