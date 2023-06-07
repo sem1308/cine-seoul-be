@@ -21,10 +21,14 @@ public class User{
     @Column(name="USER_NUM")
     private Long userNum;
 
-    /* Foreign Key */
+    /* Foreign */
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_NUM", nullable = false, insertable = false, updatable = false)
     private List<Ticket> tickets;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @Builder.Default
+    private List<Review> reviewList = new ArrayList<>();
     /* */
 
     @Column(name="ID", nullable = true, length = 100)
@@ -52,8 +56,4 @@ public class User{
     @CreationTimestamp
     @Column(name="CREATED_DATE", nullable = false)
     private LocalDateTime createdAt;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    @Builder.Default
-    private List<Review> reviewList = new ArrayList<>();
 }
