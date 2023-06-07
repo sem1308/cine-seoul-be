@@ -1,6 +1,5 @@
 package uos.cineseoul.config;
 
-import org.springdoc.core.SpringDocUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestHeader;
