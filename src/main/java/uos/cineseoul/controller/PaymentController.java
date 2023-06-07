@@ -1,6 +1,7 @@
 package uos.cineseoul.controller;
 
 
+import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import uos.cineseoul.entity.Payment;
 import uos.cineseoul.service.PaymentService;
 import uos.cineseoul.service.TicketService;
 import uos.cineseoul.service.UserService;
+import uos.cineseoul.utils.JwtTokenProvider;
 import uos.cineseoul.utils.PageUtil;
 import uos.cineseoul.utils.ReturnMessage;
 import uos.cineseoul.utils.enums.PayState;
@@ -33,6 +35,7 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final UserService userService;
     private final TicketService ticketService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/auth")
     @ApiOperation(value = "전체 결제내역 목록 조회 (filter : userNum)", protocols = "http")
@@ -64,29 +67,13 @@ public class PaymentController {
 
     @PostMapping("/auth")
     @ApiOperation(value = "결제내역 등록", protocols = "http")
-    public ResponseEntity<ReturnMessage<PrintPaymentDTO>> register(@RequestBody CreatePaymentDTO paymentDTO) {
-        InsertPaymentDTO insertPaymentDTO = new InsertPaymentDTO(paymentDTO, userService.findOneByNum(paymentDTO.getUserNum()),ticketService.findOneByNum(paymentDTO.getTicketNum()));
+    public ResponseEntity<ReturnMessage<PrintPaymentDTO>> register(@RequestHeader(value = "Authorization") String token, @RequestBody CreatePaymentDTO paymentDTO) {
+        Long userNum = jwtTokenProvider.getClaims(token).get("num", Long.class);
+        InsertPaymentDTO insertPaymentDTO = new InsertPaymentDTO(paymentDTO, userService.findOneByNum(userNum),ticketService.findOneByNum(paymentDTO.getTicketNum()));
         Payment payment = paymentService.insert(insertPaymentDTO);
         ReturnMessage<PrintPaymentDTO> msg = new ReturnMessage<>();
         msg.setMessage("결제내역 등록이 완료되었습니다.");
         msg.setData(paymentService.getPrintDTO(payment));
-        msg.setStatus(StatusEnum.OK);
-
-        return new ResponseEntity<>(msg, HttpStatus.OK);
-    }
-
-    @PostMapping("/auth/list")
-    @ApiOperation(value = "결제내역 리스트 등록", protocols = "http")
-    public ResponseEntity<ReturnMessage<List<PrintPaymentDTO>>> registerList(@RequestBody List<CreatePaymentDTO> paymentDTOS) {
-        List<InsertPaymentDTO> insertPaymentDTOS = new ArrayList<>();
-        paymentDTOS.forEach(paymentDTO->{
-            InsertPaymentDTO insertPaymentDTO = new InsertPaymentDTO(paymentDTO, userService.findOneByNum(paymentDTO.getUserNum()),ticketService.findOneByNum(paymentDTO.getTicketNum()));
-            insertPaymentDTOS.add(insertPaymentDTO);
-        });
-        List<Payment> paymentList = paymentService.insertList(insertPaymentDTOS);
-        ReturnMessage<List<PrintPaymentDTO>> msg = new ReturnMessage<>();
-        msg.setMessage("결제내역 등록이 완료되었습니다.");
-        msg.setData(paymentService.getPrintDTOList(paymentList));
         msg.setStatus(StatusEnum.OK);
 
         return new ResponseEntity<>(msg, HttpStatus.OK);
