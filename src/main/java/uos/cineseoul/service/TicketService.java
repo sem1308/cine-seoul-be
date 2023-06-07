@@ -179,7 +179,6 @@ public class TicketService {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void deleteByNum(Long ticketNum) {
         Ticket ticket = findOneByNum(ticketNum);
-        // 삭제
         checkStateAndRefund(ticket,ticket.getUser().getRole());
         delete(ticket, true);
     }
@@ -188,7 +187,6 @@ public class TicketService {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void cancelByNum(Long ticketNum) {
         Ticket ticket = findOneByNum(ticketNum);
-        // 취소
         cancelProcess(ticket);
         ticketRepo.save(ticket);
     }
