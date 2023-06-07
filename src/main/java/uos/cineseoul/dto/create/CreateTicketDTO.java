@@ -12,9 +12,6 @@ import java.util.List;
 @Builder
 public class CreateTicketDTO {
     @NotNull
-    private Long userNum;
-
-    @NotNull
     private Long schedNum;
 
     @NotNull

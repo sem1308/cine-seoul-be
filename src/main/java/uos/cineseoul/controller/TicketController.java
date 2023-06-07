@@ -1,6 +1,7 @@
 package uos.cineseoul.controller;
 
 
+import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ import uos.cineseoul.entity.Ticket;
 import uos.cineseoul.service.ScheduleService;
 import uos.cineseoul.service.TicketService;
 import uos.cineseoul.service.UserService;
+import uos.cineseoul.utils.JwtTokenProvider;
 import uos.cineseoul.utils.PageUtil;
 import uos.cineseoul.utils.ReturnMessage;
 import uos.cineseoul.utils.enums.StatusEnum;
@@ -36,6 +38,7 @@ public class TicketController {
     private final TicketService ticketService;
     private final UserService userService;
     private final ScheduleService scheduleService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/auth")
     @ApiOperation(value = "전체 티켓 목록 조회 (filter : userNum)", protocols = "http")
@@ -67,9 +70,10 @@ public class TicketController {
 
     @PostMapping("/auth")
     @ApiOperation(value = "티켓 등록", protocols = "http")
-    public ResponseEntity<ReturnMessage<PrintTicketDTO>> register(@RequestBody CreateTicketDTO ticketDTO) {
+    public ResponseEntity<ReturnMessage<PrintTicketDTO>> register(@RequestHeader(value = "Authorization") String token, @RequestBody CreateTicketDTO ticketDTO) {
+        Long userNum = jwtTokenProvider.getClaims(token).get("num", Long.class);
         InsertTicketDTO iTicketDTO = InsertTicketDTO.builder().ticketState(TicketState.N).schedule(scheduleService.findOneByNum(ticketDTO.getSchedNum()))
-                                                            .user(userService.findOneByNum(ticketDTO.getUserNum())).stdPrice(ticketDTO.getStdPrice()).build();
+                                                            .user(userService.findOneByNum(userNum)).stdPrice(ticketDTO.getStdPrice()).build();
         Ticket ticket = ticketService.insert(iTicketDTO,ticketDTO.getSeatNumList(), ticketDTO.getAudienceTypeDTOList());
         ReturnMessage<PrintTicketDTO> msg = new ReturnMessage<>();
         msg.setMessage("티켓 예매가 완료되었습니다.");
@@ -104,9 +108,10 @@ public class TicketController {
 
     @PutMapping("/auth/cancelregister")
     @ApiOperation(value = "티켓 취소 및 등록", protocols = "http")
-    public ResponseEntity<ReturnMessage<PrintTicketDTO>> CancelAndRegister(@RequestBody CancelRegisterTicketDTO ticketDTO) {
+    public ResponseEntity<ReturnMessage<PrintTicketDTO>> CancelAndRegister(@RequestHeader(value = "Authorization") String token, @RequestBody CancelRegisterTicketDTO ticketDTO) {
+        Long userNum = jwtTokenProvider.getClaims(token).get("num", Long.class);
         InsertTicketDTO insertTicketDTO = InsertTicketDTO.builder().ticketState(TicketState.N).stdPrice(ticketDTO.getStdPrice()).schedule(scheduleService.findOneByNum(ticketDTO.getSchedNum()))
-                                                        .user(userService.findOneByNum(ticketDTO.getUserNum())).build();
+                                                        .user(userService.findOneByNum(userNum)).build();
         UpdateTicketDTO updateTicketDTO = UpdateTicketDTO.builder().ticketState(TicketState.C).build();
         Ticket ticket = ticketService.cancelAndChangeSeat(ticketDTO.getTicketNum(),insertTicketDTO, updateTicketDTO, ticketDTO.getSeatNumList(), ticketDTO.getCreateTicketAudienceDTOList());
         ReturnMessage<PrintTicketDTO> msg = new ReturnMessage<>();
@@ -116,13 +121,4 @@ public class TicketController {
 
         return new ResponseEntity<>(msg, HttpStatus.OK);
     }
-//    private void fillInsertReservationDTO(List<SeatTypeDTO> seatTypeDTOS, Long schedNum, AtomicReference<Integer> totalPrice){
-//        List<InsertReservationSeatDTO> insertReservationSeatDTOS = new ArrayList<>();
-//        seatTypeDTOS.forEach(seatTypeDTO -> {
-//            ScheduleSeat scheduleSeat = scheduleService.findScheduleSeat(schedNum,seatTypeDTO.getSeatNum());
-//            totalPrice.updateAndGet(v -> v + scheduleSeat.getSeat().getSeatGrade().getPrice());
-//            insertReservationSeatDTOS.add(InsertReservationSeatDTO.builder().scheduleSeat(scheduleSeat).audienceType(seatTypeDTO.getAudienceType()).build());
-//        });
-//        return insertReservationSeatDTOS;
-//    }
 }

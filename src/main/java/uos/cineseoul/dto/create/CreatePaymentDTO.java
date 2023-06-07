@@ -26,7 +26,5 @@ public class CreatePaymentDTO {
 
     private PaymentMethod paymentMethod;
 
-    private Long userNum;
-
     private Long ticketNum;
 }
