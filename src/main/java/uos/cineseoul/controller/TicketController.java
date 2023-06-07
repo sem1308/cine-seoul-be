@@ -96,7 +96,7 @@ public class TicketController {
     }
 
     @DeleteMapping("/auth/{num}")
-    @ApiOperation(value = "비회원 티켓 삭제 by 티켓 번호", protocols = "http")
+    @ApiOperation(value = "티켓 삭제 by 티켓 번호", protocols = "http")
     public ResponseEntity<ReturnMessage<PrintTicketDTO>> delete(@PathVariable("num") Long num) {
         ticketService.deleteByNum(num);
         ReturnMessage<PrintTicketDTO> msg = new ReturnMessage<>();
