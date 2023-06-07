@@ -82,7 +82,7 @@ public class TicketController {
     @PutMapping("/auth")
     @ApiOperation(value = "티켓 정보 변경", protocols = "http")
     public ResponseEntity<ReturnMessage<PrintTicketDTO>> update(@RequestBody FixTicketDTO ticketDTO) {
-        Ticket ticket = ticketService.update(ticketDTO.getTicketNum(), ticketDTO.toUpdateDTO());
+        Ticket ticket = ticketService.update(ticketDTO.getTicketNum(), UpdateTicketDTO.builder().ticketState(ticketDTO.getTicketState()).salePrice(ticketDTO.getSalePrice()).build());
         ReturnMessage<PrintTicketDTO> msg = new ReturnMessage<>();
         msg.setMessage("티켓 변경이 완료되었습니다.");
         msg.setData(ticketService.toPrintDTO(ticket));

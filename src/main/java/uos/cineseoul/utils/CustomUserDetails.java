@@ -1,4 +1,4 @@
-package uos.cineseoul.dto;
+package uos.cineseoul.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
