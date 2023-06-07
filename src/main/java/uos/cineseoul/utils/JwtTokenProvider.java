@@ -57,11 +57,12 @@ public class JwtTokenProvider {
 
         int num = Integer.parseInt(claims.get("num").toString());
         String id = claims.get("id").toString();
+        String name = claims.get("name").toString();
 
         @SuppressWarnings("unchecked")
         List<String> roles = (ArrayList<String>)claims.get("roles");
 
-        CustomUserDetails userDetails = CustomUserDetails.builder().num(num).id(id).roles(roles).build();
+        CustomUserDetails userDetails = CustomUserDetails.builder().num(num).name(name).id(id).roles(roles).build();
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }

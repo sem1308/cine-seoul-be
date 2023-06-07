@@ -23,6 +23,8 @@ public class CustomUserDetails implements UserDetails {
 
     private int num;
 
+    private String name;
+
     private String id;
 
     private String pw;
@@ -44,7 +46,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return getId();
+        return getName();
     }
 
     @Override
