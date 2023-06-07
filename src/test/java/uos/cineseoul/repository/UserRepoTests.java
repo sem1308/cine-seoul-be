@@ -48,10 +48,10 @@ class UserRepoTests {
 	@Transactional
 	void updateTest() {
 		Long userNum = 1L;
-		UpdateUserDTO userDTO = UpdateUserDTO.builder().userNum(userNum).pw("1308111").name("한두한")
+		UpdateUserDTO userDTO = UpdateUserDTO.builder().pw("1308111").name("한두한")
 				.phoneNum("011XXXXXXXX").build();
 
-		User user = userRepo.findById(userDTO.getUserNum()).get();
+		User user = userRepo.findById(userNum).get();
 
 		UserMapper.INSTANCE.updateFromDto(userDTO,user);
 
