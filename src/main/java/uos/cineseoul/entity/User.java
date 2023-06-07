@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "USERS")
-@AllArgsConstructor()
-@NoArgsConstructor()
+@AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
 @Builder
