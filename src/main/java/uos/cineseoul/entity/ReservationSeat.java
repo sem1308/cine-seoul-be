@@ -14,7 +14,7 @@ import javax.persistence.*;
 @IdClass(ReservationSeatId.class)
 public class ReservationSeat {
     @Id
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TICKET_NUM", nullable = false)
     private Ticket ticket;
 
