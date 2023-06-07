@@ -1,6 +1,7 @@
 package uos.cineseoul.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import uos.cineseoul.utils.enums.AudienceType;
 import uos.cineseoul.utils.enums.TicketState;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity(name = "TICKET")
 @AllArgsConstructor()
@@ -46,7 +48,7 @@ public class Ticket{
     @JoinColumn(name = "SCHED_NUM", nullable = false)
     private Schedule schedule;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_NUM", nullable = false)
     private User user;
 
