@@ -50,6 +50,7 @@ public class PrintDetailedMovieDTO {
         this.genreList = new ArrayList<>();
         this.directorList = new ArrayList<>();
         this.actorList = new ArrayList<>();
+        this.countryList = new ArrayList<>();
         movie.getMovieGenreList().forEach(
                 movieGenre -> genreList.add(new PrintGenreDTO(movieGenre.getGenre()))
         );
@@ -59,7 +60,6 @@ public class PrintDetailedMovieDTO {
         movie.getMovieDirectorList().forEach(
                 movieDirector -> directorList.add(new PrintDirectorDTO(movieDirector.getDirector()))
         );
-
         movie.getMovieCountryList().forEach(
                 movieCountry -> countryList.add(new PrintCountryDTO(movieCountry.getCountry()))
         );
