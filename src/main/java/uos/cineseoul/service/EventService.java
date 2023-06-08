@@ -20,10 +20,9 @@ import java.time.LocalDateTime;
 public class EventService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
-
-    public Event insert(InsertEventDTO insertEventDTO) {
+    public Event insert(Long userNum, InsertEventDTO insertEventDTO) {
         Event event = Event.builder()
-                .user(userRepository.findByUserId(insertEventDTO.getUserId()).orElseThrow(
+                .user(userRepository.findById(userNum).orElseThrow(
                         () -> new ResourceNotFoundException("해당하는 유저가 없습니다.")
                 ))
                 .Contents(insertEventDTO.getContents())
