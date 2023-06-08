@@ -18,6 +18,7 @@ import uos.cineseoul.repository.UserRepository;
 import uos.cineseoul.service.ReviewService;
 import uos.cineseoul.utils.JwtTokenProvider;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -85,7 +86,7 @@ public class ReviewController {
 
     @PostMapping
     @Operation(description = "게시판 글을 작성한다.")
-    public ResponseEntity<Long> register(@RequestHeader(value = "Authorization") String token, @RequestBody CreateReviewDTO createReviewDTO) {
+    public ResponseEntity<Long> register(@RequestHeader(value = "Authorization") String token, @RequestBody @Valid CreateReviewDTO createReviewDTO) {
         Long userNum = jwtTokenProvider.getClaims(token).get("num", Long.class);
         Review review = reviewService.insert(userNum, new InsertReviewDTO(createReviewDTO));
         return ResponseEntity.ok(review.getReviewNum());
@@ -93,7 +94,7 @@ public class ReviewController {
 
     @PostMapping("/recommend")
     @Operation(description = "추천수를 증가시킨다.")
-    public void recommend(@RequestBody IncreaseReviewRecommend increaseReviewRecommend) {
+    public void recommend(@RequestBody @Valid IncreaseReviewRecommend increaseReviewRecommend) {
         reviewService.recommend(increaseReviewRecommend.getReviewNum());
     }
 

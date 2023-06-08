@@ -2,6 +2,7 @@ package uos.cineseoul.entity;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,7 +17,10 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "EVENT_NUM")
-    private Long EventNum;
+    private Long eventNum;
+
+    @Column(name = "TITLE")
+    private String title;
 
     @Column(name = "VIEWS")
     @Builder.Default
@@ -27,10 +31,20 @@ public class Event {
     private User user;
 
     @Column(name = "CONTENTS")
-    private String Contents;
+    @Nullable
+    private String contents;
 
     @Column(name = "IMAGE")
-    private String IMAGE;
+    private String image;
+
+    @Column(name = "BANNER")
+    private String banner;
+
+    @Column(name="START_DATE", nullable = false)
+    private LocalDateTime startAt;
+
+    @Column(name="END_DATE", nullable = false)
+    private LocalDateTime endAt;
 
     @CreationTimestamp
     @Column(name="CREATED_DATE", nullable = false)
