@@ -1,9 +1,9 @@
 package uos.cineseoul.utils.enums;
 
 public enum SeatGrade {
-    A(10000, "TOP_GRADE"),
-    B(9000, "MIDDLE_GRADE"),
-    C(7500, "LOW_GRADE");
+    A(13000, "TOP_GRADE"),
+    B(11000, "MIDDLE_GRADE"),
+    C(9000, "LOW_GRADE");
     Integer price;
     String code;
 

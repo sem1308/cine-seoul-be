@@ -35,10 +35,10 @@ class UserServiceTests {
 	void updateTest() {
 		Long userNum = 1L;
 		String pw = "1308111";
-		UpdateUserDTO userDTO = UpdateUserDTO.builder().userNum(userNum).pw(pw).name("한두한")
+		UpdateUserDTO userDTO = UpdateUserDTO.builder().pw(pw).name("한두한")
 				.phoneNum("011XXXXXXXX").build();
 
-		User updatedUser = userService.update(userDTO);
+		User updatedUser = userService.update(userNum,userDTO);
 
 		// 변경된 비밀번호 확인
 		System.out.println(updatedUser.getPw());

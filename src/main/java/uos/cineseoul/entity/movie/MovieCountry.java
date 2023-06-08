@@ -22,6 +22,6 @@ public class MovieCountry {
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "COUNTRY_CODE")
+    @JoinColumn(name = "COUNTRY_CODE", columnDefinition = "CHAR(2)")
     private Country country;
 }

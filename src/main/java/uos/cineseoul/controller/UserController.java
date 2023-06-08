@@ -1,6 +1,7 @@
 package uos.cineseoul.controller;
 
 
+import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import uos.cineseoul.dto.insert.InsertUserDTO;
 import uos.cineseoul.dto.request.LoginDTO;
@@ -53,8 +55,9 @@ public class UserController {
 
     @GetMapping("/auth/{num}")
     @ApiOperation(value = "사용자 번호로 조회", protocols = "http")
-    public ResponseEntity<PrintUserDTO> lookUpUser(@PathVariable("num") Long num) {
-        User user = userService.findOneByNum(num);
+    public ResponseEntity<PrintUserDTO> lookUpUser(@RequestHeader(value = "Authorization") Claims claims) {
+        Long userNum = claims.get("num", Long.class);
+        User user = userService.findOneByNum(userNum);
 
         return new ResponseEntity<>(userService.getPrintDTO(user), HttpStatus.OK);
     }
@@ -78,8 +81,7 @@ public class UserController {
         ReturnMessage<String> msg = new ReturnMessage<>();
         List<String> roles = new ArrayList<>();
         roles.add(user.getRole().toString());
-        String token = jwtTokenProvider.createToken(user.getUserNum(),user.getId()==null?"":user.getId(),
-                                                    user.getName()==null?"":user.getName(),roles);
+        String token = jwtTokenProvider.createToken(user.getUserNum(),user.getId(), user.getName(),roles);
         msg.setMessage("로그인이 완료되었습니다.");
         msg.setStatus(StatusEnum.OK);
         msg.setData(token);
@@ -94,8 +96,7 @@ public class UserController {
         ReturnMessage<String> msg = new ReturnMessage<>();
         List<String> roles = new ArrayList<>();
         roles.add(user.getRole().toString());
-        String token = jwtTokenProvider.createToken(user.getUserNum(),user.getId()==null?"":user.getId(),
-                user.getName()==null?"":user.getName(),roles);
+        String token = jwtTokenProvider.createToken(user.getUserNum(),"",user.getName(),roles);
         msg.setMessage("로그인이 완료되었습니다.");
         msg.setStatus(StatusEnum.OK);
         msg.setData(token);
@@ -105,8 +106,9 @@ public class UserController {
     
     @PutMapping("/auth")
     @ApiOperation(value = "사용자 정보 변경", protocols = "http")
-    public ResponseEntity<ReturnMessage<PrintUserDTO>> update(@RequestBody UpdateUserDTO userDTO) {
-        User user = userService.update(userDTO);
+    public ResponseEntity<ReturnMessage<PrintUserDTO>> update(@RequestHeader(value = "Authorization") String token, @RequestBody UpdateUserDTO userDTO) {
+        Long userNum = jwtTokenProvider.getClaims(token).get("num", Long.class);
+        User user = userService.update(userNum, userDTO);
         ReturnMessage<PrintUserDTO> msg = new ReturnMessage<>();
         msg.setMessage("사용자 정보 변경이 완료되었습니다.");
         msg.setData(userService.getPrintDTO(user));

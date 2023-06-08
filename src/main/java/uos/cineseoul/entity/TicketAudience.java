@@ -19,7 +19,7 @@ import java.util.List;
 @IdClass(TicketAudienceId.class)
 public class TicketAudience {
     @Id
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "TICKET_NUM", nullable = false)
     private Ticket ticket;
 

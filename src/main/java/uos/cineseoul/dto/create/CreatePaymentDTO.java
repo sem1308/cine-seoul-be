@@ -26,12 +26,5 @@ public class CreatePaymentDTO {
 
     private PaymentMethod paymentMethod;
 
-    private Long userNum;
-
     private Long ticketNum;
-
-    public InsertPaymentDTO toInsertDTO(User user, Ticket ticket){
-        return InsertPaymentDTO.builder().price(price).cardNum(cardNum).accountNum(accountNum)
-                .paymentMethod(paymentMethod).payedPoint(payedPoint).user(user).ticket(ticket).state(PayState.Y).build();
-    }
 }

@@ -4,6 +4,7 @@ import lombok.*;
 import uos.cineseoul.dto.update.UpdateScheduleDTO;
 import uos.cineseoul.entity.Screen;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor()
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 public class FixScheduleDTO {
+    @NotNull
     private Long schedNum;
 
     private LocalDateTime schedTime;
@@ -19,8 +21,4 @@ public class FixScheduleDTO {
     private Integer order;
 
     private Long screenNum;
-
-    public UpdateScheduleDTO toUpdateDTO(Screen screen){
-        return UpdateScheduleDTO.builder().schedTime(schedTime).order(order).screen(screen).build();
-    }
 }
