@@ -1,10 +1,10 @@
 package uos.cineseoul.utils.enums;
 
 public enum AudienceType {
-    GENERAL("일반"),
-    YOUTH("청소년"),
-    ELDERLY("경로"),
-    DISABLED("우대(장애인)");
+    G("일반"),
+    Y("청소년"),
+    E("경로"),
+    D("우대(장애인)");
 
     private String displayName;
 

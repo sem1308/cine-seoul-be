@@ -24,15 +24,15 @@ public class MovieActor {
     @JoinColumn(name = "ACT_NUM")
     private Actor actor;
 
-    @Column(name = "CREDIT_ROLE", columnDefinition = "CHAR(1)", nullable = false)
+    @Column(name = "CAST_ROLE", columnDefinition = "CHAR(1)", nullable = false)
     @Enumerated(EnumType.STRING)
-    private ActorRole creditRole;
+    private ActorRole castRole;
 
     @Builder
-    public MovieActor(Movie movie, Actor actor, ActorRole creditRole) {
+    public MovieActor(Movie movie, Actor actor, ActorRole castRole) {
         this.movie = movie;
         this.actor = actor;
-        this.creditRole = creditRole;
+        this.castRole = castRole;
         movie.getMovieActorList().add(this);
         actor.getMovieActorList().add(this);
     }

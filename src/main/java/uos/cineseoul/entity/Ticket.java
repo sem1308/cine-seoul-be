@@ -1,16 +1,13 @@
 package uos.cineseoul.entity;
 
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
-import uos.cineseoul.utils.enums.AudienceType;
 import uos.cineseoul.utils.enums.TicketState;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity(name = "TICKET")
 @AllArgsConstructor()
@@ -30,7 +27,7 @@ public class Ticket{
     @Column(name="SALE_PRICE", nullable = true, unique = false)
     private Integer salePrice;
 
-    @Column(name="TICKET_STATE", nullable = false, unique = false, columnDefinition = "CHAR(1)")
+    @Column(name="TICKET_STATE", nullable = false, unique = false, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Enumerated(EnumType.STRING)
     private TicketState ticketState;
 
@@ -54,9 +51,9 @@ public class Ticket{
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "TICKET_NUM", nullable = false, insertable = false, updatable = false)
-    private List<ReservationSeat> reservationSeats = new ArrayList<>();
+    private List<TicketSeat> ticketSeats = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "TICKET_NUM", nullable = false, insertable = false, updatable = false)
-    private List<TicketAudience> audienceTypes = new ArrayList<>();
+    private List<Audience> audienceTypes = new ArrayList<>();
 }

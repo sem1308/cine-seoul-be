@@ -3,7 +3,6 @@ package uos.cineseoul.service.movie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uos.cineseoul.dto.insert.InsertMovieDTO;
@@ -235,7 +234,7 @@ public class MovieService {
                         .builder()
                         .actor(entry.getKey())
                         .movie(movie)
-                        .creditRole(entry.getValue())
+                        .castRole(entry.getValue())
                         .build();
                 movie.getMovieActorList().add(movieActor);
             }
@@ -327,7 +326,7 @@ public class MovieService {
             MovieActor movieActor = MovieActor.builder()
                     .movie(movie)
                     .actor(entry.getKey())
-                    .creditRole(entry.getValue())
+                    .castRole(entry.getValue())
                     .build();
             movie.getMovieActorList().add(movieActor);
         }
