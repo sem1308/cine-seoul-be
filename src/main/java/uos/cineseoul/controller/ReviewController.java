@@ -31,13 +31,15 @@ public class ReviewController {
     private final ReviewService reviewService;
     private final JwtTokenProvider jwtTokenProvider;
 
-    @GetMapping
-    @Operation(description = "게시판 글을 조회한다.")
-    public ResponseEntity<PrintPageDTO<PrintReviewDTO>> findAllReview(@RequestParam(name = "page") int page,
-                                                                       @RequestParam int size) {
+    @GetMapping("{num}")
+    @Operation(description = "영화의 모든 리뷰를 조회한다.")
+    public ResponseEntity<PrintPageDTO<PrintReviewDTO>> findAllReviewByMovie(
+            @PathVariable("num") Long num,
+            @RequestParam(name = "page") int page,
+            @RequestParam int size) {
         Pageable pageable = PageRequest.of(page, size);
         List<PrintReviewDTO> printReviewDTOS = new ArrayList<>();
-        Page<Review> reviewPage = reviewService.findAllReview(pageable);
+        Page<Review> reviewPage = reviewService.findAllReviewByMovie(num, pageable);
         reviewPage.getContent().forEach(
                 review -> printReviewDTOS.add(
                         PrintReviewDTO
@@ -54,13 +56,15 @@ public class ReviewController {
         return ResponseEntity.ok(new PrintPageDTO<>(printReviewDTOS, reviewPage.getTotalPages()));
     }
 
-    @GetMapping("/recommend")
-    @Operation(description = "게시판 글을 추천순으로 조회한다.")
-    public ResponseEntity<PrintPageDTO<PrintReviewDTO>> findAllRecommendReview(@RequestParam(name = "page") int page,
-                                                                                @RequestParam int size) {
+    @GetMapping("/{num}/recommend")
+    @Operation(description = "영화의 모든 리뷰를 추천순으로 조회한다.")
+    public ResponseEntity<PrintPageDTO<PrintReviewDTO>> findAllRecommendReview(
+            @PathVariable("num") Long num,
+            @RequestParam(name = "page") int page,
+            @RequestParam int size) {
         Pageable pageable = PageRequest.of(page, size);
         List<PrintReviewDTO> printReviewDTOS = new ArrayList<>();
-        Page<Review> reviewPage = reviewService.findAllReview(pageable);
+        Page<Review> reviewPage = reviewService.findAllReviewByMovie(num, pageable);
         reviewPage.getContent().forEach(
                 review -> printReviewDTOS.add(
                         PrintReviewDTO
@@ -81,16 +85,15 @@ public class ReviewController {
 
     @PostMapping
     @Operation(description = "게시판 글을 작성한다.")
-    public ResponseEntity<Long> register(@RequestHeader(value = "Authorization") String token,@RequestBody CreateReviewDTO createReviewDTO)
-    {
+    public ResponseEntity<Long> register(@RequestHeader(value = "Authorization") String token, @RequestBody CreateReviewDTO createReviewDTO) {
         Long userNum = jwtTokenProvider.getClaims(token).get("num", Long.class);
         Review review = reviewService.insert(userNum, new InsertReviewDTO(createReviewDTO));
         return ResponseEntity.ok(review.getReviewNum());
     }
+
     @PostMapping("/recommend")
     @Operation(description = "추천수를 증가시킨다.")
-    public void recommend(@RequestBody IncreaseReviewRecommend increaseReviewRecommend)
-    {
+    public void recommend(@RequestBody IncreaseReviewRecommend increaseReviewRecommend) {
         reviewService.recommend(increaseReviewRecommend.getReviewNum());
     }
 
