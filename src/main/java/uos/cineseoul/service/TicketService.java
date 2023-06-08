@@ -117,7 +117,6 @@ public class TicketService {
             reservationSeatList.add(reservationSeat);
             // 가격 체크를 위함
             price.updateAndGet(v -> v + scheduleSeat.getSeat().getSeatGrade().getPrice());
-            // TODO: 예매 자리수로 할지 예매 티켓 수로 할지
             // 상영일정 빈자리 수 1개 내리기
             Schedule schedule = ticket.getSchedule();
             schedule.setEmptySeat(schedule.getEmptySeat()-1);
