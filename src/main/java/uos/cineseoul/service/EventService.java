@@ -13,6 +13,7 @@ import uos.cineseoul.repository.EventRepository;
 import uos.cineseoul.repository.UserRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Transactional
@@ -25,8 +26,12 @@ public class EventService {
                 .user(userRepository.findById(userNum).orElseThrow(
                         () -> new ResourceNotFoundException("해당하는 유저가 없습니다.")
                 ))
-                .Contents(insertEventDTO.getContents())
-                .IMAGE(insertEventDTO.getIMAGE())
+                .image(insertEventDTO.getImage())
+                .startAt(insertEventDTO.getStartAt())
+                .endAt(insertEventDTO.getEndAt())
+                .banner(insertEventDTO.getBanner())
+                .contents(insertEventDTO.getContents())
+                .title(insertEventDTO.getTitle())
                 .build();
         return eventRepository.save(event);
     }
@@ -37,8 +42,16 @@ public class EventService {
         );
         if (updateEventDTO.getContents() != null)
             event.setContents(updateEventDTO.getContents());
-        if (updateEventDTO.getIMAGE() != null)
-            event.setIMAGE(updateEventDTO.getIMAGE());
+        if (updateEventDTO.getStartAt() != null)
+            event.setStartAt(updateEventDTO.getStartAt());
+        if (updateEventDTO.getEndAt() != null)
+            event.setEndAt(updateEventDTO.getEndAt());
+        if (updateEventDTO.getBanner() != null)
+            event.setBanner(updateEventDTO.getBanner());
+        if (updateEventDTO.getTitle()!= null)
+            event.setTitle(updateEventDTO.getTitle());
+        if (updateEventDTO.getImage() != null)
+            event.setImage(updateEventDTO.getImage());
         if (updateEventDTO.getViews() != null)
             event.setViews(updateEventDTO.getViews());
         event.setCreatedAt(LocalDateTime.now());
@@ -53,6 +66,10 @@ public class EventService {
         );
         event.increaseViews();
         return event;
+    }
+
+    public List<Event> findEventListNow(LocalDateTime localDateTime) {
+        return eventRepository.findAllByNow(localDateTime);
     }
 
     public Page<Event> findEventList(Pageable pageable) {

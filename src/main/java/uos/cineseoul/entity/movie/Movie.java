@@ -1,6 +1,7 @@
 package uos.cineseoul.entity.movie;
 
 import lombok.*;
+import uos.cineseoul.entity.Review;
 import uos.cineseoul.utils.enums.Is;
 
 import javax.persistence.*;
@@ -50,6 +51,10 @@ public class Movie {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "GRADE_CODE")
     private Grade grade;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<Review> reviewList = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", cascade = CascadeType.ALL)
     @Builder.Default

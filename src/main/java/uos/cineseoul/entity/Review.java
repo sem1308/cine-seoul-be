@@ -2,6 +2,7 @@ package uos.cineseoul.entity;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import uos.cineseoul.entity.movie.Movie;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ public class Review {
     @Column(name = "REVIEW_NUM")
     private Long reviewNum;
 
-    @Column(name = "CONTENTS", nullable = true, unique = false, length = 1500)
+    @Column(name = "CONTENTS", nullable = true, unique = false, length = 300)
     private String contents;
 
     @Column(name = "SCORE", nullable = false)
@@ -27,6 +28,10 @@ public class Review {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_NUM")
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "MOVIE_NUM")
+    private Movie movie;
 
     @CreationTimestamp
     @Column(name="CREATED_DATE", nullable = false)
