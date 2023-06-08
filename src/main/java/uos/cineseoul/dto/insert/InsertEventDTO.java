@@ -5,7 +5,6 @@ import uos.cineseoul.dto.create.CreateEventDTO;
 
 @Data
 public class InsertEventDTO {
-
     private String Contents;
 
     private String IMAGE;
