@@ -2,6 +2,7 @@ package uos.cineseoul.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -32,6 +33,7 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("uos.cineseoul.controller"))
                 .paths(PathSelectors.any())
                 .build()
+                .ignoredParameterTypes(RequestHeader.class)
                 // API 문서에 대한 내용
                 .apiInfo(apiInfo())
                 .enable(true);
@@ -67,7 +69,4 @@ public class SwaggerConfig {
         return Arrays.asList(
                 new SecurityReference("JWT", authorizationScopes));
     }
-
-
-
 }

@@ -11,7 +11,6 @@ import javax.validation.constraints.Size;
 @Getter
 @Builder
 public class UpdateUserDTO {
-    private Long userNum ;
     // 입력 비밀번호 자리수 제한
     @Size(max = 16, min = 0)
     private String pw;
@@ -21,4 +20,5 @@ public class UpdateUserDTO {
 
     @NotNull
     @Size(max = 11, min = 10)
-    private String phoneNum;}
+    private String phoneNum;
+}

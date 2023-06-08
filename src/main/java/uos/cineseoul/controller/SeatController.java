@@ -3,14 +3,14 @@ package uos.cineseoul.controller;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uos.cineseoul.dto.create.CreateSeatDTO;
 import uos.cineseoul.dto.fix.FixSeatDTO;
+import uos.cineseoul.dto.insert.InsertSeatDTO;
 import uos.cineseoul.dto.response.PrintSeatDTO;
-import uos.cineseoul.entity.Payment;
+import uos.cineseoul.dto.update.UpdateSeatDTO;
 import uos.cineseoul.entity.Screen;
 import uos.cineseoul.entity.Seat;
 import uos.cineseoul.service.ScreenService;
@@ -52,7 +52,8 @@ public class SeatController {
     @PostMapping("/admin")
     @ApiOperation(value = "좌석 등록", protocols = "http")
     public ResponseEntity<ReturnMessage<PrintSeatDTO>> register(@RequestBody CreateSeatDTO seatDTO) {
-        Seat seat = seatService.insert(seatDTO.toInsertDTO(screenService.findOneByNum(seatDTO.getScreenNum())));
+        InsertSeatDTO insertSeatDTO = new InsertSeatDTO(seatDTO, screenService.findOneByNum(seatDTO.getScreenNum()));
+        Seat seat = seatService.insert(insertSeatDTO);
         ReturnMessage<PrintSeatDTO> msg = new ReturnMessage<>();
         msg.setMessage("좌석 등록이 완료되었습니다.");
         msg.setData(seatService.getPrintDTO(seat));
@@ -64,13 +65,11 @@ public class SeatController {
     @PutMapping("/admin")
     @ApiOperation(value = "좌석 정보 변경", protocols = "http")
     public ResponseEntity<ReturnMessage<PrintSeatDTO>> update(@RequestBody FixSeatDTO seatDTO) {
-        Screen screen;
-        try{
+        Screen screen = null;
+        if(seatDTO.getScreenNum()!=null){
             screen = screenService.findOneByNum(seatDTO.getScreenNum());
-        }catch(Exception e){
-            screen = null;
         }
-        Seat seat = seatService.update(seatDTO.getSeatNum(), seatDTO.toUpdateDTO(screen));
+        Seat seat = seatService.update(seatDTO.getSeatNum(), UpdateSeatDTO.builder().row(seatDTO.getRow()).col(seatDTO.getCol()).seatGrade(seatDTO.getSeatGrade()).screen(screen).build());
         ReturnMessage<PrintSeatDTO> msg = new ReturnMessage<>();
         msg.setMessage("좌석 정보 변경이 완료되었습니다.");
         msg.setData(seatService.getPrintDTO(seat));

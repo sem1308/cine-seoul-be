@@ -2,6 +2,7 @@ package uos.cineseoul.dto.create;
 
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @AllArgsConstructor()
@@ -10,13 +11,15 @@ import java.util.List;
 @Getter
 @Builder
 public class CreateTicketDTO {
-    private Long userNum;
-
+    @NotNull
     private Long schedNum;
 
+    @NotNull
     private Integer stdPrice;
 
+    @NotNull
     private List<Long> seatNumList;
 
+    @NotNull
     private List<CreateTicketAudienceDTO> audienceTypeDTOList;
 }

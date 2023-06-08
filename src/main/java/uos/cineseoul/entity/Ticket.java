@@ -1,6 +1,7 @@
 package uos.cineseoul.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import uos.cineseoul.utils.enums.AudienceType;
 import uos.cineseoul.utils.enums.TicketState;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity(name = "TICKET")
 @AllArgsConstructor()
@@ -28,7 +30,7 @@ public class Ticket{
     @Column(name="SALE_PRICE", nullable = true, unique = false)
     private Integer salePrice;
 
-    @Column(name="TICKET_STATE", nullable = false, unique = false, columnDefinition = "char(1)")
+    @Column(name="TICKET_STATE", nullable = false, unique = false, columnDefinition = "CHAR(1)")
     @Enumerated(EnumType.STRING)
     private TicketState ticketState;
 
@@ -37,7 +39,7 @@ public class Ticket{
     private LocalDateTime createdAt;
 
     @CreationTimestamp
-    @Column(name="CANCEL_DATE", nullable = true)
+    @Column(name="CANCEL_DATE", nullable = false)
     private LocalDateTime canceledAt;
 
     /* Foreign Key */
