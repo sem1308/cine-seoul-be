@@ -14,6 +14,7 @@ import uos.cineseoul.dto.response.PrintPageDTO;
 import uos.cineseoul.dto.update.UpdateEventDTO;
 import uos.cineseoul.entity.Event;
 import uos.cineseoul.service.EventService;
+import uos.cineseoul.utils.JwtTokenProvider;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/event")
 public class EventController {
     private final EventService eventService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/{num}")
     public ResponseEntity<PrintEventDTO> lookUpDetailEvent(@PathVariable("num") Long num) {
@@ -42,8 +44,9 @@ public class EventController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> register(CreateEventDTO createEventDTO) {
-        return ResponseEntity.ok(eventService.insert(new InsertEventDTO(createEventDTO)).getEventNum());
+    public ResponseEntity<Long> register(@RequestHeader(value = "Authorization") String token, CreateEventDTO createEventDTO) {
+        Long userNum = jwtTokenProvider.getClaims(token).get("num", Long.class);
+        return ResponseEntity.ok(eventService.insert(userNum, new InsertEventDTO(createEventDTO)).getEventNum());
     }
 
     @PutMapping

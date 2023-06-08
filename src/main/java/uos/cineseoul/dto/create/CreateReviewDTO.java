@@ -15,8 +15,4 @@ public class CreateReviewDTO {
     @NotNull
     private Integer score;
 
-    //todo 인증과정 확인 필요
-    @NotNull
-    private String userId;
-
 }
