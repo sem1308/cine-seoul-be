@@ -19,7 +19,7 @@ public class Review {
     @Column(name = "REVIEW_NUM")
     private Long reviewNum;
 
-    @Column(name = "CONTENTS", nullable = true, unique = false, length = 1500)
+    @Column(name = "CONTENTS", nullable = true, unique = false, length = 300)
     private String contents;
 
     @Column(name = "SCORE", nullable = false)

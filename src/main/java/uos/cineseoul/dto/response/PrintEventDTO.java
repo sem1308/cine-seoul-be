@@ -14,18 +14,30 @@ public class PrintEventDTO {
 
     private String userId;
 
-    private String Contents;
+    private String title;
 
-    private String IMAGE;
+    private String contents;
+
+    private String image;
+
+    private String banner;
 
     private LocalDateTime createdAt;
 
+    private LocalDateTime startAt;
+
+    private LocalDateTime endAt;
+
     public PrintEventDTO(Event event) {
-        this.EventNum = event.getEventNum();
+        EventNum = event.getEventNum();
         this.views = event.getViews();
         this.userId = event.getUser().getId();
-        this.Contents = event.getContents();
-        this.IMAGE = event.getIMAGE();
+        this.title = event.getTitle();
+        this.contents = event.getContents();
+        this.image = event.getImage();
+        this.banner = event.getBanner();
         this.createdAt = event.getCreatedAt();
+        this.startAt = event.getStartAt();
+        this.endAt = event.getEndAt();
     }
 }
