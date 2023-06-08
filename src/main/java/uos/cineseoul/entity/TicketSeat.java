@@ -1,18 +1,17 @@
 package uos.cineseoul.entity;
 
 import lombok.*;
-import uos.cineseoul.utils.enums.AudienceType;
 
 import javax.persistence.*;
 
-@Entity(name = "RESERVATION_SEAT")
+@Entity(name = "TICKET_SEAT")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-@IdClass(ReservationSeatId.class)
-public class ReservationSeat {
+@IdClass(TicketSeatId.class)
+public class TicketSeat {
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TICKET_NUM", nullable = false)

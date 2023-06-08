@@ -29,7 +29,7 @@ public class Payment{
     @Column(name="PAYED_POINT", nullable = true, unique = false)
     private Integer payedPoint;
 
-    @Column(name="STATE", columnDefinition = "char(1)")
+    @Column(name="STATE", nullable = false, columnDefinition = "char(1)")
     @Enumerated(EnumType.STRING)
     private PayState state;
 

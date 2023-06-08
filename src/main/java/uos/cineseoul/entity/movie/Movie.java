@@ -36,20 +36,20 @@ public class Movie {
     @Column(name = "POSTER", nullable = true)
     private String poster;
 
-    @Column(name = "TICKET_COUNT", nullable = false, columnDefinition = "NUMBER(10) DEFAULT 0")
+    @Column(name = "REVERVATION", nullable = false, columnDefinition = "NUMBER(10) DEFAULT 0")
     @Builder.Default
-    private Integer ticketCount = 0;
+    private Integer reservationCount = 0;
 
     @Column(name = "IS_SHOWING", nullable = false, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Enumerated(EnumType.STRING)
     private Is isShowing;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DIST_NUM")
+    @JoinColumn(name = "DIST_NUM", nullable = true)
     private Distributor distributor;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "GRADE_CODE")
+    @JoinColumn(name = "GRADE_CODE", nullable = true)
     private Grade grade;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", cascade = CascadeType.ALL)
@@ -73,14 +73,14 @@ public class Movie {
     private List<MovieCountry> movieCountryList = new ArrayList<>();
 
     @Builder
-    public Movie(Long movieNum, String title, String info, String releaseDate, int runningTime,String poster, Integer ticketCount, Is isShowing, Distributor distributor, Grade grade, List<MovieGenre> movieGenreList, List<MovieDirector> movieDirectorList, List<MovieActor> movieActorList) {
+    public Movie(Long movieNum, String title, String info, String releaseDate, int runningTime, String poster, Integer reservationCount, Is isShowing, Distributor distributor, Grade grade, List<MovieGenre> movieGenreList, List<MovieDirector> movieDirectorList, List<MovieActor> movieActorList) {
         this.movieNum = movieNum;
         this.title = title;
         this.info = info;
         this.releaseDate = releaseDate;
         this.runningTime = runningTime;
         this.poster = poster;
-        this.ticketCount = ticketCount;;
+        this.reservationCount = reservationCount;;
         this.isShowing = isShowing;
         this.distributor = distributor;
         this.grade = grade;

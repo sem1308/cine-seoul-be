@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class ReservationSeatId implements Serializable {
+public class TicketSeatId implements Serializable {
     private Long ticket;
 
     private Long seat;

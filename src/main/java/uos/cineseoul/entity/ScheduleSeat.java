@@ -23,7 +23,7 @@ public class ScheduleSeat {
     @JoinColumn(name = "SEAT_NUM", nullable = false)
     private Seat seat;
 
-    @Column(name="IS_OCCUPIED", nullable = false, unique = false, columnDefinition = "char(1)")
+    @Column(name="IS_OCCUPIED", nullable = false, unique = false, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Enumerated(EnumType.STRING)
     private Is isOccupied;
 

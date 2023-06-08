@@ -37,7 +37,7 @@ public class PrintTicketDTO {
     private List<PrintTicketAudienceDTO> audienceTypes = new ArrayList<>();
 
     public void setByTicket(Ticket ticket) {
-        if(ticket.getReservationSeats()==null || ticket.getReservationSeats().size()==0) return;
+        if(ticket.getTicketSeats()==null || ticket.getTicketSeats().size()==0) return;
         List<PrintGenreDTO> genreList = new ArrayList<>();
         Movie movie = ticket.getSchedule().getMovie();
         movie.getMovieGenreList().forEach(movieGenre ->

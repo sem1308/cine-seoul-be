@@ -3,7 +3,6 @@ package uos.cineseoul.dto.response;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import uos.cineseoul.entity.movie.Movie;
 import uos.cineseoul.utils.enums.Is;
 
@@ -42,7 +41,7 @@ public class PrintMovieDTO {
         this.title = movie.getTitle();
         this.releaseDate = movie.getReleaseDate();
         this.runningTime = movie.getRunningTime();
-        this.ticketCount = movie.getTicketCount();
+        this.ticketCount = movie.getReservationCount();
         this.isShowing = movie.getIsShowing();
         if(movie.getDistributor()!=null)
             this.distName = movie.getDistributor().getName();

@@ -9,5 +9,5 @@ import javax.persistence.Enumerated;
 public class SeatTypeDTO {
     Long seatNum;
     @Enumerated(EnumType.STRING)
-    AudienceType audienceType = AudienceType.GENERAL;
+    AudienceType audienceType = AudienceType.G;
 }

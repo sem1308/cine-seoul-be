@@ -84,15 +84,15 @@ public class TicketService {
         Ticket ticket = TicketMapper.INSTANCE.toEntity(ticketDTO);
 
         Ticket savedTicket = ticketRepo.save(ticket);
-        savedTicket.setReservationSeats(insertReservationSeatList(ticket, seatNumList));
+        savedTicket.setTicketSeats(insertReservationSeatList(ticket, seatNumList));
         savedTicket.setAudienceTypes(insertTicketAudienceList(ticket, createTicketAudienceDTOList));
         return savedTicket;
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public List<ReservationSeat> insertReservationSeatList(Ticket ticket, List<Long> seatNumList){
+    public List<TicketSeat> insertReservationSeatList(Ticket ticket, List<Long> seatNumList){
         AtomicReference<Integer> price = new AtomicReference<>(0);
-        List<ReservationSeat> reservationSeatList = new ArrayList<>();
+        List<TicketSeat> ticketSeatList = new ArrayList<>();
         seatNumList.forEach(seatNum->{
             ScheduleSeat scheduleSeat = scheduleSeatRepo.findBySchedNumAndSeatNum(ticket.getSchedule().getSchedNum(),seatNum).orElseThrow(()->{
                 throw new ResourceNotFoundException("번호가 " + ticket.getSchedule().getSchedNum() + "인 상영일정에는 번호가" + seatNum + "인 좌석이 없습니다.");
@@ -113,8 +113,8 @@ public class TicketService {
 
             // 티켓-상영일정-좌석 생성
             InsertReservationSeatDTO iReservationSeatDTO = InsertReservationSeatDTO.builder().ticket(ticket).seat(scheduleSeat.getSeat()).build();
-            ReservationSeat reservationSeat = ReservationSeatMapper.INSTANCE.toEntity(iReservationSeatDTO);
-            reservationSeatList.add(reservationSeat);
+            TicketSeat ticketSeat = ReservationSeatMapper.INSTANCE.toEntity(iReservationSeatDTO);
+            ticketSeatList.add(ticketSeat);
             // 가격 체크를 위함
             price.updateAndGet(v -> v + scheduleSeat.getSeat().getSeatGrade().getPrice());
             // 상영일정 빈자리 수 1개 내리기
@@ -123,29 +123,29 @@ public class TicketService {
             scheduleRepo.save(schedule);
             // 영화의 예매 수 1개 올리기
             Movie movie = schedule.getMovie();
-            movie.setTicketCount(movie.getTicketCount()+1);
+            movie.setReservationCount(movie.getReservationCount()+1);
             movieRepo.save(movie);
         });
 
-        reservationSeatRepo.saveAll(reservationSeatList);
+        reservationSeatRepo.saveAll(ticketSeatList);
 
         // TODO: 관객 타입에 따른 가격 변화
         if(!price.get().equals(ticket.getStdPrice())){
             throw new DataInconsistencyException("표준 가격이 좌석 가격합과 일치하지 않습니다.");
         }
 
-        return reservationSeatList;
+        return ticketSeatList;
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public List<TicketAudience> insertTicketAudienceList(Ticket ticket, List<CreateTicketAudienceDTO> createTicketAudienceDTOList){
-        List<TicketAudience> ticketAudienceList = new ArrayList<>();
+    public List<Audience> insertTicketAudienceList(Ticket ticket, List<CreateTicketAudienceDTO> createTicketAudienceDTOList){
+        List<Audience> audienceList = new ArrayList<>();
         createTicketAudienceDTOList.forEach(createTicketAudienceDTO -> {
-            TicketAudience ticketAudience = TicketAudience.builder().ticket(ticket).audienceType(createTicketAudienceDTO.getAudienceType()).count(createTicketAudienceDTO.getCount()).build();
-            ticketAudienceList.add(ticketAudience);
+            Audience audience = Audience.builder().ticket(ticket).audienceType(createTicketAudienceDTO.getAudienceType()).count(createTicketAudienceDTO.getCount()).build();
+            audienceList.add(audience);
         });
-        ticketAudienceRepo.saveAll(ticketAudienceList);
-        return ticketAudienceList;
+        ticketAudienceRepo.saveAll(audienceList);
+        return audienceList;
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
@@ -192,8 +192,8 @@ public class TicketService {
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void delete(Ticket ticket, boolean isChangeTicketCount) {
-        editScheduleSeats(ticket.getReservationSeats(), ticket.getSchedule(), isChangeTicketCount);
-        reservationSeatRepo.deleteAll(ticket.getReservationSeats());
+        editScheduleSeats(ticket.getTicketSeats(), ticket.getSchedule(), isChangeTicketCount);
+        reservationSeatRepo.deleteAll(ticket.getTicketSeats());
         ticketRepo.delete(ticket);
 
         if(ticket.getUser().getRole().equals(UserRole.N) && (ticket.getUser().getTickets().size()==1)){
@@ -211,15 +211,15 @@ public class TicketService {
     public void cancelProcess(Ticket ticket) {
         // 환불
         checkStateAndRefund(ticket,ticket.getUser().getRole());
-        editScheduleSeats(ticket.getReservationSeats(),ticket.getSchedule(), true);
+        editScheduleSeats(ticket.getTicketSeats(),ticket.getSchedule(), true);
         ticket.setCanceledAt(LocalDateTime.now());
         ticket.setTicketState(TicketState.C);
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public void editScheduleSeats(List<ReservationSeat> reservationSeatList,Schedule schedule, boolean isChangeTicketCount) {
+    public void editScheduleSeats(List<TicketSeat> ticketSeatList, Schedule schedule, boolean isChangeTicketCount) {
         // 상영일정-좌석 수정
-        reservationSeatList.forEach(reservationSeat -> {
+        ticketSeatList.forEach(reservationSeat -> {
             ScheduleSeat scheduleSeat = scheduleSeatRepo.findByScheduleAndSeat(schedule,reservationSeat.getSeat()).orElseThrow(()->{
                 throw new ResourceNotFoundException("해당 정보에 해당하는 상영일정-좌석이 없습니다.");
             });
@@ -231,7 +231,7 @@ public class TicketService {
             if(isChangeTicketCount){
                 // 영화의 예매 수 1개 내리기
                 Movie movie = schedule.getMovie();
-                movie.setTicketCount(Math.max(movie.getTicketCount()-1,0));
+                movie.setReservationCount(Math.max(movie.getReservationCount()-1,0));
                 movieRepo.save(movie);
             }
         });

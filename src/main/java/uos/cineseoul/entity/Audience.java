@@ -1,23 +1,18 @@
 package uos.cineseoul.entity;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import uos.cineseoul.utils.enums.AudienceType;
-import uos.cineseoul.utils.enums.TicketState;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-@Entity(name = "TICKET_AUDIENCE")
+@Entity(name = "AUDIENCE")
 @AllArgsConstructor()
 @NoArgsConstructor()
 @Setter
 @Getter
 @Builder
-@IdClass(TicketAudienceId.class)
-public class TicketAudience {
+@IdClass(AudienceId.class)
+public class Audience {
     @Id
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "TICKET_NUM", nullable = false)
