@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class CreateReviewDTO {
 
+    private Long movieNum;
     private String Contents;
 
     @Min(value = 0)
