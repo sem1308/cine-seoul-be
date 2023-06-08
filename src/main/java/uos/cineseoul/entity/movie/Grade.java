@@ -24,6 +24,7 @@ public class Grade {
     private String name;
 
     @Column(name = "IS_ADULT", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Is isAdult;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "grade")

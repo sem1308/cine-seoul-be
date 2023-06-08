@@ -45,11 +45,11 @@ public class Movie {
     private Is isShowing;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DIST_NUM")
+    @JoinColumn(name = "DIST_NUM", nullable = true)
     private Distributor distributor;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "GRADE_CODE")
+    @JoinColumn(name = "GRADE_CODE", nullable = true)
     private Grade grade;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", cascade = CascadeType.ALL)
