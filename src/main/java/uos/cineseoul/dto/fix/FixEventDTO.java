@@ -10,8 +10,6 @@ public class FixEventDTO {
     @NotNull
     private Long eventNum;
     private Long views;
-
     private String Contents;
-
     private String IMAGE;
 }

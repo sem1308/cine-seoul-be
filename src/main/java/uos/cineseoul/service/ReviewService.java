@@ -25,13 +25,13 @@ public class ReviewService {
         return reviewRepository.findAll(pageable);
     }
 
-    public Review insert(InsertReviewDTO insertReviewDTO) {
+    public Review insert(Long userNum, InsertReviewDTO insertReviewDTO) {
         Review review = Review
                 .builder()
                 .score(insertReviewDTO.getScore())
                 .contents(insertReviewDTO.getContents())
                 .recommend(0)
-                .user(userRepository.findByUserId(insertReviewDTO.getUserId())
+                .user(userRepository.findById(userNum)
                         .orElseThrow(
                                 () -> new ResourceNotFoundException("해당 유저를 찾을 수 없습니다.")
                         ))
