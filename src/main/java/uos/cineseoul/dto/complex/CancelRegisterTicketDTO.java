@@ -18,8 +18,6 @@ import java.util.concurrent.atomic.AtomicReference;
 public class CancelRegisterTicketDTO {
     private Long ticketNum;
 
-    private Long userNum;
-
     private Long schedNum;
 
     private Integer stdPrice;

@@ -1,6 +1,7 @@
 package uos.cineseoul.dto.insert;
 
 import lombok.*;
+import uos.cineseoul.dto.create.CreatePaymentDTO;
 import uos.cineseoul.entity.Ticket;
 import uos.cineseoul.entity.User;
 import uos.cineseoul.utils.enums.PayState;
@@ -30,4 +31,24 @@ public class InsertPaymentDTO {
     private User user;
 
     private Ticket ticket;
+
+    public InsertPaymentDTO(CreatePaymentDTO createPaymentDTO){
+        this.price = createPaymentDTO.getPrice();
+        this.payedPoint = createPaymentDTO.getPayedPoint();
+        this.cardNum = createPaymentDTO.getCardNum();
+        this.accountNum = createPaymentDTO.getAccountNum();
+        this.paymentMethod = createPaymentDTO.getPaymentMethod();
+        this.state = PayState.Y;
+    }
+
+    public InsertPaymentDTO(CreatePaymentDTO createPaymentDTO, User user, Ticket ticket){
+        this.price = createPaymentDTO.getPrice();
+        this.payedPoint = createPaymentDTO.getPayedPoint();
+        this.cardNum = createPaymentDTO.getCardNum();
+        this.accountNum = createPaymentDTO.getAccountNum();
+        this.paymentMethod = createPaymentDTO.getPaymentMethod();
+        this.state = PayState.Y;
+        this.user = user;
+        this.ticket = ticket;
+    }
 }

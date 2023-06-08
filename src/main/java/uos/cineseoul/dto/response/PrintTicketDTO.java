@@ -36,7 +36,7 @@ public class PrintTicketDTO {
 
     private List<PrintTicketAudienceDTO> audienceTypes = new ArrayList<>();
 
-    public void setScheduleAndTicketScheduleSeats(Ticket ticket) {
+    public void setByTicket(Ticket ticket) {
         if(ticket.getReservationSeats()==null || ticket.getReservationSeats().size()==0) return;
         List<PrintGenreDTO> genreList = new ArrayList<>();
         Movie movie = ticket.getSchedule().getMovie();
@@ -45,8 +45,12 @@ public class PrintTicketDTO {
         );
         this.schedule.getMovie().setGenreList(genreList);
         this.schedule.getMovie().setGradeName(movie.getGrade().getName());
+        this.schedule.getMovie().setDistName(ticket.getSchedule().getMovie().getDistributor().getName());
         this.reservationSeats.forEach(reservation -> {
             reservation.getSeat().setSeatPrice(reservation.getSeat().getSeatGrade().getPrice());
+        });
+        this.audienceTypes.forEach(audienceDTO -> {
+            audienceDTO.setDisplayName(audienceDTO.getAudienceType().getDisplayName());
         });
     }
 }

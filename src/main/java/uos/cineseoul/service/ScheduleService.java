@@ -1,7 +1,6 @@
 package uos.cineseoul.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +20,9 @@ import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.ScheduleMapper;
 import uos.cineseoul.repository.ScheduleRepository;
 import uos.cineseoul.repository.ScheduleSeatRepository;
+import uos.cineseoul.repository.TicketRepository;
 import uos.cineseoul.utils.enums.Is;
+import uos.cineseoul.utils.enums.TicketState;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ import java.util.List;
 public class ScheduleService {
     private final ScheduleRepository scheduleRepo;
     private final ScheduleSeatRepository scheduleSeatRepo;
+    private final TicketRepository ticketRepo;
 
     public List<Schedule> findAll() {
         List<Schedule> scheduleList = scheduleRepo.findAll();
@@ -140,8 +142,9 @@ public class ScheduleService {
         Screen screenTo = scheduleDTO.getScreen();
         // 상영관이 바꼈으면 상영관 교체후 상영일정-좌석 재등록 (단, 이미 예약된 티켓이 있다면 거절)
         if (screenTo != null && !(screenTo.getScreenNum().equals(schedule.getScreen().getScreenNum()))) {
+            if(!ticketRepo.findByScheduleAndTicketStateNot(schedule, TicketState.C).isEmpty()) throw new ForbiddenException("예약된 티켓이 존재하므로 변경이 불가합니다.");
             // 기존 상영일정-좌석 삭제
-            deleteScheduleSeat(schedule);
+            scheduleSeatRepo.deleteAll(schedule.getScheduleSeats());
             // 빈좌석 재등록
             schedule.setEmptySeat(screenTo.getTotalSeat());
             // 새로운 상영일정-좌석 등록
@@ -158,25 +161,23 @@ public class ScheduleService {
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void delete(Long schedNum) {
-        // 업데이트할 상영일정 불러오기
+        // 제거할 상영일정 불러오기
         Schedule schedule = findOneByNum(schedNum);
-        // 상영일정-좌석 처리
-        deleteScheduleSeat(schedule);
-        // 상영일정 삭제
-        scheduleRepo.delete(schedule);
+
+        if(ticketRepo.findBySchedule(schedule).isEmpty()){
+            // 상영일정 삭제
+            scheduleRepo.delete(schedule);
+        }else{
+            throw new ForbiddenException("티켓을 먼저 삭제해야합니다.");
+        }
     }
 
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void deleteScheduleSeat(Schedule schedule) {
-        // 예약된 상영일정-좌석이 없어야 제거
-        schedule.getScheduleSeats().forEach(ss -> {
-            if (ss.getIsOccupied().equals(Is.Y)) {
-                throw new ForbiddenException("이미 예약된 자리가 존재합니다.");
-            } else {
-                scheduleSeatRepo.delete(ss);
-            }
-        });
+        scheduleSeatRepo.deleteAll(schedule.getScheduleSeats());
     }
 
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void insertScheduleSeat(Schedule schedule, Screen screen) {
         List<Seat> seatList = screen.getSeats();
         seatList.forEach(seat -> {

@@ -133,11 +133,11 @@ public class UserService {
         return newUser;
     }
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
-    public User update(UpdateUserDTO userDTO) {
-        if(userDTO.getUserNum()!=null){
+    public User update(Long userNum, UpdateUserDTO userDTO) {
+        if(userDTO.getPw()!=null){
             userDTO.setPw(passwordEncoder.encode(userDTO.getPw()));
         }
-        User user = userRepo.findById(userDTO.getUserNum()).orElseThrow(() -> new ResourceNotFoundException("번호가 "+userDTO.getUserNum()+"인 고객이 존재하지 않습니다."));
+        User user = findOneByNum(userNum);
         UserMapper.INSTANCE.updateFromDto(userDTO, user);
         User updatedUser = userRepo.save(user);
 
