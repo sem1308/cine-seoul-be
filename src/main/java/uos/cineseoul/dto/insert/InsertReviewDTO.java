@@ -14,11 +14,9 @@ public class InsertReviewDTO {
 
     private Integer score;
 
-    private String userId;
 
     public InsertReviewDTO(CreateReviewDTO createReviewDTO) {
         Contents = createReviewDTO.getContents();
         this.score = createReviewDTO.getScore();
-        this.userId = createReviewDTO.getUserId();
     }
 }

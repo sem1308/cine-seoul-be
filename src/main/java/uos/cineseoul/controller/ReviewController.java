@@ -16,6 +16,7 @@ import uos.cineseoul.dto.response.PrintReviewDTO;
 import uos.cineseoul.entity.Review;
 import uos.cineseoul.repository.UserRepository;
 import uos.cineseoul.service.ReviewService;
+import uos.cineseoul.utils.JwtTokenProvider;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,6 +29,7 @@ import java.util.List;
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping
     @Operation(description = "게시판 글을 조회한다.")
@@ -79,9 +81,10 @@ public class ReviewController {
 
     @PostMapping
     @Operation(description = "게시판 글을 작성한다.")
-    public ResponseEntity<Long> register(CreateReviewDTO createReviewDTO)
+    public ResponseEntity<Long> register(@RequestHeader(value = "Authorization") String token,@RequestBody CreateReviewDTO createReviewDTO)
     {
-        Review review = reviewService.insert(new InsertReviewDTO(createReviewDTO));
+        Long userNum = jwtTokenProvider.getClaims(token).get("num", Long.class);
+        Review review = reviewService.insert(userNum, new InsertReviewDTO(createReviewDTO));
         return ResponseEntity.ok(review.getReviewNum());
     }
     @PostMapping("/recommend")
