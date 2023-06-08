@@ -21,7 +21,6 @@ import java.util.List;
 public class EventService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
-
     public Event insert(Long userNum, InsertEventDTO insertEventDTO) {
         Event event = Event.builder()
                 .user(userRepository.findById(userNum).orElseThrow(
