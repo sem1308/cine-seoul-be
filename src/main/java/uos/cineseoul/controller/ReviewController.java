@@ -31,7 +31,7 @@ public class ReviewController {
 
     @GetMapping
     @Operation(description = "게시판 글을 조회한다.")
-    private ResponseEntity<PrintPageDTO<PrintReviewDTO>> findAllReview(@RequestParam(name = "page") int page,
+    public ResponseEntity<PrintPageDTO<PrintReviewDTO>> findAllReview(@RequestParam(name = "page") int page,
                                                                        @RequestParam int size) {
         Pageable pageable = PageRequest.of(page, size);
         List<PrintReviewDTO> printReviewDTOS = new ArrayList<>();
@@ -54,7 +54,7 @@ public class ReviewController {
 
     @GetMapping("/recommend")
     @Operation(description = "게시판 글을 추천순으로 조회한다.")
-    private ResponseEntity<PrintPageDTO<PrintReviewDTO>> findAllRecommendReview(@RequestParam(name = "page") int page,
+    public ResponseEntity<PrintPageDTO<PrintReviewDTO>> findAllRecommendReview(@RequestParam(name = "page") int page,
                                                                                 @RequestParam int size) {
         Pageable pageable = PageRequest.of(page, size);
         List<PrintReviewDTO> printReviewDTOS = new ArrayList<>();
@@ -79,14 +79,14 @@ public class ReviewController {
 
     @PostMapping
     @Operation(description = "게시판 글을 작성한다.")
-    private ResponseEntity<Long> register(CreateReviewDTO createReviewDTO)
+    public ResponseEntity<Long> register(CreateReviewDTO createReviewDTO)
     {
         Review review = reviewService.insert(new InsertReviewDTO(createReviewDTO));
         return ResponseEntity.ok(review.getReviewNum());
     }
     @PostMapping("/recommend")
     @Operation(description = "추천수를 증가시킨다.")
-    private void recommend(@RequestBody IncreaseReviewRecommend increaseReviewRecommend)
+    public void recommend(@RequestBody IncreaseReviewRecommend increaseReviewRecommend)
     {
         reviewService.recommend(increaseReviewRecommend.getReviewNum());
     }
