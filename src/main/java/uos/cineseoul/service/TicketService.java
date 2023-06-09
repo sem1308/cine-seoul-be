@@ -41,7 +41,7 @@ public class TicketService {
     private final PaymentRepository paymentRepo;
     private final MovieRepository movieRepo;
     private final UserRepository userRepo;
-    private final ReservationSeatRepository reservationSeatRepo;
+    private final ReservationSeatRepository ticketSeatRepo;
     private final TicketAudienceRepository ticketAudienceRepo;
 
     public List<Ticket> findAll() {
@@ -82,16 +82,23 @@ public class TicketService {
         }
 
         Ticket ticket = TicketMapper.INSTANCE.toEntity(ticketDTO);
-
         Ticket savedTicket = ticketRepo.save(ticket);
-        savedTicket.setTicketSeats(insertReservationSeatList(ticket, seatNumList));
-        savedTicket.setAudienceTypes(insertTicketAudienceList(ticket, createTicketAudienceDTOList));
+
+        AtomicReference<Integer> price = new AtomicReference<>(0);
+        AtomicReference<Integer> discountPrice = new AtomicReference<>(0);
+
+        savedTicket.setTicketSeats(insertReservationSeatList(ticket, seatNumList, price));
+        savedTicket.setAudienceTypes(insertTicketAudienceList(ticket, createTicketAudienceDTOList, discountPrice));
+
+        if(!ticket.getStdPrice().equals(price.get()-discountPrice.get())){
+            throw new DataInconsistencyException("표준 가격이 좌석 가격에서 할인가격을 뺀 값과 일치하지 않습니다.");
+        }
+
         return savedTicket;
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public List<TicketSeat> insertReservationSeatList(Ticket ticket, List<Long> seatNumList){
-        AtomicReference<Integer> price = new AtomicReference<>(0);
+    public List<TicketSeat> insertReservationSeatList(Ticket ticket, List<Long> seatNumList, AtomicReference<Integer> price){
         List<TicketSeat> ticketSeatList = new ArrayList<>();
         seatNumList.forEach(seatNum->{
             ScheduleSeat scheduleSeat = scheduleSeatRepo.findBySchedNumAndSeatNum(ticket.getSchedule().getSchedNum(),seatNum).orElseThrow(()->{
@@ -127,22 +134,19 @@ public class TicketService {
             movieRepo.save(movie);
         });
 
-        reservationSeatRepo.saveAll(ticketSeatList);
-
-        // TODO: 관객 타입에 따른 가격 변화
-        if(!price.get().equals(ticket.getStdPrice())){
-            throw new DataInconsistencyException("표준 가격이 좌석 가격합과 일치하지 않습니다.");
-        }
+        ticketSeatRepo.saveAll(ticketSeatList);
 
         return ticketSeatList;
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public List<Audience> insertTicketAudienceList(Ticket ticket, List<CreateTicketAudienceDTO> createTicketAudienceDTOList){
+    public List<Audience> insertTicketAudienceList(Ticket ticket, List<CreateTicketAudienceDTO> createTicketAudienceDTOList, AtomicReference<Integer> discountPrice){
         List<Audience> audienceList = new ArrayList<>();
         createTicketAudienceDTOList.forEach(createTicketAudienceDTO -> {
             Audience audience = Audience.builder().ticket(ticket).audienceType(createTicketAudienceDTO.getAudienceType()).count(createTicketAudienceDTO.getCount()).build();
             audienceList.add(audience);
+            // 할인 가격 체크를 위함
+            discountPrice.updateAndGet(v -> v + audience.getAudienceType().getDiscountPrice() * audience.getCount());
         });
         ticketAudienceRepo.saveAll(audienceList);
         return audienceList;
@@ -166,7 +170,7 @@ public class TicketService {
         // 티켓 취소 처리
         if(ticket.getTicketState().equals(TicketState.C)){
             cancelProcess(ticket);
-            checkStateAndRefund(ticket,ticket.getUser().getRole());
+            checkStateAndRefund(ticket,ticket.getUser());
         }
 
         Ticket updatedTicket = ticketRepo.save(ticket);
@@ -178,7 +182,7 @@ public class TicketService {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void deleteByNum(Long ticketNum) {
         Ticket ticket = findOneByNum(ticketNum);
-        checkStateAndRefund(ticket,ticket.getUser().getRole());
+        checkStateAndRefund(ticket,ticket.getUser());
         delete(ticket, true);
     }
 
@@ -193,10 +197,11 @@ public class TicketService {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void delete(Ticket ticket, boolean isChangeTicketCount) {
         editScheduleSeats(ticket.getTicketSeats(), ticket.getSchedule(), isChangeTicketCount);
-        reservationSeatRepo.deleteAll(ticket.getTicketSeats());
+        ticketSeatRepo.deleteAll(ticket.getTicketSeats());
+        ticketAudienceRepo.deleteAll(ticket.getAudienceTypes());
         ticketRepo.delete(ticket);
 
-        if(ticket.getUser().getRole().equals(UserRole.N) && (ticket.getUser().getTickets().size()==1)){
+        if(ticket.getUser().getRole().equals(UserRole.N) && (ticketRepo.findByUserNum(ticket.getUser().getUserNum()).size()==0)){
             userRepo.deleteById(ticket.getUser().getUserNum());
         }
     }
@@ -210,7 +215,7 @@ public class TicketService {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void cancelProcess(Ticket ticket) {
         // 환불
-        checkStateAndRefund(ticket,ticket.getUser().getRole());
+        checkStateAndRefund(ticket,ticket.getUser());
         editScheduleSeats(ticket.getTicketSeats(),ticket.getSchedule(), true);
         ticket.setCanceledAt(LocalDateTime.now());
         ticket.setTicketState(TicketState.C);
@@ -252,7 +257,7 @@ public class TicketService {
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public void checkStateAndRefund(Ticket ticket, UserRole role){
+    public void checkStateAndRefund(Ticket ticket, User user){
         Optional<Payment> p = paymentRepo.findByTicketNum(ticket.getTicketNum());
         if(p.isPresent()){
             Payment payment = p.get();
@@ -265,18 +270,15 @@ public class TicketService {
                     accountService.refundByCardNum(payment.getPrice(), ticket.getUser().getName(),payment.getCardNum());
                     break;
                 case 'P':
-                    // 포인트 환불
                     break;
             }
-            if(role.equals(UserRole.N)){
-                //TODO:비회원도 남길지
-                paymentRepo.delete(payment);
-            }else{
-                // 결제 취소 상태로 변경
-                payment.setState(PayState.C);
-                payment.setCanceledAt(LocalDateTime.now());
-                paymentRepo.save(payment);
-            }
+            // 포인트 환불
+            user.setPoint(user.getPoint()+payment.getPayedPoint());
+            userRepo.save(user);
+            // TODO:결제 취소 상태로 변경? 아니면 그냥 제거
+            payment.setState(PayState.C);
+            payment.setCanceledAt(LocalDateTime.now());
+            paymentRepo.save(payment);
         }
     }
 

@@ -1,7 +1,6 @@
 package uos.cineseoul.controller;
 
 
-import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,6 +13,7 @@ import uos.cineseoul.dto.complex.CancelRegisterTicketDTO;
 import uos.cineseoul.dto.create.CreateTicketDTO;
 import uos.cineseoul.dto.fix.FixTicketDTO;
 import uos.cineseoul.dto.insert.InsertTicketDTO;
+import uos.cineseoul.dto.response.PrintAudienceTypeDTO;
 import uos.cineseoul.dto.response.PrintPageDTO;
 import uos.cineseoul.dto.response.PrintTicketDTO;
 import uos.cineseoul.dto.update.UpdateTicketDTO;
@@ -24,10 +24,12 @@ import uos.cineseoul.service.UserService;
 import uos.cineseoul.utils.JwtTokenProvider;
 import uos.cineseoul.utils.PageUtil;
 import uos.cineseoul.utils.ReturnMessage;
+import uos.cineseoul.utils.enums.AudienceType;
 import uos.cineseoul.utils.enums.StatusEnum;
 
 import uos.cineseoul.utils.enums.TicketState;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController()
@@ -58,6 +60,16 @@ public class TicketController {
         }
         List<PrintTicketDTO> printTicketDTOS = ticketService.toPrintDTOList(ticketList.getContent());
         return new ResponseEntity<>(new PrintPageDTO<>(printTicketDTOS,ticketList.getTotalPages()), HttpStatus.OK);
+    }
+
+    @GetMapping("/auth/audience")
+    @ApiOperation(value = "관람객 유형 조회", protocols = "http")
+    public ResponseEntity<List<PrintAudienceTypeDTO>> lookUpAudienceTypeList() {
+        List<PrintAudienceTypeDTO> printAudienceDTOList = new ArrayList<>();
+        for (AudienceType audienceType : AudienceType.values()) {
+            printAudienceDTOList.add(new PrintAudienceTypeDTO(audienceType));
+        }
+        return new ResponseEntity<>(printAudienceDTOList, HttpStatus.OK);
     }
 
     @GetMapping("/auth/{num}")
