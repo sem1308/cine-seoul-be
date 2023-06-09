@@ -2,6 +2,8 @@ package uos.cineseoul.dto.response;
 
 import lombok.*;
 import uos.cineseoul.entity.Ticket;
+import uos.cineseoul.entity.movie.Distributor;
+import uos.cineseoul.entity.movie.Grade;
 import uos.cineseoul.entity.movie.Movie;
 import uos.cineseoul.utils.enums.TicketState;
 
@@ -32,7 +34,7 @@ public class PrintTicketDTO {
 
     private PrintScheduleNotSchedSeatDTO schedule;
 
-    private List<PrintReservationSeatDTO> reservationSeats = new ArrayList<>();
+    private List<PrintTicketSeatDTO> ticketSeats = new ArrayList<>();
 
     private List<PrintTicketAudienceDTO> audienceTypes = new ArrayList<>();
 
@@ -44,10 +46,14 @@ public class PrintTicketDTO {
                 genreList.add(new PrintGenreDTO(movieGenre.getGenre()))
         );
         this.schedule.getMovie().setGenreList(genreList);
-        this.schedule.getMovie().setGradeName(movie.getGrade().getName());
-        this.schedule.getMovie().setDistName(ticket.getSchedule().getMovie().getDistributor().getName());
-        this.reservationSeats.forEach(reservation -> {
-            reservation.getSeat().setSeatPrice(reservation.getSeat().getSeatGrade().getPrice());
+        Grade grade = movie.getGrade();
+        if(grade!=null)
+            this.schedule.getMovie().setGradeName(grade.getName());
+        Distributor distributor = ticket.getSchedule().getMovie().getDistributor();
+        if(distributor!=null)
+            this.schedule.getMovie().setDistName(distributor.getName());
+        this.ticketSeats.forEach(ticketSeat -> {
+            ticketSeat.getSeat().setSeatPrice(ticketSeat.getSeat().getSeatGrade().getPrice());
         });
         this.audienceTypes.forEach(audienceDTO -> {
             audienceDTO.setDisplayName(audienceDTO.getAudienceType().getDisplayName());

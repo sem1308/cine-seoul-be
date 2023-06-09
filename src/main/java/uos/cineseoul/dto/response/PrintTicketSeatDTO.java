@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @Getter
 @Builder
-public class PrintReservationSeatDTO {
+public class PrintTicketSeatDTO {
 //    private Long ticketScheduleSeatNum;
     private PrintSeatDTO seat;
 }

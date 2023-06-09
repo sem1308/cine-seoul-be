@@ -53,10 +53,18 @@ public class UserController {
         return new ResponseEntity<>(new PrintPageDTO<>(printUserDTOS,userList.getTotalPages()), HttpStatus.OK);
     }
 
-    @GetMapping("/auth/{num}")
+    @GetMapping("/admin/{num}")
     @ApiOperation(value = "사용자 번호로 조회", protocols = "http")
-    public ResponseEntity<PrintUserDTO> lookUpUser(@RequestHeader(value = "Authorization") Claims claims) {
-        Long userNum = claims.get("num", Long.class);
+    public ResponseEntity<PrintUserDTO> lookUpUserByNum(@PathVariable(value = "num") Long num) {
+        User user = userService.findOneByNum(num);
+
+        return new ResponseEntity<>(userService.getPrintDTO(user), HttpStatus.OK);
+    }
+
+    @GetMapping("/auth")
+    @ApiOperation(value = "사용자 JWT헤더로 조회", protocols = "http")
+    public ResponseEntity<PrintUserDTO> lookUpUser(@RequestHeader(value = "Authorization") String token) {
+        Long userNum = jwtTokenProvider.getClaims(token).get("num", Long.class);
         User user = userService.findOneByNum(userNum);
 
         return new ResponseEntity<>(userService.getPrintDTO(user), HttpStatus.OK);
@@ -105,7 +113,7 @@ public class UserController {
     }
     
     @PutMapping("/auth")
-    @ApiOperation(value = "사용자 정보 변경", protocols = "http")
+    @ApiOperation(value = "사용자 정보 변경 by JWT 헤더", protocols = "http")
     public ResponseEntity<ReturnMessage<PrintUserDTO>> update(@RequestHeader(value = "Authorization") String token, @RequestBody UpdateUserDTO userDTO) {
         Long userNum = jwtTokenProvider.getClaims(token).get("num", Long.class);
         User user = userService.update(userNum, userDTO);
