@@ -66,7 +66,7 @@ class PaymentRepoTests {
 
 		Payment savedPayment = paymentRepo.save(payment);
 
-		ticket.setTicketState(TicketState.Y);
+		ticket.setTicketState(TicketState.P);
 		ticketRepo.save(ticket);
 	}
 
