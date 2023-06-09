@@ -45,18 +45,27 @@ public class TicketController {
     @GetMapping("/auth")
     @ApiOperation(value = "전체 티켓 목록 조회 (filter : userNum)", protocols = "http")
     public ResponseEntity<PrintPageDTO<PrintTicketDTO>> lookUpTicketList(@RequestParam(value="userNum", required = false) Long userNum,
-                                                         @RequestParam(value="sort_created_date", required = false ) boolean isSortCreatedDate,
-                                                         @RequestParam(value="sort_dir", required = false) Sort.Direction sortDir,
-                                                         @RequestParam(value="page", required = false, defaultValue = "0") int page,
-                                                         @RequestParam(value="size", required = false, defaultValue = "12") int size) {
+                                                                         @RequestParam(value="ticket_state", required = false ) TicketState ticketState,
+                                                                         @RequestParam(value="sort_created_date", required = false ) boolean isSortCreatedDate,
+                                                                         @RequestParam(value="sort_dir", required = false) Sort.Direction sortDir,
+                                                                         @RequestParam(value="page", required = false, defaultValue = "0") int page,
+                                                                         @RequestParam(value="size", required = false, defaultValue = "12") int size) {
         String sortBy = isSortCreatedDate ? "createdAt" :"ticketNum";
         Pageable pageable = PageUtil.setPageable(page, size,sortBy,sortDir);
 
         Page<Ticket> ticketList;
         if(userNum!=null){
-            ticketList = ticketService.findByUserNum(userNum, pageable);
+            if(ticketState!=null){
+                ticketList = ticketService.findByUserNumAndTicketState(userNum, ticketState, pageable);
+            }else{
+                ticketList = ticketService.findByUserNum(userNum, pageable);
+            }
         }else{
-            ticketList = ticketService.findAll(pageable);
+            if(ticketState!=null){
+                ticketList = ticketService.findAllByTicketState(ticketState, pageable);
+            }else{
+                ticketList = ticketService.findAll(pageable);
+            }
         }
         List<PrintTicketDTO> printTicketDTOS = ticketService.toPrintDTOList(ticketList.getContent());
         return new ResponseEntity<>(new PrintPageDTO<>(printTicketDTOS,ticketList.getTotalPages()), HttpStatus.OK);
@@ -109,9 +118,9 @@ public class TicketController {
 
     @DeleteMapping("/auth/{num}")
     @ApiOperation(value = "티켓 삭제 by 티켓 번호", protocols = "http")
-    public ResponseEntity<ReturnMessage<PrintTicketDTO>> delete(@PathVariable("num") Long num) {
+    public ResponseEntity<ReturnMessage<String>> delete(@PathVariable("num") Long num) {
         ticketService.deleteByNum(num);
-        ReturnMessage<PrintTicketDTO> msg = new ReturnMessage<>();
+        ReturnMessage<String> msg = new ReturnMessage<>();
         msg.setMessage("티켓 삭제가 완료되었습니다.");
         msg.setStatus(StatusEnum.OK);
 

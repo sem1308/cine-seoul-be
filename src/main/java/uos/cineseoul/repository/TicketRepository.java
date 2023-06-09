@@ -16,7 +16,10 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     @Query("select t from TICKET t where t.user.userNum = :userNum")
     List<Ticket> findByUserNum(@Param("userNum") Long userNum);
 
+    Page<Ticket> findAllByTicketState(TicketState ticketState, Pageable pageable);
+
     Page<Ticket> findByUser_UserNum(Long userNum, Pageable pageable);
+    Page<Ticket> findByUser_UserNumAndTicketState(Long userNum, TicketState ticketState, Pageable pageable);
 
     @Query("select t from TICKET t where t.user.id = :userID")
     List<Ticket> findByUserID(@Param("userID") String userID);

@@ -41,7 +41,7 @@ public class TicketService {
     private final PaymentRepository paymentRepo;
     private final MovieRepository movieRepo;
     private final UserRepository userRepo;
-    private final ReservationSeatRepository ticketSeatRepo;
+    private final TicketSeatRepository ticketSeatRepo;
     private final TicketAudienceRepository ticketAudienceRepo;
 
     public List<Ticket> findAll() {
@@ -54,6 +54,11 @@ public class TicketService {
         return ticketList;
     }
 
+    public Page<Ticket> findAllByTicketState(TicketState ticketState,Pageable pageable) {
+        Page<Ticket> ticketList = ticketRepo.findAllByTicketState(ticketState, pageable);
+        return ticketList;
+    }
+
     public List<Ticket> findByUserNum(Long userNum) {
         List<Ticket> ticketList = ticketRepo.findByUserNum(userNum);
         return ticketList;
@@ -61,6 +66,11 @@ public class TicketService {
 
     public Page<Ticket> findByUserNum(Long userNum, Pageable pageable) {
         Page<Ticket> ticketList = ticketRepo.findByUser_UserNum(userNum, pageable);
+        return ticketList;
+    }
+
+    public Page<Ticket> findByUserNumAndTicketState(Long userNum, TicketState ticketState, Pageable pageable) {
+        Page<Ticket> ticketList = ticketRepo.findByUser_UserNumAndTicketState(userNum, ticketState, pageable);
         return ticketList;
     }
 
