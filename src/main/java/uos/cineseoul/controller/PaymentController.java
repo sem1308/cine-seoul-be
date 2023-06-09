@@ -21,10 +21,8 @@ import uos.cineseoul.service.UserService;
 import uos.cineseoul.utils.JwtTokenProvider;
 import uos.cineseoul.utils.PageUtil;
 import uos.cineseoul.utils.ReturnMessage;
-import uos.cineseoul.utils.enums.PayState;
 import uos.cineseoul.utils.enums.StatusEnum;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController()
