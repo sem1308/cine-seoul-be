@@ -87,11 +87,11 @@ public class PaymentService {
 
         ticket.setSalePrice(payment.getPrice());
 
-        // 이미 발행된 티켓인지 확인
-        if (ticket.getTicketState().equals(TicketState.Y)) {
+        // 이미 결제된 티켓인지 확인
+        if (ticket.getTicketState().equals(TicketState.P)) {
             throw new ResourceNotFoundException("이미 발행된 티켓입니다.");
         } else {
-            ticket.setTicketState(TicketState.Y);
+            ticket.setTicketState(TicketState.P);
             ticketRepo.save(ticket);
         }
 

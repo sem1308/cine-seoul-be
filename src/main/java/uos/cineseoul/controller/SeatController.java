@@ -49,6 +49,30 @@ public class SeatController {
         return new ResponseEntity<>(seatService.getPrintDTO(seat), HttpStatus.OK);
     }
 
+    @DeleteMapping("/admin/{num}")
+    @ApiOperation(value = "좌석 번호로 삭제", protocols = "http")
+    public ResponseEntity<ReturnMessage<String>> deleteSeatByNum(@PathVariable("num") Long num) {
+        seatService.deleteByNum(num);
+        ReturnMessage<String> msg = new ReturnMessage<>();
+        msg.setMessage("좌석 삭제가 완료되었습니다.");
+        msg.setStatus(StatusEnum.OK);
+
+        return new ResponseEntity<>(msg, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/admin")
+    @ApiOperation(value = "상영관 번호, 행, 열로 삭제", protocols = "http")
+    public ResponseEntity<ReturnMessage<String>> deleteSeatByRowCol(@RequestParam(value="screen_num") Long screenNum ,
+                                                                    @RequestParam(value="row") String row ,
+                                                                    @RequestParam(value="col") String col) {
+        seatService.deleteByScreenRowCol(screenNum, row, col);
+        ReturnMessage<String> msg = new ReturnMessage<>();
+        msg.setMessage("좌석 삭제가 완료되었습니다.");
+        msg.setStatus(StatusEnum.OK);
+
+        return new ResponseEntity<>(msg, HttpStatus.OK);
+    }
+
     @PostMapping("/admin")
     @ApiOperation(value = "좌석 등록", protocols = "http")
     public ResponseEntity<ReturnMessage<PrintSeatDTO>> register(@RequestBody CreateSeatDTO seatDTO) {
