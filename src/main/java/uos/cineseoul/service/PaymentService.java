@@ -75,6 +75,13 @@ public class PaymentService {
         Ticket ticket = payment.getTicket();
         User user = payment.getUser();
 
+        // 이미 결제된 티켓인지 확인
+        if (ticket.getTicketState().equals(TicketState.P)) {
+            throw new ResourceNotFoundException("이미 발행된 티켓입니다.");
+        } else {
+            ticket.setTicketState(TicketState.P);
+        }
+
         // 결제 가격과 티켓 표준 가격 확인
         if (payment.getPrice() > ticket.getStdPrice()) {
             throw new DataInconsistencyException("결제 가격이 티켓 표쥰 가격보다 높으므로 취소됩니다.");
@@ -83,16 +90,6 @@ public class PaymentService {
         // 유저 확인
         if (!user.getUserNum().equals(ticket.getUser().getUserNum())) {
             throw new DataInconsistencyException("티켓 예매한 사용자와 결제하려는 사용자가 다르므로 취소됩니다.");
-        }
-
-        ticket.setSalePrice(payment.getPrice());
-
-        // 이미 결제된 티켓인지 확인
-        if (ticket.getTicketState().equals(TicketState.P)) {
-            throw new ResourceNotFoundException("이미 발행된 티켓입니다.");
-        } else {
-            ticket.setTicketState(TicketState.P);
-            ticketRepo.save(ticket);
         }
 
         switch (payment.getPaymentMethod().toString().charAt(0)) {
@@ -114,13 +111,17 @@ public class PaymentService {
 
         Payment savedPayment = paymentRepo.save(payment);
 
+        ticket.setSalePrice(payment.getPrice());
+        ticketRepo.save(ticket);
+
         // 포인트 결제 사항 체크
         Integer point = payment.getPayedPoint();
         if(point != null || !point.equals(0)){
             if(user.getPoint() < point) throw new DataInconsistencyException("유저의 포인트가 결제 포인트보다 적습니다.");
             user.setPoint(user.getPoint() - point);
-            userRepo.save(user);
         }
+        user.setPoint(user.getPoint()+(int)(payment.getPrice()*0.05));
+        userRepo.save(user);
 
         return savedPayment;
     }
