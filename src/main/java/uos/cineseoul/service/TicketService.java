@@ -209,8 +209,10 @@ public class TicketService {
         editScheduleSeats(ticket.getTicketSeats(), ticket.getSchedule(), isChangeTicketCount);
         ticketSeatRepo.deleteAll(ticket.getTicketSeats());
         ticketAudienceRepo.deleteAll(ticket.getAudienceTypes());
-        Payment payment = paymentRepo.findByTicket(ticket).get();
-        paymentRepo.delete(payment);
+        Payment payment = paymentRepo.findByTicket(ticket).orElse(null);
+        if(payment!=null){
+            paymentRepo.delete(payment);
+        }
         ticketRepo.delete(ticket);
 
         if(ticket.getUser().getRole().equals(UserRole.N) && (ticketRepo.findByUserNum(ticket.getUser().getUserNum()).size()==0)){
