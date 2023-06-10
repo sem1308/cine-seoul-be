@@ -282,8 +282,10 @@ public class TicketService {
                 case 'P':
                     break;
             }
-            // 포인트 환불
+            // 결제 포인트 환불
             user.setPoint(user.getPoint()+payment.getPayedPoint());
+            // 결제해서 얻은 포인트 반환
+            user.setPoint(user.getPoint()-(int)(payment.getPrice()*0.05));
             userRepo.save(user);
             // TODO:결제 취소 상태로 변경? 아니면 그냥 제거
             payment.setState(PayState.C);
