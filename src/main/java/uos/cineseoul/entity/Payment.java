@@ -54,11 +54,11 @@ public class Payment{
     private LocalDateTime canceledAt;
 
     /* Foreign Key */
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_NUM", nullable = false)
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TICKET_NUM", nullable = false)
     private Ticket ticket;
     /* */

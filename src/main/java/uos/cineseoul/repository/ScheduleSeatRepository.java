@@ -7,6 +7,7 @@ import uos.cineseoul.entity.Schedule;
 import uos.cineseoul.entity.ScheduleSeat;
 import uos.cineseoul.entity.ScheduleSeatId;
 import uos.cineseoul.entity.Seat;
+import uos.cineseoul.entity.movie.Movie;
 import uos.cineseoul.utils.enums.Is;
 
 import java.util.List;
@@ -21,6 +22,9 @@ public interface ScheduleSeatRepository extends JpaRepository<ScheduleSeat, Sche
     // 상영 일정 번호로 조회
     @Query("select ss from SCHEDULE_SEAT ss where ss.schedule.schedNum = :schedNum")
     List<ScheduleSeat> findAllBySchedNum(@Param("schedNum")Long schedNum);
+
+    // 영화로 조회
+    List<ScheduleSeat> findAllBySchedule_Movie(Movie movie);
 
     // 상영일정번호 및 좌석번호로 조회
 //    @Query("select ss from SCHEDULE_SEAT ss where ss.schedule = :schedule and ss.seat = :seat")

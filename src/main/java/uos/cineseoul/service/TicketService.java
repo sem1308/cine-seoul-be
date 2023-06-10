@@ -209,6 +209,8 @@ public class TicketService {
         editScheduleSeats(ticket.getTicketSeats(), ticket.getSchedule(), isChangeTicketCount);
         ticketSeatRepo.deleteAll(ticket.getTicketSeats());
         ticketAudienceRepo.deleteAll(ticket.getAudienceTypes());
+        Payment payment = paymentRepo.findByTicket(ticket).get();
+        paymentRepo.delete(payment);
         ticketRepo.delete(ticket);
 
         if(ticket.getUser().getRole().equals(UserRole.N) && (ticketRepo.findByUserNum(ticket.getUser().getUserNum()).size()==0)){
@@ -235,11 +237,11 @@ public class TicketService {
     public void editScheduleSeats(List<TicketSeat> ticketSeatList, Schedule schedule, boolean isChangeTicketCount) {
         // 상영일정-좌석 수정
         ticketSeatList.forEach(reservationSeat -> {
-            ScheduleSeat scheduleSeat = scheduleSeatRepo.findByScheduleAndSeat(schedule,reservationSeat.getSeat()).orElseThrow(()->{
-                throw new ResourceNotFoundException("해당 정보에 해당하는 상영일정-좌석이 없습니다.");
-            });
-            scheduleSeat.setIsOccupied(Is.N);
-            scheduleSeatRepo.save(scheduleSeat);
+            ScheduleSeat scheduleSeat = scheduleSeatRepo.findByScheduleAndSeat(schedule,reservationSeat.getSeat()).orElse(null);
+            if(scheduleSeat!=null){
+                scheduleSeat.setIsOccupied(Is.N);
+                scheduleSeatRepo.save(scheduleSeat);
+            }
             // 상영일정 빈자리 수 1개 올리기
             schedule.setEmptySeat(Math.min(schedule.getEmptySeat()+1,schedule.getScreen().getTotalSeat()));
             scheduleRepo.save(schedule);

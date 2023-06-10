@@ -14,7 +14,7 @@ import javax.persistence.*;
 @IdClass(ScheduleSeatId.class)
 public class ScheduleSeat {
     @Id
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SCHED_NUM", nullable = false)
     private Schedule schedule;
 
