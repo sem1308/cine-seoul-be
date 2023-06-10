@@ -15,12 +15,14 @@ import uos.cineseoul.entity.Payment;
 import uos.cineseoul.entity.Ticket;
 import uos.cineseoul.entity.User;
 import uos.cineseoul.exception.DataInconsistencyException;
+import uos.cineseoul.exception.ForbiddenException;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.PaymentMapper;
 import uos.cineseoul.repository.PaymentRepository;
 import uos.cineseoul.repository.TicketRepository;
 import uos.cineseoul.repository.UserRepository;
 import uos.cineseoul.utils.enums.TicketState;
+import uos.cineseoul.utils.enums.UserRole;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,12 +117,14 @@ public class PaymentService {
         ticketRepo.save(ticket);
 
         // 포인트 결제 사항 체크
-        Integer point = payment.getPayedPoint();
-        if(point != null || !point.equals(0)){
-            if(user.getPoint() < point) throw new DataInconsistencyException("유저의 포인트가 결제 포인트보다 적습니다.");
-            user.setPoint(user.getPoint() - point);
+        if(!user.getRole().equals(UserRole.N)){
+            Integer point = payment.getPayedPoint();
+            if(point != null && !point.equals(0)){
+                if(user.getPoint() < point) throw new DataInconsistencyException("유저의 포인트가 결제 포인트보다 적습니다.");
+                user.setPoint(user.getPoint() - point);
+            }
+            user.setPoint(user.getPoint()+(int)(payment.getPrice()*0.05));
         }
-        user.setPoint(user.getPoint()+(int)(payment.getPrice()*0.05));
         userRepo.save(user);
 
         return savedPayment;
