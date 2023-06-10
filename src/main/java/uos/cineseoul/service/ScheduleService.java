@@ -15,9 +15,11 @@ import uos.cineseoul.entity.Schedule;
 import uos.cineseoul.entity.ScheduleSeat;
 import uos.cineseoul.entity.Screen;
 import uos.cineseoul.entity.Seat;
+import uos.cineseoul.entity.movie.Movie;
 import uos.cineseoul.exception.ForbiddenException;
 import uos.cineseoul.exception.ResourceNotFoundException;
 import uos.cineseoul.mapper.ScheduleMapper;
+import uos.cineseoul.repository.MovieRepository;
 import uos.cineseoul.repository.ScheduleRepository;
 import uos.cineseoul.repository.ScheduleSeatRepository;
 import uos.cineseoul.repository.TicketRepository;
@@ -27,6 +29,7 @@ import uos.cineseoul.utils.enums.TicketState;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +37,7 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepo;
     private final ScheduleSeatRepository scheduleSeatRepo;
     private final TicketRepository ticketRepo;
+    private final MovieRepository movieRepo;
 
     public List<Schedule> findAll() {
         List<Schedule> scheduleList = scheduleRepo.findAll();
@@ -118,6 +122,9 @@ public class ScheduleService {
             throw new DuplicateKeyException("해당 상영관과 시간의 상영일정이 존재합니다.");
         }
     }
+    public static boolean isBetween(LocalDateTime time, LocalDateTime time1, LocalDateTime time2) {
+        return time.isAfter(time1) && time.isBefore(time2);
+    }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public Schedule insert(InsertScheduleDTO scheduleDTO) {
@@ -126,8 +133,48 @@ public class ScheduleService {
         // 엔티티 매핑
         Schedule schedule = ScheduleMapper.INSTANCE.toEntity(scheduleDTO);
         schedule.setEmptySeat(schedule.getScreen().getTotalSeat());
+
+        // 10분 간격 확인
+        Integer interval = 10;
+
+        // 상영 시간의 day에 해당하고 상영 시간보다 빠른 상영 시간에 상영하는 최대 상영일정 가져오기
+        LocalDateTime startDatetime = LocalDateTime.of(schedule.getSchedTime().toLocalDate(), schedule.getSchedTime().toLocalTime().of(0, 0, 0));
+        Optional<Schedule> schedule1 = scheduleRepo.findTopByMovie_MovieNumAndSchedTimeBetweenOrderBySchedTimeDesc(schedule.getMovie().getMovieNum(), startDatetime,schedule.getSchedTime());
+
+        if(schedule1.isPresent()){
+            Schedule scheduleB = schedule1.get();
+            // 상영할 수 있는 시간인지
+            if(isBetween(schedule.getSchedTime(), scheduleB.getSchedTime(), scheduleB.getSchedTime().plusMinutes(scheduleB.getMovie().getRunningTime()+interval))){
+                // 상영불가 - 상영시간 겹침
+                throw new ForbiddenException("상영시간이 다른 상영시간과 겹칩니다. 영화시작 전 10분과 끝나고 10분후 사이에 시간이 있으면 안됩니다.");
+            }
+            // 상영 가능
+            schedule.setOrder(schedule1.get().getOrder()+1);
+        }else{
+            schedule.setOrder(1);
+        }
+
+        LocalDateTime endDatetime = LocalDateTime.of(schedule.getSchedTime().toLocalDate(), schedule.getSchedTime().toLocalTime().of(23, 59, 59));
+        Optional<Schedule> schedule2 = scheduleRepo.findTopByMovie_MovieNumAndSchedTimeBetweenOrderBySchedTimeAsc(schedule.getMovie().getMovieNum(), schedule.getSchedTime(), endDatetime);
+
+        if(schedule2.isPresent()){
+            Schedule scheduleA = schedule2.get();
+            // 상영할 수 있는 시간인지
+            if(isBetween(scheduleA.getSchedTime(), schedule.getSchedTime(), schedule.getSchedTime().plusMinutes(schedule.getMovie().getRunningTime()+interval))){
+                // 상영불가 - 상영시간 겹침
+                throw new ForbiddenException("상영시간이 다른 상영시간과 겹칩니다. 영화시작 전 10분과 끝나고 10분후 사이에 시간이 있으면 안됩니다.");
+            }
+            scheduleA.setOrder(scheduleA.getOrder()+1);
+            scheduleRepo.save(scheduleA);
+        }
+
         // 상영일정 저장
         Schedule savedSched = scheduleRepo.save(schedule);
+
+        // 영화 상영중이라 표시
+        Movie movie = schedule.getMovie();
+        movie.setIsShowing(Is.Y);
+        movieRepo.save(movie);
 
         // 상영일정-좌석 저장
         insertScheduleSeat(savedSched, savedSched.getScreen());
@@ -160,21 +207,47 @@ public class ScheduleService {
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public void setIsShowing(Movie movie) {
+        if(scheduleSeatRepo.findAllBySchedule_Movie(movie).isEmpty()){
+            movie.setIsShowing(Is.N);
+        }
+        movieRepo.save(movie);
+    }
+
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public void setOrder(Schedule schedule){
+        LocalDateTime endDatetime = LocalDateTime.of(schedule.getSchedTime().toLocalDate(), schedule.getSchedTime().toLocalTime().of(23, 59, 59));
+        Optional<Schedule> schedule1 = scheduleRepo.findTopByMovie_MovieNumAndSchedTimeBetweenOrderBySchedTimeAsc(schedule.getMovie().getMovieNum(), schedule.getSchedTime().plusMinutes(1), endDatetime);
+
+        if(schedule1.isPresent()){
+            Schedule scheduleA = schedule1.get();
+            scheduleA.setOrder(scheduleA.getOrder()-1);
+            scheduleRepo.save(scheduleA);
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void delete(Long schedNum) {
         // 제거할 상영일정 불러오기
         Schedule schedule = findOneByNum(schedNum);
-
+        setOrder(schedule);
         if(ticketRepo.findBySchedule(schedule).isEmpty()){
             // 상영일정 삭제
-            scheduleRepo.delete(schedule);
+            try{
+                scheduleRepo.delete(schedule);
+            }catch (Exception e){
+                throw new ForbiddenException("상영일정-좌석 먼저 삭제해야합니다.");
+            }
         }else{
             throw new ForbiddenException("티켓을 먼저 삭제해야합니다.");
         }
+        setIsShowing(schedule.getMovie());
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void deleteScheduleSeat(Schedule schedule) {
         scheduleSeatRepo.deleteAll(schedule.getScheduleSeats());
+        setIsShowing(schedule.getMovie());
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
