@@ -27,10 +27,10 @@ public class TicketScheduleTask {
     private final TicketRepository ticketRepo;
     private final TicketService ticketService;
 
-    private void deleteExpiredTickets(List<Ticket> ticketList, boolean isChangeTicketCount) {
+    private void deleteExpiredTickets(List<Ticket> ticketList, boolean isEditScheduleSeat) {
         if(!ticketList.isEmpty()){
             ticketList.forEach(ticket -> {
-                ticketService.delete(ticket, isChangeTicketCount);
+                ticketService.delete(ticket, isEditScheduleSeat);
             });
         }
     }
