@@ -130,15 +130,6 @@ public class PaymentService {
         return savedPayment;
     }
 
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public List<Payment> insertList(List<InsertPaymentDTO>paymentDTOS) {
-        List<Payment> paymentList = new ArrayList<>();
-        paymentDTOS.forEach(paymentDTO->{
-            paymentList.add(insert(paymentDTO));
-        });
-        return paymentList;
-    }
-
     public PrintPaymentDTO getPrintDTO(Payment payment) {
         PrintPaymentDTO paymentDTO = PaymentMapper.INSTANCE.toDTO(payment);
         paymentDTO.setTicketNum(payment.getTicket().getTicketNum());
