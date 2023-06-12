@@ -90,6 +90,7 @@ public class TicketService {
         if(!audienceCount.get().equals(seatNumList.size())){
             throw new DataInconsistencyException("좌석 개수와 관객 총 개수가 다릅니다.");
         }
+        if(LocalDateTime.now().isAfter(ticketDTO.getSchedule().getSchedTime().minusMinutes(15))) throw new ForbiddenException("티켓은 상영시간 15분 전까지만 예매할 수 있습니다.");
 
         Ticket ticket = TicketMapper.INSTANCE.toEntity(ticketDTO);
         Ticket savedTicket = ticketRepo.save(ticket);
@@ -172,6 +173,7 @@ public class TicketService {
 
         // 티켓 취소 처리
         if(ticketDTO.getTicketState().equals(TicketState.C)){
+            if(LocalDateTime.now().isAfter(ticket.getSchedule().getSchedTime().minusMinutes(10))) throw new ForbiddenException("티켓은 상영 10분 전까지만 취소할 수 있습니다.");
             cancelProcess(ticket);
         }
 
