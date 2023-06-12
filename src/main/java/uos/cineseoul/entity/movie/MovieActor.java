@@ -16,7 +16,7 @@ public class MovieActor {
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MOIVE_NUM")
+    @JoinColumn(name = "MOVIE_NUM")
     private Movie movie;
 
     @Id
