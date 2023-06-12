@@ -36,9 +36,6 @@ public class MovieService {
 
     public List<Movie> findAllMovie() {
         List<Movie> movieList = movieRepository.findAll();
-        if (movieList.isEmpty()) {
-            throw new ResourceNotFoundException("영화 목록이 없습니다.");
-        }
         return movieList;
     }
 

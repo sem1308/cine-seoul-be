@@ -25,9 +25,6 @@ public class ScreenService {
 
     public List<Screen> findAll() {
         List<Screen> screenList = screenRepo.findAll();
-        if (screenList.isEmpty()) {
-            throw new ResourceNotFoundException("상영관이 없습니다.");
-        }
         return screenList;
     }
 
