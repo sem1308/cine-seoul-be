@@ -37,9 +37,6 @@ public class PaymentService {
 
     public List<Payment> findAll() {
         List<Payment> paymentList = paymentRepo.findAll();
-        if (paymentList.isEmpty()) {
-            throw new ResourceNotFoundException("결제 내역이 없습니다.");
-        }
         return paymentList;
     }
 

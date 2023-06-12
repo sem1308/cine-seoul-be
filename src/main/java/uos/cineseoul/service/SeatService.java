@@ -98,6 +98,7 @@ public class SeatService {
         Screen screen = seatDTO.getScreen();
         // 좌석 중복 체크
         checkDuplicate(screen.getScreenNum(), seatDTO.getRow(), seatDTO.getCol());
+        checkSchedule(screen.getScreenNum());
 
         // 스크린의 총 좌석 값 1 증가
         screen.setTotalSeat(screen.getTotalSeat() + 1);
