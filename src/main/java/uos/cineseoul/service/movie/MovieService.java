@@ -47,9 +47,9 @@ public class MovieService {
         } else {
             movieList = movieRepository.findAll(pageable);
         }
-        if (movieList.isEmpty()) {
-            throw new ResourceNotFoundException("영화 목록이 없습니다.");
-        }
+//        if (movieList.isEmpty()) {
+//            throw new ResourceNotFoundException("영화 목록이 없습니다.");
+//        }
         return movieList;
     }
 

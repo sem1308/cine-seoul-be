@@ -42,17 +42,11 @@ public class PaymentService {
 
     public Page<Payment> findAll(Pageable pageable) {
         Page<Payment> paymentList = paymentRepo.findAll(pageable);
-        if (paymentList.isEmpty()) {
-            throw new ResourceNotFoundException("결제 내역이 없습니다.");
-        }
         return paymentList;
     }
 
     public List<Payment> findByUserNum(Long userNum) {
         List<Payment> paymentList = paymentRepo.findByUserNum(userNum);
-        if (paymentList.isEmpty()) {
-            throw new ResourceNotFoundException(userNum + "번 유저에 대한 결제 내역이 없습니다.");
-        }
         return paymentList;
     }
 
