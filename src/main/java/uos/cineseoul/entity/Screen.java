@@ -21,8 +21,7 @@ public class Screen {
     @Column(name="NAME", nullable = false, unique = true, length = 100)
     private String name;
 
-    @Column(name="TOTAL_SEAT", nullable = true, unique = false)
-    @ColumnDefault("0")
+    @Column(name="TOTAL_SEAT", nullable = true, unique = false, columnDefinition = "NUMBER DEFAULT 0")
     private Integer totalSeat;
 
     /* Foreign Key */
