@@ -81,7 +81,7 @@ public class SeatService {
     }
 
     public void checkScheduleSeat(Seat seat){
-        if (!scheduleSeatRepo.findAllBySeatAndIsOccupied(seat, Is.Y).isEmpty()) {
+        if (!scheduleSeatRepo.findAllBySeat(seat).isEmpty()) {
             throw new DuplicateKeyException("상영일정-좌석이 존재하므로 삭제할 수 없습니다.");
         }
     }
@@ -92,7 +92,7 @@ public class SeatService {
         }
     }
 
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public Seat insert(InsertSeatDTO seatDTO) {
         // 상영관 불러오기
         Screen screen = seatDTO.getScreen();
@@ -112,7 +112,7 @@ public class SeatService {
         return newSeat;
     }
 
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void delete(Seat seat) {
         Screen screen = seat.getScreen();
 
@@ -128,19 +128,19 @@ public class SeatService {
         seatRepo.delete(seat);
     }
 
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void deleteByNum(Long seatNum) {
         Seat seat = findOneByNum(seatNum);
         delete(seat);
     }
 
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void deleteByScreenRowCol(Long ScreenNum, String row, String col) {
         Seat seat = findOneByScreenRowCol(ScreenNum,row,col);
         delete(seat);
     }
 
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public Seat update(Long seatNum, UpdateSeatDTO seatDTO) {
         Seat seat = findOneByNum(seatNum);
 
