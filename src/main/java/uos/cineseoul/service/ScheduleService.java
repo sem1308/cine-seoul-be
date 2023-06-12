@@ -134,7 +134,7 @@ public class ScheduleService {
         Schedule schedule = ScheduleMapper.INSTANCE.toEntity(scheduleDTO);
         schedule.setEmptySeat(schedule.getScreen().getTotalSeat());
 
-        checkSchedTime(schedule);
+        checkSchedTime(schedule, 0);
 
         // 상영일정 저장
         Schedule savedSched = scheduleRepo.save(schedule);
@@ -169,7 +169,7 @@ public class ScheduleService {
         ScheduleMapper.INSTANCE.updateFromDto(scheduleDTO, schedule);
 
         if(scheduleDTO.getSchedTime()!=null){
-            checkSchedTime(schedule);
+            checkSchedTime(schedule, 1);
         }
 
         // 상영일정 저장
@@ -179,13 +179,13 @@ public class ScheduleService {
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public void checkSchedTime(Schedule schedule){
+    public void checkSchedTime(Schedule schedule, Integer reviseTime){
         // 10분 간격 확인
         Integer interval = 10;
 
         // 상영 시간의 day에 해당하고 상영 시간보다 빠른 상영 시간에 상영하는 최대 상영일정 가져오기
         LocalDateTime startDatetime = LocalDateTime.of(schedule.getSchedTime().toLocalDate(), schedule.getSchedTime().toLocalTime().of(0, 0, 0));
-        Optional<Schedule> schedule1 = scheduleRepo.findTopByMovie_MovieNumAndSchedTimeBetweenOrderBySchedTimeDesc(schedule.getMovie().getMovieNum(), startDatetime,schedule.getSchedTime());
+        Optional<Schedule> schedule1 = scheduleRepo.findTopByMovie_MovieNumAndSchedTimeBetweenOrderBySchedTimeDesc(schedule.getMovie().getMovieNum(), startDatetime,schedule.getSchedTime().minusMinutes(reviseTime));
 
         if(schedule1.isPresent()){
             Schedule scheduleB = schedule1.get();
@@ -200,8 +200,9 @@ public class ScheduleService {
             schedule.setOrder(1);
         }
 
+        // 상영 시간의 day에 해당하고 상영 시간보다 느린 상영 시간에 상영하는 최소 상영일정 가져오기
         LocalDateTime endDatetime = LocalDateTime.of(schedule.getSchedTime().toLocalDate(), schedule.getSchedTime().toLocalTime().of(23, 59, 59));
-        Optional<Schedule> schedule2 = scheduleRepo.findTopByMovie_MovieNumAndSchedTimeBetweenOrderBySchedTimeAsc(schedule.getMovie().getMovieNum(), schedule.getSchedTime(), endDatetime);
+        Optional<Schedule> schedule2 = scheduleRepo.findTopByMovie_MovieNumAndSchedTimeBetweenOrderBySchedTimeAsc(schedule.getMovie().getMovieNum(), schedule.getSchedTime().plusMinutes(reviseTime), endDatetime);
 
         if(schedule2.isPresent()){
             Schedule scheduleA = schedule2.get();
