@@ -125,6 +125,7 @@ public class UserService {
         }else{
             // not 비회원
             checkDuplicateById(user.getId());
+            user.setPoint(0);
         }
         user.setPw(passwordEncoder.encode(user.getPw()));
         User newUser = userRepo.save(user);
