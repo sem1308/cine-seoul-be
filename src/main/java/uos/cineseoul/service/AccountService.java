@@ -59,6 +59,12 @@ public class AccountService {
         }
     }
 
+    public void checkVaildityByAccount(String accountNum,String cusName){
+        if (accountRepo.findByAccountNumAndOwnerName(accountNum,cusName).isEmpty()){
+            throw new ResourceNotFoundException("계좌 정보가 없습니다.");
+        }
+    }
+
     public String getApprovalNum(String cardNum){
         String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HHmmss")).toString();
         // 카드사가 1개밖에 없다 가정, 7번째 자리부터는 고유하므로 그것만 가져옴

@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface AccountRepository extends JpaRepository<Account, String>{
     public Optional<Account> findByCardNum(String cardNum);
     public Optional<Account> findByCardNumAndOwnerName(String cardNum, String ownerName);
+    public Optional<Account> findByAccountNumAndOwnerName(String accountNum, String ownerName);
 }

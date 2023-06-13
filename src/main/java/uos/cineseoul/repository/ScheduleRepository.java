@@ -53,5 +53,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     @Query("select s from SCHEDULE s where s.movie.movieNum = :movieNum and s.schedTime between :start and :end")
     Page<Schedule> findByMovieNumAndDateBetween(LocalDateTime start, LocalDateTime end, @Param("movieNum") Long movieNum, Pageable pageable);
     Optional<Schedule> findTopByMovie_MovieNumAndSchedTimeBetweenOrderBySchedTimeDesc(Long movieNum, LocalDateTime start, LocalDateTime end);
+    Optional<Schedule> findTopByScreen_ScreenNumAndSchedTimeBetweenOrderBySchedTimeDesc(Long screenNUm, LocalDateTime start, LocalDateTime end);
     Optional<Schedule> findTopByMovie_MovieNumAndSchedTimeBetweenOrderBySchedTimeAsc(Long movieNum, LocalDateTime start, LocalDateTime end);
+    Optional<Schedule> findTopByScreen_ScreenNumAndSchedTimeBetweenOrderBySchedTimeAsc(Long screenNUm, LocalDateTime start, LocalDateTime end);
 }

@@ -185,7 +185,7 @@ public class ScheduleService {
 
         // 상영 시간의 day에 해당하고 상영 시간보다 빠른 상영 시간에 상영하는 최대 상영일정 가져오기
         LocalDateTime startDatetime = LocalDateTime.of(schedule.getSchedTime().toLocalDate(), schedule.getSchedTime().toLocalTime().of(0, 0, 0));
-        Optional<Schedule> schedule1 = scheduleRepo.findTopByMovie_MovieNumAndSchedTimeBetweenOrderBySchedTimeDesc(schedule.getMovie().getMovieNum(), startDatetime,schedule.getSchedTime().minusMinutes(reviseTime));
+        Optional<Schedule> schedule1 = scheduleRepo.findTopByScreen_ScreenNumAndSchedTimeBetweenOrderBySchedTimeDesc(schedule.getScreen().getScreenNum(), startDatetime,schedule.getSchedTime().minusMinutes(reviseTime));
 
         if(schedule1.isPresent()){
             Schedule scheduleB = schedule1.get();
@@ -202,7 +202,7 @@ public class ScheduleService {
 
         // 상영 시간의 day에 해당하고 상영 시간보다 느린 상영 시간에 상영하는 최소 상영일정 가져오기
         LocalDateTime endDatetime = LocalDateTime.of(schedule.getSchedTime().toLocalDate(), schedule.getSchedTime().toLocalTime().of(23, 59, 59));
-        Optional<Schedule> schedule2 = scheduleRepo.findTopByMovie_MovieNumAndSchedTimeBetweenOrderBySchedTimeAsc(schedule.getMovie().getMovieNum(), schedule.getSchedTime().plusMinutes(reviseTime), endDatetime);
+        Optional<Schedule> schedule2 = scheduleRepo.findTopByScreen_ScreenNumAndSchedTimeBetweenOrderBySchedTimeAsc(schedule.getScreen().getScreenNum(), schedule.getSchedTime().plusMinutes(reviseTime), endDatetime);
 
         if(schedule2.isPresent()){
             Schedule scheduleA = schedule2.get();
