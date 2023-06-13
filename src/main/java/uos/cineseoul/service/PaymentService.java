@@ -89,6 +89,7 @@ public class PaymentService {
             case 'A':
                 if(payment.getAccountNum()==null) throw new DataInconsistencyException("계좌결제지만 계좌번호가 입력되지 않았습니다.");
                 accountService.payByAccountNum(paymentDTO.getPrice(), paymentDTO.getAccountNum());
+                accountService.checkVaildityByAccount(paymentDTO.getAccountNum(), user.getName());
                 break;
             case 'C':
                 if(payment.getCardNum()==null) throw new DataInconsistencyException("카드결제지만 카드번호가 입력되지 않았습니다.");
