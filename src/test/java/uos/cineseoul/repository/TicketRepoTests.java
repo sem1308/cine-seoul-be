@@ -41,7 +41,7 @@ class TicketRepoTests {
 
 		InsertTicketDTO ticketDTO = InsertTicketDTO.builder().stdPrice(stdPrice).salePrice(salePrice)
 				.user(user).build();
-		scheduleSeat.setIsOccupied(Is.N);
+//		scheduleSeat.setIsOccupied(Is.N);
 		scheduleSeatRepo.save(scheduleSeat);
 
 		Ticket ticket = TicketMapper.INSTANCE.toEntity(ticketDTO);
