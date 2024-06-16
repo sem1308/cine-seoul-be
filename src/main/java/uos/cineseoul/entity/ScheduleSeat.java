@@ -11,14 +11,16 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Builder
-@IdClass(ScheduleSeatId.class)
 public class ScheduleSeat {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "schedule_seat_id")
+    private Long scheduleSeatId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SCHED_NUM", nullable = false)
     private Schedule schedule;
 
-    @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SEAT_NUM", nullable = false)
     private Seat seat;
