@@ -1,5 +1,6 @@
 package uos.cineseoul.dto.create;
 
+import lombok.Builder;
 import lombok.Data;
 import uos.cineseoul.utils.ActorAndRole;
 import uos.cineseoul.utils.enums.Is;
@@ -11,6 +12,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
+@Builder
 public class CreateMovieDTO {
 
     @NotBlank
