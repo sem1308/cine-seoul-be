@@ -45,40 +45,31 @@ public class TicketService {
     private final TicketAudienceRepository ticketAudienceRepo;
 
     public List<Ticket> findAll() {
-        List<Ticket> ticketList = ticketRepo.findAll();
-        return ticketList;
+        return ticketRepo.findAll();
     }
 
     public Page<Ticket> findAll(Pageable pageable) {
-        Page<Ticket> ticketList = ticketRepo.findAll(pageable);
-        return ticketList;
+        return ticketRepo.findAll(pageable);
     }
 
     public Page<Ticket> findAllByTicketState(TicketState ticketState,Pageable pageable) {
-        Page<Ticket> ticketList = ticketRepo.findAllByTicketState(ticketState, pageable);
-        return ticketList;
+        return ticketRepo.findAllByTicketState(ticketState, pageable);
     }
 
     public List<Ticket> findByUserNum(Long userNum) {
-        List<Ticket> ticketList = ticketRepo.findByUserNum(userNum);
-        return ticketList;
+        return ticketRepo.findByUserNum(userNum);
     }
 
     public Page<Ticket> findByUserNum(Long userNum, Pageable pageable) {
-        Page<Ticket> ticketList = ticketRepo.findByUser_UserNum(userNum, pageable);
-        return ticketList;
+        return ticketRepo.findByUser_UserNum(userNum, pageable);
     }
 
     public Page<Ticket> findByUserNumAndTicketState(Long userNum, TicketState ticketState, Pageable pageable) {
-        Page<Ticket> ticketList = ticketRepo.findByUser_UserNumAndTicketState(userNum, ticketState, pageable);
-        return ticketList;
+        return ticketRepo.findByUser_UserNumAndTicketState(userNum, ticketState, pageable);
     }
 
     public Ticket findOneByNum(Long num) {
-        Ticket ticket = ticketRepo.findById(num).orElseThrow(()->{
-            throw new ResourceNotFoundException("번호가 "+ num +"인 티켓이 없습니다.");
-        });
-        return ticket;
+        return ticketRepo.findById(num).orElseThrow(()-> new ResourceNotFoundException("번호가 " + num + "인 티켓이 없습니다."));
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
@@ -112,9 +103,7 @@ public class TicketService {
     public List<TicketSeat> insertTicketSeatList(Ticket ticket, List<Long> seatNumList, AtomicReference<Integer> price){
         List<TicketSeat> ticketSeatList = new ArrayList<>();
         seatNumList.forEach(seatNum->{
-            ScheduleSeat scheduleSeat = scheduleSeatRepo.findBySchedNumAndSeatNum(ticket.getSchedule().getSchedNum(),seatNum).orElseThrow(()->{
-                throw new ResourceNotFoundException("번호가 " + ticket.getSchedule().getSchedNum() + "인 상영일정에는 번호가" + seatNum + "인 좌석이 없습니다.");
-            });
+            ScheduleSeat scheduleSeat = scheduleSeatRepo.findBySchedNumAndSeatNum(ticket.getSchedule().getSchedNum(),seatNum).orElseThrow(()-> new ResourceNotFoundException("번호가 " + ticket.getSchedule().getSchedNum() + "인 상영일정에는 번호가" + seatNum + "인 좌석이 없습니다."));
             if(scheduleSeat.getIsOccupied().equals(Is.Y)){
                 throw new DuplicateKeyException("해당 상영일정 좌석에 대해 이미 예약이 되어있습니다.");
             }
@@ -184,9 +173,7 @@ public class TicketService {
 
         TicketMapper.INSTANCE.updateFromDto(ticketDTO,ticket);
 
-        Ticket updatedTicket = ticketRepo.save(ticket);
-
-        return updatedTicket;
+        return ticketRepo.save(ticket);
     }
 
     // 티켓 삭제
@@ -212,13 +199,10 @@ public class TicketService {
             editScheduleSeats(ticket.getTicketSeats(), ticket.getSchedule());
         ticketSeatRepo.deleteAll(ticket.getTicketSeats());
         ticketAudienceRepo.deleteAll(ticket.getAudienceTypes());
-        Payment payment = paymentRepo.findByTicket(ticket).orElse(null);
-        if(payment!=null){
-            paymentRepo.delete(payment);
-        }
+        paymentRepo.findByTicket(ticket).ifPresent(paymentRepo::delete);
         ticketRepo.delete(ticket);
 
-        if(ticket.getUser().getRole().equals(UserRole.N) && (ticketRepo.findByUserNum(ticket.getUser().getUserNum()).size()==0)){
+        if(ticket.getUser().getRole().equals(UserRole.N) && (ticketRepo.findByUserNum(ticket.getUser().getUserNum()).isEmpty())){
             userRepo.deleteById(ticket.getUser().getUserNum());
         }
     }
@@ -267,8 +251,7 @@ public class TicketService {
         }else{
             update(ticketNum, updateTicketDTO);
         }
-        Ticket ticket = insert(insertTicketDTO, seatNumList, createTicketAudienceDTOList);
-        return ticket;
+        return insert(insertTicketDTO, seatNumList, createTicketAudienceDTOList);
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
