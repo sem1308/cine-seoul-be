@@ -1,12 +1,14 @@
 package uos.cineseoul.entity.movie;
 
 import lombok.*;
+import uos.cineseoul.dto.insert.InsertMovieDTO;
 import uos.cineseoul.entity.Review;
 import uos.cineseoul.utils.enums.Is;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Entity
 @AllArgsConstructor
@@ -42,7 +44,7 @@ public class Movie {
 
     @Column(name = "IS_SHOWING", nullable = false, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Enumerated(EnumType.STRING)
-    private Is isShowing;
+    private Is isShowing = Is.N;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DIST_NUM", nullable = true)
@@ -89,5 +91,16 @@ public class Movie {
         this.movieActorList = movieActorList;
         this.distributor.getMovieList().add(this);
         this.grade.getMovieList().add(this);
+    }
+
+
+    // test를 위한 영화 mock object 생성 - 정보가 많아 mock이라는 함수로 생성
+    public static Movie mock(){
+        Random random = new Random();
+        int randNum = random.nextInt();
+        return Movie.builder()
+            .title("title" + randNum)
+            .isShowing(Is.N)
+            .build();
     }
 }
