@@ -36,7 +36,7 @@ public class Movie {
     @Column(name = "POSTER", nullable = true)
     private String poster;
 
-    @Column(name = "REVERVATION_COUNT", nullable = false, columnDefinition = "NUMBER(10) DEFAULT 0")
+    @Column(name = "REVERVATION_COUNT", nullable = false, columnDefinition = "INT DEFAULT 0")
     @Builder.Default
     private Integer reservationCount = 0;
 

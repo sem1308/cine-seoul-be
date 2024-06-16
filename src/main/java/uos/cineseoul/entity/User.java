@@ -46,7 +46,7 @@ public class User{
     @Column(name = "PHONE_NUM", nullable = false, length = 11)
     private String phoneNum;
 
-    @Column(name = "POINT", nullable = true, columnDefinition = "NUMBER(10) DEFAULT 0")
+    @Column(name = "POINT", nullable = true, columnDefinition = "INT DEFAULT 0")
     private Integer point;
 
     @Column(name = "ROLE", nullable = false, columnDefinition = "char(1)")
