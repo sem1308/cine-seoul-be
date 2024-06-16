@@ -102,7 +102,7 @@ public class SeatService {
 
         // 스크린의 총 좌석 값 1 증가
         screen.setTotalSeat(screen.getTotalSeat() + 1);
-        screenRepo.save(screen);
+//        screenRepo.save(screen);
 
         // 좌석 생성
         Seat seat = SeatMapper.INSTANCE.toEntity(seatDTO);
