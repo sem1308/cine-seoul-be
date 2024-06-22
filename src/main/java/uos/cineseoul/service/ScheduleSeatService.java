@@ -1,36 +1,19 @@
 package uos.cineseoul.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import uos.cineseoul.dto.insert.InsertScheduleDTO;
-import uos.cineseoul.dto.response.PrintScheduleDTO;
-import uos.cineseoul.dto.update.UpdateScheduleDTO;
 import uos.cineseoul.entity.Schedule;
 import uos.cineseoul.entity.ScheduleSeat;
 import uos.cineseoul.entity.Screen;
 import uos.cineseoul.entity.Seat;
-import uos.cineseoul.entity.movie.Movie;
-import uos.cineseoul.exception.ForbiddenException;
 import uos.cineseoul.exception.ResourceNotFoundException;
-import uos.cineseoul.mapper.ScheduleMapper;
-import uos.cineseoul.repository.MovieRepository;
-import uos.cineseoul.repository.ScheduleRepository;
 import uos.cineseoul.repository.ScheduleSeatRepository;
-import uos.cineseoul.repository.TicketRepository;
-import uos.cineseoul.utils.enums.Is;
 import uos.cineseoul.utils.enums.SeatState;
-import uos.cineseoul.utils.enums.TicketState;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -78,7 +61,7 @@ public class ScheduleSeatService {
         return scheduleSeat.getScheduleSeatNum();
     }
 
-    public synchronized Long selectScheduleSeatNoLocking(Long scheduleSeatNum){
+    public synchronized Long selectScheduleSeatWithoutLocking(Long scheduleSeatNum){
         ScheduleSeat scheduleSeat = findScheduleSeat(scheduleSeatNum);
         if(!scheduleSeat.getState().equals(SeatState.AVAILABLE)){
             throw new IllegalStateException("해당 좌석은 이미 예약된 상태입니다.");
@@ -88,8 +71,23 @@ public class ScheduleSeatService {
         return scheduleSeat.getScheduleSeatNum();
     }
 
+    public synchronized Long selectScheduleSeatWithoutLocking(Long schedNum, Long seatNum){
+        ScheduleSeat scheduleSeat = findScheduleSeat(schedNum,seatNum);
+        if(!scheduleSeat.getState().equals(SeatState.AVAILABLE)){
+            throw new IllegalStateException("해당 좌석은 이미 예약된 상태입니다.");
+        }
+
+        scheduleSeat.select();
+        return scheduleSeat.getScheduleSeatNum();
+    }
+
+
     public void deleteScheduleSeatList(List<ScheduleSeat> scheduleSeatList) {
         scheduleSeatRepo.deleteAll(scheduleSeatList);
+    }
+
+    public void deleteScheduleSeat(ScheduleSeat scheduleSeat) {
+        scheduleSeatRepo.delete(scheduleSeat);
     }
 
     public void insertScheduleSeat(Schedule schedule, Screen screen) {

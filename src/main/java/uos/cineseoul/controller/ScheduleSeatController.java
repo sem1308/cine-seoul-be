@@ -27,7 +27,7 @@ public class ScheduleSeatController {
 
     @GetMapping("/select/{scheduleSeatNum}/no")
     public ResponseEntity<Long> selectSeatNo(@PathVariable Long scheduleSeatNum){
-        scheduleSeatService.selectScheduleSeatNoLocking(scheduleSeatNum);
+        scheduleSeatService.selectScheduleSeatWithoutLocking(scheduleSeatNum);
         return ResponseEntity.ok(scheduleSeatNum);
     }
 }
