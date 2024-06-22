@@ -108,9 +108,9 @@ public class SeatService {
         Seat seat = SeatMapper.INSTANCE.toEntity(seatDTO);
         seat.setScreen(screen);
 
-        Seat newSeat = seatRepo.save(seat);
+        seatRepo.save(seat);
 
-        return newSeat;
+        return seat;
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
