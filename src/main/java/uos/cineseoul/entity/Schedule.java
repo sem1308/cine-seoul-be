@@ -5,6 +5,7 @@ import uos.cineseoul.entity.movie.Movie;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "SCHEDULE")
@@ -41,4 +42,15 @@ public class Schedule {
     @JoinColumn(name = "MOVIE_NUM", nullable = false)
     private Movie movie;
     /* */
+
+    public static Schedule mock(Screen screen, Movie movie){
+        return Schedule.builder()
+            .schedTime(LocalDateTime.now())
+            .order(1)
+            .emptySeat(screen.getSeats().size())
+            .scheduleSeats(new ArrayList<>())
+            .screen(screen)
+            .movie(movie)
+            .build();
+    }
 }
