@@ -1,6 +1,7 @@
 package uos.cineseoul.repository;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,36 +19,23 @@ import javax.transaction.Transactional;
 class UserRepoTests {
 	@Autowired
 	UserRepository userRepo;
-	@Test
-	@Transactional
-	void registerTest() {
 
+	User user;
+
+	@BeforeEach
+	public void init(){
 		// mapper test
 		InsertUserDTO userDTO = InsertUserDTO.builder().id("sem1308").pw("1308").name("한수한")
-				.residentNum("9902211111111").phoneNum("010XXXXXXXX").role(UserRole.M).build();
+			.residentNum("9902211111111").phoneNum("010XXXXXXXX").role(UserRole.M).build();
 
-		User user = UserMapper.INSTANCE.toEntity(userDTO);
-		if(!user.getRole().equals("N")){
-			user.setPoint(0);
-		}
-
-		// no mapper test
-//		User user = User.builder().id("sem1308").pw("1308").name("한수한")
-//						.residentNum("9902211111111").phoneNum("010XXXXXXXX")
-//						.point(0).role("A").build();
-
-		User savedUser =userRepo.save(user);
-
-		assert user.getId().equals(savedUser.getId());
-
-//		System.out.println(savedUser.getPoint());
-//		System.out.println(savedUser.getCreatedAt());
+		user = UserMapper.INSTANCE.toEntity(userDTO);
+		userRepo.save(user);
 	}
 
 	@Test
 	@Transactional
 	void updateTest() {
-		Long userNum = 1L;
+		Long userNum = user.getUserNum();
 		UpdateUserDTO userDTO = UpdateUserDTO.builder().pw("1308111").name("한두한")
 				.phoneNum("011XXXXXXXX").build();
 
