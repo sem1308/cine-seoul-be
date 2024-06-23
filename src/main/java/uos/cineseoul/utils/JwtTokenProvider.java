@@ -55,9 +55,9 @@ public class JwtTokenProvider {
     public Authentication getAuthentication(String token) {
         Claims claims = getClaims(token);
 
-        int num = Integer.parseInt(claims.get("num").toString());
-        String id = claims.get("id").toString();
-        String name = claims.get("name").toString();
+        Long num = claims.get("num", Long.class);
+        String id = claims.get("id", String.class);
+        String name = claims.get("name", String.class);
 
         @SuppressWarnings("unchecked")
         List<String> roles = (ArrayList<String>)claims.get("roles");
