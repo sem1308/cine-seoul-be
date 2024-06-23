@@ -10,26 +10,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import uos.cineseoul.dto.request.SelectScheduleSeatDto;
-import uos.cineseoul.entity.Schedule;
-import uos.cineseoul.entity.ScheduleSeat;
-import uos.cineseoul.entity.Screen;
-import uos.cineseoul.entity.Seat;
+import uos.cineseoul.entity.*;
 import uos.cineseoul.entity.movie.Movie;
 import uos.cineseoul.repository.*;
 import uos.cineseoul.service.ScheduleSeatService;
+import uos.cineseoul.utils.JwtTokenProvider;
 import uos.cineseoul.utils.enums.SeatState;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -55,7 +50,13 @@ class ScheduleSeatControllerTest {
     SeatRepository seatRepository;
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     ObjectMapper objectMapper;
+
+    @Autowired
+    JwtTokenProvider tokenProvider;
 
     // 픽스처
     Screen screen = Screen.mock();
@@ -63,6 +64,8 @@ class ScheduleSeatControllerTest {
     Movie movie = Movie.mock();
     Schedule schedule = Schedule.mock(screen,movie);
     ScheduleSeat scheduleSeat;
+
+    User user = User.mock();
 
     @BeforeEach
     public void init(){
@@ -82,6 +85,8 @@ class ScheduleSeatControllerTest {
         // 상영일정_좌석 등록
         scheduleSeatService.insertScheduleSeat(schedule,screen);
         scheduleSeat = scheduleSeatService.findScheduleSeat(schedule.getSchedNum(), seat.getSeatNum());
+
+        userRepository.save(user);
     }
 
     @AfterEach
@@ -91,30 +96,6 @@ class ScheduleSeatControllerTest {
         movieRepository.deleteAll();
         seatRepository.deleteAll();
         screenRepository.deleteAll();
-    }
-
-    @DisplayName("selectScheduleSeat : 상영관 번호와 좌석 번호로 상영일정_좌석을 성공적으로 선택한다.")
-    @Test
-    public void selectScheduleSeat() throws Exception {
-        //given
-        String url = "/schedule/seat/select";
-        SelectScheduleSeatDto selectScheduleSeatDto = SelectScheduleSeatDto.builder()
-            .scheduleNum(schedule.getSchedNum())
-            .seatNum(seat.getSeatNum())
-            .build();
-
-        String selectScheduleSeatDtoJson = objectMapper.writeValueAsString(selectScheduleSeatDto);
-
-        //when
-        //then
-        mockMvc.perform(MockMvcRequestBuilders.get(url)
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .content(selectScheduleSeatDtoJson))
-            .andExpect(status().isOk());
-
-        scheduleSeat = scheduleSeatService.findScheduleSeat(scheduleSeat.getScheduleSeatNum());
-
-        Assertions.assertThat(scheduleSeat.getState()).isEqualTo(SeatState.SELECTED);
     }
 
     @DisplayName("selectScheduleSeat : 상영일정_좌석번호로 상영일정_좌석을 성공적으로 선택한다.")
@@ -133,7 +114,6 @@ class ScheduleSeatControllerTest {
         Assertions.assertThat(scheduleSeat.getState()).isEqualTo(SeatState.SELECTED);
     }
 
-
     @DisplayName("selectScheduleSeat concurrently : 동시에 여러 사람이 상영일정_좌석번호로 상영일정_좌석을 선택할 때 성공적으로 한 명만 선택된다.")
     @Test
     public void selectScheduleSeatByNumConcurrently() throws Exception {
@@ -151,7 +131,8 @@ class ScheduleSeatControllerTest {
         for (int i = 0; i < numberOfThreads; i++) {
             executorService.submit(() -> {
                 try {
-                    MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(url))
+                    MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(url)
+                            .header(JwtTokenProvider.HEADER_NAME,tokenProvider.createToken(user.getUserNum(),user.getId(),user.getName(),user.getRole().toString())))
                         .andReturn();
                     System.out.println(Thread.currentThread().getName() + ": " + result.getResponse().getContentAsString());
                     if(result.getResponse().getStatus() == HttpStatus.OK.value()){

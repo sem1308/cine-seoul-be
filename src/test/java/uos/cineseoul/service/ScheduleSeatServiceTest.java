@@ -7,10 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import uos.cineseoul.entity.Schedule;
-import uos.cineseoul.entity.ScheduleSeat;
-import uos.cineseoul.entity.Screen;
-import uos.cineseoul.entity.Seat;
+import uos.cineseoul.entity.*;
 import uos.cineseoul.entity.movie.Movie;
 import uos.cineseoul.repository.*;
 import uos.cineseoul.utils.enums.SeatState;
@@ -39,6 +36,9 @@ class ScheduleSeatServiceTest {
     @Autowired
     SeatRepository seatRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     // 픽스처
     Screen screen = Screen.mock();
     Seat seat = Seat.mock(screen);
@@ -46,6 +46,7 @@ class ScheduleSeatServiceTest {
     Schedule schedule = Schedule.mock(screen,movie);
     ScheduleSeat scheduleSeat;
 
+    User user = User.mock();
     @BeforeEach
     public void init(){
         // 상영관 등록
@@ -64,6 +65,8 @@ class ScheduleSeatServiceTest {
         // 상영일정_좌석 등록
         scheduleSeatService.insertScheduleSeat(schedule,screen);
         scheduleSeat = scheduleSeatService.findScheduleSeat(schedule.getSchedNum(), seat.getSeatNum());
+
+        userRepository.save(user);
     }
 
     @AfterEach
@@ -80,11 +83,12 @@ class ScheduleSeatServiceTest {
     public void selectScheduleSeat() {
         //given
         //when
-        scheduleSeatService.selectScheduleSeat(scheduleSeat.getScheduleSeatNum());
+        scheduleSeatService.selectScheduleSeat(scheduleSeat.getScheduleSeatNum(), user.getUserNum());
         scheduleSeat = scheduleSeatService.findScheduleSeat(scheduleSeat.getScheduleSeatNum());
 
         //then
         Assertions.assertThat(scheduleSeat.getState()).isEqualTo(SeatState.SELECTED);
+        Assertions.assertThat(scheduleSeat.getUser().getUserNum()).isEqualTo(user.getUserNum());
     }
 
     @DisplayName("selectScheduleSeat concurrently : 동시에 여러 사람이 상영일정_좌석번호로 상영일정_좌석을 선택할 때 성공적으로 한 명만 선택된다.")
