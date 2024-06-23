@@ -1,20 +1,30 @@
 package uos.cineseoul.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import uos.cineseoul.dto.create.CreateTicketAudienceDTO;
+import uos.cineseoul.dto.create.CreateTicketDTO;
 import uos.cineseoul.dto.insert.InsertTicketDTO;
 import uos.cineseoul.dto.response.PrintTicketDTO;
 import uos.cineseoul.dto.update.UpdateTicketDTO;
-import uos.cineseoul.entity.Ticket;
+import uos.cineseoul.entity.*;
+import uos.cineseoul.entity.movie.Movie;
+import uos.cineseoul.repository.*;
 import uos.cineseoul.service.ScheduleService;
 import uos.cineseoul.service.SeatService;
 import uos.cineseoul.service.TicketService;
 import uos.cineseoul.service.UserService;
+import uos.cineseoul.utils.enums.AudienceType;
 import uos.cineseoul.utils.enums.TicketState;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -22,27 +32,83 @@ import java.util.List;
 class TicketServiceTests {
 	@Autowired
 	TicketService ticketService;
+
 	@Autowired
-	UserService userService;
+	ScheduleSeatService scheduleSeatService;
 	@Autowired
-	ScheduleService scheduleService;
+	ScheduleSeatRepository scheduleSeatRepository;
+
+	@Autowired
+	ScheduleRepository scheduleRepository;
+
+	@Autowired
+	MovieRepository movieRepository;
+
+	@Autowired
+	ScreenRepository screenRepository;
+
+	@Autowired
+	SeatRepository seatRepository;
+
+	@Autowired
+	UserRepository userRepository;
+
+	// 픽스처
+	Screen screen = Screen.mock();
+	Seat seat = Seat.mock(screen);
+	Movie movie = Movie.mock();
+	Schedule schedule = Schedule.mock(screen,movie);
+	ScheduleSeat scheduleSeat;
+
+	User user = User.mock();
+	@BeforeEach
+	public void init(){
+		// 상영관 등록
+		screenRepository.save(screen);
+
+		// 상영관에 좌석 등록
+		seat = seatRepository.save(seat);
+		screen.getSeats().add(seat);
+
+		// 영화 등록
+		movieRepository.save(movie);
+
+		// 상영일정 등록
+		scheduleRepository.save(schedule);
+
+		// 상영일정_좌석 등록
+		scheduleSeatService.insertScheduleSeat(schedule,screen);
+		scheduleSeat = scheduleSeatService.findScheduleSeat(schedule.getSchedNum(), seat.getSeatNum());
+
+		userRepository.save(user);
+		
+		// 좌석 선택
+		scheduleSeat.select(user);
+	}
+
 	@Test
 	@Transactional
-	//@Rollback(false)
 	void generateTicketTest() {
-		Integer stdPrice = 8000;
-		Integer salePrice = 7500;
-		String issued = "N";
+		Integer stdPrice = seat.getSeatGrade().getPrice();
+		Integer salePrice = stdPrice - AudienceType.G.getDiscountPrice();
 
-		Long userNum = 1L;
-		Long schedNum = 2L;
-		Long seatNum = 1L;
+		InsertTicketDTO ticketDTO = InsertTicketDTO.builder().stdPrice(stdPrice)
+			.ticketState(TicketState.N).schedule(schedule).user(user).build();
 
-		InsertTicketDTO ticketDTO = InsertTicketDTO.builder().stdPrice(stdPrice).salePrice(salePrice)
-				.user(userService.findOneByNum(userNum)).build();
+		List<Long> seatNumList = new ArrayList<>();
+		seatNumList.add(seat.getSeatNum());
 
-//		Ticket savedTicket = ticketService.insert(ticketDTO);
-//		assert savedTicket.getSalePrice().equals(salePrice);
+		List<CreateTicketAudienceDTO> audienceTypeDTOList = new ArrayList<>();
+		audienceTypeDTOList.add(CreateTicketAudienceDTO.builder().audienceType(AudienceType.G).count(1).build());
+
+		Ticket ticket = ticketService.insert(ticketDTO,seatNumList,audienceTypeDTOList);
+
+		Assertions.assertThat(ticket.getTicketSeats().size()).isEqualTo(seatNumList.size());
+		Assertions.assertThat(ticket.getUser().getUserNum()).isEqualTo(user.getUserNum());
+		Assertions.assertThat(ticket.getSchedule().getSchedNum()).isEqualTo(schedule.getSchedNum());
+		Assertions.assertThat(ticket.getTicketState()).isEqualTo(TicketState.N);
+		Assertions.assertThat(ticket.getStdPrice()).isEqualTo(stdPrice);
+		Assertions.assertThat(ticket.getSalePrice()).isEqualTo(salePrice);
 	}
 
 	@Test
