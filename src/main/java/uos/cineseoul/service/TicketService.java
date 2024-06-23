@@ -45,40 +45,31 @@ public class TicketService {
     private final TicketAudienceRepository ticketAudienceRepo;
 
     public List<Ticket> findAll() {
-        List<Ticket> ticketList = ticketRepo.findAll();
-        return ticketList;
+        return ticketRepo.findAll();
     }
 
     public Page<Ticket> findAll(Pageable pageable) {
-        Page<Ticket> ticketList = ticketRepo.findAll(pageable);
-        return ticketList;
+        return ticketRepo.findAll(pageable);
     }
 
     public Page<Ticket> findAllByTicketState(TicketState ticketState,Pageable pageable) {
-        Page<Ticket> ticketList = ticketRepo.findAllByTicketState(ticketState, pageable);
-        return ticketList;
+        return ticketRepo.findAllByTicketState(ticketState, pageable);
     }
 
     public List<Ticket> findByUserNum(Long userNum) {
-        List<Ticket> ticketList = ticketRepo.findByUserNum(userNum);
-        return ticketList;
+        return ticketRepo.findByUserNum(userNum);
     }
 
     public Page<Ticket> findByUserNum(Long userNum, Pageable pageable) {
-        Page<Ticket> ticketList = ticketRepo.findByUser_UserNum(userNum, pageable);
-        return ticketList;
+        return ticketRepo.findByUser_UserNum(userNum, pageable);
     }
 
     public Page<Ticket> findByUserNumAndTicketState(Long userNum, TicketState ticketState, Pageable pageable) {
-        Page<Ticket> ticketList = ticketRepo.findByUser_UserNumAndTicketState(userNum, ticketState, pageable);
-        return ticketList;
+        return ticketRepo.findByUser_UserNumAndTicketState(userNum, ticketState, pageable);
     }
 
     public Ticket findOneByNum(Long num) {
-        Ticket ticket = ticketRepo.findById(num).orElseThrow(()->{
-            throw new ResourceNotFoundException("번호가 "+ num +"인 티켓이 없습니다.");
-        });
-        return ticket;
+        return ticketRepo.findById(num).orElseThrow(()-> new ResourceNotFoundException("번호가 " + num + "인 티켓이 없습니다."));
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
@@ -93,41 +84,72 @@ public class TicketService {
         if(LocalDateTime.now().isAfter(ticketDTO.getSchedule().getSchedTime().minusMinutes(15))) throw new ForbiddenException("티켓은 상영시간 15분 전까지만 예매할 수 있습니다.");
 
         Ticket ticket = TicketMapper.INSTANCE.toEntity(ticketDTO);
-        Ticket savedTicket = ticketRepo.save(ticket);
+        ticketRepo.save(ticket);
 
         AtomicReference<Integer> price = new AtomicReference<>(0);
         AtomicReference<Integer> discountPrice = new AtomicReference<>(0);
 
-        savedTicket.setTicketSeats(insertTicketSeatList(ticket, seatNumList, price));
-        savedTicket.setAudienceTypes(insertTicketAudienceList(ticket, createTicketAudienceDTOList, discountPrice));
+        // 티켓에 좌석 등록하기
+        ticket.setTicketSeats(insertTicketSeatList(ticket, seatNumList, price));
+        // 티켓에 관람객 유형 등록하기
+        ticket.setAudienceTypes(insertTicketAudienceList(ticket, createTicketAudienceDTOList, discountPrice));
 
-        if(!ticket.getStdPrice().equals(price.get()-discountPrice.get())){
-            throw new DataInconsistencyException("표준 가격이 좌석 가격에서 할인가격을 뺀 값과 일치하지 않습니다.");
+        if(!ticket.getStdPrice().equals(price.get())){
+            throw new DataInconsistencyException("표쥰 가격이 맞지 않습니다.");
         }
+        ticket.setSalePrice(price.get() - discountPrice.get());
 
-        return savedTicket;
+        return ticket;
     }
 
+//    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+//    public List<TicketSeat> insertTicketSeatList(Ticket ticket, List<Long> seatNumList, AtomicReference<Integer> price){
+//        List<TicketSeat> ticketSeatList = new ArrayList<>();
+//        seatNumList.forEach(seatNum->{
+//            ScheduleSeat scheduleSeat = scheduleSeatRepo.findBySchedNumAndSeatNum(ticket.getSchedule().getSchedNum(),seatNum).orElseThrow(()-> new ResourceNotFoundException("번호가 " + ticket.getSchedule().getSchedNum() + "인 상영일정에는 번호가" + seatNum + "인 좌석이 없습니다."));
+//            if(scheduleSeat.getIsOccupied().equals(Is.Y)){
+//                throw new DuplicateKeyException("해당 상영일정 좌석에 대해 이미 예약이 되어있습니다.");
+//            }
+//            // 좌석 할당 처리
+//            scheduleSeat.setIsOccupied(Is.Y);
+//            // 버전 관리를 위한 필드
+//            scheduleSeat.setVersion(scheduleSeat.getVersion() + 1);
+//            // 동시 예매 처리
+//            try {
+//                scheduleSeatRepo.save(scheduleSeat);
+//            } catch (OptimisticLockingFailureException e) {
+//                throw new OptimisticLockingFailureException("데이터가 다른 사용자에 의해 수정되었습니다. 다시 시도해주세요.");
+//            }
+//
+//            // 티켓-상영일정-좌석 생성
+//            InsertReservationSeatDTO iReservationSeatDTO = InsertReservationSeatDTO.builder().ticket(ticket).seat(scheduleSeat.getSeat()).build();
+//            TicketSeat ticketSeat = ReservationSeatMapper.INSTANCE.toEntity(iReservationSeatDTO);
+//            ticketSeatList.add(ticketSeat);
+//            // 가격 체크를 위함
+//            price.updateAndGet(v -> v + scheduleSeat.getSeat().getSeatGrade().getPrice());
+//            // 상영일정 빈자리 수 1개 내리기
+//            Schedule schedule = ticket.getSchedule();
+//            schedule.setEmptySeat(schedule.getEmptySeat()-1);
+//            scheduleRepo.save(schedule);
+//            // 영화의 예매 수 1개 올리기
+//            Movie movie = schedule.getMovie();
+//            movie.setReservationCount(movie.getReservationCount()+1);
+//            movieRepo.save(movie);
+//        });
+//
+//        ticketSeatRepo.saveAll(ticketSeatList);
+//
+//        return ticketSeatList;
+//    }
+
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public List<TicketSeat> insertTicketSeatList(Ticket ticket, List<Long> seatNumList, AtomicReference<Integer> price){
+    public List<TicketSeat> insertTicketSeatList(Ticket ticket, List<Long> scheduleSeatNumList, AtomicReference<Integer> price){
         List<TicketSeat> ticketSeatList = new ArrayList<>();
-        seatNumList.forEach(seatNum->{
-            ScheduleSeat scheduleSeat = scheduleSeatRepo.findBySchedNumAndSeatNum(ticket.getSchedule().getSchedNum(),seatNum).orElseThrow(()->{
-                throw new ResourceNotFoundException("번호가 " + ticket.getSchedule().getSchedNum() + "인 상영일정에는 번호가" + seatNum + "인 좌석이 없습니다.");
-            });
-            if(scheduleSeat.getIsOccupied().equals(Is.Y)){
-                throw new DuplicateKeyException("해당 상영일정 좌석에 대해 이미 예약이 되어있습니다.");
-            }
+        scheduleSeatNumList.forEach(scheduleSeatNum->{
+            ScheduleSeat scheduleSeat = scheduleSeatRepo.findById(scheduleSeatNum).orElseThrow(()->
+                new ResourceNotFoundException("번호가 " + scheduleSeatNum + "인 상영일정_좌석이 없습니다."));
             // 좌석 할당 처리
-            scheduleSeat.setIsOccupied(Is.Y);
-            // 버전 관리를 위한 필드
-            scheduleSeat.setVersion(scheduleSeat.getVersion() + 1);
-            // 동시 예매 처리
-            try {
-                scheduleSeatRepo.save(scheduleSeat);
-            } catch (OptimisticLockingFailureException e) {
-                throw new OptimisticLockingFailureException("데이터가 다른 사용자에 의해 수정되었습니다. 다시 시도해주세요.");
-            }
+            scheduleSeat.reserve(ticket.getUser());
 
             // 티켓-상영일정-좌석 생성
             InsertReservationSeatDTO iReservationSeatDTO = InsertReservationSeatDTO.builder().ticket(ticket).seat(scheduleSeat.getSeat()).build();
@@ -184,9 +206,7 @@ public class TicketService {
 
         TicketMapper.INSTANCE.updateFromDto(ticketDTO,ticket);
 
-        Ticket updatedTicket = ticketRepo.save(ticket);
-
-        return updatedTicket;
+        return ticketRepo.save(ticket);
     }
 
     // 티켓 삭제
@@ -209,16 +229,13 @@ public class TicketService {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void delete(Ticket ticket, boolean isEditScheduleSeat) {
         if(isEditScheduleSeat)
-            editScheduleSeats(ticket.getTicketSeats(), ticket.getSchedule());
+            cancelScheduleSeats(ticket.getTicketSeats(), ticket.getSchedule());
         ticketSeatRepo.deleteAll(ticket.getTicketSeats());
         ticketAudienceRepo.deleteAll(ticket.getAudienceTypes());
-        Payment payment = paymentRepo.findByTicket(ticket).orElse(null);
-        if(payment!=null){
-            paymentRepo.delete(payment);
-        }
+        paymentRepo.findByTicket(ticket).ifPresent(paymentRepo::delete);
         ticketRepo.delete(ticket);
 
-        if(ticket.getUser().getRole().equals(UserRole.N) && (ticketRepo.findByUserNum(ticket.getUser().getUserNum()).size()==0)){
+        if(ticket.getUser().getRole().equals(UserRole.N) && (ticketRepo.findByUserNum(ticket.getUser().getUserNum()).isEmpty())){
             userRepo.deleteById(ticket.getUser().getUserNum());
         }
     }
@@ -233,20 +250,16 @@ public class TicketService {
     public void cancelProcess(Ticket ticket) {
         // 환불
         checkStateAndRefund(ticket,ticket.getUser());
-        editScheduleSeats(ticket.getTicketSeats(),ticket.getSchedule());
+        cancelScheduleSeats(ticket.getTicketSeats(),ticket.getSchedule());
         ticket.setCanceledAt(LocalDateTime.now());
         ticket.setTicketState(TicketState.C);
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public void editScheduleSeats(List<TicketSeat> ticketSeatList, Schedule schedule) {
+    public void cancelScheduleSeats(List<TicketSeat> ticketSeatList, Schedule schedule) {
         // 상영일정-좌석 수정
         ticketSeatList.forEach(reservationSeat -> {
-            ScheduleSeat scheduleSeat = scheduleSeatRepo.findByScheduleAndSeat(schedule,reservationSeat.getSeat()).orElse(null);
-            if(scheduleSeat!=null){
-                scheduleSeat.setIsOccupied(Is.N);
-                scheduleSeatRepo.save(scheduleSeat);
-            }
+            scheduleSeatRepo.findByScheduleAndSeat(schedule, reservationSeat.getSeat()).ifPresent(ScheduleSeat::cancel);
             // 상영일정 빈자리 수 1개 올리기
             schedule.setEmptySeat(Math.min(schedule.getEmptySeat()+1,schedule.getScreen().getTotalSeat()));
             scheduleRepo.save(schedule);
@@ -267,8 +280,7 @@ public class TicketService {
         }else{
             update(ticketNum, updateTicketDTO);
         }
-        Ticket ticket = insert(insertTicketDTO, seatNumList, createTicketAudienceDTOList);
-        return ticket;
+        return insert(insertTicketDTO, seatNumList, createTicketAudienceDTOList);
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
@@ -288,13 +300,7 @@ public class TicketService {
                 case 'P':
                     break;
             }
-            if(!user.getRole().equals(UserRole.N)){
-                // 결제 포인트 환불
-                user.setPoint(user.getPoint()+payment.getPayedPoint());
-                // 결제해서 얻은 포인트 반환
-                user.setPoint(user.getPoint()-(int)(payment.getPrice()*0.05));
-                userRepo.save(user);
-            }
+            user.refund(payment);
             // 결제 취소 상태로 변경
             payment.setState(PayState.C);
             payment.setCanceledAt(LocalDateTime.now());

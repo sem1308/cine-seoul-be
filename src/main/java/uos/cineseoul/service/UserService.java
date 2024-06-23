@@ -117,6 +117,7 @@ public class UserService {
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public User insert(InsertUserDTO userDTO) {
+        userDTO.setPw(passwordEncoder.encode(userDTO.getPw()));
         User user = UserMapper.INSTANCE.toEntity(userDTO);
 
         if(user.getRole().equals(UserRole.N)){
@@ -125,12 +126,10 @@ public class UserService {
         }else{
             // not 비회원
             checkDuplicateById(user.getId());
-            user.setPoint(0);
         }
-        user.setPw(passwordEncoder.encode(user.getPw()));
-        User newUser = userRepo.save(user);
+        userRepo.save(user);
 
-        return newUser;
+        return user;
     }
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public User update(Long userNum, UpdateUserDTO userDTO) {

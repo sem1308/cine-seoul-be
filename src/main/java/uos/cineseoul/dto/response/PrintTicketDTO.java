@@ -34,8 +34,10 @@ public class PrintTicketDTO {
 
     private PrintScheduleNotSchedSeatDTO schedule;
 
+    @Builder.Default
     private List<PrintTicketSeatDTO> ticketSeats = new ArrayList<>();
 
+    @Builder.Default
     private List<PrintTicketAudienceDTO> audienceTypes = new ArrayList<>();
 
     public void setByTicket(Ticket ticket) {

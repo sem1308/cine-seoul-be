@@ -263,10 +263,12 @@ public class ScheduleService {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void insertScheduleSeat(Schedule schedule, Screen screen) {
         List<Seat> seatList = screen.getSeats();
-        seatList.forEach(seat -> {
-            ScheduleSeat ss = ScheduleSeat.builder().schedule(schedule).seat(seat).isOccupied(Is.N).build();
-            scheduleSeatRepo.save(ss);
-        });
+        if(seatList != null && !seatList.isEmpty()){
+            seatList.forEach(seat -> {
+                ScheduleSeat ss = ScheduleSeat.builder().schedule(schedule).seat(seat).build();
+                scheduleSeatRepo.save(ss);
+            });
+        }
     }
 
     public PrintScheduleDTO getPrintDTO(Schedule schedule, boolean isShowSeats) {

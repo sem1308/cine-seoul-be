@@ -25,7 +25,8 @@ public class Ticket{
     private Integer stdPrice;
 
     @Column(name="SALE_PRICE", nullable = true, unique = false)
-    private Integer salePrice;
+    @Builder.Default
+    private Integer salePrice = 0;
 
     @Column(name="TICKET_STATE", nullable = false, unique = false, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Enumerated(EnumType.STRING)
@@ -40,7 +41,6 @@ public class Ticket{
     private LocalDateTime canceledAt;
 
     /* Foreign Key */
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SCHED_NUM", nullable = false)
     private Schedule schedule;
@@ -51,9 +51,11 @@ public class Ticket{
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "TICKET_NUM", nullable = false, insertable = false, updatable = false)
+    @Builder.Default
     private List<TicketSeat> ticketSeats = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "TICKET_NUM", nullable = false, insertable = false, updatable = false)
+    @Builder.Default
     private List<Audience> audienceTypes = new ArrayList<>();
 }

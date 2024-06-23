@@ -1,5 +1,3 @@
-SET DEFINE OFF
-
 INSERT INTO ACTOR (NAME, IMG_URL) 
 VALUES ('할리 베일리', 'https://ssl.pstatic.net/sstatic/keypage/outside/scui/cs_common_module/im/no_img_people_206x232_v2.png');
 
@@ -2097,8 +2095,6 @@ VALUES ('에버렛 스완슨', '');
 INSERT INTO ACTOR (NAME, IMG_URL) 
 VALUES ('황태환', '');
 
---SET DEFINE OFF
-
 INSERT INTO DIRECTOR (NAME, IMG_URL) 
 VALUES ('롭 마샬', 'https://search.pstatic.net/common?type=n&size=174x196&quality=100&direct=true&src=https%3A%2F%2Fssl.pstatic.net%2Fimgmovie%2Fmdi%2Fpi%2F000000076%2FPM7605_175801_000.jpg');
 
@@ -2549,8 +2545,6 @@ VALUES ('이우철', 'https://search.pstatic.net/common?type=n&size=174x196&qual
 INSERT INTO DIRECTOR (NAME, IMG_URL) 
 VALUES ('김상철', 'https://search.pstatic.net/common?type=n&size=174x196&quality=100&direct=true&src=http%3A%2F%2Fsstatic.naver.net%2Fpeople%2Fportrait%2F202111%2F20211110205716442.jpg');
 
---SET DEFINE OFF
-
 INSERT INTO DISTRIBUTOR (NAME) 
 VALUES ('㈜갤리온엔터테인먼트');
 
@@ -2770,8 +2764,6 @@ VALUES ('㈜미디어캐슬');
 INSERT INTO DISTRIBUTOR (NAME) 
 VALUES ('그린나래미디어(주)');
 
---SET DEFINE OFF
-
 INSERT INTO GENRE (GENRE_CODE, NAME) 
 VALUES ('01', '드라마');
 
@@ -2856,15 +2848,10 @@ VALUES ('27', '영화음악');
 INSERT INTO GENRE (GENRE_CODE, NAME) 
 VALUES ('28', '영화패러디포스터');
 
---행 1
 INSERT INTO GRADE (GRADE_CODE, NAME, IS_ADULT) VALUES ('12','12세 관람가','N');
---행 2
 INSERT INTO GRADE (GRADE_CODE, NAME, IS_ADULT) VALUES ('15','15세 관람가','N');
---행 3
 INSERT INTO GRADE (GRADE_CODE, NAME, IS_ADULT) VALUES ('18','청소년 관람불가','Y');
---행 4
 INSERT INTO GRADE (GRADE_CODE, NAME, IS_ADULT) VALUES ('AL','전체 관람가','N');
---행 5
 INSERT INTO GRADE (GRADE_CODE, NAME, IS_ADULT) VALUES ('UN','미정','N');
 
 INSERT INTO GRADE (GRADE_CODE, NAME, IS_ADULT) VALUES ('LS','제한 상영가','Y');
