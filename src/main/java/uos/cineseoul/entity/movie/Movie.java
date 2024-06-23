@@ -44,6 +44,7 @@ public class Movie {
 
     @Column(name = "IS_SHOWING", nullable = false, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     private Is isShowing = Is.N;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -51,9 +51,11 @@ public class Ticket{
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "TICKET_NUM", nullable = false, insertable = false, updatable = false)
+    @Builder.Default
     private List<TicketSeat> ticketSeats = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "TICKET_NUM", nullable = false, insertable = false, updatable = false)
+    @Builder.Default
     private List<Audience> audienceTypes = new ArrayList<>();
 }
