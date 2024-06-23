@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -25,6 +24,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static uos.cineseoul.util.JwtTokenUtil.createToken;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -102,10 +103,12 @@ class ScheduleSeatControllerTest {
     @Test
     public void selectScheduleSeatByNum() throws Exception {
         //given
-        String url = "/schedule/seat/select/"+scheduleSeat.getScheduleSeatNum()+"/no";
+        String url = "/schedule/seat/auth/select/"+scheduleSeat.getScheduleSeatNum();
 
         //when
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(url)).andReturn();
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(url)
+            .header(JwtTokenProvider.HEADER_NAME,createToken(tokenProvider,user))
+        ).andReturn();
 
         scheduleSeat = scheduleSeatService.findScheduleSeat(scheduleSeat.getScheduleSeatNum());
 
@@ -122,7 +125,7 @@ class ScheduleSeatControllerTest {
         ExecutorService executorService = Executors.newFixedThreadPool(numberOfThreads);
         CountDownLatch latch = new CountDownLatch(numberOfThreads);
 
-        String url = "/schedule/seat/select/"+scheduleSeat.getScheduleSeatNum();
+        String url = "/schedule/seat/auth/select/"+scheduleSeat.getScheduleSeatNum();
 
         AtomicInteger atomicInt = new AtomicInteger(0);
         //when
@@ -132,7 +135,7 @@ class ScheduleSeatControllerTest {
             executorService.submit(() -> {
                 try {
                     MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(url)
-                            .header(JwtTokenProvider.HEADER_NAME,tokenProvider.createToken(user.getUserNum(),user.getId(),user.getName(),user.getRole().toString())))
+                            .header(JwtTokenProvider.HEADER_NAME,createToken(tokenProvider,user)))
                         .andReturn();
                     System.out.println(Thread.currentThread().getName() + ": " + result.getResponse().getContentAsString());
                     if(result.getResponse().getStatus() == HttpStatus.OK.value()){

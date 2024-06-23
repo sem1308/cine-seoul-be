@@ -30,10 +30,9 @@ public class ScheduleSeatController {
 //        }
 //    }
 
-    @GetMapping("/select/{scheduleSeatNum}")
+    @GetMapping("/auth/select/{scheduleSeatNum}")
     public ResponseEntity<Long> selectSeat(Authentication authentication, @PathVariable Long scheduleSeatNum){
-        Object principal = authentication.getPrincipal();
-        if(principal instanceof CustomUserDetails userDetails) {
+        if(authentication.getPrincipal() instanceof CustomUserDetails userDetails) {
             Long userNum = userDetails.getNum();
             scheduleSeatService.selectScheduleSeat(scheduleSeatNum, userNum);
             return ResponseEntity.ok(scheduleSeatNum);
