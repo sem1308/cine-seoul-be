@@ -109,15 +109,8 @@ public class PaymentService {
         ticketRepo.save(ticket);
 
         // 포인트 결제 사항 체크
-        if(!user.getRole().equals(UserRole.N)){
-            Integer point = payment.getPayedPoint();
-            if(point != null && !point.equals(0)){
-                if(user.getPoint() < point) throw new DataInconsistencyException("유저의 포인트가 결제 포인트보다 적습니다.");
-                user.setPoint(user.getPoint() - point);
-            }
-            user.setPoint(user.getPoint()+(int)(payment.getPrice()*0.05));
-        }
-        userRepo.save(user);
+        user.checkPoint(payment.getPayedPoint());
+        user.addPoint(payment.getPrice());
 
         return savedPayment;
     }

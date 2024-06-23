@@ -2,6 +2,7 @@ package uos.cineseoul.entity;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import uos.cineseoul.exception.DataInconsistencyException;
 import uos.cineseoul.utils.enums.UserRole;
 
 import javax.persistence.*;
@@ -12,7 +13,6 @@ import java.util.List;
 @Entity(name = "USERS")
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
 @Builder
 public class User{
@@ -56,4 +56,29 @@ public class User{
     @CreationTimestamp
     @Column(name="CREATED_DATE", nullable = false)
     private LocalDateTime createdAt;
+
+    //=== 비즈니스 로직 ===//
+
+    public void checkPoint(Integer payPoint){
+        if(payPoint != null && !payPoint.equals(0)){
+            if(this.role.equals(UserRole.N)){
+                throw new IllegalArgumentException("비회원은 포인트결제가 안됩니다.");
+            }else{
+                if(this.point < payPoint) throw new DataInconsistencyException("유저의 포인트가 결제 포인트보다 적습니다.");
+                this.point -= payPoint;
+            }
+        }
+    }
+
+    public void addPoint(int price){
+        this.point += (int)(price*0.05);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof User u){
+            return this.userNum.equals(u.getUserNum());
+        }
+        return false;
+    }
 }
