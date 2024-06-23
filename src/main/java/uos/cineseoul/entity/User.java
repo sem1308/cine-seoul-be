@@ -58,8 +58,18 @@ public class User{
     @Column(name="CREATED_DATE", nullable = false)
     private LocalDateTime createdAt;
 
-    //=== 비즈니스 로직 ===//
+    public static User mock(){
+        return User.builder()
+            .id("sem1308")
+            .pw("1308")
+            .name("한수한")
+            .residentNum("9902211111111")
+            .phoneNum("010XXXXXXXX")
+            .role(UserRole.M)
+            .build();
+    }
 
+    //=== 비즈니스 로직 ===//
     public void checkPoint(Integer payPoint){
         if(payPoint != null && !payPoint.equals(0)){
             if(this.role.equals(UserRole.N)){

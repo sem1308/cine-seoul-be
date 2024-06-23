@@ -19,18 +19,6 @@ public class ScheduleSeat {
     @Column(name = "schedule_seat_num")
     private Long scheduleSeatNum;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SCHED_NUM", nullable = false)
-    private Schedule schedule;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SEAT_NUM", nullable = false)
-    private Seat seat;
-
-//    @Column(name="IS_OCCUPIED", nullable = false, unique = false, columnDefinition = "CHAR(1) DEFAULT 'N'")
-//    @Enumerated(EnumType.STRING)
-//    private Is isOccupied;
-
     @Column(name="state", nullable = false, columnDefinition = "VARCHAR(10) DEFAULT 'AVAILABLE'")
     @Enumerated(EnumType.STRING)
     @Builder.Default
@@ -39,14 +27,33 @@ public class ScheduleSeat {
     @Column(name="reserved_date_time")
     private LocalDateTime reservedDateTime;
 
+    /* Foreign Key */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "SCHED_NUM", nullable = false)
+    private Schedule schedule;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "SEAT_NUM", nullable = false)
+    private Seat seat;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_NUM")
+    private User user;
+
     //=== 비즈니스 로직 ===//
-    public void select(){
+    public void select(User user){
+        this.user = user;
         this.state = SeatState.SELECTED;
     }
 
-    public void reserve(){
-        this.state = SeatState.RESERVED;
-        this.reservedDateTime = LocalDateTime.now();
+    public void reserve(User user){
+        if(this.state.equals(SeatState.SELECTED) && this.user.equals(user)){
+            // 티켓이 선택된 상태이고 선택한 사람과 예매하려는 사람이 동일하다면
+            this.state = SeatState.RESERVED;
+            this.reservedDateTime = LocalDateTime.now();
+        }else{
+            throw new IllegalArgumentException("선택자와 티켓 예매자의 정보가 다릅니다.");
+        }
     }
 
     public void cancel(){
