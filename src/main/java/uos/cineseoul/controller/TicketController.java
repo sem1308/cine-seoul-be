@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import uos.cineseoul.dto.complex.CancelRegisterTicketDTO;
 import uos.cineseoul.dto.create.CreateTicketDTO;
@@ -21,6 +22,7 @@ import uos.cineseoul.entity.Ticket;
 import uos.cineseoul.service.ScheduleService;
 import uos.cineseoul.service.TicketService;
 import uos.cineseoul.service.UserService;
+import uos.cineseoul.utils.CustomUserDetails;
 import uos.cineseoul.utils.JwtTokenProvider;
 import uos.cineseoul.utils.PageUtil;
 import uos.cineseoul.utils.ReturnMessage;
@@ -91,17 +93,17 @@ public class TicketController {
 
     @PostMapping("/auth")
     @ApiOperation(value = "티켓 등록", protocols = "http")
-    public ResponseEntity<ReturnMessage<PrintTicketDTO>> register(@RequestHeader(value = "Authorization") String token, @RequestBody CreateTicketDTO ticketDTO) {
-        Long userNum = jwtTokenProvider.getClaims(token).get("num", Long.class);
-        InsertTicketDTO iTicketDTO = InsertTicketDTO.builder().ticketState(TicketState.N).schedule(scheduleService.findOneByNum(ticketDTO.getSchedNum()))
-                                                            .user(userService.findOneByNum(userNum)).stdPrice(ticketDTO.getStdPrice()).build();
-        Ticket ticket = ticketService.insert(iTicketDTO,ticketDTO.getSeatNumList(), ticketDTO.getAudienceTypeDTOList());
-        ReturnMessage<PrintTicketDTO> msg = new ReturnMessage<>();
-        msg.setMessage("티켓 예매가 완료되었습니다.");
-        msg.setData(ticketService.toPrintDTO(ticket));
-        msg.setStatus(StatusEnum.OK);
+    public ResponseEntity<PrintTicketDTO> register(Authentication authentication, @RequestBody CreateTicketDTO ticketDTO) {
+        if(authentication.getPrincipal() instanceof CustomUserDetails userDetails){
+            Long userNum = userDetails.getNum();
+            InsertTicketDTO iTicketDTO = InsertTicketDTO.builder().ticketState(TicketState.N).schedule(scheduleService.findOneByNum(ticketDTO.getSchedNum()))
+                .user(userService.findOneByNum(userNum)).stdPrice(ticketDTO.getStdPrice()).build();
+            Ticket ticket = ticketService.insert(iTicketDTO,ticketDTO.getSeatNumList(), ticketDTO.getAudienceTypeDTOList());
 
-        return new ResponseEntity<>(msg, HttpStatus.OK);
+            return ResponseEntity.ok(TicketService.toPrintDTO(ticket));
+        }else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
     @PutMapping("/auth")

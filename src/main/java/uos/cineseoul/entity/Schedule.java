@@ -45,7 +45,7 @@ public class Schedule {
 
     public static Schedule mock(Screen screen, Movie movie){
         return Schedule.builder()
-            .schedTime(LocalDateTime.now())
+            .schedTime(LocalDateTime.now().plusDays(1))
             .order(1)
             .emptySeat(screen.getSeats().size())
             .scheduleSeats(new ArrayList<>())

@@ -94,9 +94,10 @@ public class TicketService {
         // 티켓에 관람객 유형 등록하기
         ticket.setAudienceTypes(insertTicketAudienceList(ticket, createTicketAudienceDTOList, discountPrice));
 
-        if(!ticket.getStdPrice().equals(price.get()-discountPrice.get())){
-            throw new DataInconsistencyException("표준 가격이 좌석 가격에서 할인가격을 뺀 값과 일치하지 않습니다.");
+        if(!ticket.getStdPrice().equals(price.get())){
+            throw new DataInconsistencyException("표쥰 가격이 맞지 않습니다.");
         }
+        ticket.setSalePrice(price.get() - discountPrice.get());
 
         return ticket;
     }
