@@ -1,8 +1,6 @@
 package uos.cineseoul.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,16 +11,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 import uos.cineseoul.dto.create.CreateTicketAudienceDTO;
 import uos.cineseoul.dto.create.CreateTicketDTO;
-import uos.cineseoul.dto.insert.InsertTicketDTO;
 import uos.cineseoul.entity.*;
 import uos.cineseoul.entity.movie.Movie;
 import uos.cineseoul.repository.*;
 import uos.cineseoul.service.ScheduleSeatService;
-import uos.cineseoul.service.TicketService;
 import uos.cineseoul.util.JwtTokenUtil;
 import uos.cineseoul.utils.JwtTokenProvider;
 import uos.cineseoul.utils.enums.AudienceType;
@@ -31,7 +26,6 @@ import uos.cineseoul.utils.enums.TicketState;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -41,9 +35,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class TicketControllerTest {
     @Autowired
     MockMvc mockMvc;
-
-    @Autowired
-    TicketService ticketService;
 
     @Autowired
     ScheduleSeatService scheduleSeatService;
