@@ -47,7 +47,8 @@ public class User{
     private String phoneNum;
 
     @Column(name = "POINT", nullable = true, columnDefinition = "INT DEFAULT 0")
-    private Integer point;
+    @Builder.Default
+    private Integer point = 0;
 
     @Column(name = "ROLE", nullable = false, columnDefinition = "char(1)")
     @Enumerated(EnumType.STRING)
@@ -72,6 +73,13 @@ public class User{
 
     public void addPoint(int price){
         this.point += (int)(price*0.05);
+    }
+
+    public void refund(Payment payment){
+        if(!this.role.equals(UserRole.N)){
+            // 결제 포인트 환불 및 결제해서 얻은 포인트 반환
+            this.point = this.point + payment.getPayedPoint() - (int)(payment.getPrice()*0.05);
+        }
     }
 
     @Override
